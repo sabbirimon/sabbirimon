@@ -1,5 +1,5 @@
 # 💫 About Me:
-🔭 I’m currently working on Poridhi.io<br>🌱 I’m currently learning SDN, and py<br>💬 Ask me about CCNA, Linux, Docker<br>
+🔭 I’m currently working at Poridhi.io as a junior DevOps engineer<br>🌱 I’m currently learning SDN, and py<br>💬 Ask me about CCNA, Linux, Docker<br>
 
 
 ## 🌐 Socials:
