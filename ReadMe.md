@@ -24,7 +24,7 @@
 ### 😂 Random Dev Meme
 <img src='https://memer-new.vercel.app/' style="height: 400px;"/>
 
-### [Snake game from github user contributions graph](https://github.com/Platane/snk) - [Platane](https://github.com/Platane/) 
+### [Snake game Animation](https://github.com/Platane/snk) 
 ![preview](https://raw.githubusercontent.com/Platane/snk/output/github-contribution-grid-snake.gif)
 
 ---
@@ -32,6 +32,13 @@
 
 ### [Readme Jokes](https://github.com/ABSphreak/readme-jokes) - [ABSphreak](https://github.com/ABSphreak)  
 <img src="https://readme-jokes.vercel.app/api" alt="Jokes Card" />
+
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/platane/platane/output/github-contribution-grid-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/platane/platane/output/github-contribution-grid-snake.svg">
+  <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/platane/platane/output/github-contribution-grid-snake.svg">
+</picture>
 
 
 
