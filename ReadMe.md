@@ -24,11 +24,27 @@
 ### 😂 Random Dev Meme
 <img src='https://memer-new.vercel.app/' style="height: 400px;"/>
 
+### [Snake game from github user contributions graph](https://github.com/Platane/snk) - [Platane](https://github.com/Platane/) 
+![preview](https://raw.githubusercontent.com/Platane/snk/output/github-contribution-grid-snake.gif)
+
 ---
 [![](https://visitcount.itsvg.in/api?id=sabbirimon&icon=2&color=13)](https://visitcount.itsvg.in)
 
+### [Readme Jokes](https://github.com/ABSphreak/readme-jokes) - [ABSphreak](https://github.com/ABSphreak)  
+<img src="https://readme-jokes.vercel.app/api" alt="Jokes Card" />
+
+
+
   ## 💰 You can help me by Donating
   [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/sabbirimon) 
+
+
+<br>
+<p align="center">
+  <a href="https://ibb.co/svJn3dDT">
+    <img src="https://i.ibb.co/svJn3dDT/bmc-qr.png" alt="bmc-qr" width="192" height="192" style="border:0;" />
+  </a>
+</p>
 
   
 <!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
