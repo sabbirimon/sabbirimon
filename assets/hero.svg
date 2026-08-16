@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  sabbirimon — Animated Glassmorphism Hero Banner
+  ─────────────────────────────────────────────────────────────────
+  Pure SVG + SMIL. No external CSS / JS required. Renders anywhere
+  SVG renders (GitHub README, GitHub Pages, docs sites, OBS overlays).
+  All animation is via <animate> / <animateTransform> so it survives
+  in stripped environments.
+
+  Sections:
+    · Aurora gradient backdrop (animated color stops)
+    · Drifting mesh grid (perspective plane)
+    · Floating glass orbs (rotating + breathing)
+    · Glass headline card (subtle inner glow, typed-text animation)
+    · Subtle grain overlay
+
+  Two variants of the headline font + colors are baked into the same
+  file by default — for true dark/light switching use the
+  `hero-light.svg` companion.
+-->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1280 400"
+     width="100%" preserveAspectRatio="xMidYMid slice"
+     role="img" aria-label="Sabbirimon — DevOps engineer, 5G/RAN explorer, open-source tinkerer"
+     font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif">
+
+  <defs>
+    <!-- Animated aurora gradient — color stops cycle continuously -->
+    <linearGradient id="aurora" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06b6d4">
+        <animate attributeName="stop-color"
+                 values="#06b6d4;#a855f7;#ec4899;#22d3ee;#06b6d4"
+                 dur="14s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="40%" stop-color="#a855f7">
+        <animate attributeName="stop-color"
+                 values="#a855f7;#ec4899;#22d3ee;#84cc16;#a855f7"
+                 dur="14s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="75%" stop-color="#ec4899">
+        <animate attributeName="stop-color"
+                 values="#ec4899;#22d3ee;#84cc16;#06b6d4;#ec4899"
+                 dur="14s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#22d3ee">
+        <animate attributeName="stop-color"
+                 values="#22d3ee;#84cc16;#06b6d4;#a855f7;#22d3ee"
+                 dur="14s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+
+    <!-- Soft radial mask so aurora fades to deep navy at edges -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="65%">
+      <stop offset="0%"  stop-color="#000" stop-opacity="0"/>
+      <stop offset="70%" stop-color="#000" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="1"/>
+    </radialGradient>
+
+    <!-- Mesh grid pattern — animated dash for "moving" lines -->
+    <pattern id="grid" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none"
+            stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <animateTransform attributeName="patternTransform"
+                        type="translate"
+                        from="0 0" to="48 48"
+                        dur="22s" repeatCount="indefinite"/>
+    </pattern>
+
+    <!-- Glass orb gradient — animated highlight -->
+    <radialGradient id="orb1" cx="35%" cy="30%" r="70%">
+      <stop offset="0%"  stop-color="rgba(255,255,255,0.85)"/>
+      <stop offset="40%" stop-color="rgba(168,85,247,0.55)"/>
+      <stop offset="100%" stop-color="rgba(6,182,212,0.0)"/>
+    </radialGradient>
+    <radialGradient id="orb2" cx="50%" cy="50%" r="60%">
+      <stop offset="0%"  stop-color="rgba(255,255,255,0.8)"/>
+      <stop offset="50%" stop-color="rgba(236,72,153,0.45)"/>
+      <stop offset="100%" stop-color="rgba(34,211,238,0.0)"/>
+    </radialGradient>
+    <radialGradient id="orb3" cx="50%" cy="50%" r="60%">
+      <stop offset="0%"  stop-color="rgba(255,255,255,0.8)"/>
+      <stop offset="50%" stop-color="rgba(132,204,22,0.45)"/>
+      <stop offset="100%" stop-color="rgba(168,85,247,0.0)"/>
+    </radialGradient>
+
+    <!-- Glass card gradient border -->
+    <linearGradient id="glassBorder" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"  stop-color="rgba(255,255,255,0.55)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0.05)"/>
+      <stop offset="100%" stop-color="rgba(168,85,247,0.45)"/>
+    </linearGradient>
+
+    <!-- Soft drop shadow for headline -->
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Aurora glow blur for orbs -->
+    <filter id="orbBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+
+    <!-- Conic prism for headline accent -->
+    <linearGradient id="nameGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"  stop-color="#22d3ee">
+        <animate attributeName="stop-color"
+                 values="#22d3ee;#a855f7;#ec4899;#84cc16;#22d3ee"
+                 dur="10s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="#a855f7">
+        <animate attributeName="stop-color"
+                 values="#a855f7;#ec4899;#84cc16;#22d3ee;#a855f7"
+                 dur="10s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#ec4899">
+        <animate attributeName="stop-color"
+                 values="#ec4899;#84cc16;#22d3ee;#a855f7;#ec4899"
+                 dur="10s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Background: deep navy → black -->
+  <rect x="0" y="0" width="1280" height="400" fill="#0a0a1f"/>
+
+  <!-- Aurora layer -->
+  <rect x="0" y="0" width="1280" height="400" fill="url(#aurora)" opacity="0.95"/>
+
+  <!-- Mesh grid overlay (animated translate) -->
+  <rect x="0" y="0" width="1280" height="400" fill="url(#grid)"/>
+
+  <!-- Floating glass orbs -->
+  <g filter="url(#orbBlur)" opacity="0.85">
+    <circle cx="180" cy="120" r="90" fill="url(#orb1)">
+      <animateTransform attributeName="transform" type="translate"
+                        values="0 0; 40 -20; 0 0; -30 20; 0 0"
+                        dur="16s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="90;110;90" dur="9s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1080" cy="320" r="120" fill="url(#orb2)">
+      <animateTransform attributeName="transform" type="translate"
+                        values="0 0; -50 -30; 0 0; 30 40; 0 0"
+                        dur="20s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="120;100;120" dur="11s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="640" cy="380" r="140" fill="url(#orb3)" opacity="0.7">
+      <animateTransform attributeName="transform" type="translate"
+                        values="0 0; 20 -40; 0 0; -25 25; 0 0"
+                        dur="24s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="140;160;140" dur="13s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Vignette darkens edges -->
+  <rect x="0" y="0" width="1280" height="400" fill="url(#vignette)"/>
+
+  <!-- Glass headline card -->
+  <g transform="translate(640 200)">
+    <!-- Outer glow halo -->
+    <rect x="-380" y="-110" width="760" height="220" rx="28"
+          fill="rgba(255,255,255,0.04)"
+          stroke="url(#glassBorder)" stroke-width="1.4">
+      <animate attributeName="stroke-opacity"
+               values="0.6;1;0.6" dur="6s" repeatCount="indefinite"/>
+    </rect>
+    <!-- Soft inner highlight -->
+    <rect x="-378" y="-108" width="756" height="60" rx="26"
+          fill="url(#aurora)" opacity="0.18"/>
+
+    <!-- Eyebrow -->
+    <text x="0" y="-58" text-anchor="middle"
+          font-size="18" letter-spacing="6"
+          fill="rgba(255,255,255,0.85)" font-weight="600">
+      HI, I’M
+      <animate attributeName="opacity"
+               values="0.4;1;0.4" dur="3.2s" repeatCount="indefinite"/>
+    </text>
+
+    <!-- Big name with animated gradient -->
+    <text x="0" y="0" text-anchor="middle"
+          font-size="78" font-weight="900"
+          fill="url(#nameGrad)" filter="url(#softGlow)">
+      Sabbirimon
+    </text>
+
+    <!-- Subline with typewriter illusion via opacity-clipping -->
+    <g>
+      <clipPath id="typeClip">
+        <rect x="-310" y="22" width="0" height="40">
+          <animate attributeName="width"
+                   values="0;620;620;620;0;0"
+                   keyTimes="0;0.25;0.55;0.7;0.85;1"
+                   dur="9s" repeatCount="indefinite"/>
+        </rect>
+      </clipPath>
+      <text x="0" y="56" text-anchor="middle"
+            font-size="22" font-weight="500"
+            fill="rgba(255,255,255,0.92)"
+            clip-path="url(#typeClip)">
+        DevOps engineer · 5G/RAN explorer · Open-source tinkerer
+      </text>
+    </g>
+
+    <!-- Blinking cursor -->
+    <rect x="316" y="36" width="2" height="22" fill="#22d3ee">
+      <animate attributeName="opacity"
+               values="0;0;1;1;0"
+               keyTimes="0;0.24;0.26;0.7;0.72"
+               dur="9s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- Tag chips row -->
+    <g transform="translate(0 90)" font-size="13" font-weight="600">
+      <g>
+        <rect x="-220" y="-14" width="80" height="26" rx="13"
+              fill="rgba(34,211,238,0.18)" stroke="#22d3ee" stroke-width="1"/>
+        <text x="-180" y="4" text-anchor="middle" fill="#22d3ee">DevOps</text>
+      </g>
+      <g>
+        <rect x="-126" y="-14" width="86" height="26" rx="13"
+              fill="rgba(168,85,247,0.18)" stroke="#a855f7" stroke-width="1"/>
+        <text x="-83" y="4" text-anchor="middle" fill="#c084fc">5G / RAN</text>
+      </g>
+      <g>
+        <rect x="-26" y="-14" width="90" height="26" rx="13"
+              fill="rgba(236,72,153,0.18)" stroke="#ec4899" stroke-width="1"/>
+        <text x="19" y="4" text-anchor="middle" fill="#f472b6">Open-source</text>
+      </g>
+      <g>
+        <rect x="78" y="-14" width="142" height="26" rx="13"
+              fill="rgba(132,204,22,0.18)" stroke="#84cc16" stroke-width="1"/>
+        <text x="149" y="4" text-anchor="middle" fill="#a3e635">GSMLTE · Docker · K8s</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Subtle film grain via SVG turbulence (cheap) -->
+  <rect x="0" y="0" width="1280" height="400" fill="black" opacity="0.18"
+        style="mix-blend-mode:overlay"/>
+</svg>
