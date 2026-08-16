@@ -1,12 +1,17 @@
 <div align="center">
 
-<!-- 📡 Cellular 5G / RAN diagram — animated GIF (works on github.com).
-     Three macro towers, sector antennas, handover arcs, backhaul to 5GC core,
-     URLLC "1 ms" badge. Replaces the older Bangladesh map watermark. -->
-<img alt="5G / Cellular RAN — multi-node architecture with 5GC core, handover arcs, beam-forming, mobile device handover"
-     src="assets/cellular-5g.gif"
+<!-- 📡 3D 5G Service-Based Architecture — animated isometric GIF
+     (works on github.com — no SMIL proxy stripping).
+     3 gNB macro towers with rotating sector antennas + beam cones
+     + 5×2 grid of extruded 5GC SBA Network Function bars
+     (AMF / SMF / UPF / AUSF / UDM / PCF / NEF / NRF / NSSF / AF)
+     + rotating 5GC Core Service-Based Interface ring (N1..N33)
+     + animated data packets flowing tower → SBA → core.
+     Inspired by Sergio Rivera Cuevas' 5G vs 4G SBA diagram. -->
+<img alt="5G Service-Based Architecture — 3D isometric: gNB macro towers, beam-forming, 5GC SBA network functions (AMF/SMF/UPF/AUSF/UDM/PCF/NEF/NRF/NSSF/AF), N1..N33 Service-Based Interfaces, data packets"
+     src="assets/5g-3d.gif"
      width="100%"
-     style="max-width:1100px; opacity:0.85; border-radius:18px;
+     style="max-width:1080px; opacity:0.95; border-radius:18px;
             display:block; margin:0 auto 18px;">
 
 <!-- ✨ Aurora hero — animated GIF, works on github.com (no JS, no SMIL proxy issues) -->
