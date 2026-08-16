@@ -1,20 +1,28 @@
 <div align="center">
 
-<!-- 🌏 Bangladesh map background watermark — RGB-color-cycling outline at ~60% opacity.
-     GIF works on github.com. Spans the full README width as a soft backdrop. -->
-<img alt="Bangladesh outline background"
-     src="assets/bd-map.gif"
+<!-- 📡 Cellular 5G / RAN diagram — animated GIF (works on github.com).
+     Three macro towers, sector antennas, handover arcs, backhaul to 5GC core,
+     URLLC "1 ms" badge. Replaces the older Bangladesh map watermark. -->
+<img alt="5G / Cellular RAN — multi-node architecture with 5GC core, handover arcs, beam-forming, mobile device handover"
+     src="assets/cellular-5g.gif"
      width="100%"
-     style="max-width:1100px; opacity:0.6; border-radius:14px;
-            display:block; margin:0 auto 14px;">
+     style="max-width:1100px; opacity:0.85; border-radius:18px;
+            display:block; margin:0 auto 18px;">
 
 <!-- ✨ Aurora hero — animated GIF, works on github.com (no JS, no SMIL proxy issues) -->
 <img alt="Sabbirimon — DevOps engineer · 5G/RAN explorer · Open-source tinkerer"
      src="assets/hero.gif"
      width="100%"
-     style="max-width:720px; border-radius:22px; margin-bottom:12px; display:block;">
+     style="max-width:720px; border-radius:22px; margin-bottom:14px; display:block;">
 
-<!-- 📡 Live broadcast — animated radio-wave GIF next to a stack of social pills -->
+<!-- 🔮 Glassmorphic stat pills (FOLLOWERS · STARS · WATCHERS · VIEWS) —
+     animated counters. Replaces the dead visitcount.itsvg.in + plain shields. -->
+<img alt="FOLLOWERS · STARS · WATCHERS · VIEWS — animated counters"
+     src="assets/stats-badges.gif"
+     width="100%"
+     style="max-width:760px; border-radius:18px; margin:4px auto 18px; display:block;">
+
+<!-- 📡 Live broadcast — animated radio-wave GIF next to social pills -->
 <table align="center" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td align="center" valign="middle">
@@ -24,9 +32,9 @@
            style="border-radius:18px;">
     </td>
     <td align="left" valign="middle" style="padding-left:24px;">
-      <a href="https://github.com/sabbirimon"><img alt="followers" src="https://img.shields.io/github/followers/sabbirimon?style=for-the-badge&logo=github&color=22d3ee&labelColor=0a0a1f"></a><br>
-      <a href="https://github.com/sabbirimon"><img alt="stars"    src="https://img.shields.io/github/stars/sabbirimon?style=for-the-badge&logo=github&color=a855f7&labelColor=0a0a1f"></a><br>
-      <img alt="views" src="https://visitcount.itsvg.in/api?id=sabbirimon&icon=2&color=13">
+      <a href="https://github.com/sabbirimon?tab=followers"><img alt="followers" src="https://img.shields.io/github/followers/sabbirimon?style=for-the-badge&logo=github&color=22d3ee&labelColor=0a0a1f"></a><br>
+      <a href="https://github.com/sabbirimon?tab=repositories"><img alt="stars"    src="https://img.shields.io/github/stars/sabbirimon?style=for-the-badge&logo=github&color=a855f7&labelColor=0a0a1f"></a><br>
+      <img alt="views" src="https://komarev.com/ghpvc/?username=sabbirimon&color=a855f7&style=for-the-badge&label=PROFILE+VIEWS" />
     </td>
   </tr>
 </table>
@@ -45,8 +53,8 @@
 
 ## 💫 About Me
 
-🔭 I’m currently working at **Poridhi.io** as a Junior DevOps Engineer  
-🌱 I’m currently learning **RAN, SDN, and Python**  
+🔭 I’m currently working at **Poridhi.io** as a Junior DevOps Engineer
+🌱 I’m currently learning **RAN, SDN, and Python**
 💬 Ask me about **GSM, LTE, 5G, CCNA, Linux, Docker**
 
 ---
@@ -107,14 +115,6 @@
 
 ---
 
-## 🔝 Top Contributed Repos
-
-<p align="center">
-  <img src="https://github-contributor-stats.vercel.app/api?username=sabbirimon&limit=5&theme=dark&combine_all_yearly_contributions=true" alt="Top contributed repos"/>
-</p>
-
----
-
 ## 🐍 Contribution Snake
 
 <p align="center">
@@ -136,17 +136,14 @@
 </p>
 
 <p align="center">
-  <a href="https://ibb.co/svJn3dDT">
-    <img src="https://i.ibb.co/svJn3dDT/bmc-qr.png" alt="BMC QR" width="192" height="192" style="border-radius:14px; box-shadow:0 0 24px rgba(168,85,247,0.4);"/>
+  <a href="https://sabbirimon.github.io/sabbirimon/">
+    <img src="assets/hero.svg"
+         alt="Sabbirimon landing page"
+         width="180"
+         style="border-radius:14px; box-shadow:0 0 24px rgba(168,85,247,0.4);"/>
   </a>
-</p>
-
----
-
-## 😂 Random Dev Meme
-
-<p align="center">
-  <img src="https://memer-new.vercel.app/" style="height:400px; border-radius:14px;" alt="Random dev meme"/>
+  <br>
+  <sub>✨ Try the <b>Synapse Clicker</b> mini-game on the landing page ✨</sub>
 </p>
 
 ---

@@ -521,6 +521,127 @@
     .radio-svg-wrap object { height: 220px; }
   }
 
+  /* ─── Mini-game (Synapse Clicker) ────────────────────── */
+  .game-card {
+    padding: 28px;
+  }
+  .game-blurb {
+    margin: 0 0 18px;
+    color: var(--ink-soft);
+    font-size: 15px;
+    text-align: center;
+  }
+  .game-blurb b {
+    color: var(--accent-cyan);
+    font-weight: 700;
+  }
+  .game-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.40);
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    margin-bottom: 18px;
+  }
+  #game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  .game-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(10, 10, 31, 0.30);
+    transition: opacity 0.3s ease;
+  }
+  .game-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .game-btn {
+    border: 1px solid var(--glass-border-hot);
+    background: linear-gradient(135deg, rgba(34,211,238,0.30), rgba(168,85,247,0.30));
+    color: var(--ink);
+    padding: 14px 36px;
+    border-radius: 999px;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(168,85,247,0.45);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    letter-spacing: 0.04em;
+  }
+  .game-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 14px 42px rgba(168,85,247,0.65);
+  }
+  .game-btn:active { transform: scale(0.97); }
+  .game-hud {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .hud-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .hud-block:hover {
+    transform: translateY(-2px);
+    border-color: var(--glass-border-hot);
+  }
+  .hud-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+  .hud-value {
+    font-size: 24px;
+    font-weight: 900;
+    font-family: ui-monospace, Menlo, monospace;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1;
+  }
+  .hud-value.flash {
+    animation: hudFlash 0.4s ease-out;
+  }
+  @keyframes hudFlash {
+    0%   { transform: scale(1);    filter: brightness(1); }
+    40%  { transform: scale(1.4);  filter: brightness(1.7); }
+    100% { transform: scale(1);    filter: brightness(1); }
+  }
+  .game-foot {
+    margin: 0;
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 13px;
+  }
+  .game-foot b { color: var(--accent-purple); }
+  @media (max-width: 720px) {
+    .game-hud { grid-template-columns: repeat(2, 1fr); }
+  }
+
   /* ─── Footer ──────────────────────────────────────────── */
   footer {
     text-align: center;
@@ -761,6 +882,51 @@
         <h3>☕ Buy me a coffee</h3>
         <p>Support the open-source work</p>
       </a>
+    </div>
+  </section>
+
+  <!-- 🎮 Mini-Game — Synapse Clicker
+       Visitors tap nodes to fire them; weights flow through the network
+       and the score tracks how many activations they chain in 30 seconds.
+       Best score is persisted in localStorage. -->
+  <section aria-labelledby="game-heading">
+    <h2 id="game-heading"><span class="emoji">🎮</span> Synapse Clicker</h2>
+    <div class="glass game-card">
+      <p class="game-blurb">
+        Tap nodes to <b>fire</b> them. Chain activations across the
+        network to score. <b>30&nbsp;seconds</b>. Beat your best.
+      </p>
+
+      <div class="game-stage">
+        <canvas id="game-canvas" aria-label="Synapse Clicker game canvas"></canvas>
+        <div class="game-overlay" id="game-overlay">
+          <button id="game-start" class="game-btn">▶ Start</button>
+        </div>
+      </div>
+
+      <div class="game-hud">
+        <div class="hud-block">
+          <span class="hud-label">SCORE</span>
+          <span class="hud-value" id="game-score">0</span>
+        </div>
+        <div class="hud-block">
+          <span class="hud-label">TIME</span>
+          <span class="hud-value" id="game-time">30</span>
+        </div>
+        <div class="hud-block">
+          <span class="hud-label">BEST</span>
+          <span class="hud-value" id="game-best">0</span>
+        </div>
+        <div class="hud-block">
+          <span class="hud-label">CHAIN</span>
+          <span class="hud-value" id="game-chain">×1</span>
+        </div>
+      </div>
+
+      <p class="game-foot">
+        Tip: hit <b>output nodes</b> last — they double your chain bonus.
+        · Best score saved on this device.
+      </p>
     </div>
   </section>
 
@@ -1158,6 +1324,367 @@
       if (window.swapAuroraPalette) window.swapAuroraPalette(next);
     });
   })();
+</script>
+
+<!-- 🎮 Synapse Clicker — mini-game -->
+<script>
+(function initGame() {
+  const canvas = document.getElementById("game-canvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  // HUD elements
+  const elScore = document.getElementById("game-score");
+  const elTime  = document.getElementById("game-time");
+  const elBest  = document.getElementById("game-best");
+  const elChain = document.getElementById("game-chain");
+  const overlay = document.getElementById("game-overlay");
+  const btnStart = document.getElementById("game-start");
+
+  // ─── High-DPI sizing ──────────────────────────────────
+  let W = 0, H = 0, DPR = 1;
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = canvas.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width  = Math.floor(W * DPR);
+    canvas.height = Math.floor(H * DPR);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    layoutNodes();
+  }
+
+  // ─── Network topology ─────────────────────────────────
+  // 4 input → 6 hidden → 6 hidden → 4 output
+  const LAYERS = [4, 6, 6, 4];
+  let nodes = [];            // [{x,y,r,layer,idx,activation,firing}]
+  let edges = [];            // [{a,b,layer}]
+  let packets = [];          // [{a,b,u,life,color,score}]
+  let ripples = [];          // [{x,y,age,color}]
+
+  function layoutNodes() {
+    nodes = [];
+    edges = [];
+    const padX = 50;
+    const padY = 30;
+    const colW = (W - 2 * padX) / (LAYERS.length - 1);
+    LAYERS.forEach((n, li) => {
+      for (let i = 0; i < n; i++) {
+        const y = padY + (H - 2 * padY) * (i / Math.max(n - 1, 1));
+        const x = padX + li * colW;
+        nodes.push({
+          x, y, r: 18,
+          layer: li, idx: i,
+          activation: 0,    // 0..1 glow intensity
+          firing: 0,        // flash on tap, fades
+          type: li === 0 ? "input" : li === LAYERS.length - 1 ? "output" : "hidden",
+        });
+      }
+      // Build edges to next layer
+      if (li < LAYERS.length - 1) {
+        const srcStart = nodes.length - n;
+        const dstStart = nodes.length;
+        const nextN = LAYERS[li + 1];
+        for (let a = 0; a < n; a++) {
+          for (let b = 0; b < nextN; b++) {
+            edges.push({
+              a: srcStart + a,
+              b: dstStart + b,
+              layer: li,
+            });
+          }
+        }
+      }
+    });
+  }
+
+  // ─── Color helpers ────────────────────────────────────
+  const COLORS = ["#22d3ee", "#a855f7", "#ec4899", "#84cc16", "#facc15"];
+  function colorFor(t) {
+    const n = COLORS.length;
+    const seg = (t % 1) * n;
+    const i = Math.floor(seg);
+    const f = seg - i;
+    const c1 = hex(COLORS[i % n]), c2 = hex(COLORS[(i + 1) % n]);
+    return [c1[0] + (c2[0] - c1[0]) * f,
+            c1[1] + (c2[1] - c1[1]) * f,
+            c1[2] + (c2[2] - c1[2]) * f];
+  }
+  function hex(h) {
+    h = h.replace("#", "");
+    return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+  }
+  function rgba(c, a) {
+    return `rgba(${c[0]|0},${c[1]|0},${c[2]|0},${a})`;
+  }
+
+  // ─── Game state ───────────────────────────────────────
+  let state = "idle";          // idle | playing | over
+  let score = 0;
+  let timeLeft = 30;
+  let chain = 0;               // current chain count
+  let bestChain = 0;
+  let lastTime = 0;
+  let startTime = 0;
+
+  // Load best score from localStorage
+  let best = 0;
+  try {
+    best = parseInt(localStorage.getItem("sabbirimon-game-best") || "0", 10) || 0;
+  } catch (e) { /* ignore */ }
+  elBest.textContent = best;
+
+  // ─── Interactions ─────────────────────────────────────
+  function pickNode(x, y) {
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      const n = nodes[i];
+      const dx = x - n.x, dy = y - n.y;
+      if (dx * dx + dy * dy <= (n.r + 8) * (n.r + 8)) return n;
+    }
+    return null;
+  }
+
+  canvas.addEventListener("pointerdown", (e) => {
+    if (state !== "playing") return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const node = pickNode(x, y);
+    if (!node) return;
+    fireNode(node);
+  });
+
+  function fireNode(node) {
+    node.firing = 1.0;
+    node.activation = 1.0;
+    ripples.push({ x: node.x, y: node.y, age: 0, color: colorFor(performance.now() * 0.0005) });
+
+    // Score by node type
+    let base = 10;
+    let bonus = 0;
+    if (node.type === "input")  base = 5;
+    if (node.type === "hidden") base = 15;
+    if (node.type === "output") { base = 25; bonus = chain * 5; }
+
+    chain += 1;
+    if (chain > bestChain) bestChain = chain;
+    elChain.textContent = "×" + chain;
+
+    const gained = base + bonus;
+    score += gained;
+    elScore.textContent = score;
+    flash(elScore);
+    flash(elChain);
+
+    // Propagate a packet to the next layer (toward output)
+    if (node.layer < LAYERS.length - 1) {
+      // Pick a random target in next layer
+      const nextLayerStart = nodes.filter(n => n.layer === node.layer + 1)[0];
+      const idxInLayer = node.idx;
+      const nextN = LAYERS[node.layer + 1];
+      const targetIdx = Math.floor(Math.random() * nextN);
+      const targetNode = nodes.find(n => n.layer === node.layer + 1 && n.idx === targetIdx);
+      packets.push({
+        from: { x: node.x, y: node.y },
+        to:   { x: targetNode.x, y: targetNode.y },
+        toNode: targetNode,
+        u: 0, speed: 0.012 + Math.random() * 0.006,
+        color: colorFor(performance.now() * 0.0005),
+        life: 1.0,
+      });
+    }
+  }
+
+  function flash(el) {
+    el.classList.remove("flash");
+    void el.offsetWidth;  // restart animation
+    el.classList.add("flash");
+  }
+
+  // ─── Animation loop ───────────────────────────────────
+  function frame(now) {
+    const dt = Math.min((now - lastTime) / 1000, 0.05);
+    lastTime = now;
+
+    // Clear with subtle fade
+    ctx.fillStyle = "rgba(5, 5, 18, 0.95)";
+    ctx.fillRect(0, 0, W, H);
+
+    // Subtle grid
+    ctx.strokeStyle = "rgba(255,255,255,0.04)";
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 32) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    }
+    for (let y = 0; y < H; y += 32) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+
+    // Layer labels
+    ctx.font = "10px ui-monospace, Menlo, monospace";
+    ctx.fillStyle = "rgba(255,255,255,0.35)";
+    ctx.textAlign = "center";
+    ["INPUT", "HIDDEN", "HIDDEN", "OUTPUT"].forEach((label, li) => {
+      const layerNodes = nodes.filter(n => n.layer === li);
+      if (layerNodes.length) {
+        ctx.fillText(label, layerNodes[0].x, 14);
+      }
+    });
+
+    // Draw edges (gradient lines)
+    edges.forEach(e => {
+      const a = nodes[e.a], b = nodes[e.b];
+      const intensity = Math.max(a.activation, b.activation);
+      const baseCol = colorFor(performance.now() * 0.0002 + e.layer * 0.2);
+      const w = 0.5 + intensity * 1.8;
+      ctx.strokeStyle = rgba(baseCol, 0.18 + intensity * 0.5);
+      ctx.lineWidth = w;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+    });
+
+    // Draw nodes
+    nodes.forEach(n => {
+      n.activation *= 0.985;
+      n.firing *= 0.92;
+
+      const col = colorFor(performance.now() * 0.0003 + n.layer * 0.2);
+      // Outer glow (scales with activation)
+      const glowR = n.r + 14 + n.activation * 16;
+      const grad = ctx.createRadialGradient(n.x, n.y, n.r * 0.5, n.x, n.y, glowR);
+      grad.addColorStop(0, rgba(col, 0.6 + n.activation * 0.4));
+      grad.addColorStop(1, rgba(col, 0));
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, glowR, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Core circle
+      ctx.fillStyle = rgba([255, 255, 255], 0.95);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r * 0.6, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Inner colored ring
+      ctx.strokeStyle = rgba(col, 1);
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r * (0.7 + n.activation * 0.4), 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Type indicator
+      if (n.type === "output") {
+        ctx.strokeStyle = rgba(col, 0.8 + n.activation * 0.2);
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r + 6 + n.activation * 4, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // Hit-area for debug (invisible larger ring)
+      // (intentionally not drawn)
+    });
+
+    // Update + draw packets
+    packets = packets.filter(p => p.life > 0);
+    packets.forEach(p => {
+      p.u += p.speed * dt * 60;
+      if (p.u >= 1) {
+        p.u = 1;
+        p.life = 0;
+        // Hit the target node — fire it automatically for chain reaction
+        if (p.toNode && state === "playing") {
+          // Add score only if not already firing
+          if (p.toNode.firing < 0.3) fireNode(p.toNode);
+        }
+        return;
+      }
+      const x = p.from.x + (p.to.x - p.from.x) * p.u;
+      const y = p.from.y + (p.to.y - p.from.y) * p.u;
+      // Halo
+      const halo = ctx.createRadialGradient(x, y, 0, x, y, 14);
+      halo.addColorStop(0, rgba([255,255,255], 0.95));
+      halo.addColorStop(0.5, rgba(p.color, 0.5));
+      halo.addColorStop(1, rgba(p.color, 0));
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.arc(x, y, 14, 0, Math.PI * 2);
+      ctx.fill();
+      // Core dot
+      ctx.fillStyle = "#fff";
+      ctx.beginPath();
+      ctx.arc(x, y, 3, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Ripples
+    ripples = ripples.filter(r => r.age < 1);
+    ripples.forEach(r => {
+      r.age += dt * 1.2;
+      const rad = 10 + r.age * 60;
+      const a = Math.max(0, 1 - r.age);
+      ctx.strokeStyle = rgba(r.color, a * 0.7);
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(r.x, r.y, rad, 0, Math.PI * 2);
+      ctx.stroke();
+    });
+
+    // Timer + game state
+    if (state === "playing") {
+      timeLeft = Math.max(0, 30 - (now - startTime) / 1000);
+      elTime.textContent = Math.ceil(timeLeft);
+      if (timeLeft <= 0) endGame();
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  // ─── Game flow ────────────────────────────────────────
+  function startGame() {
+    score = 0;
+    chain = 0;
+    bestChain = 0;
+    timeLeft = 30;
+    elScore.textContent = "0";
+    elTime.textContent = "30";
+    elChain.textContent = "×1";
+    nodes.forEach(n => { n.activation = 0; n.firing = 0; });
+    packets = [];
+    ripples = [];
+    state = "playing";
+    startTime = performance.now();
+    overlay.classList.add("hidden");
+  }
+
+  function endGame() {
+    state = "over";
+    if (score > best) {
+      best = score;
+      try { localStorage.setItem("sabbirimon-game-best", String(best)); } catch (e) { /* ignore */ }
+      elBest.textContent = best;
+      flash(elBest);
+    }
+    btnStart.textContent = `↻ Play Again — Best ${best}`;
+    overlay.classList.remove("hidden");
+    // Decorative burst
+    nodes.forEach((n, i) => {
+      setTimeout(() => {
+        ripples.push({ x: n.x, y: n.y, age: 0, color: colorFor(i * 0.05) });
+      }, i * 20);
+    });
+  }
+
+  btnStart.addEventListener("click", startGame);
+
+  // ─── Boot ─────────────────────────────────────────────
+  window.addEventListener("resize", resize);
+  resize();
+  lastTime = performance.now();
+  requestAnimationFrame(frame);
+})();
 </script>
 
 </body>
