@@ -11,7 +11,7 @@
 <meta property="og:title"       content="Sabbirimon">
 <meta property="og:description" content="Junior DevOps engineer · 5G/RAN explorer · Open-source tinkerer">
 <meta property="og:type"        content="profile">
-<meta property="og:image"       content="../assets/hero.svg">
+<meta property="og:image"       content="assets/hero.svg">
 <meta name="twitter:card"       content="summary_large_image">
 
 <!-- Preconnect for performance -->
@@ -810,7 +810,7 @@
 
       <!-- Static broadcast-tower SVG (same artwork used in the README) -->
       <div class="radio-svg-wrap">
-        <object type="image/svg+xml" data="../assets/radio-waves.svg" aria-label="Broadcast tower with expanding signal arcs"></object>
+        <object type="image/svg+xml" data="assets/radio-waves.svg" aria-label="Broadcast tower with expanding signal arcs"></object>
       </div>
     </div>
   </section>
@@ -1116,7 +1116,7 @@
   };
 
   // ─── 🌏 Bangladesh outline overlay ───────────────────
-  // Fetched once from /assets/bangladesh.json (pre-baked), then drawn
+  // Fetched once from assets/bangladesh.json (pre-baked), then drawn
   // every frame with an RGB color cycle and a traveling pulse dot.
   (function startBangladeshMap() {
     const canvas = document.getElementById("bd-map");
@@ -1136,7 +1136,7 @@
     window.addEventListener("resize", resize);
 
     let boundary = [];
-    fetch("../assets/bangladesh.json")
+    fetch("assets/bangladesh.json")
       .then(r => r.ok ? r.json() : Promise.reject(r.statusText))
       .then(data => {
         boundary = data;
@@ -1254,7 +1254,7 @@
     const target = document.getElementById("lottie-hello");
     if (!target) return;
     // Inline JSON for offline-first
-    fetch("../assets/lottie-hello.json")
+    fetch("assets/lottie-hello.json")
       .then(r => r.ok ? r.json() : Promise.reject(r.statusText))
       .then(data => {
         try {
