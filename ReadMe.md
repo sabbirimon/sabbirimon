@@ -141,6 +141,17 @@
 </p>
 
 <p align="center">
+  <a href="https://buymeacoffee.com/sabbirimon">
+    <img src="https://i.ibb.co/svJn3dDT/bmc-qr.png"
+         alt="Buy me a coffee — QR code"
+         width="192" height="192"
+         style="border-radius:14px; box-shadow:0 0 24px rgba(168,85,247,0.4); background:#fff; padding:8px;"/>
+  </a>
+  <br>
+  <sub>Scan to ☕ buy me a coffee</sub>
+</p>
+
+<p align="center">
   <a href="https://sabbirimon.github.io/sabbirimon/">
     <img src="assets/hero.svg"
          alt="Sabbirimon landing page"
