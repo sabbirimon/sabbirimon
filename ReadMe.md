@@ -1,38 +1,33 @@
 <div align="center">
 
-<!-- 📡 3D 5G Service-Based Architecture — animated isometric GIF
-     (works on github.com — no SMIL proxy stripping).
-     3 gNB macro towers with rotating sector antennas + beam cones
-     + 5×2 grid of extruded 5GC SBA Network Function bars
-     (AMF / SMF / UPF / AUSF / UDM / PCF / NEF / NRF / NSSF / AF)
-     + rotating 5GC Core Service-Based Interface ring (N1..N33)
-     + animated data packets flowing tower → SBA → core.
-     Inspired by Sergio Rivera Cuevas' 5G vs 4G SBA diagram. -->
-<img alt="5G Service-Based Architecture — 3D isometric: gNB macro towers, beam-forming, 5GC SBA network functions (AMF/SMF/UPF/AUSF/UDM/PCF/NEF/NRF/NSSF/AF), N1..N33 Service-Based Interfaces, data packets"
-     src="assets/5g-3d.gif"
+<!-- 📡 Cellular 5G / RAN diagram — animated SVG (works on github.com).
+     Three macro towers, sector antennas, handover arcs, backhaul to 5GC core,
+     URLLC "1 ms" badge. Pure SMIL animation, no GIF proxy issues. -->
+<img alt="5G / Cellular RAN — multi-node architecture with 5GC core, handover arcs, beam-forming, mobile device handover"
+     src="assets/cellular-5g.svg"
      width="100%"
-     style="max-width:1080px; opacity:0.95; border-radius:18px;
+     style="max-width:1100px; opacity:0.95; border-radius:18px;
             display:block; margin:0 auto 18px;">
 
-<!-- ✨ Aurora hero — animated GIF, works on github.com (no JS, no SMIL proxy issues) -->
+<!-- ✨ Aurora hero — animated SVG, works on github.com (no JS) -->
 <img alt="Sabbirimon — DevOps engineer · 5G/RAN explorer · Open-source tinkerer"
-     src="assets/hero.gif"
+     src="assets/hero.svg"
      width="100%"
      style="max-width:720px; border-radius:22px; margin-bottom:14px; display:block;">
 
 <!-- 🔮 Glassmorphic stat pills (FOLLOWERS · STARS · WATCHERS · VIEWS) —
-     animated counters. Replaces the dead visitcount.itsvg.in + plain shields. -->
+     animated counter pills. Pure SVG. -->
 <img alt="FOLLOWERS · STARS · WATCHERS · VIEWS — animated counters"
-     src="assets/stats-badges.gif"
+     src="assets/stats-badges.svg"
      width="100%"
      style="max-width:760px; border-radius:18px; margin:4px auto 18px; display:block;">
 
-<!-- 📡 Live broadcast — animated radio-wave GIF next to social pills -->
+<!-- 📡 Live broadcast — animated radio-wave SVG next to social pills -->
 <table align="center" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td align="center" valign="middle">
       <img alt="5G / RAN — broadcast tower with expanding signal arcs and data packets"
-           src="assets/radio-waves.gif"
+           src="assets/radio-waves.svg"
            width="220"
            style="border-radius:18px;">
     </td>
@@ -44,9 +39,9 @@
   </tr>
 </table>
 
-<!-- 🔮 Breathing glass-orb row — pure GIF, no CSS needed -->
+<!-- 🔮 Breathing glass-orb row — pure SVG, no CSS needed -->
 <img alt="Cloud · DevOps · 5G/RAN · Open-source"
-     src="assets/orbs.gif"
+     src="assets/orbs.svg"
      width="480"
      style="border-radius:16px; margin-top:14px;">
 
@@ -138,17 +133,6 @@
   <a href="https://buymeacoffee.com/sabbirimon">
     <img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy me a coffee"/>
   </a>
-</p>
-
-<p align="center">
-  <a href="https://buymeacoffee.com/sabbirimon">
-    <img src="https://i.ibb.co/svJn3dDT/bmc-qr.png"
-         alt="Buy me a coffee — QR code"
-         width="192" height="192"
-         style="border-radius:14px; box-shadow:0 0 24px rgba(168,85,247,0.4); background:#fff; padding:8px;"/>
-  </a>
-  <br>
-  <sub>Scan to ☕ buy me a coffee</sub>
 </p>
 
 <p align="center">

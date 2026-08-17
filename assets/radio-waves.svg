@@ -1,196 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  sabbirimon — Wireless Radio Wave Decoration
-  ─────────────────────────────────────────────
-  A "broadcast tower + concentric expanding signal arcs" piece.
-  Pure SVG + SMIL. Designed to be embedded inline inside the README
-  or composited into the HTML landing as a decorative element.
-
-  Usage:
-    <img src="assets/radio-waves.svg" alt="…" width="240" />
-    or inline for richer styling.
-
-  All animation is via <animate> / <animateTransform>, so it survives
-  in any environment that renders SVG (no JS, no CSS deps).
+  radio-waves.svg — animated broadcast tower with expanding signal arcs.
+  Pure SVG + SMIL. Width 320, height 320.
 -->
-<svg xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 400 400" width="400" height="400"
-     role="img" aria-label="Radio tower broadcasting expanding signal arcs">
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320"
+     preserveAspectRatio="xMidYMid meet"
+     role="img" aria-label="Broadcast tower with expanding signal arcs and data packets">
   <defs>
-    <!-- Animated stroke gradient for the arcs -->
-    <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%"  stop-color="#22d3ee">
-        <animate attributeName="stop-color"
-                 values="#22d3ee;#a855f7;#ec4899;#22d3ee"
-                 dur="6s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="100%" stop-color="#a855f7">
-        <animate attributeName="stop-color"
-                 values="#a855f7;#ec4899;#22d3ee;#a855f7"
-                 dur="6s" repeatCount="indefinite"/>
-      </stop>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#030712"/>
+      <stop offset="100%" stop-color="#0a0a1f"/>
     </linearGradient>
-
-    <!-- Tower gradient -->
-    <linearGradient id="towerGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"  stop-color="#ec4899"/>
-      <stop offset="50%" stop-color="#a855f7"/>
-      <stop offset="100%" stop-color="#22d3ee"/>
-    </linearGradient>
-
-    <!-- Glow filter for arcs -->
-    <filter id="waveGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3" result="b"/>
-      <feMerge>
-        <feMergeNode in="b"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-
-    <!-- Tower glow -->
-    <filter id="towerGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="6"/>
-    </filter>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
-  <!-- ─── Expanding signal arcs (right side, broadcast direction) ─── -->
-  <g transform="translate(200 320)" fill="none" stroke="url(#waveGrad)" stroke-linecap="round" filter="url(#waveGlow)">
-    <!-- Arc 1 -->
-    <path d="M 0 -160 A 160 160 0 0 1 138 -80" stroke-width="3" opacity="0.0">
-      <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.7;1" dur="3.2s" repeatCount="indefinite"/>
-      <animateTransform attributeName="transform" type="scale"
-                        values="0.2;1.6" keyTimes="0;1"
-                        dur="3.2s" repeatCount="indefinite" additive="sum"/>
-    </path>
-    <!-- Arc 2 (delayed) -->
-    <path d="M 0 -160 A 160 160 0 0 1 138 -80" stroke-width="3" opacity="0">
-      <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.7;1" dur="3.2s" begin="1s" repeatCount="indefinite"/>
-      <animateTransform attributeName="transform" type="scale"
-                        values="0.2;1.6" keyTimes="0;1"
-                        dur="3.2s" begin="1s" repeatCount="indefinite" additive="sum"/>
-    </path>
-    <!-- Arc 3 (further delayed) -->
-    <path d="M 0 -160 A 160 160 0 0 1 138 -80" stroke-width="3" opacity="0">
-      <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.7;1" dur="3.2s" begin="2s" repeatCount="indefinite"/>
-      <animateTransform attributeName="transform" type="scale"
-                        values="0.2;1.6" keyTimes="0;1"
-                        dur="3.2s" begin="2s" repeatCount="indefinite" additive="sum"/>
-    </path>
+  <rect width="320" height="320" fill="url(#sky)"/>
 
-    <!-- Mirrored arcs on the left side -->
-    <path d="M 0 -160 A 160 160 0 0 0 -138 -80" stroke-width="3" opacity="0">
-      <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.7;1" dur="3.2s" begin="0.5s" repeatCount="indefinite"/>
-      <animateTransform attributeName="transform" type="scale"
-                        values="0.2;1.6" keyTimes="0;1"
-                        dur="3.2s" begin="0.5s" repeatCount="indefinite" additive="sum"/>
-    </path>
-    <path d="M 0 -160 A 160 160 0 0 0 -138 -80" stroke-width="3" opacity="0">
-      <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.7;1" dur="3.2s" begin="1.5s" repeatCount="indefinite"/>
-      <animateTransform attributeName="transform" type="scale"
-                        values="0.2;1.6" keyTimes="0;1"
-                        dur="3.2s" begin="1.5s" repeatCount="indefinite" additive="sum"/>
-    </path>
-  </g>
+  <!-- Halo behind tower -->
+  <circle cx="160" cy="160" r="80" fill="url(#halo)">
+    <animate attributeName="r" values="60;90;60" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
+  </circle>
 
-  <!-- ─── Broadcast tower (centered at bottom) ─────────────────────── -->
-  <g transform="translate(200 320)">
-
-    <!-- Glow halo behind tower -->
-    <circle cx="0" cy="-40" r="60" fill="url(#towerGrad)" opacity="0.25" filter="url(#towerGlow)">
-      <animate attributeName="r" values="55;75;55" dur="3.2s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.15;0.45;0.15" dur="3.2s" repeatCount="indefinite"/>
+  <!-- 6 concentric signal arcs, staggered -->
+  <g fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round">
+    <circle cx="160" cy="160" r="40" opacity="0">
+      <animate attributeName="r" from="20" to="160" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="4s" repeatCount="indefinite"/>
     </circle>
-
-    <!-- Tower body — triangular lattice -->
-    <g>
-      <!-- Main legs -->
-      <line x1="-22" y1="0"   x2="0"  y2="-90" stroke="url(#towerGrad)" stroke-width="4" stroke-linecap="round"/>
-      <line x1="22"  y1="0"   x2="0"  y2="-90" stroke="url(#towerGrad)" stroke-width="4" stroke-linecap="round"/>
-      <line x1="-14" y1="-30" x2="14" y2="-30" stroke="url(#towerGrad)" stroke-width="3" stroke-linecap="round"/>
-      <line x1="-18" y1="-60" x2="18" y2="-60" stroke="url(#towerGrad)" stroke-width="3" stroke-linecap="round"/>
-      <line x1="-8"  y1="-45" x2="8"  y2="-45" stroke="url(#towerGrad)" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-      <line x1="-12" y1="-75" x2="12" y2="-75" stroke="url(#towerGrad)" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-
-      <!-- Cross-bracing (X patterns) -->
-      <line x1="-22" y1="0"   x2="14" y2="-30" stroke="url(#towerGrad)" stroke-width="1.5" opacity="0.6"/>
-      <line x1="22"  y1="0"   x2="-14" y2="-30" stroke="url(#towerGrad)" stroke-width="1.5" opacity="0.6"/>
-      <line x1="-14" y1="-30" x2="18" y2="-60" stroke="url(#towerGrad)" stroke-width="1.5" opacity="0.6"/>
-      <line x1="14"  y1="-30" x2="-18" y2="-60" stroke="url(#towerGrad)" stroke-width="1.5" opacity="0.6"/>
-      <line x1="-18" y1="-60" x2="12" y2="-75" stroke="url(#towerGrad)" stroke-width="1.5" opacity="0.6"/>
-      <line x1="18"  y1="-60" x2="-12" y2="-75" stroke="url(#towerGrad)" stroke-width="1.5" opacity="0.6"/>
-
-      <!-- Antenna at top -->
-      <line x1="0" y1="-90" x2="0" y2="-130" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round"/>
-
-      <!-- Blinking tip light -->
-      <circle cx="0" cy="-130" r="5" fill="#ec4899">
-        <animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite"/>
-        <animate attributeName="r" values="4;7;4" dur="1.5s" repeatCount="indefinite"/>
-      </circle>
-      <!-- Pulsing aura around tip -->
-      <circle cx="0" cy="-130" r="9" fill="#ec4899" opacity="0.4">
-        <animate attributeName="r" values="6;22;6" dur="2s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite"/>
-      </circle>
-    </g>
-
-    <!-- Signal-strength bars (4 ascending) bottom-left -->
-    <g transform="translate(-110 0)">
-      <rect x="0"  y="-12" width="6" height="12" rx="1.5" fill="#22d3ee">
-        <animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" begin="0s"   repeatCount="indefinite"/>
-      </rect>
-      <rect x="10" y="-18" width="6" height="18" rx="1.5" fill="#a855f7">
-        <animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" begin="0.15s" repeatCount="indefinite"/>
-      </rect>
-      <rect x="20" y="-26" width="6" height="26" rx="1.5" fill="#ec4899">
-        <animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" begin="0.30s" repeatCount="indefinite"/>
-      </rect>
-      <rect x="30" y="-36" width="6" height="36" rx="1.5" fill="#84cc16">
-        <animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" begin="0.45s" repeatCount="indefinite"/>
-      </rect>
-    </g>
-
-    <!-- "RSSI" label that pulses next to bars -->
-    <text x="-108" y="-44" font-size="10" font-weight="700"
-          font-family="ui-monospace, Menlo, monospace" fill="#22d3ee" letter-spacing="1.5">
-      5G
-      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
-    </text>
-
-    <!-- Frequency display, top-right -->
-    <g transform="translate(60 -100)" font-family="ui-monospace, Menlo, monospace">
-      <rect x="-2" y="-12" width="64" height="18" rx="4"
-            fill="rgba(10,10,31,0.65)" stroke="url(#waveGrad)" stroke-width="1"/>
-      <text x="30" y="2" text-anchor="middle" font-size="11" font-weight="700" fill="#22d3ee" letter-spacing="1">
-        <animate attributeName="opacity" values="0.7;1;0.7" dur="0.8s" repeatCount="indefinite"/>
-        ▮▮▮▮▯▯▯
-      </text>
-    </g>
-
-    <!-- ─── Tiny data-packet dots that travel outward along the arcs ─── -->
-    <g>
-      <circle r="3" fill="#22d3ee" opacity="0">
-        <animateMotion path="M 0 -160 A 160 160 0 0 1 138 -80"
-                       dur="2.4s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.8;1" dur="2.4s" repeatCount="indefinite"/>
-      </circle>
-      <circle r="3" fill="#a855f7" opacity="0">
-        <animateMotion path="M 0 -160 A 160 160 0 0 1 138 -80"
-                       dur="2.4s" begin="0.6s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.8;1" dur="2.4s" begin="0.6s" repeatCount="indefinite"/>
-      </circle>
-      <circle r="3" fill="#ec4899" opacity="0">
-        <animateMotion path="M 0 -160 A 160 160 0 0 0 -138 -80"
-                       dur="2.4s" begin="1.2s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.8;1" dur="2.4s" begin="1.2s" repeatCount="indefinite"/>
-      </circle>
-    </g>
+    <circle cx="160" cy="160" r="40" opacity="0">
+      <animate attributeName="r" from="20" to="160" dur="4s" begin="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="4s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="160" cy="160" r="40" opacity="0">
+      <animate attributeName="r" from="20" to="160" dur="4s" begin="1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="4s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="160" cy="160" r="40" opacity="0">
+      <animate attributeName="r" from="20" to="160" dur="4s" begin="1.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="4s" begin="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="160" cy="160" r="40" opacity="0">
+      <animate attributeName="r" from="20" to="160" dur="4s" begin="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="4s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="160" cy="160" r="40" opacity="0">
+      <animate attributeName="r" from="20" to="160" dur="4s" begin="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="4s" begin="2.5s" repeatCount="indefinite"/>
+    </circle>
   </g>
 
-  <!-- Ground line -->
-  <line x1="40" y1="320" x2="360" y2="320"
-        stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="3 6">
-    <animate attributeName="stroke-dashoffset" from="0" to="-18" dur="1.6s" repeatCount="indefinite"/>
-  </line>
+  <!-- Broadcast tower (lattice) -->
+  <g stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round">
+    <line x1="140" y1="240" x2="160" y2="120"/>
+    <line x1="180" y1="240" x2="160" y2="120"/>
+    <line x1="150" y1="200" x2="170" y2="200"/>
+    <line x1="145" y1="170" x2="175" y2="170"/>
+    <line x1="160" y1="120" x2="160" y2="50" stroke="#22d3ee" stroke-width="2"/>
+    <circle cx="160" cy="48" r="3" fill="#22d3ee">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Signal-strength bars bottom-left -->
+  <g fill="#22d3ee">
+    <rect x="40" y="270" width="6" height="10">
+      <animate attributeName="height" values="4;10;4" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="276;270;276" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="50" y="260" width="6" height="20">
+      <animate attributeName="height" values="10;20;10" dur="2s" begin="0.3s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="270;260;270" dur="2s" begin="0.3s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="60" y="250" width="6" height="30">
+      <animate attributeName="height" values="16;30;16" dur="2s" begin="0.6s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="264;250;264" dur="2s" begin="0.6s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="70" y="240" width="6" height="40">
+      <animate attributeName="height" values="22;40;22" dur="2s" begin="0.9s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="258;240;258" dur="2s" begin="0.9s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Frequency display -->
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#ffffff" fill-opacity="0.8">
+    <rect x="220" y="240" width="78" height="36" rx="6" ry="6"
+          fill="#ffffff" fill-opacity="0.05" stroke="#22d3ee" stroke-opacity="0.5"/>
+    <text x="259" y="258" text-anchor="middle">FREQ</text>
+    <text x="259" y="272" text-anchor="middle" font-size="13" font-weight="700" fill="#22d3ee">3.5 GHz</text>
+  </g>
 </svg>
