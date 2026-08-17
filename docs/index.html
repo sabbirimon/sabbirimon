@@ -17,11 +17,13 @@
 <!-- Preconnect to GitHub API for live stats fetch -->
 <link rel="preconnect" href="https://api.github.com" crossorigin>
 
-  <script type="module" crossorigin src="/sabbirimon/assets/index-BRhqCbzp.js"></script>
-  <link rel="stylesheet" crossorigin href="/sabbirimon/assets/index-CF0xQ9Rn.css">
+  <script type="module" crossorigin src="/sabbirimon/assets/index-BmnVqMFU.js"></script>
+  <link rel="stylesheet" crossorigin href="/sabbirimon/assets/index-CgwBgiC7.css">
 <link rel="manifest" href="/sabbirimon/manifest.webmanifest"></head>
 
 <body data-theme="dark">
+
+<a href="#hello-heading" class="skip-link">Skip to main content</a>
 
 <!-- Three.js aurora background -->
 <canvas id="aurora" aria-hidden="true"></canvas>
@@ -324,13 +326,13 @@
       </p>
 
       <div class="game-stage">
-        <canvas id="game-canvas" aria-label="Synapse Clicker game canvas"></canvas>
+        <canvas id="game-canvas" aria-label="Synapse Clicker game canvas. Click or tap a node to fire it; chain activations for combos."></canvas>
         <div class="game-overlay" id="game-overlay">
           <button id="game-start" class="game-btn">▶ Start</button>
         </div>
       </div>
 
-      <div class="game-hud">
+      <div class="game-hud" aria-live="polite">
         <div class="hud-block">
           <span class="hud-label">SCORE</span>
           <span class="hud-value" id="game-score">0</span>
