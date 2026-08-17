@@ -17,8 +17,8 @@
 <!-- Preconnect to GitHub API for live stats fetch -->
 <link rel="preconnect" href="https://api.github.com" crossorigin>
 
-  <script type="module" crossorigin src="/sabbirimon/assets/index-CGdM57u3.js"></script>
-  <link rel="stylesheet" crossorigin href="/sabbirimon/assets/index-ChUtRrrM.css">
+  <script type="module" crossorigin src="/sabbirimon/assets/index-C1DvF2dw.js"></script>
+  <link rel="stylesheet" crossorigin href="/sabbirimon/assets/index-Ba7A7pgR.css">
 <link rel="manifest" href="/sabbirimon/manifest.webmanifest"></head>
 
 <body data-theme="dark">
@@ -65,16 +65,16 @@
   <!-- About -->
   <section aria-labelledby="about-heading">
     <h2 id="about-heading"><span class="emoji">💫</span> About</h2>
-    <div class="grid">
-      <div class="glass">
+    <div class="grid about-grid">
+      <div class="glass about-card">
         <h3>What I'm doing now</h3>
         <p>Working as a Junior DevOps Engineer at <b>Poridhi.io</b>, helping ship reliable infrastructure for the team's products.</p>
       </div>
-      <div class="glass">
+      <div class="glass about-card">
         <h3>What I'm learning</h3>
         <p>RAN, SDN, and Python — building out the foundations to move toward telecom + cloud-native engineering.</p>
       </div>
-      <div class="glass">
+      <div class="glass about-card">
         <h3>Ask me about</h3>
         <p>GSM, LTE, 5G, CCNA, Linux, Docker — happy to chat radio, networking, or anything container-shaped.</p>
       </div>
@@ -178,6 +178,34 @@
         <canvas id="sba-bars" aria-label="WebGL 5GC Network Function visualization"></canvas>
       </div>
       <p class="meta">10 NFs · AMF · SMF · UPF · AUSF · UDM · PCF · NEF · NRF · NSSF · AF</p>
+    </div>
+  </section>
+
+  <!-- 🎯 5GC NF Quiz — basic system design learning game -->
+  <section aria-labelledby="quiz-heading">
+    <h2 id="quiz-heading"><span class="emoji">🎯</span> NF Quiz · Learn 5GC by doing</h2>
+    <div class="glass quiz-card" id="quiz">
+      <p class="quiz-blurb">
+        Read the scenario, then pick the <b>Network Function</b> that
+        handles it. Streak = consecutive correct answers; best streak
+        is saved on this device.
+      </p>
+
+      <div class="quiz-stage">
+        <p class="quiz-question" aria-live="polite">Loading…</p>
+        <div class="quiz-options" role="group" aria-label="Network Function options"></div>
+        <div class="quiz-feedback" aria-live="polite"></div>
+        <div class="quiz-hud">
+          <span class="hud-label">STREAK</span>
+          <span class="hud-value quiz-score">0</span>
+          <span class="hud-label">BEST</span>
+          <span class="hud-value quiz-best">0</span>
+          <button type="button" class="quiz-next" disabled>Next →</button>
+        </div>
+        <div class="quiz-progress"><span class="quiz-bar"></span></div>
+      </div>
+
+      <p class="meta">10 NFs · 10 scenarios · multiple choice · pure JS, no dependencies</p>
     </div>
   </section>
 
