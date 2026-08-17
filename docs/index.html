@@ -17,8 +17,8 @@
 <!-- Preconnect to GitHub API for live stats fetch -->
 <link rel="preconnect" href="https://api.github.com" crossorigin>
 
-  <script type="module" crossorigin src="/sabbirimon/assets/index-BaUUkNkk.js"></script>
-  <link rel="stylesheet" crossorigin href="/sabbirimon/assets/index-BwykUrEt.css">
+  <script type="module" crossorigin src="/sabbirimon/assets/index-BRhqCbzp.js"></script>
+  <link rel="stylesheet" crossorigin href="/sabbirimon/assets/index-CF0xQ9Rn.css">
 <link rel="manifest" href="/sabbirimon/manifest.webmanifest"></head>
 
 <body data-theme="dark">
@@ -238,10 +238,12 @@
   <!-- Stats — LIVE GitHub data fetched by src/liveStats.js -->
   <section aria-labelledby="stats-heading">
     <h2 id="stats-heading"><span class="emoji">📊</span> GitHub Stats · Live</h2>
-    <div class="grid">
-      <div class="glass stats-card" id="live-stats">
-        <h3>At a glance</h3>
-        <p>Pulled live from the GitHub REST API · cached for 5 min in <code>sessionStorage</code>.</p>
+    <div class="stats-wrap" id="live-stats">
+      <div class="glass stats-card stats-main">
+        <div class="stats-head">
+          <h3>At a glance</h3>
+          <p>Pulled live from the GitHub REST API · cached 10 min in <code>sessionStorage</code>.</p>
+        </div>
         <div class="stat-row">
           <div class="stat">
             <span class="num" data-stat-value="followers">…</span>
@@ -256,12 +258,32 @@
             <span class="label">days on GitHub</span>
           </div>
         </div>
-        <p class="meta" id="live-stats-note">Updated by Vite-bundled JS — no third-party widget service.</p>
+        <p class="note" id="live-stats-note">Fetching from GitHub…</p>
       </div>
-      <div class="glass">
-        <h3>Trophies</h3>
-        <p>Live trophies at <a href="https://github-profile-trophy.vercel.app/?username=sabbirimon&theme=radical" target="_blank" rel="noopener">github-profile-trophy</a>.</p>
-        <p class="meta">Updated by the README widget service.</p>
+
+      <div class="glass stats-card stats-heatmap">
+        <div class="stats-head">
+          <h3>Public push activity</h3>
+          <p>Last 52 weeks of push events on public repos.</p>
+        </div>
+        <div id="activity-heatmap" class="stats-mount"></div>
+        <p class="note">Source: <code>events/public</code> — covers the latest 300 events.</p>
+      </div>
+
+      <div class="glass stats-card stats-ticker">
+        <div class="stats-head">
+          <h3>Recent commits</h3>
+          <p>Latest push events across public repos.</p>
+        </div>
+        <div id="commit-ticker" class="stats-mount"></div>
+      </div>
+
+      <div class="glass stats-card stats-grid-full">
+        <div class="stats-head">
+          <h3>Top recent repos</h3>
+          <p>Four most recently updated repositories with a description.</p>
+        </div>
+        <div id="repo-cards" class="repo-grid"></div>
       </div>
     </div>
   </section>
