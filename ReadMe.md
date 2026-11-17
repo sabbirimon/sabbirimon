@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://sabbirimon.github.io/sabbirimon/">
+  <a href="https://imon.com.bd/">
     <picture>
       <source media="(prefers-reduced-motion: reduce)" srcset="assets/pixel-hero.svg">
       <img src="assets/pixel-hero.gif" width="100%" alt="IMON — Let’s Code Together. Sabbir Hassan Imon. An animated pixel world linking to my interactive portfolio.">
@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://sabbirimon.github.io/sabbirimon/" aria-label="Enter IMON World">
+  <a href="https://imon.com.bd/" aria-label="Enter IMON World">
     <picture>
       <source media="(prefers-reduced-motion: reduce)" srcset="assets/enter-world.png">
       <img src="assets/enter-world.gif" width="760" alt="ENTER IMON WORLD — Let's Code Together. Open the pixel worlds, arcade, and Gridworks campaign.">
@@ -17,16 +17,16 @@
 </p>
 
 <p align="center">
-  <a href="https://sabbirimon.github.io/sabbirimon/#arcade"><img src="assets/play-games.svg" width="440" alt="🎮 PLAY GAMES — Snake, Ludo, racing and Gridworks"></a><br>
+  <a href="https://imon.com.bd/#arcade"><img src="assets/play-games.svg" width="440" alt="🎮 PLAY GAMES — Snake, Ludo, racing and Gridworks"></a><br>
   <sub>Yes, there are playable games inside. Pick a side quest and chase a high score.</sub>
 </p>
 
 <p align="center">
-  <a href="https://sabbirimon.github.io/sabbirimon/"><strong>Explore my world ↗</strong></a>
+  <a href="https://imon.com.bd/"><strong>Explore my world ↗</strong></a>
   &nbsp; · &nbsp;
-  <a href="https://sabbirimon.github.io/sabbirimon/#projects">Selected projects</a>
+  <a href="https://imon.com.bd/#projects">Selected projects</a>
   &nbsp; · &nbsp;
-  <a href="https://sabbirimon.github.io/sabbirimon/#arcade">Play the arcade</a>
+  <a href="https://imon.com.bd/#arcade">Play the arcade</a>
   &nbsp; · &nbsp;
   <a href="https://linkedin.com/in/sabbirimon">LinkedIn</a>
 </p>
@@ -37,13 +37,13 @@ A little preview of the live site. Pick a landscape to enter it.
 
 <table>
   <tr>
-    <td align="center" width="33%"><a href="https://sabbirimon.github.io/sabbirimon/?scene=waterfall-valley"><img src="docs/art/waterfall-valley.webp" width="280" alt="Waterfall Valley: a bright pixel village, emerald cliffs, and cascading blue water"><br><strong>Waterfall Valley ↗</strong></a><br><sub>Bright skies · Living landscapes</sub></td>
-    <td align="center" width="33%"><a href="https://sabbirimon.github.io/sabbirimon/?scene=twilight-lake"><img src="docs/art/twilight-lake.webp" width="280" alt="Twilight Lake: a mountain lake reflecting gold and magenta skies"><br><strong>Twilight Lake ↗</strong></a><br><sub>Golden skies · Mountain reflections</sub></td>
-    <td align="center" width="33%"><a href="https://sabbirimon.github.io/sabbirimon/?scene=neon-forest"><img src="docs/art/neon-forest.webp" width="280" alt="Neon Forest: luminous magenta trees beside a cyan river"><br><strong>Neon Forest ↗</strong></a><br><sub>Glowing woods · Firefly nights</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=waterfall-valley"><img src="docs/art/waterfall-valley.webp" width="280" alt="Waterfall Valley: a bright pixel village, emerald cliffs, and cascading blue water"><br><strong>Waterfall Valley ↗</strong></a><br><sub>Bright skies · Living landscapes</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=twilight-lake"><img src="docs/art/twilight-lake.webp" width="280" alt="Twilight Lake: a mountain lake reflecting gold and magenta skies"><br><strong>Twilight Lake ↗</strong></a><br><sub>Golden skies · Mountain reflections</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=neon-forest"><img src="docs/art/neon-forest.webp" width="280" alt="Neon Forest: luminous magenta trees beside a cyan river"><br><strong>Neon Forest ↗</strong></a><br><sub>Glowing woods · Firefly nights</sub></td>
   </tr>
 </table>
 
-**[Explore 33 scenery presets](https://sabbirimon.github.io/sabbirimon/)** · **[Play the arcade](https://sabbirimon.github.io/sabbirimon/#arcade)** · **[Build your world in Gridworks](https://sabbirimon.github.io/sabbirimon/gridworks/)**
+**[Explore 33 scenery presets](https://imon.com.bd/)** · **[Play the arcade](https://imon.com.bd/#arcade)** · **[Build your world in Gridworks](https://imon.com.bd/gridworks/)**
 
 ## IMON · Let’s Code Together
 
@@ -72,19 +72,19 @@ My roots are in DevOps and networking: Linux, containers, Kubernetes, and the ra
 
 ### Take a play break
 
-<a href="https://sabbirimon.github.io/sabbirimon/#arcade">
+<a href="https://imon.com.bd/#arcade">
   <img src="assets/pixel-arcade.svg" width="100%" alt="IMON Arcade — games, daily tech quests, and a full infrastructure management campaign.">
 </a>
 
-**[IMON Gridworks](https://sabbirimon.github.io/sabbirimon/gridworks/)** — build power plants, communication networks, data centers, and connected cities in a full-screen management campaign.
+**[IMON Gridworks](https://imon.com.bd/gridworks/)** — build power plants, communication networks, data centers, and connected cities in a full-screen management campaign.
 
-**[Pixel arcade](https://sabbirimon.github.io/sabbirimon/#arcade)** — Snake · Surf · Ludo with computer opponents · 2048 · Dev Slots · IMON Rally.
+**[Pixel arcade](https://imon.com.bd/#arcade)** — Snake · Surf · Ludo with computer opponents · 2048 · Dev Slots · IMON Rally.
 
-**[Daily Tech Quest](https://sabbirimon.github.io/sabbirimon/#news)** — fresh tech MCQs in 5, 20, or 30-question rounds, scores, and live tech, science & space news.
+**[Daily Tech Quest](https://imon.com.bd/#news)** — fresh tech MCQs in 5, 20, or 30-question rounds, scores, and live tech, science & space news.
 
 Explore animated pixel worlds, local-time lighting, weather art, customizable colors, and optional ambient audio. Games support keyboard and touch, with personal progress saved on your device.
 
-**[Enter World Studio →](https://sabbirimon.github.io/sabbirimon/)** · **[Try Cyberpunk mode →](https://sabbirimon.github.io/sabbirimon/?world=cyberpunk)**
+**[Enter World Studio →](https://imon.com.bd/)** · **[Try Cyberpunk mode →](https://imon.com.bd/?world=cyberpunk)**
 
 Dev Slots uses free virtual collectibles; there are no purchases, cash stakes, or real-world prizes.
 

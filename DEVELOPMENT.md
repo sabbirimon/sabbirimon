@@ -2,6 +2,8 @@
 
 A buildless GitHub Pages site in `docs/`, with original pixel scenery, browser games, visitor-local weather, and daily public content. The profile README and its animated artwork live at the repository root and in `assets/`.
 
+The canonical production address is [imon.com.bd](https://imon.com.bd/), with [Gridworks](https://imon.com.bd/gridworks/) at `/gridworks/`. Repository and source-code links continue to point to GitHub.
+
 ## Run and check
 
 Use Node.js 22+ and Python 3.10+. The site has no npm runtime dependencies.
@@ -10,7 +12,7 @@ Use Node.js 22+ and Python 3.10+. The site has no npm runtime dependencies.
 python3 scripts/serve.py
 ```
 
-Open `http://127.0.0.1:4173/docs/`. This preview preserves the same relative project-path behavior as GitHub Pages. Test keyboard and touch controls, narrow screens, reduced motion, dialog focus restoration, and offline reload after a successful first visit.
+Open `http://127.0.0.1:4173/docs/`. Assets, module imports, the manifest, and the service worker use relative URLs so the site works at both the custom-domain root and the local preview path. Test keyboard and touch controls, narrow screens, reduced motion, dialog focus restoration, and offline reload after a successful first visit.
 
 ```sh
 node --test tests/*.test.mjs
