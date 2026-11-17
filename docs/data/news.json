@@ -1,0 +1,103 @@
+{
+  "updated": "2026-11-17T13:21:43.438960+00:00",
+  "source": "Hacker News",
+  "sourceUrl": "https://news.ycombinator.com/",
+  "stories": [
+    {
+      "id": 50522980,
+      "title": "Carnegie Mellon is putting computer science courses on YouTube for free",
+      "url": "https://www.cs.cmu.edu/learn/",
+      "score": 1765,
+      "time": 1794861816,
+      "comments": 235
+    },
+    {
+      "id": 50530163,
+      "title": "New Evidence Shows School Phone Bans Are Gradually Improving Test Scores",
+      "url": "https://www.nytimes.com/2026/11/17/upshot/school-phone-bans-study-scores.html",
+      "score": 125,
+      "time": 1794915951,
+      "comments": 56
+    },
+    {
+      "id": 50511874,
+      "title": "VisualBasic.World: A gallery of Planet Source Code programs from 1997 to 2012",
+      "url": "https://visualbasic.world/",
+      "score": 100,
+      "time": 1794784110,
+      "comments": 37
+    },
+    {
+      "id": 50523601,
+      "title": "BugMeNot has closed",
+      "url": "https://www.bugmenot.com/",
+      "score": 608,
+      "time": 1794864737,
+      "comments": 272
+    },
+    {
+      "id": 50470523,
+      "title": "Rows vs. Columns: How different are they, really?",
+      "url": "https://spiraldb.com/blog/rows-vs-columns",
+      "score": 33,
+      "time": 1794503081,
+      "comments": 15
+    },
+    {
+      "id": 50524767,
+      "title": "Optimizely compromised, served malware on Zoom, GitLab",
+      "url": "https://blog.report-uri.com/worlds-largest-brands-infected-with-malware-via-optimizely/",
+      "score": 442,
+      "time": 1794870034,
+      "comments": 188
+    },
+    {
+      "id": 50509456,
+      "title": "Turbo Pascal Compiler Written in Turbo Pascal",
+      "url": "https://turbo51.com/compiler-design/tpc16-turbo-pascal-compiler-written-in-turbo-pascal",
+      "score": 25,
+      "time": 1794768057,
+      "comments": 3
+    },
+    {
+      "id": 50512779,
+      "title": "Nimony: A New Compiler for Nim",
+      "url": "https://nimony.org/",
+      "score": 100,
+      "time": 1794791122,
+      "comments": 36
+    },
+    {
+      "id": 50526560,
+      "title": "If an App Asks for Full Disk Access or System and App Protection Override",
+      "url": "https://support.apple.com/en-us/149699",
+      "score": 160,
+      "time": 1794881824,
+      "comments": 87
+    },
+    {
+      "id": 50530114,
+      "title": "My Empire of Dirt",
+      "url": "https://geohot.github.io//blog/jekyll/update/2026/11/17/my-empire-of-dirt.html",
+      "score": 19,
+      "time": 1794915560,
+      "comments": 8
+    },
+    {
+      "id": 50525575,
+      "title": "Why 3dfx 1 cards had such a washed out color output?",
+      "url": "https://twitter.com/id_aa_carmack/status/2122478083319992513",
+      "score": 188,
+      "time": 1794874584,
+      "comments": 57
+    },
+    {
+      "id": 50522643,
+      "title": "Chemistry is Actually Geometry",
+      "url": "https://chillphysicsenjoyer.substack.com/p/chemistry-is-actually-geometry",
+      "score": 258,
+      "time": 1794860538,
+      "comments": 119
+    }
+  ]
+}

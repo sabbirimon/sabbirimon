@@ -1,0 +1,402 @@
+{
+  "date": "2026-11-17",
+  "updated": "2026-11-17T13:21:43.438960+00:00",
+  "source": {
+    "name": "Open Trivia DB",
+    "url": "https://opentdb.com/",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "questions": [
+    {
+      "question": "The C programming language was created by this American computer scientist. ",
+      "options": [
+        "Willis Ware",
+        "Tim Berners Lee",
+        "al-Khwārizmī",
+        "Dennis Ritchie"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Dennis Ritchie.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Moore's law originally stated that the number of transistors on a microprocessor chip would double every...",
+      "options": [
+        "Two Years",
+        "Four Years",
+        "Year",
+        "Eight Years"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is Year.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What kind of memory is used on memory cache?",
+      "options": [
+        "DRAM",
+        "ROM",
+        "SRAM",
+        "Flash"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is SRAM.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "The series of the Intel HD graphics generation succeeding that of the 5000 and 6000 series (Broadwell) is called:",
+      "options": [
+        "HD Graphics 700 ",
+        "HD Graphics 600",
+        "HD Graphics 500",
+        "HD Graphics 7000"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is HD Graphics 500.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "How many bits make up the significand portion of a single precision floating point number?",
+      "options": [
+        "15",
+        "53",
+        "8",
+        "23"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is 23.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What was the name of the security vulnerability found in Bash in 2014?",
+      "options": [
+        "Heartbleed",
+        "Bashbug",
+        "Shellshock",
+        "Stagefright"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is Shellshock.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "Dutch computer scientist Mark Overmars is known for creating which game development engine?",
+      "options": [
+        "Game Maker",
+        "Construct",
+        "Torque 2D",
+        "Stencyl"
+      ],
+      "answer": 0,
+      "explanation": "The correct answer is Game Maker.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "Which of these Cherry MX mechanical keyboard switches is both tactile and clicky?",
+      "options": [
+        "Cherry MX Red",
+        "Cherry MX Black",
+        "Cherry MX Blue",
+        "Cherry MX Brown"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is Cherry MX Blue.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "Which programming language shares its name with an island in Indonesia?",
+      "options": [
+        "C",
+        "Jakarta",
+        "Java",
+        "Python"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is Java.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "What is the main CPU is the Sega Mega Drive / Sega Genesis?",
+      "options": [
+        "Yamaha YM2612",
+        "Zilog Z80",
+        "Motorola 68000",
+        "Intel 8088"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is Motorola 68000.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What amount of bits commonly equals one byte?",
+      "options": [
+        "64",
+        "2",
+        "1",
+        "8"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is 8.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Nvidia's headquarters are based in which Silicon Valley city?",
+      "options": [
+        "Cupertino",
+        "Palo Alto",
+        "Mountain View",
+        "Santa Clara"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Santa Clara.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "How many Hz does the video standard PAL support?",
+      "options": [
+        "25",
+        "59",
+        "60",
+        "50"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is 50.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "In the server hosting industry IaaS stands for...",
+      "options": [
+        "Internet and a Server",
+        "Infrastructure as a Service",
+        "Internet as a Service",
+        "Infrastructure as a Server"
+      ],
+      "answer": 1,
+      "explanation": "The correct answer is Infrastructure as a Service.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the name of the process that sends one qubit of information using two bits of classical information?",
+      "options": [
+        "Quantum Teleportation",
+        "Quantum Entanglement",
+        "Super Dense Coding",
+        "Quantum Programming"
+      ],
+      "answer": 0,
+      "explanation": "The correct answer is Quantum Teleportation.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "In computing terms, typically what does CLI stand for?",
+      "options": [
+        "Common Language Interface",
+        "Command Line Interface",
+        "Common Language Input",
+        "Control Line Interface"
+      ],
+      "answer": 1,
+      "explanation": "The correct answer is Command Line Interface.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "The programming language 'Swift' was created to replace what other programming language?",
+      "options": [
+        "C++",
+        "C#",
+        "Ruby",
+        "Objective-C"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Objective-C.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "While Apple was formed in California, in which western state was Microsoft founded?",
+      "options": [
+        "Colorado",
+        "Washington",
+        "Arizona",
+        "New Mexico"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is New Mexico.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the number of keys on a standard Windows Keyboard?",
+      "options": [
+        "104",
+        "64",
+        "76",
+        "94"
+      ],
+      "answer": 0,
+      "explanation": "The correct answer is 104.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What does CPU stand for?",
+      "options": [
+        "Computer Personal Unit",
+        "Central Process Unit",
+        "Central Processing Unit",
+        "Central Processor Unit"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is Central Processing Unit.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "The teapot often seen in many 3D modeling applications is called what?",
+      "options": [
+        "Utah Teapot",
+        "Tennessee Teapot",
+        "Pixar Teapot",
+        "3D Teapot"
+      ],
+      "answer": 0,
+      "explanation": "The correct answer is Utah Teapot.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "According to the International System of Units, how many bytes are in a kilobyte of RAM?",
+      "options": [
+        "500",
+        "1024",
+        "512",
+        "1000"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is 1000.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "This mobile OS held the largest market share in 2012.",
+      "options": [
+        "BlackBerry",
+        "Android",
+        "Symbian",
+        "iOS"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is iOS.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "What did the name of the Tor Anonymity Network orignially stand for?",
+      "options": [
+        "The Orange Router",
+        "The Onion Router",
+        "The Only Router",
+        "The Ominous Router"
+      ],
+      "answer": 1,
+      "explanation": "The correct answer is The Onion Router.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What major programming language does Unreal Engine 4 use?",
+      "options": [
+        "C#",
+        "C++",
+        "Assembly",
+        "ECMAScript"
+      ],
+      "answer": 1,
+      "explanation": "The correct answer is C++.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "Which computer hardware device provides an interface for all other connected devices to communicate?",
+      "options": [
+        "Motherboard",
+        "Hard Disk Drive",
+        "Random Access Memory",
+        "Central Processing Unit"
+      ],
+      "answer": 0,
+      "explanation": "The correct answer is Motherboard.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "In CSS, which of these values CANNOT be used with the \"position\" property?",
+      "options": [
+        "absolute",
+        "static",
+        "relative",
+        "center"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is center.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "CMOS is tech used for constructing integrated circuits. What does CMOS stand for?",
+      "options": [
+        "Complementary magnetic-ohms-semiconductor",
+        "Computer-made operating system",
+        "Computer-made oscillating static",
+        "Complementary metal–oxide–semiconductor"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Complementary metal–oxide–semiconductor.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "Which kind of algorithm is Ron Rivest not famous for creating?",
+      "options": [
+        "Hashing algorithm",
+        "Stream cipher",
+        "Asymmetric encryption",
+        "Secret sharing scheme"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Secret sharing scheme.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "How many bytes are in a single Kibibyte?",
+      "options": [
+        "2400",
+        "1000",
+        "1024",
+        "1240"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is 1024.",
+      "category": "Computers",
+      "difficulty": "medium"
+    }
+  ]
+}

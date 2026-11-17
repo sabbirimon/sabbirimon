@@ -1,0 +1,75 @@
+name: Publish IMON World
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '15 0 * * *' # 06:15 Asia/Dhaka; GitHub schedules run in UTC.
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - name: Refresh public daily content
+        run: python3 scripts/refresh-daily.py
+      - name: Version the offline cache for this deployment
+        run: |
+          python3 - <<'PY'
+          import datetime
+          import os
+          from pathlib import Path
+          import re
+          from zoneinfo import ZoneInfo
+
+          day = datetime.datetime.now(ZoneInfo('Asia/Dhaka')).strftime('%Y%m%d')
+          version = f"imon-world-{day}-{os.environ['GITHUB_RUN_ID']}-{os.environ['GITHUB_RUN_ATTEMPT']}"
+          path = Path('docs/sw.js')
+          text, count = re.subn(
+              r"^const VERSION\s*=\s*['\"][^'\"]+['\"];?",
+              lambda _: f"const VERSION = '{version}';",
+              path.read_text(), count=1, flags=re.MULTILINE,
+          )
+          if count != 1:
+              raise SystemExit('Could not find the service-worker VERSION declaration.')
+          path.write_text(text)
+          print(f'Offline cache: {version}')
+          PY
+      - name: Test game and interaction models
+        run: node --test tests/*.test.mjs
+      - name: Check published files and daily data
+        run: python3 scripts/check-site.py
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

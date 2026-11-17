@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 250" role="img" aria-labelledby="title desc">
+<title id="title">IMON Arcade — Snake, Surf, 2048, Ludo, Dev Slots, Racing and Dev Quiz</title>
+<desc id="desc">Original pixel-art scenes frame an invitation to explore the IMON browser arcade.</desc>
+<style>
+.float { animation: float 5s ease-in-out infinite; }
+.float-slow { animation: float 7s ease-in-out infinite; animation-delay:-2s; }
+.twinkle { animation: twinkle 4s ease-in-out infinite; }
+.cursor { animation: blink 2s steps(1,end) infinite; }
+@keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+@keyframes twinkle { 0%,100% { opacity:.35; } 50% { opacity:1; } }
+@keyframes blink { 0%,49% { opacity:1; } 50%,100% { opacity:0; } }
+@media (prefers-reduced-motion: reduce) { .float,.float-slow,.twinkle,.cursor { animation:none !important; } }
+</style><rect width="1200" height="250" fill="#17162e" />
+<path d="M0 0h1200v5H0zM0 245h1200v5H0zM0 0h5v250H0zM1195 0h5v250h-5z" fill="#4d3b69" />
+<g shape-rendering="crispEdges">
+<path d="M28 28h260v194H28z" fill="#111126" />
+<path d="M28 28h260v4H28zM28 218h260v4H28zM28 28h4v194h-4zM284 28h4v194h-4z" fill="#39304f" />
+<g stroke="#232239" stroke-width="1">
+<path d="M60 32v186M92 32v186M124 32v186M156 32v186M188 32v186M220 32v186M252 32v186M32 60h252M32 92h252M32 124h252M32 156h252M32 188h252" />
+</g>
+<path d="M65 160h25v25H65zM97 160h25v25H97zM129 160h25v25h-25zM129 128h25v25h-25zM129 96h25v25h-25zM161 96h25v25h-25zM193 96h25v25h-25z" fill="#93e8be" />
+<path d="M211 101h4v4h-4zM211 113h4v4h-4z" fill="#172c2c" />
+<path class="twinkle" d="M229 161h18v18h-18zM233 157h5v5h-5z" fill="#f7ce77" />
+
+<path d="M912 28h260v194H912z" fill="#1a2c3c" />
+<path d="M912 28h260v4H912zM912 218h260v4H912zM912 28h4v194h-4zM1168 28h4v194h-4z" fill="#43606e" />
+<g fill="#3c7785">
+<path d="M928 65h40v5h-40zM1100 82h40v5h-40zM950 170h48v5h-48zM1080 190h32v5h-32zM1106 136h36v5h-36z" />
+</g>
+<g class="float-slow">
+<path d="M1030 74h22v12h8v72h-8v12h-22v-12h-8V86h8z" fill="#f7ce77" />
+<path d="M1037 81h8v81h-8z" fill="#ec9d71" />
+<path d="M1030 90h22v22h-22z" fill="#edb797" />
+<path d="M1030 88h22v8h-22z" fill="#43334b" />
+<path d="M1027 113h28v25h-28z" fill="#c2a5ff" />
+<path d="M1021 116h6v18h-6zM1055 116h6v18h-6z" fill="#edb797" />
+<path d="M1030 138h8v11h-8zM1044 138h8v11h-8z" fill="#302640" />
+<path d="M1020 167h5v15h-5zM1058 164h5v19h-5zM1037 180h8v16h-8z" fill="#98dce1" />
+</g>
+</g>
+<g font-family="ui-monospace,monospace" text-anchor="middle">
+<text x="600" y="65" fill="#93e8be" font-size="14" letter-spacing="2">SIDE QUEST UNLOCKED</text>
+</g>
+<path fill="#facc15" d="M372 92h7v7h-7zM379 92h7v7h-7zM386 92h7v7h-7zM393 92h7v7h-7zM400 92h7v7h-7zM386 99h7v7h-7zM386 106h7v7h-7zM386 113h7v7h-7zM386 120h7v7h-7zM386 127h7v7h-7zM372 134h7v7h-7zM379 134h7v7h-7zM386 134h7v7h-7zM393 134h7v7h-7zM400 134h7v7h-7zM414 92h7v7h-7zM442 92h7v7h-7zM414 99h7v7h-7zM421 99h7v7h-7zM435 99h7v7h-7zM442 99h7v7h-7zM414 106h7v7h-7zM428 106h7v7h-7zM442 106h7v7h-7zM414 113h7v7h-7zM428 113h7v7h-7zM442 113h7v7h-7zM414 120h7v7h-7zM442 120h7v7h-7zM414 127h7v7h-7zM442 127h7v7h-7zM414 134h7v7h-7zM442 134h7v7h-7zM463 92h7v7h-7zM470 92h7v7h-7zM477 92h7v7h-7zM456 99h7v7h-7zM484 99h7v7h-7zM456 106h7v7h-7zM484 106h7v7h-7zM456 113h7v7h-7zM484 113h7v7h-7zM456 120h7v7h-7zM484 120h7v7h-7zM456 127h7v7h-7zM484 127h7v7h-7zM463 134h7v7h-7zM470 134h7v7h-7zM477 134h7v7h-7zM498 92h7v7h-7zM526 92h7v7h-7zM498 99h7v7h-7zM505 99h7v7h-7zM526 99h7v7h-7zM498 106h7v7h-7zM505 106h7v7h-7zM526 106h7v7h-7zM498 113h7v7h-7zM512 113h7v7h-7zM526 113h7v7h-7zM498 120h7v7h-7zM519 120h7v7h-7zM526 120h7v7h-7zM498 127h7v7h-7zM519 127h7v7h-7zM526 127h7v7h-7zM498 134h7v7h-7zM526 134h7v7h-7zM589 92h7v7h-7zM596 92h7v7h-7zM603 92h7v7h-7zM582 99h7v7h-7zM610 99h7v7h-7zM582 106h7v7h-7zM610 106h7v7h-7zM582 113h7v7h-7zM589 113h7v7h-7zM596 113h7v7h-7zM603 113h7v7h-7zM610 113h7v7h-7zM582 120h7v7h-7zM610 120h7v7h-7zM582 127h7v7h-7zM610 127h7v7h-7zM582 134h7v7h-7zM610 134h7v7h-7zM624 92h7v7h-7zM631 92h7v7h-7zM638 92h7v7h-7zM645 92h7v7h-7zM624 99h7v7h-7zM652 99h7v7h-7zM624 106h7v7h-7zM652 106h7v7h-7zM624 113h7v7h-7zM631 113h7v7h-7zM638 113h7v7h-7zM645 113h7v7h-7zM624 120h7v7h-7zM638 120h7v7h-7zM624 127h7v7h-7zM645 127h7v7h-7zM624 134h7v7h-7zM652 134h7v7h-7zM673 92h7v7h-7zM680 92h7v7h-7zM687 92h7v7h-7zM694 92h7v7h-7zM666 99h7v7h-7zM666 106h7v7h-7zM666 113h7v7h-7zM666 120h7v7h-7zM666 127h7v7h-7zM673 134h7v7h-7zM680 134h7v7h-7zM687 134h7v7h-7zM694 134h7v7h-7zM715 92h7v7h-7zM722 92h7v7h-7zM729 92h7v7h-7zM708 99h7v7h-7zM736 99h7v7h-7zM708 106h7v7h-7zM736 106h7v7h-7zM708 113h7v7h-7zM715 113h7v7h-7zM722 113h7v7h-7zM729 113h7v7h-7zM736 113h7v7h-7zM708 120h7v7h-7zM736 120h7v7h-7zM708 127h7v7h-7zM736 127h7v7h-7zM708 134h7v7h-7zM736 134h7v7h-7zM750 92h7v7h-7zM757 92h7v7h-7zM764 92h7v7h-7zM771 92h7v7h-7zM750 99h7v7h-7zM778 99h7v7h-7zM750 106h7v7h-7zM778 106h7v7h-7zM750 113h7v7h-7zM778 113h7v7h-7zM750 120h7v7h-7zM778 120h7v7h-7zM750 127h7v7h-7zM778 127h7v7h-7zM750 134h7v7h-7zM757 134h7v7h-7zM764 134h7v7h-7zM771 134h7v7h-7zM792 92h7v7h-7zM799 92h7v7h-7zM806 92h7v7h-7zM813 92h7v7h-7zM820 92h7v7h-7zM792 99h7v7h-7zM792 106h7v7h-7zM792 113h7v7h-7zM799 113h7v7h-7zM806 113h7v7h-7zM813 113h7v7h-7zM792 120h7v7h-7zM792 127h7v7h-7zM792 134h7v7h-7zM799 134h7v7h-7zM806 134h7v7h-7zM813 134h7v7h-7zM820 134h7v7h-7z" />
+<g font-family="ui-monospace,monospace" text-anchor="middle">
+<text x="600" y="173" fill="#b8a8cd" font-size="14">SNAKE · SURF · 2048 · LUDO</text>
+<text x="600" y="225" fill="#f7ce77" font-size="14" font-weight="bold">PRESS PLAY ↗</text>
+</g>
+<g class="twinkle" style="animation-delay:-1s" fill="#f7ce77"><path d="M330 49h2v4h4v2h-4v4h-2v-4h-4v-2h4z" /></g><g class="twinkle" style="animation-delay:-2s" fill="#c2a5ff"><path d="M868 198h2v4h4v2h-4v4h-2v-4h-4v-2h4z" /></g><text x="600" y="196" fill="#b8a8cd" font-size="14" font-family="ui-monospace,monospace" text-anchor="middle">DEV SLOTS · RACING · DEV QUIZ</text></svg>

@@ -1,0 +1,457 @@
+[
+  {
+    "question": "What does HTTP stand for?",
+    "options": [
+      "Hypertext Transfer Protocol",
+      "High Transfer Text Process",
+      "Host Terminal Transfer Port",
+      "Hyperlink Text Template Protocol"
+    ],
+    "answer": 0,
+    "explanation": "HTTP is the application-layer protocol used to transfer web resources.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which HTTP status code means Not Found?",
+    "options": [
+      "404",
+      "200",
+      "301",
+      "500"
+    ],
+    "answer": 0,
+    "explanation": "404 indicates that the server cannot find the requested resource.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What is the usual purpose of DNS?",
+    "options": [
+      "Resolve domain names to IP addresses",
+      "Encrypt files on disk",
+      "Compress video",
+      "Compile JavaScript"
+    ],
+    "answer": 0,
+    "explanation": "DNS lets clients look up records such as the IP addresses associated with domain names.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which Git command shows working-tree changes?",
+    "options": [
+      "git status",
+      "git init",
+      "git clone",
+      "git branch -d"
+    ],
+    "answer": 0,
+    "explanation": "git status reports staged, unstaged, and untracked changes.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which file describes steps to build a Docker image?",
+    "options": [
+      "Dockerfile",
+      "package-lock.json",
+      "README.md",
+      ".gitignore"
+    ],
+    "answer": 0,
+    "explanation": "A Dockerfile contains build instructions such as FROM, COPY, and RUN.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What is Kubernetes smallest deployable computing unit?",
+    "options": [
+      "Pod",
+      "Cluster",
+      "Namespace",
+      "Deployment"
+    ],
+    "answer": 0,
+    "explanation": "A Pod groups one or more containers with shared networking and storage resources.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which value does JavaScript typeof null return?",
+    "options": [
+      "object",
+      "null",
+      "undefined",
+      "boolean"
+    ],
+    "answer": 0,
+    "explanation": "typeof null returns object, a long-standing historical behavior in JavaScript.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which JavaScript array method creates an array by transforming each element?",
+    "options": [
+      "map()",
+      "push()",
+      "pop()",
+      "sort()"
+    ],
+    "answer": 0,
+    "explanation": "map returns a new array containing the callback result for each visited element.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which Python type is a mutable ordered sequence?",
+    "options": [
+      "list",
+      "tuple",
+      "frozenset",
+      "int"
+    ],
+    "answer": 0,
+    "explanation": "Lists preserve order and let you add, remove, or change their elements.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which SQL keyword retrieves rows from a table?",
+    "options": [
+      "SELECT",
+      "DROP",
+      "DELETE",
+      "ALTER"
+    ],
+    "answer": 0,
+    "explanation": "SELECT is used to query rows and expressions.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What does RAM usually lose when power is removed?",
+    "options": [
+      "Its stored contents",
+      "Its physical chips",
+      "Its capacity rating",
+      "Its memory addresses permanently"
+    ],
+    "answer": 0,
+    "explanation": "Ordinary RAM is volatile memory and does not retain its data without power.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which number base uses only 0 and 1?",
+    "options": [
+      "Binary",
+      "Decimal",
+      "Hexadecimal",
+      "Octal"
+    ],
+    "answer": 0,
+    "explanation": "Binary is base two.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What does the modulo operator compute for positive integers?",
+    "options": [
+      "The remainder after division",
+      "The quotient rounded up",
+      "The power",
+      "The square root"
+    ],
+    "answer": 0,
+    "explanation": "For example, 17 modulo 5 is 2.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which protocol commonly provides encrypted remote shell access?",
+    "options": [
+      "SSH",
+      "FTP",
+      "Telnet",
+      "HTTP"
+    ],
+    "answer": 0,
+    "explanation": "SSH encrypts remote terminal sessions and related connections.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What is a unit test intended to check?",
+    "options": [
+      "A small isolated piece of behavior",
+      "Only visual colors",
+      "Every external service at once",
+      "The processor temperature"
+    ],
+    "answer": 0,
+    "explanation": "A unit test targets a focused behavior with controlled dependencies.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What does CI commonly mean in software development?",
+    "options": [
+      "Continuous Integration",
+      "Central Internet",
+      "Compiled Instance",
+      "Container Interface"
+    ],
+    "answer": 0,
+    "explanation": "Continuous Integration frequently integrates changes and runs automated checks.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which Rust concept tracks who is responsible for a value?",
+    "options": [
+      "Ownership",
+      "Hoisting",
+      "Prototype chaining",
+      "Duck typing"
+    ],
+    "answer": 0,
+    "explanation": "Rust ownership and borrowing rules help enforce memory safety.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What does a .gitignore file do?",
+    "options": [
+      "Specifies untracked files Git should ignore",
+      "Encrypts all commits",
+      "Deletes tracked secrets automatically",
+      "Locks a repository"
+    ],
+    "answer": 0,
+    "explanation": "Ignore rules affect untracked paths; already tracked files remain tracked.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which is a valid JSON boolean?",
+    "options": [
+      "true",
+      "True",
+      "TRUE()",
+      "yes"
+    ],
+    "answer": 0,
+    "explanation": "JSON uses the lowercase literals true and false.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What does an API define?",
+    "options": [
+      "An interface for software components to communicate",
+      "A monitor resolution",
+      "A disk partition format",
+      "A keyboard layout"
+    ],
+    "answer": 0,
+    "explanation": "An application programming interface exposes a contract for interacting with software.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What does HTTPS add to HTTP transport?",
+    "options": [
+      "TLS encryption and authentication",
+      "Unlimited bandwidth",
+      "A database automatically",
+      "Guaranteed truthful content"
+    ],
+    "answer": 0,
+    "explanation": "TLS protects the connection; it does not prove that a webpage content is true.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which data structure normally uses first-in, first-out ordering?",
+    "options": [
+      "Queue",
+      "Stack",
+      "Set",
+      "Tree"
+    ],
+    "answer": 0,
+    "explanation": "A queue processes the oldest enqueued item first.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which data structure normally uses last-in, first-out ordering?",
+    "options": [
+      "Stack",
+      "Queue",
+      "Graph",
+      "Hash map"
+    ],
+    "answer": 0,
+    "explanation": "The latest item pushed onto a stack is the first one popped.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What does CSS primarily control?",
+    "options": [
+      "The presentation of a document",
+      "The database storage engine",
+      "The network routing table",
+      "The server operating system"
+    ],
+    "answer": 0,
+    "explanation": "CSS describes visual styling and layout for documents such as HTML.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which HTML element represents the main page heading?",
+    "options": [
+      "h1",
+      "span",
+      "footer",
+      "input"
+    ],
+    "answer": 0,
+    "explanation": "h1 marks the top-level heading in the document structure.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What is the purpose of a database index?",
+    "options": [
+      "Help locate rows efficiently",
+      "Guarantee every query is free",
+      "Replace all backups",
+      "Automatically encrypt passwords"
+    ],
+    "answer": 0,
+    "explanation": "An index trades storage and write overhead for faster access patterns.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which command copies a remote Git repository locally?",
+    "options": [
+      "git clone",
+      "git reset",
+      "git stash",
+      "git clean"
+    ],
+    "answer": 0,
+    "explanation": "git clone creates a local repository from an existing one.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which operator is logical AND in JavaScript?",
+    "options": [
+      "&&",
+      "||",
+      "??",
+      "**"
+    ],
+    "answer": 0,
+    "explanation": "&& evaluates the second operand only when the first is truthy.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What is an environment variable?",
+    "options": [
+      "A named value available to a process",
+      "A type of monitor",
+      "A mandatory public password",
+      "A permanent database column"
+    ],
+    "answer": 0,
+    "explanation": "Programs can read environment values for configuration.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What does open source generally provide?",
+    "options": [
+      "Source code under a license allowing use, modification, and redistribution",
+      "No license conditions ever",
+      "Guaranteed free hosting",
+      "Only executable binaries"
+    ],
+    "answer": 0,
+    "explanation": "Open-source rights and conditions are defined by the software license.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What is a cache designed to do?",
+    "options": [
+      "Reuse stored results or data to reduce repeated work",
+      "Make every value permanent",
+      "Remove the need for authentication",
+      "Prevent every network error"
+    ],
+    "answer": 0,
+    "explanation": "Caches can improve performance but need an appropriate freshness strategy.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What does the Linux pwd command print?",
+    "options": [
+      "The current working directory",
+      "The current password",
+      "All running processes",
+      "The disk format"
+    ],
+    "answer": 0,
+    "explanation": "pwd stands for print working directory.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "What does a compiler generally do?",
+    "options": [
+      "Translate source code into another representation",
+      "Guarantee bug-free software",
+      "Create a network account",
+      "Replace the operating system"
+    ],
+    "answer": 0,
+    "explanation": "Compilers translate programs, often to machine code or an intermediate representation.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Which command lists directory entries on Unix-like systems?",
+    "options": [
+      "ls",
+      "cd",
+      "pwd",
+      "mkdir"
+    ],
+    "answer": 0,
+    "explanation": "ls lists files and directories; its flags control detail and filtering.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  },
+  {
+    "question": "Why should passwords be stored with a password-hashing function?",
+    "options": [
+      "To make password verification possible without storing plaintext",
+      "To allow instant reversal",
+      "To guarantee users never forget them",
+      "To publish them safely"
+    ],
+    "answer": 0,
+    "explanation": "Password hashes are designed for verification; salts and an appropriate work factor matter.",
+    "category": "Developer fundamentals",
+    "difficulty": "mixed"
+  }
+]

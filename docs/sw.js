@@ -1,1 +1,33 @@
-if(!self.define){let s,e={};const l=(l,i)=>(l=new URL(l+".js",i).href,e[l]||new Promise(e=>{if("document"in self){const s=document.createElement("script");s.src=l,s.onload=e,document.head.appendChild(s)}else s=l,importScripts(l),e()}).then(()=>{let s=e[l];if(!s)throw new Error(`Module ${l} didn’t register its module`);return s}));self.define=(i,r)=>{const n=s||("document"in self?document.currentScript.src:"")||location.href;if(e[n])return;let t={};const u=s=>l(s,n),a={module:{uri:n},exports:t,require:u};e[n]=Promise.all(i.map(s=>a[s]||u(s))).then(s=>(r(...s),t))}}define(["./workbox-efbd304a"],function(s){"use strict";self.skipWaiting(),s.clientsClaim(),s.precacheAndRoute([{url:"index.html",revision:"902015e6e7e168adb4d20835a871bf1d"},{url:"assets/workbox-window.prod.es5-BBnX5xw4.js",revision:null},{url:"assets/widgets-Bfe61WC4.js",revision:null},{url:"assets/virtual_pwa-register-HzBzbEGi.js",revision:null},{url:"assets/vanilla-tilt.es2015-EfUCf7yr.js",revision:null},{url:"assets/three-B2CCr1hy.js",revision:null},{url:"assets/stats-badges.svg",revision:null},{url:"assets/scene5g-BxbqGbXQ.js",revision:null},{url:"assets/sbaBars-AOjSpQG3.js",revision:null},{url:"assets/radio-waves.svg",revision:null},{url:"assets/quiz-BW4qXkJF.js",revision:null},{url:"assets/pwa-BtmQRzfz.js",revision:null},{url:"assets/orbs.svg",revision:null},{url:"assets/lottie-u4OJrkoR.js",revision:null},{url:"assets/lottie-r-XxikLb.js",revision:null},{url:"assets/lottie-hello.json",revision:null},{url:"assets/index-DxoherqP.js",revision:null},{url:"assets/index-C-nDsctf.css",revision:null},{url:"assets/hero.svg",revision:null},{url:"assets/gsap-CzGW6FVa.js",revision:null},{url:"assets/game-CPw34_Jz.js",revision:null},{url:"assets/cellular-5g.svg",revision:null},{url:"assets/cellular-5g.gif",revision:null},{url:"assets/bd-map.svg",revision:null},{url:"assets/bangladesh.json",revision:null},{url:"assets/aurora-Dw-FUDxV.js",revision:null},{url:"assets/5g-3d.gif",revision:null},{url:"assets/5g-3d.gif",revision:"f333c66664a1beaab3828a8f5444fc22"},{url:"assets/hero.svg",revision:"a8bf1517fe81d5f5447ef4b7a316fd1a"},{url:"assets/lottie-hello.json",revision:"ab3008089d0325b8e9959352ac85b13f"},{url:"assets/radio-waves.svg",revision:"2ee6bea432933b71157a9cc44801fe39"},{url:"manifest.webmanifest",revision:"58910570b91f89eddcb5ec5344fdb5aa"}],{}),s.cleanupOutdatedCaches(),s.registerRoute(new s.NavigationRoute(s.createHandlerBoundToURL("/sabbirimon/index.html"),{denylist:[/^\/api/]})),s.registerRoute(/^https:\/\/api\.github\.com\/.*/i,new s.NetworkFirst({cacheName:"github-api",plugins:[new s.ExpirationPlugin({maxEntries:16,maxAgeSeconds:300}),new s.CacheableResponsePlugin({statuses:[0,200]})]}),"GET")});
+// A fresh version is stamped by the daily deployment workflow.
+const VERSION = 'imon-world-v2';
+const SCOPE = self.registration.scope;
+const CACHE = VERSION + ':' + SCOPE;
+const FILES = ['./','index.html','style.css','app.js','world.js','weather.js','experience.js','experience.css','local-context.js','ambient.js','audio.js','arcade.js','arcade.css','ludo.js','ludo.css','puzzle.js','puzzle.css','slots.js','slots.css','racer.js','racer.css','quiz.js','quiz.css','news.js','news.css','data/news.json','data/science.json','data/quiz.json','data/quiz-bank.json','gridworks/','gridworks/index.html','gridworks/engine.js','gridworks/view.js','gridworks/story.js','gridworks/globe.js','gridworks/globe.css','gridworks/style.css','icon.svg','manifest.webmanifest','fonts/press-start-2p.ttf','fonts/mulish-regular.ttf','fonts/mulish-extra-bold.ttf'];
+self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES.map(file => new URL(file,SCOPE).href))).then(() => self.skipWaiting())); });
+self.addEventListener('activate', event => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    const legacy = keys.some(key => key.startsWith('workbox-precache-') && key.endsWith(SCOPE));
+    await Promise.all(keys.filter(key => key !== CACHE && (((key.startsWith('sabbir-world-') || key.startsWith('imon-world-')) && key.endsWith(':' + SCOPE)) || (key.startsWith('workbox-precache-') && key.endsWith(SCOPE)))).map(key => caches.delete(key)));
+    await self.clients.claim();
+    // The old bundled application cannot receive our update message; refresh only its scope once.
+    if (legacy) for (const client of await self.clients.matchAll({type:'window'})) if (client.url.startsWith(SCOPE)) await client.navigate(client.url).catch(() => {});
+  })());
+});
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  if (event.request.method !== 'GET' || !url.href.startsWith(SCOPE) || url.origin !== self.location.origin) return;
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE);
+    try {
+      const response = await fetch(event.request);
+      if (response.ok && (FILES.some(file => new URL(file,SCOPE).pathname === url.pathname) || event.request.mode === 'navigate')) await cache.put(event.request,response.clone());
+      return response;
+    } catch {
+      const hit = await cache.match(event.request,{ignoreSearch:true});
+      if (hit) return hit;
+      if (event.request.mode === 'navigate') return await cache.match(new URL(url.pathname.includes('/gridworks') ? 'gridworks/index.html' : 'index.html',SCOPE).href) || Response.error();
+      return Response.error();
+    }
+  })());
+});

@@ -1,0 +1,183 @@
+/* Live tech and space/science headlines, with dated offline snapshots. */
+const API = 'https://hacker-news.firebaseio.com/v0/';
+const SOURCE = 'https://news.ycombinator.com/';
+const REFRESH_MS = 30 * 60 * 1000;
+const ENTITIES = { amp: '&', quot: '"', apos: "'", lt: '<', gt: '>', nbsp: ' ', ndash: '–', mdash: '—', hellip: '…', lsquo: '‘', rsquo: '’', ldquo: '“', rdquo: '”', bull: '•', middot: '·', copy: '©', reg: '®', trade: '™', times: '×', divide: '÷', deg: '°', euro: '€', pound: '£', yen: '¥', cent: '¢', laquo: '«', raquo: '»' };
+
+export function safeNewsUrl(value) {
+  if (typeof value !== 'string') return null;
+  try {
+    const url = new URL(value);
+    return ['http:', 'https:'].includes(url.protocol) && !url.username && !url.password ? url.href : null;
+  } catch { return null; }
+}
+
+export function decodeNewsTitle(value) {
+  if (typeof value !== 'string') return '';
+  return value.replace(/&(#x[\da-f]+|#\d+|[a-z][\da-z]+);/gi, (entity, code) => {
+    if (code[0] === '#') {
+      const point = code[1].toLowerCase() === 'x' ? Number.parseInt(code.slice(2), 16) : Number.parseInt(code.slice(1), 10);
+      return point > 0 && point <= 0x10ffff && !(point >= 0xd800 && point <= 0xdfff) ? String.fromCodePoint(point) : entity;
+    }
+    if (Object.hasOwn(ENTITIES, code)) return ENTITIES[code];
+    if (typeof document !== 'undefined') {
+      // Only a single regex-validated entity token enters this detached decoder:
+      // it cannot contain markup. The full headline always uses textContent.
+      const decoder = document.createElement('textarea');
+      decoder.innerHTML = entity;
+      return decoder.value;
+    }
+    return entity;
+  }).trim();
+}
+
+export function normalizeNewsSnapshot(value) {
+  if (!value || !Array.isArray(value.stories)) return null;
+  const seen = new Set();
+  const stories = value.stories.flatMap(story => {
+    if (!story || !Number.isSafeInteger(story.id) || story.id < 1 || seen.has(story.id) || story.deleted || story.dead || (story.type && story.type !== 'story')) return [];
+    const title = value.titleFormat === 'plain' && typeof story.title === 'string' ? story.title.trim() : decodeNewsTitle(story.title);
+    if (!title || title.length > 1000 || !Number.isFinite(story.time) || story.time <= 0 || !Number.isFinite(new Date(story.time * 1000).getTime())) return [];
+    const url = safeNewsUrl(story.url) || `${SOURCE}item?id=${story.id}`;
+    seen.add(story.id);
+    return [{ id: story.id, title, url, score: Number.isSafeInteger(story.score) && story.score >= 0 ? story.score : 0, time: story.time, comments: Number.isSafeInteger(story.comments) && story.comments >= 0 ? story.comments : 0 }];
+  }).slice(0, 12);
+  const updated = typeof value.updated === 'string' && Number.isFinite(Date.parse(value.updated)) ? new Date(value.updated).toISOString() : null;
+  return stories.length ? { updated, source: 'Hacker News', sourceUrl: SOURCE, titleFormat: 'plain', stories } : null;
+}
+
+export function newsTimeAgo(seconds, now = Date.now()) {
+  const elapsed = Math.max(0, Math.floor(now / 1000 - seconds));
+  if (elapsed < 60) return 'just now';
+  if (elapsed < 3600) return `${Math.floor(elapsed / 60)}m ago`;
+  if (elapsed < 86400) return `${Math.floor(elapsed / 3600)}h ago`;
+  return `${Math.floor(elapsed / 86400)}d ago`;
+}
+
+async function fetchJson(url, timeout = 6500) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeout);
+  try {
+    const response = await fetch(url, { signal: controller.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer' });
+    if (!response.ok) throw new Error(`News request failed: ${response.status}`);
+    return await response.json();
+  } finally { clearTimeout(timer); }
+}
+
+async function liveSnapshot() {
+  const ids = await fetchJson(`${API}topstories.json`);
+  if (!Array.isArray(ids)) throw new Error('Invalid news list.');
+  const queue = [...new Set(ids.filter(id => Number.isSafeInteger(id) && id > 0))].slice(0, 12);
+  const stories = Array(queue.length).fill(null);
+  let position = 0;
+  await Promise.all(Array.from({ length: Math.min(4, queue.length) }, async () => {
+    while (position < queue.length) {
+      const index = position++;
+      try {
+        const item = await fetchJson(`${API}item/${queue[index]}.json`, 5000);
+        if (item?.type === 'story' && !item.deleted && !item.dead) stories[index] = { ...item, comments: item.descendants };
+      } catch { /* A failed item does not discard the other official results. */ }
+    }
+  }));
+  const result = normalizeNewsSnapshot({ updated: new Date().toISOString(), stories });
+  if (!result || result.stories.length < 6) throw new Error('Not enough current stories.');
+  return result;
+}
+
+const SCIENCE_API = 'https://api.spaceflightnewsapi.net/v4/articles/?limit=12';
+const SCIENCE_SOURCE = 'https://www.spaceflightnewsapi.net/';
+export function normalizeScienceSnapshot(value) {
+  if (!value || !Array.isArray(value.results || value.stories)) return null;
+  const seen = new Set();
+  const stories = (value.results || value.stories).flatMap(item => {
+    const url = safeNewsUrl(item?.url), time = item?.published_at ? Date.parse(item.published_at) / 1000 : item?.time;
+    if (!Number.isSafeInteger(item?.id) || item.id < 1 || seen.has(item.id) || !url || typeof item.title !== 'string' || !item.title.trim() || item.title.length > 1000 || !Number.isFinite(time) || time <= 0 || !Number.isFinite(new Date(time * 1000).getTime())) return [];
+    seen.add(item.id);
+    return [{ id: item.id, title: item.title.trim(), url, time, publisher: String(item.news_site || item.publisher || new URL(url).hostname).slice(0, 100) }];
+  }).slice(0, 12);
+  return stories.length ? { stories, source: 'Spaceflight News API', sourceUrl: SCIENCE_SOURCE, updated: Number.isFinite(Date.parse(value.updated)) ? new Date(value.updated).toISOString() : null } : null;
+}
+
+export function initNews() {
+  const section = document.getElementById('news'), grid = document.getElementById('news-grid'), status = document.getElementById('news-status'), refreshButton = document.getElementById('news-refresh'), source = document.getElementById('news-source');
+  if (!section || !grid || !status || !refreshButton || !source || section.dataset.newsInitialized) return;
+  section.dataset.newsInitialized = 'true';
+  status.setAttribute('aria-live', 'polite');
+  const feeds = {
+    tech: { name: 'Hacker News', url: SOURCE, path: 'news.json', normalize: normalizeNewsSnapshot, live: liveSnapshot },
+    science: { name: 'Spaceflight News API', url: SCIENCE_SOURCE, path: 'science.json', normalize: normalizeScienceSnapshot, live: async () => {
+      const result = normalizeScienceSnapshot({ ...await fetchJson(SCIENCE_API, 15000), updated: new Date().toISOString() });
+      if (!result) throw new Error('Science headlines unavailable.');
+      return result;
+    } }
+  };
+  const states = Object.fromEntries(Object.keys(feeds).map(key => [key, { snapshot: null, mode: 'unavailable', started: false, pending: false, lastAttempt: 0 }]));
+  let selected = 'tech', visible = false;
+  const tabs = document.createElement('div'); tabs.className = 'news-tabs'; tabs.setAttribute('role', 'group'); tabs.setAttribute('aria-label', 'News category');
+  for (const [key, label] of [['tech', '⌘ Technology'], ['science', '✦ Science & space']]) {
+    const button = document.createElement('button'); button.textContent = label; button.dataset.feed = key; button.setAttribute('aria-pressed', String(key === selected));
+    button.addEventListener('click', () => { selected = key; for (const tab of tabs.children) tab.setAttribute('aria-pressed', String(tab === button)); render(); if (!states[key].started) refresh(key); else revalidate(); }); tabs.append(button);
+  }
+  grid.before(tabs);
+  function externalLink(url, text, className) {
+    const link = document.createElement('a'); link.href = safeNewsUrl(url) || SOURCE; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = text;
+    if (className) link.className = className;
+    return link;
+  }
+  function render() {
+    const { snapshot, mode, pending } = states[selected], feed = feeds[selected];
+    refreshButton.disabled = pending; refreshButton.textContent = pending ? 'Refreshing…' : 'Refresh headlines ↻'; grid.setAttribute('aria-busy', String(pending));
+    source.href = feed.url; source.textContent = `${selected === 'tech' ? 'Community-curated on' : 'Science & space via'} ${feed.name} ↗`;
+    if (!snapshot) status.textContent = pending ? 'Loading the latest dispatch…' : 'News unavailable. Connect and try refreshing.';
+    else {
+      const date = snapshot.updated ? new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(snapshot.updated)) : 'time unavailable';
+      status.textContent = `${mode === 'live' ? 'Live' : mode === 'snapshot' ? 'Daily snapshot' : 'Cached headlines'} · Refreshed ${date}${pending ? ' · Updating…' : mode === 'cached' ? ' · Live refresh unavailable' : ''}`;
+    }
+    status.dataset.newsState = mode;
+    const fragment = document.createDocumentFragment();
+    if (!snapshot) { const empty = document.createElement('p'); empty.className = 'news-empty'; empty.textContent = pending ? 'Finding fresh discoveries…' : 'No saved headlines yet. Try again when you’re online.'; fragment.append(empty); }
+    else snapshot.stories.slice(0, 6).forEach((story, index) => {
+      const card = document.createElement('article'); card.className = 'news-card';
+      const top = document.createElement('div'); top.className = 'news-card-top';
+      const number = document.createElement('span'); number.className = 'news-rank'; number.textContent = `${String(index + 1).padStart(2, '0')} / ${selected === 'tech' ? 'TECH' : 'SCIENCE'}`;
+      top.append(number, externalLink(story.url, `${new URL(story.url).hostname.replace(/^www\./, '')} ↗`, 'news-domain'));
+      const heading = document.createElement('h3'); heading.append(externalLink(story.url, story.title));
+      const meta = document.createElement('div'); meta.className = 'news-meta';
+      const detail = document.createElement('span'); detail.className = 'news-points'; detail.textContent = selected === 'tech' ? `▲ ${story.score.toLocaleString()} points` : story.publisher;
+      const time = document.createElement('time'); time.dateTime = new Date(story.time * 1000).toISOString(); time.textContent = newsTimeAgo(story.time); time.title = new Date(story.time * 1000).toLocaleString();
+      const discussion = selected === 'tech' ? externalLink(`${SOURCE}item?id=${story.id}`, `${story.comments.toLocaleString()} comments ↗`, 'news-discussion') : externalLink(story.url, 'Read story ↗', 'news-discussion');
+      meta.append(detail, time, discussion); card.append(top, heading, meta); fragment.append(card);
+    });
+    grid.replaceChildren(fragment);
+  }
+  async function refresh(key = selected) {
+    const state = states[key], feed = feeds[key], cacheKey = `imon-${key}-news-v2`;
+    if (state.pending) return;
+    const firstLoad = !state.started;
+    state.started = true; state.pending = true; state.lastAttempt = Date.now();
+    const display = () => { if (selected === key) render(); };
+    const accept = (value, mode) => { state.snapshot = value; state.mode = mode; try { localStorage.setItem(cacheKey, JSON.stringify(value)); } catch {} display(); };
+    if (firstLoad) {
+      try { state.snapshot = feed.normalize(JSON.parse(localStorage.getItem(cacheKey))); state.mode = state.snapshot ? 'cached' : 'unavailable'; } catch {}
+      display();
+      try {
+        const raw = await fetchJson(new URL(`./data/${feed.path}`, import.meta.url).href, 5000);
+        const daily = feed.normalize({ ...raw, titleFormat: 'plain' });
+        if (daily && (!state.snapshot || Date.parse(daily.updated || 0) > Date.parse(state.snapshot.updated || 0))) accept(daily, navigator.onLine === false ? 'cached' : 'snapshot');
+      } catch {}
+    }
+    display();
+    try { if (navigator.onLine === false) throw new Error('Offline'); accept(await feed.live(), 'live'); }
+    catch { state.mode = state.snapshot ? 'cached' : 'unavailable'; }
+    finally { state.pending = false; display(); }
+  }
+  function revalidate() { const state = states[selected]; if (visible && !document.hidden && (!state.started || Date.now() - state.lastAttempt >= REFRESH_MS)) refresh(); }
+  refreshButton.addEventListener('click', () => refresh());
+  if ('IntersectionObserver' in window) new IntersectionObserver(entries => { visible = entries[0].isIntersecting; revalidate(); }, { threshold: .01 }).observe(section);
+  else { visible = true; revalidate(); }
+  document.addEventListener('visibilitychange', revalidate);
+  window.addEventListener('offline', () => { for (const state of Object.values(states)) if (state.snapshot && !state.pending) state.mode = 'cached'; render(); });
+  window.addEventListener('online', () => { if (visible && !document.hidden) refresh(); });
+  setInterval(revalidate, REFRESH_MS);
+  render();
+}
