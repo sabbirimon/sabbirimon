@@ -92,7 +92,15 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     }
     points.push([width, height]); polygon(points, color);
   }
+  function windLean(x){
+    if(!motion)return 0;
+    const type=document.body.dataset.weather;
+    const force={wind:.12,storm:.18,'heavy-rain':.08,cyclone:.25,blizzard:.14,drizzle:.025,rain:.05}[type]||.012;
+    const power=Number(document.body.dataset.weatherPower)||1;
+    return force*power*(.55+Math.sin(clock*1.7+x*.03)*.35+Math.sin(clock*.8)*.1);
+  }
   function tree(x, y, size, p) {
+    ctx.save();ctx.translate(x,y);ctx.transform(1,0,-windLean(x),1,0,0);ctx.translate(-x,-y);
     const s = size;
     rect(x - 2*s, y - 30*s, 5*s, 31*s, p.trunk);
     rect(x + 2*s, y - 17*s, 6*s, 3*s, p.trunk);
@@ -105,6 +113,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     rect(x - 2*s, y - 41*s, 5*s, 3*s, p.grassLight);
     rect(x + 9*s, y - 36*s, 3*s, 3*s, '#e9a9c5');
     rect(x - 9*s, y - 29*s, 3*s, 3*s, '#e9a9c5');
+    ctx.restore();
   }
   function bush(x, y, p, small = false) {
     rect(x, y - 5, small ? 10 : 18, 5, p.leaf);
@@ -210,6 +219,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     }
   }
   function palm(x,y,p,lean=1) {
+    lean+=windLean(x)*7;
     for(let i=0;i<8;i++) {
       rect(x+i*lean,y-i*6,5,7,p.trunk);
       rect(x+i*lean,y-i*6,2,2,p.dirtLight);
@@ -492,6 +502,10 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       const x=((i*43+13)%width)+Math.sin(t*.35+i)*3,y=height*(.52+((i*17)%41)/100)+Math.cos(t*.45+i)*3;
       ctx.globalAlpha=.3+(Math.sin(t+i*1.7)+1)*.28;rect(x,y,1,1,i%3?'#e7ed99':'#b8eaff');
     }ctx.globalAlpha=1;
+    // Foreground vegetation is a separate animated layer over the illustrated art.
+    const foliage={...p,trunk:'#283d48',leaf:scene==='neon-forest'?'#742b83':'#205848',leafLight:scene==='neon-forest'?'#ca4bba':'#51ad78',grassLight:'#8de6bb',grassShade:'#132f3d'};
+    tree(width*.025,height+8,portrait?1.05:1.2,foliage);
+    tree(width*.97,height+10,portrait?.85:1.5,foliage);
     const explorerY=height-(portrait?108:38),explorerX=width*(portrait?.54:.74);
     // A small original stepping stone grounds the draggable explorer in every painting.
     rect(explorerX-7,explorerY+1,35,4,'#132c3780');

@@ -2,7 +2,7 @@
 
 A buildless GitHub Pages site in `docs/`, with original pixel scenery, browser games, visitor-local weather, and daily public content. The profile README and its animated artwork live at the repository root and in `assets/`.
 
-The canonical production address is [imon.com.bd](https://imon.com.bd/), with [Gridworks](https://imon.com.bd/gridworks/) at `/gridworks/`. Repository and source-code links continue to point to GitHub.
+The canonical production address is [imon.com.bd](https://imon.com.bd/), with [Gridworks](https://imon.com.bd/gridworks/) at `/gridworks/`. The custom domain has a valid TLS certificate, HTTPS enforcement is enabled, and `www.imon.com.bd` redirects to the canonical apex domain. Repository and source-code links continue to point to GitHub.
 
 ## Run and check
 
@@ -40,7 +40,7 @@ API outages do not justify invented headlines or a live label on stale data. Kee
 
 ## Audio and game behavior
 
-Game sound effects start **off**, controlled by `audio.js`. Procedural ambience starts enabled but remains silent until the first user gesture unlocks browser audio; it has a separate control. Hidden tabs suspend ambience, and motion settings respect reduced-motion preferences.
+Music, ambience, and game sound effects all start **off**. The Music & ambience switch enables optional sounds generated with the browser’s Web Audio API, including rain, wind, water, and thunder; these are synthesized sounds, not recordings. Browser audio starts only after a user gesture. A separate game-effects switch uses `audio.js`, while the ambience volume control saves its setting locally. Hidden tabs suspend ambience. No audio library or new runtime dependency is required.
 
 Ludo uses an explicit local variant: roll six to release a token, exact roll to finish, and four tokens home to win. Starting/starred squares are safe; captures on other squares return all rival tokens there to their yards. A six, capture, or finishing token grants one bonus roll. Three consecutive sixes forfeit the third roll without undoing prior moves. Stacks do not block, and a capture is not required before entering the home lane. Human players share one device; computer seats act locally.
 
@@ -64,4 +64,18 @@ The expanded art collection has 13 landscapes and 33 presets. `?scene=waterfall-
 
 The profile now includes an animated entry button and a controller-themed arcade link. The About card has wave, code, and play poses with manual controls and reduced-motion support. Gridworks opens its quick-start guide after the first story briefing; GUIDE reopens the button reference, first connections, ISP pricing, and save instructions.
 
-Live mode follows the visitor’s browser time and automatically rotates phase-appropriate illustrated scenes at 1, 5, 15 or 60-minute intervals. Manual scenery selection disables rotation. Rotation pauses in hidden tabs and with Motion Off or reduced motion. Quick weather buttons preview rain, snow and storms; unavailable real weather uses a clearly labeled decorative firefly/wind fallback.
+## World controls and weather
+
+The visible weather control deck offers Light rain, Heavy rain, Snow, Thunderstorm, Lightning, Wind, Clouds, Fog, Fireflies, and Clear. Visitors can pause/play animation, select Gentle/Normal/Vivid intensity, and independently adjust Density and Strength from 25% to 200%. World Studio includes a live animation preview and the same controls, plus scenery, time, colors, and optional sound volume. Custom effects are decorative artwork, not weather alerts.
+
+Live mode follows the visitor’s browser time and automatically rotates phase-appropriate illustrated scenes at 1, 5, 15 or 60-minute intervals. Manual scenery selection disables rotation. Rotation pauses in hidden tabs and with Motion Off or the operating system’s reduced-motion preference; the site respects that preference. Unavailable real weather uses a clearly labeled decorative firefly/wind fallback. Scenery, colors, motion, weather intensity, density, strength, and sound-volume preferences are stored locally when browser storage is available.
+
+Weather uses Canvas 2D and audio uses Web Audio, with no new dependencies. For browser QA, check each main-deck effect and its Studio preview, pause/play, all intensity settings, the independent sliders, sound off on entry, user-enabled audio, and reduced motion. Keep the run/check and publishing commands above as the release workflow.
+
+## Search and sharing
+
+The homepage has a descriptive title and summary, an HTTPS canonical URL, Open Graph and Twitter sharing metadata, and JSON-LD for the public Person and WebSite identities. Names and topics match visible content: Sabbir Hassan Imon, IMON, open-source projects, local-first AI, Android, and pixel browser games. There is no hidden keyword text or invented credential.
+
+`docs/robots.txt` allows crawling and points to `https://imon.com.bd/sitemap.xml`. The sitemap lists only the canonical homepage and `/gridworks/`; scene query strings and section fragments are not separate pages. Keep metadata and the sitemap aligned when adding real routes. The existing social preview is `docs/social-card.png`.
+
+These files help crawlers understand the site; indexing and ranking are not guaranteed. After publishing, the owner can submit the sitemap and inspect both URLs in Google Search Console. Maintenance references: [Google’s SEO starter guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide), [site-name structured data](https://developers.google.com/search/docs/appearance/site-names), and [sitemap guidance](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap). No SEO package or tracking script is required.

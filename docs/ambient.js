@@ -1,16 +1,17 @@
 /**
  * IMON's procedural ambience. No recordings, downloads, or autoplay bypasses.
- * Preference starts ON; AudioContext creation/resume happens only in unlock(),
- * called directly by the page's first pointer/keyboard gesture. This is separate
+ * Preference starts OFF; AudioContext creation/resume happens only in unlock(),
+ * after ambience is enabled by the visitor and a gesture allows audio. This is separate
  * from the game sound-effects switch in audio.js, which starts OFF.
  */
 export function initAmbient() {
-  let enabled = true, unlocked = false, destroyed = false;
+  let enabled = false, unlocked = false, destroyed = false, volume = .35;
   let scene = 'islands', weather = 'clear', context = null, master = null;
-  let wind = null, surf = null, rain = null, hum = null;
+  let wind = null, surf = null, rain = null, rainBody = null, water = null, hum = null;
   let timer = null, musicTimer = null, suspendTimer = null, nextChirp = 0, lastThunder = -Infinity, musicStep = 0;
   const sources = new Set();
-  const notify = () => document.dispatchEvent(new CustomEvent('imon:ambient', { detail: { enabled, unlocked, scene, weather } }));
+  const notify = () => document.dispatchEvent(new CustomEvent('imon:ambient', { detail: { enabled, unlocked, volume, scene, weather } }));
+  const outputLevel = () => volume * .34;
 
   function sceneFamily() {
     if (/cyberpunk|dystopia/.test(scene)) return 'cyberpunk';
@@ -38,12 +39,23 @@ export function initAmbient() {
   }
   function buildGraph() {
     master = context.createGain(); master.gain.value = 0; master.connect(context.destination);
-    const buffer = context.createBuffer(1, context.sampleRate * 3, context.sampleRate);
-    const samples = buffer.getChannelData(0);
-    for (let i = 0; i < samples.length; i++) samples[i] = Math.random() * 2 - 1;
-    wind = noiseLayer(buffer, 'bandpass', 650, .45);
+    // Independent stereo textures keep the sound spacious without recordings.
+    const buffer = context.createBuffer(2, context.sampleRate * 6, context.sampleRate);
+    const softBuffer = context.createBuffer(2, context.sampleRate * 6, context.sampleRate);
+    for (let channel = 0; channel < 2; channel++) {
+      const samples = buffer.getChannelData(channel), soft = softBuffer.getChannelData(channel);
+      let previous = 0;
+      for (let i = 0; i < samples.length; i++) {
+        samples[i] = Math.random() * 2 - 1;
+        previous = previous * .97 + samples[i] * .03;
+        soft[i] = previous * 3;
+      }
+    }
+    wind = noiseLayer(softBuffer, 'bandpass', 650, .45);
     surf = noiseLayer(buffer, 'lowpass', 950, .5);
     rain = noiseLayer(buffer, 'highpass', 1400, .3);
+    rainBody = noiseLayer(buffer, 'lowpass', 1700, .45);
+    water = noiseLayer(buffer, 'bandpass', 850, .4);
     const oscillator = context.createOscillator(), gain = context.createGain();
     oscillator.type = 'sine'; oscillator.frequency.value = 90; gain.gain.value = 0;
     oscillator.connect(gain); gain.connect(master); oscillator.start(); sources.add(oscillator);
@@ -113,8 +125,11 @@ export function initAmbient() {
     else if (family === 'space') { windLevel = .012; windFrequency = 180; humLevel = .012; humFrequency = 55; }
     else if (family === 'city') { windLevel = .07 + Math.sin(t * .09) * .025; windFrequency = 220; humLevel = .012; }
     else windLevel = .04 + Math.sin(t * .1) * .015;
-    if (weather === 'rain') { rainLevel = .11; windLevel += .025; }
+    if (weather === 'drizzle') { rainLevel = .045; windLevel += .01; }
+    else if (weather === 'rain') { rainLevel = .11; windLevel += .025; }
+    else if (weather === 'heavy-rain') { rainLevel = .14; windLevel += .055; }
     else if (weather === 'storm') { rainLevel = .15; windLevel += .075; }
+    else if (weather === 'cloudy') { windLevel += .018; humLevel += .002; }
     else if (weather === 'snow') { windLevel += .025; windFrequency = 900; }
     else if (weather === 'blizzard') { windLevel += .16; windFrequency = 800; rainLevel = .018; }
     else if (weather === 'fog') { windLevel *= .65; humLevel += .004; }
@@ -124,8 +139,17 @@ export function initAmbient() {
     else if (weather === 'cyclone') { windLevel += .23; rainLevel = .11; windFrequency = 600; }
     else if (weather === 'flood') { surfLevel = .25 + Math.sin(t * .2) * .06; windLevel += .04; }
     else if (weather === 'earthquake') { humLevel += .02; humFrequency = 45; }
-    target(wind.gain.gain, windLevel); target(wind.filter.frequency, windFrequency, 2);
-    target(surf.gain.gain, surfLevel, 2); target(rain.gain.gain, rainLevel); target(hum.gain.gain, humLevel); target(hum.source.frequency, humFrequency, 2);
+    const showerSwell = .92 + Math.sin(t * .19) * .055 + Math.sin(t * .43) * .025;
+    let waterLevel = /waterfall|river|cascade/.test(scene) ? .16 : /lake|lagoon|oasis/.test(scene) ? .065 : 0;
+    if (weather === 'flood') waterLevel = .2;
+    target(wind.gain.gain, windLevel * (1 + Math.sin(t * .27) * .08));
+    target(wind.filter.frequency, windFrequency * (1 + Math.sin(t * .11) * .12), 2);
+    target(surf.gain.gain, surfLevel, 2);
+    target(water.gain.gain, waterLevel * (.9 + Math.sin(t * .31) * .1), 2);
+    target(water.filter.frequency, 850 + Math.sin(t * .17) * 120, 2);
+    target(rain.gain.gain, rainLevel * showerSwell);
+    target(rainBody.gain.gain, rainLevel * .65 * showerSwell);
+    target(hum.gain.gain, humLevel); target(hum.source.frequency, humFrequency, 2);
     if (t >= nextChirp) {
       nextChirp = t + 8 + Math.random() * 11;
       const hour = new Date().getHours(), night = hour < 5 || hour >= 18;
@@ -138,7 +162,7 @@ export function initAmbient() {
   }
 
   async function unlock() {
-    if (destroyed) return false;
+    if (destroyed || !enabled || document.hidden) return false;
     // Only explicit input can create the audio context. Visibility events never do.
     if (!unlocked && navigator.userActivation?.isActive === false) return false;
     try {
@@ -149,8 +173,9 @@ export function initAmbient() {
       }
       if (document.hidden || !enabled) { await context.suspend(); return false; }
       await context.resume();
+      if (!enabled || document.hidden || destroyed) { await context.suspend(); return false; }
       unlocked = context.state === 'running';
-      if (unlocked) { target(master.gain, .12, .6); update(); }
+      if (unlocked) { target(master.gain, outputLevel(), .6); update(); }
       notify(); return unlocked;
     } catch { return false; }
   }
@@ -167,27 +192,39 @@ export function initAmbient() {
     notify(); return enabled;
   }
 
+  function setVolume(value) {
+    const number = Number(value);
+    if (!Number.isFinite(number)) return volume;
+    volume = Math.min(1, Math.max(0, number));
+    if (master) target(master.gain, enabled && !document.hidden ? outputLevel() : 0, .15);
+    notify(); return volume;
+  }
+
   function thunder() {
     if (!active() || context.currentTime - lastThunder < 5) return;
     const t = context.currentTime; lastThunder = t;
-    // A soft, low-frequency rumble: no explosive onset or volume spike.
+    // A gradual, rolling synthetic rumble with a longer distant tail.
     const source = context.createBufferSource(), filter = context.createBiquadFilter(), gain = context.createGain();
-    source.buffer = wind.source.buffer; filter.type = 'lowpass'; filter.frequency.value = 150; filter.Q.value = .5;
-    gain.gain.setValueAtTime(0, t); gain.gain.linearRampToValueAtTime(.32, t + .8); gain.gain.exponentialRampToValueAtTime(.0001, t + 3.6);
-    source.connect(filter); filter.connect(gain); gain.connect(master); source.onended = () => { source.disconnect(); filter.disconnect(); gain.disconnect(); }; source.start(t); source.stop(t + 3.7);
+    source.buffer = wind.source.buffer; filter.type = 'lowpass'; filter.frequency.setValueAtTime(280, t); filter.frequency.exponentialRampToValueAtTime(95, t + 5); filter.Q.value = .5;
+    gain.gain.setValueAtTime(0, t); gain.gain.linearRampToValueAtTime(.38, t + .65); gain.gain.linearRampToValueAtTime(.2, t + 1.3); gain.gain.linearRampToValueAtTime(.28, t + 1.9); gain.gain.exponentialRampToValueAtTime(.0001, t + 5.3);
+    source.connect(filter); filter.connect(gain); gain.connect(master); source.onended = () => { source.disconnect(); filter.disconnect(); gain.disconnect(); }; source.start(t); source.stop(t + 5.4);
   }
   function visibilityChanged() {
     if (!context || destroyed) return;
     clearTimeout(suspendTimer);
     if (document.hidden) context.suspend().catch(() => {});
-    else if (enabled && unlocked) context.resume().then(() => { target(master.gain, .12, .6); update(); }).catch(() => {});
+    else if (enabled && unlocked) context.resume().then(() => {
+      if (!enabled || document.hidden || destroyed) { context?.suspend().catch(() => {}); return; }
+      target(master.gain, outputLevel(), .6); update();
+    }).catch(() => {});
   }
   document.addEventListener('visibilitychange', visibilityChanged);
   return {
-    unlock, setEnabled, thunder,
+    unlock, setEnabled, setVolume, thunder,
     isEnabled: () => enabled,
+    getVolume: () => volume,
     setScene(name) { scene = String(name || 'islands').toLowerCase(); musicStep = 0; update(); },
-    setWeather(name) { weather = ['rain', 'storm', 'snow', 'blizzard', 'fog', 'sandstorm', 'wind', 'hail', 'cyclone', 'flood', 'earthquake', 'aurora', 'meteors', 'fireflies', 'leaves'].includes(name) ? name : 'clear'; update(); },
+    setWeather(name) { weather = ['drizzle', 'rain', 'heavy-rain', 'storm', 'cloudy', 'snow', 'blizzard', 'fog', 'sandstorm', 'wind', 'hail', 'cyclone', 'flood', 'earthquake', 'aurora', 'meteors', 'fireflies', 'leaves'].includes(name) ? name : 'clear'; update(); },
     destroy() {
       if (destroyed) return;
       destroyed = true; clearInterval(timer); clearInterval(musicTimer); clearTimeout(suspendTimer);

@@ -44,3 +44,5 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadController && !refreshing) { refreshing = true; location.reload(); } });
   navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(async registration => { registration.update().catch(() => {}); await navigator.serviceWorker.ready; $('#offline-status').textContent = '✓ Games ready for offline adventures'; }).catch(() => { $('#offline-status').textContent = 'Online arcade ready'; });
 }
+
+document.getElementById('copy-whatsapp')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText('@imons');toast('WhatsApp username copied: @imons');}catch{toast('WhatsApp: @imons');}});
