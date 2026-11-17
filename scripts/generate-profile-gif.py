@@ -48,6 +48,11 @@ def render_frame(original, frame_number, renderer):
             brightness = 0.42 + 0.58 * (1 + math.sin(angle + star_number)) / 2
             node.set("opacity", f"{brightness:.2f}")
             star_number += 1
+        if "cloud-drift" in classes:
+            node.set("transform", f"translate({round(6 * math.sin(angle))} 0)")
+        if "river-flow" in classes:
+            node.set("transform", f"translate({round(5 * math.sin(angle))} 0)")
+            node.set("opacity", f"{.5 + .25 * math.sin(angle):.2f}")
         if "cursor" in classes:
             node.set("opacity", "1" if frame_number % 20 < 10 else "0")
         # The small floating collectible catches the light without flashing.

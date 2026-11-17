@@ -7,10 +7,10 @@ A buildless GitHub Pages site in `docs/`, with original pixel scenery, browser g
 Use Node.js 22+ and Python 3.10+. The site has no npm runtime dependencies.
 
 ```sh
-python3 scripts/serve.py --directory docs
+python3 scripts/serve.py
 ```
 
-Open `http://127.0.0.1:4173/`. For a project-path check, serve the repository's parent folder and open this checkout's `docs/` path. Test keyboard and touch controls, narrow screens, reduced motion, dialog focus restoration, and offline reload after a successful first visit.
+Open `http://127.0.0.1:4173/docs/`. This preview preserves the same relative project-path behavior as GitHub Pages. Test keyboard and touch controls, narrow screens, reduced motion, dialog focus restoration, and offline reload after a successful first visit.
 
 ```sh
 node --test tests/*.test.mjs
@@ -46,7 +46,7 @@ Dev Slots is a free collectible toy. Spins have no payment or wager, and XP/card
 
 ## Artwork
 
-Pixel scenes and game graphics are original code/vector artwork. Font license files are in `docs/fonts/`. Regenerate the profile GIF with `python3 scripts/generate-profile-gif.py` after installing Pillow and `rsvg-convert` (librsvg); its SVG remains the editable source and reduced-motion alternative.
+Interactive pixel scenes, the globe, and game graphics use original code/vector artwork. The three illustrated landscape backgrounds use original AI-generated artwork; generation prompts and provenance are in `docs/art/PROMPTS.md`. Font license files are in `docs/fonts/`. Regenerate the profile GIF with `python3 scripts/generate-profile-gif.py` after installing Pillow and `rsvg-convert` (librsvg); its SVG remains the editable source and reduced-motion alternative.
 
 ## Gridworks campaign
 
@@ -55,3 +55,11 @@ Pixel scenes and game graphics are original code/vector artwork. Font license fi
 The original storyline follows an engineer and NOVA reconnecting a fragmented world. Milestone chapters use rainbow badges. The game supports keyboard construction, touch pan/zoom, map overlays, fullscreen, pause/speed controls, and sound off by default.
 
 The world atlas shows 18 cities across four fictional continents and five countries. Top-down and angled cameras, vivid terrain and Cyber palettes, and Auto/Low/High quality controls are available. FPS is measured from animation frames; the site does not claim to read GPU utilization. Automatic quality lowers render resolution on sustained slow frames. Simulation network analysis runs on simulation steps, not every fractional animation frame.
+
+Regenerate the large README entrance button with `uv run --python 3.13 --with pillow python scripts/generate-entry-button.py`. Its static PNG is the reduced-motion alternative.
+
+The expanded art collection has 13 landscapes and 33 presets. `?scene=waterfall-valley`, `?scene=twilight-lake`, and `?scene=neon-forest` link into individual worlds. The illustrated assets total about 1.61 MB and are cached for offline use. The globe renders an Earth-inspired sphere using an original hand-drawn texture; campaign countries and city positions remain fictional.
+
+The profile now includes an animated entry button and a controller-themed arcade link. The About card has wave, code, and play poses with manual controls and reduced-motion support. Gridworks opens its quick-start guide after the first story briefing; GUIDE reopens the button reference, first connections, ISP pricing, and save instructions.
+
+Live mode follows the visitor’s browser time and automatically rotates phase-appropriate illustrated scenes at 1, 5, 15 or 60-minute intervals. Manual scenery selection disables rotation. Rotation pauses in hidden tabs and with Motion Off or reduced motion. Quick weather buttons preview rain, snow and storms; unavailable real weather uses a clearly labeled decorative firefly/wind fallback.

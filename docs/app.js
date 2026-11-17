@@ -1,3 +1,4 @@
+import { initPlayerCard } from './player-card.js';
 import { initExperience } from './experience.js';
 import { initArcade } from './arcade.js';
 import { initLudo } from './ludo.js';
@@ -13,6 +14,7 @@ let toastTimer;
 function toast(message) { $('#toast').textContent = message; $('#toast').classList.add('visible'); clearTimeout(toastTimer); toastTimer = setTimeout(() => $('#toast').classList.remove('visible'), 3500); }
 document.addEventListener('imon:toast', event => toast(event.detail));
 initExperience();
+initPlayerCard();
 initArcade(); initLudo(); initPuzzle(); initSlots(); initRacer(); initQuiz(); initNews(); initGameSoundControls();
 document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
   const filter = button.dataset.filter; let count = 0;

@@ -1,4 +1,21 @@
-/** Original procedural pixel scenery. No downloaded artwork or runtime dependencies. */
+/** Original pixel worlds: procedural scenes and locally hosted, original illustrated landscapes. */
+export const WORLD_ART = {
+  'waterfall-valley': { name: 'Waterfall Valley', file: 'waterfall-valley', focus: .55 },
+  'twilight-lake': { name: 'Twilight Lake', file: 'twilight-lake', focus: .52 },
+  'neon-forest': { name: 'Neon Forest', file: 'neon-forest', focus: .52 }
+};
+const artworkCache = new Map();
+function requestArtwork(name, ready) {
+  if (!WORLD_ART[name] || typeof Image === 'undefined') return null;
+  let record = artworkCache.get(name);
+  if (record) { if (!record.loaded) record.listeners.add(ready); return record; }
+  const image = new Image(); image.decoding = 'async';
+  record = { image, loaded: false, listeners: new Set([ready]), fallback: false }; artworkCache.set(name, record);
+  image.onload = () => { record.loaded = true; for (const callback of record.listeners) callback(); record.listeners.clear(); };
+  image.onerror = () => { if (!record.fallback) { record.fallback = true; image.src = new URL(`./art/${WORLD_ART[name].file}.png`, import.meta.url).href; } };
+  image.src = new URL(`./art/${WORLD_ART[name].file}.webp`, import.meta.url).href;
+  return record;
+}
 const PALETTES = {
   morning: { sky: ['#8ab8e0', '#a5d4e6', '#c6e8df', '#f4edc4'], mountain: ['#6c9a9c', '#79a991', '#90b68a'], cloud: '#e3efeb', cloudLight: '#fff4d9', grass: '#b1d98d', grassLight: '#edf5be', grassShade: '#6ba67c', dirt: '#817166', dirtLight: '#b29b7d', dirtDark: '#57626b', water: '#84cfde', waterLight: '#e7fff5', leaf: '#568f74', leafLight: '#a1cb88', trunk: '#978573', star: '#fff1d4' },
   twilight: { sky: ['#13132c', '#1b1b3a', '#232348', '#30305b'], mountain: ['#33335d', '#41416a', '#50517a'], cloud: '#575477', cloudLight: '#777294', grass: '#84e6b5', grassLight: '#c3f6c9', grassShade: '#38978f', dirt: '#53475f', dirtLight: '#796079', dirtDark: '#302e49', water: '#64bdcf', waterLight: '#b4f8ed', leaf: '#418e85', leafLight: '#70c599', trunk: '#66516a', star: '#c6b9e9' },
@@ -18,7 +35,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
   }
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let theme = 'daylight', scene = 'islands', transition = null, sceneTransition = null, motion = !reduced.matches, visible = true;
-  let width = 480, height = 240, portrait = false, clock = 0, last = 0, frame = 0, collected = 0;
+  let width = 480, height = 240, renderScale = 1, portrait = false, clock = 0, last = 0, frame = 0, collected = 0;
   let pointer = { x: 0, y: 0 }, particles = [], coins = [];
   let explorerOffset={x:0,y:0},explorerBounds=null,explorerDrag=null,suppressClick=false;
   const stars = Array.from({ length: 61 }, (_, i) => ({
@@ -140,9 +157,9 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
   function robot(x, y) {
     x+=explorerOffset.x;y+=explorerOffset.y;
     const transform=ctx.getTransform();
-    const sx=transform.a,sy=transform.d;
+    const sx=transform.a/renderScale,sy=transform.d/renderScale;
     const minTop=Math.max(height*.56,height-(portrait?195:138));
-    let left=sx*(x-1)+transform.e,top=sy*(y-30)+transform.f;
+    let left=sx*(x-1)+transform.e/renderScale,top=sy*(y-30)+transform.f/renderScale;
     const boxW=21*sx,boxH=32*sy;
     const safeLeft=Math.max(4,Math.min(width-boxW-4,left));
     const safeTop=Math.max(minTop,Math.min(height-boxH-8,top));
@@ -448,10 +465,47 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     }
     ctx.restore();
   }
+  function drawArtwork(record, p, light) {
+    const image = record.image, iw = image.naturalWidth, ih = image.naturalHeight;
+    const fit = Math.max(width/iw, height/ih), sw = width/fit, sh = height/fit;
+    const focus = WORLD_ART[scene].focus;
+    const sx = Math.max(0,Math.min(iw-sw,iw*focus-sw*.5));
+    const sy = Math.max(0,Math.min(ih-sh,ih*.56-sh*.5));
+    ctx.drawImage(image,sx,sy,sw,sh,0,0,width,height);
+    // Tint follows the existing smooth phase transition, retaining the painted colors.
+    ctx.globalAlpha = scene === 'neon-forest' ? .07 + (1-light)*.1 : .035 + (1-light)*.23;
+    rect(0,0,width,height,p.sky[0]);ctx.globalAlpha=1;
+    const t = motion ? clock : 0;
+    // Thin atmospheric clouds sit behind the UI; detail remains visible through them.
+    cloud(width*.08+Math.sin(t*.08)*9,height*.16,.8,p,.11);
+    cloud(width*.71-Math.sin(t*.07)*8,height*.26,.65,p,.09);
+    for(let i=0;i<15;i++) {
+      const x=width*(.12+((i*37)%76)/100),y=height*(.66+(i%5)*.047);
+      const shimmer=.18+(Math.sin(t*1.2+i*2.1)+1)*.13;
+      ctx.globalAlpha=shimmer;rect(x+Math.sin(t*.6+i)*3,y,3+i%4,1,scene==='neon-forest'?'#c5c0ff':'#d2ffef');
+    }ctx.globalAlpha=1;
+    for(let i=0;i<4;i++) {
+      const x=(width*.13+i*width*.22+t*(2+i*.4))%(width+15)-5,y=height*(.32+(i%3)*.05),flap=motion&&Math.sin(t*3+i)>0?1:-1;
+      ctx.globalAlpha=.65;rect(x,y,2,1,'#e3f0d8');rect(x-2,y+flap,2,1,'#e3f0d8');rect(x+2,y+flap,2,1,'#e3f0d8');
+    }ctx.globalAlpha=1;
+    if(light<.65 || scene==='neon-forest')for(let i=0;i<23;i++) {
+      const x=((i*43+13)%width)+Math.sin(t*.35+i)*3,y=height*(.52+((i*17)%41)/100)+Math.cos(t*.45+i)*3;
+      ctx.globalAlpha=.3+(Math.sin(t+i*1.7)+1)*.28;rect(x,y,1,1,i%3?'#e7ed99':'#b8eaff');
+    }ctx.globalAlpha=1;
+    const explorerY=height-(portrait?108:38),explorerX=width*(portrait?.54:.74);
+    // A small original stepping stone grounds the draggable explorer in every painting.
+    rect(explorerX-7,explorerY+1,35,4,'#132c3780');
+    robot(explorerX,explorerY);
+  }
   function draw() {
     const p=paletteNow(),light=lightNow();
+    ctx.setTransform(renderScale,0,0,renderScale,0,0);
+    const px=motion?pointer.x*2:0,py=motion?pointer.y:0;
+    const art = WORLD_ART[scene] ? artworkCache.get(scene) : null;
     if(transition&&transitionProgress()>=1)transition=null;
     ctx.imageSmoothingEnabled=false;
+    if(art?.loaded) drawArtwork(art,p,light);
+    else {
     for(let band=0;band<24;band++) {
       const position=band/23*3,index=Math.min(2,Math.floor(position)),ratio=position-index;
       const a=parseInt(p.sky[index].slice(1),16),b=parseInt(p.sky[index+1].slice(1),16);
@@ -468,7 +522,6 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       rect(x,y,s.size,s.size,p.star);
       if(s.size===2) {rect(x-2,y+1,6,1,p.star);rect(x+1,y-2,1,6,p.star);}
     }); ctx.globalAlpha=1;
-    const px=motion?pointer.x*2:0,py=motion?pointer.y:0;
     const drift=motion?Math.sin(clock*.12)*8:0;
     const cloudOpacity=.3+.52*light;
     cloud(23+drift+px*.3,height*.3,1,p,cloudOpacity);
@@ -521,7 +574,8 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     robot(width*.5-13,cy-8);
     ctx.restore();
     ctx.restore();
-    } else drawBiome(scene,p,cy,px,py);
+    } else drawBiome(WORLD_ART[scene]?'forest':scene,p,cy,px,py);
+    }
     // Coins track the translated scenery so visual targets and hit areas agree.
     coins.forEach(c=>coin({...c,x:c.x+Math.round(px),y:c.y+Math.round(py)},p));
     particles.forEach(pt=>{
@@ -564,7 +618,8 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     portrait=box.width<650&&box.height/box.width>.9;
     width=portrait?300:480;
     height=Math.max(190,Math.round(width*box.height/box.width));
-    canvas.width=width; canvas.height=height;
+    renderScale=WORLD_ART[scene]?2:1;
+    canvas.width=width*renderScale; canvas.height=height*renderScale;
     const collectedIds=new Set(coins.filter(c=>c.collected).map(c=>c.id));
     coins=[
       {id:0,x:width*.21,y:height-(portrait?173:126),phase:0},
@@ -657,17 +712,21 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       draw();schedule();
     },
     setScene(name) {
-      if(!['islands','forest','beach','desert','mountains','city','sakura','cave','space','cyberpunk'].includes(name)||name===scene)return;
+      if(!['islands','forest','beach','desert','mountains','city','sakura','cave','space','cyberpunk',...Object.keys(WORLD_ART)].includes(name)||name===scene)return;
       // One low-resolution snapshot provides a cheap scene dissolve; no second live renderer.
       if(motion) {
         try {
           const snapshot=typeof OffscreenCanvas==='function'?new OffscreenCanvas(width,height):document.createElement('canvas');
           snapshot.width=width;snapshot.height=height;
-          snapshot.getContext('2d').drawImage(canvas,0,0);
+          snapshot.getContext('2d').drawImage(canvas,0,0,width,height);
           sceneTransition={image:snapshot,start:clock};
         } catch { sceneTransition=null; }
       } else sceneTransition=null;
-      scene=name;draw();schedule();
+      scene=name;
+      const dissolve=sceneTransition;
+      if(renderScale !== (WORLD_ART[scene]?2:1)) { resize(); sceneTransition=dissolve; }
+      if(WORLD_ART[scene])requestArtwork(scene,()=>{draw();schedule();});
+      draw();schedule();
     },
     setMotion,
     resetObjects() { explorerOffset={x:0,y:0};explorerDrag=null;sceneTransition=null;draw(); },

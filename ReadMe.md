@@ -8,6 +8,20 @@
 </p>
 
 <p align="center">
+  <a href="https://sabbirimon.github.io/sabbirimon/" aria-label="Enter IMON World">
+    <picture>
+      <source media="(prefers-reduced-motion: reduce)" srcset="assets/enter-world.png">
+      <img src="assets/enter-world.gif" width="760" alt="ENTER IMON WORLD — Let's Code Together. Open the pixel worlds, arcade, and Gridworks campaign.">
+    </picture>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://sabbirimon.github.io/sabbirimon/#arcade"><img src="assets/play-games.svg" width="440" alt="🎮 PLAY GAMES — Snake, Ludo, racing and Gridworks"></a><br>
+  <sub>Yes, there are playable games inside. Pick a side quest and chase a high score.</sub>
+</p>
+
+<p align="center">
   <a href="https://sabbirimon.github.io/sabbirimon/"><strong>Explore my world ↗</strong></a>
   &nbsp; · &nbsp;
   <a href="https://sabbirimon.github.io/sabbirimon/#projects">Selected projects</a>
@@ -16,6 +30,20 @@
   &nbsp; · &nbsp;
   <a href="https://linkedin.com/in/sabbirimon">LinkedIn</a>
 </p>
+
+### Choose your world
+
+A little preview of the live site. Pick a landscape to enter it.
+
+<table>
+  <tr>
+    <td align="center" width="33%"><a href="https://sabbirimon.github.io/sabbirimon/?scene=waterfall-valley"><img src="docs/art/waterfall-valley.webp" width="280" alt="Waterfall Valley: a bright pixel village, emerald cliffs, and cascading blue water"><br><strong>Waterfall Valley ↗</strong></a><br><sub>Bright skies · Living landscapes</sub></td>
+    <td align="center" width="33%"><a href="https://sabbirimon.github.io/sabbirimon/?scene=twilight-lake"><img src="docs/art/twilight-lake.webp" width="280" alt="Twilight Lake: a mountain lake reflecting gold and magenta skies"><br><strong>Twilight Lake ↗</strong></a><br><sub>Golden skies · Mountain reflections</sub></td>
+    <td align="center" width="33%"><a href="https://sabbirimon.github.io/sabbirimon/?scene=neon-forest"><img src="docs/art/neon-forest.webp" width="280" alt="Neon Forest: luminous magenta trees beside a cyan river"><br><strong>Neon Forest ↗</strong></a><br><sub>Glowing woods · Firefly nights</sub></td>
+  </tr>
+</table>
+
+**[Explore 33 scenery presets](https://sabbirimon.github.io/sabbirimon/)** · **[Play the arcade](https://sabbirimon.github.io/sabbirimon/#arcade)** · **[Build your world in Gridworks](https://sabbirimon.github.io/sabbirimon/gridworks/)**
 
 ## IMON · Let’s Code Together
 

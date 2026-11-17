@@ -531,7 +531,25 @@ $('#campaign-button').onclick = () => { renderCampaign(); $('#campaign-dialog').
 $('#story-button').onclick = () => showStory(sandbox ? meta.active : state.levelIndex);
 $('#story-dialog').addEventListener('click', event => { const button = event.target.closest('[data-story-chapter]'); if (button) showStory(Number(button.dataset.storyChapter)); });
 $('#starter-guide').addEventListener('click', event => { const button = event.target.closest('[data-starter]'); if (button) { selectTool(button.dataset.starter); hover = { x: button.dataset.starter === 'coal' ? 13 : 14, y: 11 }; closeMobilePanel(); draw(); } });
-$('#help-button').onclick = () => $('#help-dialog').showModal();
+// First-time players see the quick start after the opening story closes, never
+// stacked above another dialog. GUIDE remains available for later reference.
+let quickStartSeen = false;
+try { quickStartSeen = localStorage.getItem('imon-gridworks-guide-v1') === 'seen'; } catch {}
+function openQuickStart() {
+  if (document.querySelector('dialog[open]')) return;
+  $('#help-dialog').showModal();
+  $('#help-dialog').querySelector('button[aria-label="Close guide"]')?.focus({ preventScroll: true });
+}
+$('#help-button').onclick = openQuickStart;
+$('#help-dialog').addEventListener('close', () => {
+  quickStartSeen = true;
+  try { localStorage.setItem('imon-gridworks-guide-v1', 'seen'); } catch {}
+});
+$('#story-dialog').addEventListener('close', () => {
+  if (!quickStartSeen && !sandbox && state?.levelIndex === 0 && meta.completed.length === 0) {
+    requestAnimationFrame(openQuickStart);
+  }
+});
 $('#sandbox-button').onclick = () => { loadCity(LEVELS.length - 1, true); $('#campaign-dialog').close(); closeMobilePanel(); };
 $('#next-mission').onclick = () => { if (state.levelIndex >= LEVELS.length - 1) { renderCampaign(); $('#campaign-dialog').showModal(); } else loadCity(state.levelIndex + 1); };
 $('#sound-button').onclick = () => { const on = setSound(!isSoundEnabled()); $('#sound-button').setAttribute('aria-pressed', String(on)); $('#sound-button span').textContent = `SOUND ${on ? 'ON' : 'OFF'}`; if (on) playSound('start'); };

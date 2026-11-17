@@ -2,7 +2,7 @@
 export const WEATHER_TYPES = ['clear','drizzle','rain','storm','snow','blizzard','fog','wind','hail','sandstorm','cyclone','flood','earthquake','aurora','meteors','fireflies','leaves'];
 export function initWeather({ onThunder = () => {} } = {}) {
   const canvas = document.createElement('canvas');canvas.id='weather-layer';canvas.setAttribute('aria-hidden','true');document.body.append(canvas);
-  Object.assign(canvas.style,{position:'fixed',inset:'0',width:'100%',height:'100%',pointerEvents:'none',zIndex:'6',opacity:'.32',imageRendering:'pixelated'});
+  Object.assign(canvas.style,{position:'fixed',inset:'0',width:'100%',height:'100%',pointerEvents:'none',zIndex:'6',opacity:'.7',imageRendering:'pixelated'});
   const ctx=canvas.getContext('2d'),hero=document.getElementById('pixel-world'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
   let type='clear',motion=true,frame=0,last=0,width=0,height=0,lastFlash=0,flashUntil=0,destroyed=false;
   const particles=Array.from({length:130},(_,i)=>({x:Math.random(),y:Math.random(),speed:.05+Math.random()*.24,size:i%4?1:2,phase:Math.random()*Math.PI*2}));
@@ -52,5 +52,5 @@ export function initWeather({ onThunder = () => {} } = {}) {
   }
   function run(){if(frame)cancelAnimationFrame(frame);frame=0;last=0;lastFlash=performance.now();flashUntil=0;if(hero)hero.style.translate='0px 0px';if(!ctx)return;ctx.clearRect(0,0,width,height);if(type!=='clear'&&!document.hidden){if(motion&&!reduced.matches)frame=requestAnimationFrame(draw);else draw(0,true);}}
   const onReduced=()=>run();addEventListener('resize',resize,{passive:true});document.addEventListener('visibilitychange',run);reduced.addEventListener('change',onReduced);resize();
-  return{setWeather(value){type=WEATHER_TYPES.includes(value)?value:'clear';document.body.dataset.weather=type;run();},setMotion(value){motion=Boolean(value);run();},destroy(){destroyed=true;if(frame)cancelAnimationFrame(frame);removeEventListener('resize',resize);document.removeEventListener('visibilitychange',run);reduced.removeEventListener('change',onReduced);if(hero)hero.style.translate='0px 0px';canvas.remove();}};
+  return{setWeather(value){const next=WEATHER_TYPES.includes(value)?value:'clear';if(next===type)return;type=next;canvas.style.opacity=['fog','flood','sandstorm'].includes(type)?'.55':'.8';document.body.dataset.weather=type;run();},setMotion(value){motion=Boolean(value);run();},destroy(){destroyed=true;if(frame)cancelAnimationFrame(frame);removeEventListener('resize',resize);document.removeEventListener('visibilitychange',run);reduced.removeEventListener('change',onReduced);if(hero)hero.style.translate='0px 0px';canvas.remove();}};
 }

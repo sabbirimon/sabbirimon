@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="240" viewBox="0 0 880 240" role="img" aria-labelledby="play-title play-description">
+  <title id="play-title">Play Games — IMON Arcade</title>
+  <desc id="play-description">A bright cyan and magenta pixel controller beside Play Games. Snake, Ludo, Racing, and Gridworks.</desc>
+  <defs>
+    <linearGradient id="arcade-border" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#34efff"/>
+      <stop offset=".48" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#ff49dc"/>
+    </linearGradient>
+    <linearGradient id="arcade-face" x1="0" x2="1">
+      <stop stop-color="#14254b"/>
+      <stop offset="1" stop-color="#211240"/>
+    </linearGradient>
+    <style>
+      .spark { animation: arcade-spark 2.8s steps(2,end) infinite; }
+      .spark-late { animation-delay: 1.4s; }
+      .arrow { animation: arcade-nudge 2.8s steps(2,end) infinite; }
+      @keyframes arcade-spark { 0%,70%,100% {opacity:1} 75%,90% {opacity:.3} }
+      @keyframes arcade-nudge { 0%,60%,100% {transform:translateX(0)} 70%,85% {transform:translateX(6px)} }
+      @media (prefers-reduced-motion:reduce) { .spark,.arrow { animation:none; } }
+    </style>
+  </defs>
+  <path fill="#050919" d="M24 0h832v12h12v12h12v192h-12v12h-12v12H24v-12H12v-12H0V24h12V12h12z"/>
+  <path fill="url(#arcade-border)" d="M24 8h832v12h12v12h4v176h-4v12h-12v12H24v-12H12v-12H8V32h4V20h12z"/>
+  <path fill="url(#arcade-face)" d="M28 20h824v12h8v176h-8v12H28v-12h-8V32h8z"/>
+  <path fill="#ffffff" opacity=".09" d="M32 32h816v4H32zm0 172h816v4H32z"/>
+  <path fill="#ff49dc" opacity=".12" d="M40 48h168v144H40z"/>
+  <path fill="#34efff" opacity=".2" d="M44 44h32v4H48v28h-4zm132 0h32v32h-4V48h-28zM44 164h4v28h28v4H44zm160 0h4v32h-32v-4h28z"/>
+  <g shape-rendering="crispEdges">
+    <path fill="#060c20" d="M76 72h100v12h16v20h12v56h-12v12h-24v-12h-12v-12H96v12H84v12H60v-12H48v-56h12V84h16z" transform="translate(4 8)"/>
+    <path fill="#9df8ff" d="M76 72h100v12h16v20h12v56h-12v12h-24v-12h-12v-12H96v12H84v12H60v-12H48v-56h12V84h16z"/>
+    <path fill="#30dcec" d="M76 84h100v12h16v60h-16v-12h-12v-8H88v8H76v12H60v-52h12V92h4z"/>
+    <path fill="#182749" d="M80 100h16v16h16v16H96v16H80v-16H64v-16h16z"/>
+    <path fill="#ffe574" d="M160 100h16v16h-16z"/>
+    <path fill="#ff49dc" d="M176 116h16v16h-16z"/>
+    <path fill="#7351f5" d="M144 116h16v16h-16z"/>
+    <path fill="#ffffff" d="M160 132h16v12h-16z"/>
+    <path fill="#182749" d="M120 116h12v8h-12z"/>
+    <path class="spark" fill="#fff18a" d="M64 40h8v8h8v8h-8v8h-8v-8h-8v-8h8z"/>
+    <path class="spark spark-late" fill="#ff7ae6" d="M188 176h8v8h8v8h-8v8h-8v-8h-8v-8h8z"/>
+  </g>
+  <g font-family="'Courier New',monospace" font-weight="900">
+    <text x="240" y="66" font-size="18" letter-spacing="5" fill="#ff82e7">IMON ARCADE</text>
+    <text x="242" y="132" font-size="60" letter-spacing="1" fill="#070b20">PLAY GAMES</text>
+    <text x="238" y="128" font-size="60" letter-spacing="1" fill="#f4fdff">PLAY GAMES</text>
+    <text x="240" y="172" font-size="22" fill="#b3faff">SNAKE · LUDO · RACING · GRIDWORKS</text>
+  </g>
+  <path class="arrow" fill="#ff65df" d="M754 80h16v16h16v16h16v16h-16v16h-16v16h-16v-32h-24v-16h24z"/>
+  <path fill="#34efff" d="M240 190h104v4H240z"/>
+  <path fill="#a78bfa" d="M352 190h40v4h-40z"/>
+  <path fill="#ff65df" d="M400 190h16v4h-16z"/>
+</svg>
