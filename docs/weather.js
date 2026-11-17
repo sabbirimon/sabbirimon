@@ -1,5 +1,5 @@
 /** Original, bounded atmospheric weather. Visual atmosphere is separate from weather data. */
-export const WEATHER_TYPES = ['clear','cloudy','drizzle','rain','heavy-rain','storm','lightning','snow','blizzard','fog','wind','hail','sandstorm','cyclone','flood','earthquake','aurora','meteors','fireflies','leaves'];
+export const WEATHER_TYPES = ['clear','glass-rain','glass-fog','cloudy','drizzle','rain','heavy-rain','storm','lightning','snow','blizzard','fog','wind','hail','sandstorm','cyclone','flood','earthquake','aurora','meteors','fireflies','leaves'];
 const INTENSITIES = { gentle: .55, normal: .78, vivid: 1 };
 export function initWeather({ onThunder = () => {}, mount = document.body, id = 'weather-layer' } = {}) {
   const viewport = mount === document.body || mount === document.documentElement;
@@ -36,6 +36,28 @@ export function initWeather({ onThunder = () => {}, mount = document.body, id = 
       ctx.globalAlpha=amount;softEllipse(x+size*.7,y+size*.15,size*.95,size*.25,color);softEllipse(x+size*.35,y,size*.48,size*.23,light);softEllipse(x+size*.91,y+size*.04,size*.55,size*.2,color);
     }ctx.globalAlpha=1;
   }
+  function glassWeather(seconds,dt,fogged){
+    const strength=INTENSITIES[intensity];
+    if(fogged){
+      ctx.fillStyle=`rgba(208,225,231,${.035*power*strength})`;ctx.fillRect(0,0,width,height);
+      for(let i=0;i<6;i++){const drift=Math.sin(seconds*.09+i)*width*.08;softEllipse((i%3)*width*.5+drift,(i<3?0:1)*height,width*.58,height*.55,`rgba(220,235,239,${.12*strength*density*power})`);}
+    }
+    const count=Math.min(230,Math.round((fogged?95:150)*density*strength));
+    for(let i=0;i<count;i++){
+      const p=particles[i],sliding=i%7===0,cycle=(seconds*.22+p.phase)%6;
+      const speed=sliding&&cycle>1.4?(fogged?.018:.045)*p.speed*power:0;
+      p.y=(p.y+speed*dt)%1;
+      const x=p.x*width+Math.sin(seconds*.38+p.phase)*(sliding?.65:.05),y=p.y*height;
+      const r=(sliding?2.3+p.depth*2.2:.9+p.depth*1.3)*(fogged?.7:1),stretch=sliding?1.45:1;
+      if(sliding&&speed){
+        const trail=ctx.createLinearGradient(x,y-r*12,x,y);trail.addColorStop(0,'rgba(190,218,233,0)');trail.addColorStop(1,'rgba(218,241,252,.2)');ctx.strokeStyle=trail;ctx.lineWidth=r*.7;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x+.5,y-r*12);ctx.quadraticCurveTo(x-1,y-r*5,x,y);ctx.stroke();
+      }
+      const lens=ctx.createRadialGradient(x-r*.35,y-r*.4,.1,x,y,r*1.5);lens.addColorStop(0,'rgba(226,247,255,.14)');lens.addColorStop(.55,'rgba(21,43,62,.09)');lens.addColorStop(.9,'rgba(6,20,36,.58)');lens.addColorStop(1,'rgba(205,235,247,.5)');
+      ctx.fillStyle=lens;ctx.beginPath();ctx.ellipse(x,y,r,r*stretch,0,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='rgba(242,252,255,.9)';ctx.lineWidth=.55;ctx.beginPath();ctx.arc(x-r*.08,y-r*.12,r*.7,Math.PI*1.05,Math.PI*1.7);ctx.stroke();
+      ctx.strokeStyle='rgba(154,207,229,.28)';ctx.beginPath();ctx.arc(x,y+r*.2,r*.78,.15,1.4);ctx.stroke();
+    }
+  }
   function lightning(time,seconds,still){
     if(still)return;
     if(time>=nextLightning){strikeAt=time;strikeX=.18+((Math.floor(seconds)*37)%65)/100;nextLightning=time+Math.max(9000,11500/Math.sqrt(density));try{onThunder();}catch{}}
@@ -55,6 +77,7 @@ export function initWeather({ onThunder = () => {}, mount = document.body, id = 
     if(type==='clear'||document.hidden||!visible)return;
     const dt=still||last===null?0:Math.min(.05,Math.max(0,(time-last)/1000));if(!still){last=time;animationTime+=dt;}
     const seconds=animationTime,strength=INTENSITIES[intensity],snow=['snow','blizzard'].includes(type),wet=['drizzle','rain','heavy-rain','storm','hail','cyclone'].includes(type);
+    if(type==='glass-rain'||type==='glass-fog')glassWeather(seconds,dt,type==='glass-fog');
     if(['cloudy','storm','lightning','heavy-rain','cyclone'].includes(type))clouds(seconds,['storm','lightning','cyclone'].includes(type),strength);
     if(wet||snow||['sandstorm','leaves','fireflies','wind','earthquake'].includes(type)){
       const max={drizzle:62,rain:150,'heavy-rain':225,storm:235,hail:105,cyclone:240,snow:125,blizzard:200,sandstorm:135,leaves:38,fireflies:52,wind:70,earthquake:35}[type]||80;
@@ -119,7 +142,7 @@ export function initWeather({ onThunder = () => {}, mount = document.body, id = 
   if(!viewport&&typeof IntersectionObserver!=='undefined'){intersectionObserver=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;run({resetLightning:true});},{rootMargin:'30px'});intersectionObserver.observe(mount);}
   resize();
   return{
-    setWeather(value){const next=WEATHER_TYPES.includes(value)?value:'clear';if(next===type)return;type=next;canvas.style.imageRendering=['drizzle','rain','heavy-rain','storm','lightning','wind','cloudy','fog','cyclone'].includes(type)?'auto':'pixelated';if(viewport)document.body.dataset.weather=type;run({resetLightning:true});},
+    setWeather(value){const next=WEATHER_TYPES.includes(value)?value:'clear';if(next===type)return;type=next;canvas.style.imageRendering=['glass-rain','glass-fog','drizzle','rain','heavy-rain','storm','lightning','wind','cloudy','fog','cyclone'].includes(type)?'auto':'pixelated';if(viewport)document.body.dataset.weather=type;run({resetLightning:true});},
     setIntensity(value){const next=Object.hasOwn(INTENSITIES,value)?value:'vivid';if(next===intensity)return;intensity=next;applyOpacity();run();},
     setDensity(value){const next=clampSetting(value);if(next===density)return;density=next;run();},
     setPower(value){const next=clampSetting(value);if(next===power)return;power=next;applyOpacity();run();},

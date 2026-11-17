@@ -255,7 +255,7 @@ export function initAmbient() {
     isEnabled: () => enabled,
     getVolume: () => volume,
     setScene(name) { scene = String(name || 'islands').toLowerCase(); musicStep = 0; update(); },
-    setWeather(name) { weather = ['drizzle', 'rain', 'heavy-rain', 'storm', 'cloudy', 'snow', 'blizzard', 'fog', 'sandstorm', 'wind', 'hail', 'cyclone', 'flood', 'earthquake', 'aurora', 'meteors', 'fireflies', 'leaves'].includes(name) ? name : 'clear'; update(); },
+    setWeather(name) { if(name==='glass-rain')name='rain';if(name==='glass-fog')name='fog';if(name==='lightning')name='storm';weather = ['drizzle', 'rain', 'heavy-rain', 'storm', 'cloudy', 'snow', 'blizzard', 'fog', 'sandstorm', 'wind', 'hail', 'cyclone', 'flood', 'earthquake', 'aurora', 'meteors', 'fireflies', 'leaves'].includes(name) ? name : 'clear'; update(); },
     destroy() {
       if (destroyed) return;
       destroyed = true; clearInterval(timer); clearInterval(musicTimer); clearTimeout(suspendTimer);

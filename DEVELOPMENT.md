@@ -83,3 +83,5 @@ These files help crawlers understand the site; indexing and ranking are not guar
 ### Final weather polish
 
 Rain uses layered smooth strokes with weather-dependent drop sizes, flow and gust angles; wind, fog, clouds and lightning use soft drawing with subtle reflection ripples. Snow, stars and firefly lights are intentionally small. Foreground trees sway, and wind turbines rotate faster as wind strength increases. Cyberpunk uses gentle, sparse drizzle and retains the sound preference. The main weather deck and World Studio share density, strength and intensity settings.
+
+Rain on glass and fogged glass are decorative window effects with the same intensity, density and strength controls. Lightning uses strength-controlled glows/reflections with deliberately spaced flashes. The Earthquake control opens a pixel city with a repeating building-collapse/rebuild vignette; it is visual decoration and never modifies Gridworks saves.

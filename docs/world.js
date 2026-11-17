@@ -325,7 +325,11 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       const buildingColors=[p.mountain[0],p.dirtDark,p.mountain[1]];
       for(let i=0;i<14;i++) {
         const x=i*width/14,w=width/14-3,edge=Math.abs(i-6.5)/6.5;
-        const h=30+Math.round(edge*55)+(i*13)%23;
+        const baseHeight=30+Math.round(edge*55)+(i*13)%23;
+        const quake=motion&&document.body.dataset.weather==='earthquake';
+        const phase=clock%12-i*.09;
+        const damage=quake?(phase<1?0:phase<4?Math.min(1,(phase-1)/1.8):phase<7?1:Math.max(0,1-(phase-7)/3)):0;
+        const h=Math.max(8,baseHeight*(1-damage*.72));
         rect(x,waterY-h,w,h,buildingColors[i%3]);rect(x+3,waterY-h-4,w-6,5,buildingColors[i%3]);
         if(i%4===0)rect(x+w/2,waterY-h-14,2,12,p.dirtLight);
         for(let wy=waterY-h+8;wy<waterY-5;wy+=9)for(let wx=x+5;wx<x+w-4;wx+=7) {
@@ -335,6 +339,10 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
           const sway=motion?Math.round(Math.sin(clock+row+i)*2):0;
           ctx.globalAlpha=.35-row*.06;rect(x+4+sway,waterY+8+row*8,w-8,2,p.waterLight);
         }ctx.globalAlpha=1;
+        if(damage>0){
+          for(let j=0;j<5;j++){const fall=(clock*1.6+j*.22+i*.1)%1;rect(x+j*w/5,waterY-baseHeight*(1-fall)*damage,2+j%2,2,j%2?'#81939d':'#c1b8a3');}
+          ctx.globalAlpha=damage*.38;rect(x-3,waterY-6,w+6,7,'#b7b3a2');ctx.globalAlpha=1;
+        }
       }
       rect(0,waterY,width,3,p.waterLight);
       const pierLeft=width*.5-(portrait?61:78),pierWidth=portrait?122:156;

@@ -83,3 +83,10 @@ test('smooth weather uses curves, tapered gradients and reflected lightning with
  weather.setWeather('lightning');h.step(1200);h.step(1280);assert(h.draws.some(d=>d[7]?.some(segment=>segment[0]==='quadratic')),'Reflection ripples accompany the bolt');
  weather.setWeather('snow');assert.equal(h.canvas.style.imageRendering,'pixelated');assert(h.draws.every(d=>d[2]<=2&&d[3]<=2),'Small snowflake sizes remain unchanged');weather.destroy();
 }));
+
+
+test('glass rain and condensation animate without blocking motion controls',()=>harness(h=>{
+ const weather=initWeather();
+ for(const type of ['glass-rain','glass-fog']){weather.setWeather(type);assert(h.draws.length>0);assert.equal(h.canvas.style.imageRendering,'auto');const a=h.step(1000),b=h.step(1040);assert.notDeepEqual(a,b);weather.setMotion(false);assert.equal(h.frames.size,0);weather.setMotion(true);assert.equal(h.frames.size,1);}
+ weather.destroy();
+}));
