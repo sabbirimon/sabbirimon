@@ -99,6 +99,16 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     const power=Number(document.body.dataset.weatherPower)||1;
     return force*power*(.55+Math.sin(clock*1.7+x*.03)*.35+Math.sin(clock*.8)*.1);
   }
+  function turbine(x,y,scale=1){
+    const windy=['wind','storm','cyclone','heavy-rain','blizzard'].includes(document.body.dataset.weather);
+    const power=Number(document.body.dataset.weatherPower)||1;
+    const angle=motion?clock*(windy?2.7:0.6)*power:0;
+    ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);
+    polygon([[-3,0],[3,0],[1,-44],[-1,-44]],'#b9cad6');rect(-2,-43,1,40,'#f1f3ec');
+    ctx.translate(0,-45);
+    for(let i=0;i<3;i++){ctx.save();ctx.rotate(angle+i*Math.PI*2/3);polygon([[-1,0],[2,-4],[1,-23],[-2,-19]],'#e3f5f2');ctx.restore();}
+    rect(-3,-3,6,6,'#789cb2');rect(-1,-1,2,2,'#b2f5df');ctx.restore();
+  }
   function tree(x, y, size, p) {
     ctx.save();ctx.translate(x,y);ctx.transform(1,0,-windLean(x),1,0,0);ctx.translate(-x,-y);
     const s = size;
@@ -534,7 +544,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       ctx.globalAlpha=a;
       const x=s.x*width,y=s.y*Math.min(height,400);
       rect(x,y,s.size,s.size,p.star);
-      if(s.size===2) {rect(x-2,y+1,6,1,p.star);rect(x+1,y-2,1,6,p.star);}
+      if(s.size===2) {rect(x-1,y,3,1,p.star);rect(x,y-1,1,3,p.star);}
     }); ctx.globalAlpha=1;
     const drift=motion?Math.sin(clock*.12)*8:0;
     const cloudOpacity=.3+.52*light;
@@ -590,6 +600,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     ctx.restore();
     } else drawBiome(WORLD_ART[scene]?'forest':scene,p,cy,px,py);
     }
+    if(!['space','cave','cyberpunk'].includes(scene)){turbine(width*.15,height-19,.72);turbine(width*.88,height-27,.52);}
     // Coins track the translated scenery so visual targets and hit areas agree.
     coins.forEach(c=>coin({...c,x:c.x+Math.round(px),y:c.y+Math.round(py)},p));
     particles.forEach(pt=>{

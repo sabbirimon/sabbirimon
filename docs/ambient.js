@@ -6,11 +6,13 @@
  */
 export function initAmbient() {
   let enabled = false, unlocked = false, destroyed = false, volume = .35;
+  const layerKeys = ['rain', 'wind', 'water', 'birds', 'crickets', 'music'];
+  let layers = { rain: false, wind: false, water: false, birds: false, crickets: true, music: false };
   let scene = 'islands', weather = 'clear', context = null, master = null;
   let wind = null, surf = null, rain = null, rainBody = null, water = null, hum = null;
-  let timer = null, musicTimer = null, suspendTimer = null, nextChirp = 0, lastThunder = -Infinity, musicStep = 0;
+  let timer = null, musicTimer = null, suspendTimer = null, nextChirp = 0, nextBird = 0, nextCricket = 0, lastThunder = -Infinity, musicStep = 0;
   const sources = new Set();
-  const notify = () => document.dispatchEvent(new CustomEvent('imon:ambient', { detail: { enabled, unlocked, volume, scene, weather } }));
+  const notify = () => document.dispatchEvent(new CustomEvent('imon:ambient', { detail: { enabled, unlocked, volume, layers: getLayers(), scene, weather } }));
   const outputLevel = () => volume * .34;
 
   function sceneFamily() {
@@ -61,6 +63,7 @@ export function initAmbient() {
     oscillator.connect(gain); gain.connect(master); oscillator.start(); sources.add(oscillator);
     hum = { source: oscillator, gain };
     nextChirp = context.currentTime + 3;
+    nextBird = nextCricket = context.currentTime;
     timer = setInterval(update, 1000);
     musicTimer = setInterval(musicTick, 280);
   }
@@ -76,7 +79,7 @@ export function initAmbient() {
     oscillator.start(t); oscillator.stop(t + duration + .03);
   }
   function musicTick() {
-    if (!active() || sceneFamily() !== 'cyberpunk') return;
+    if (!active() || (layers ? !layers.music : sceneFamily() !== 'cyberpunk')) return;
     // Original procedural minor-key sequence, composed in code for this site.
     const roots = [65.406, 51.913, 43.654, 48.999];
     const root = roots[Math.floor(musicStep / 16) % roots.length];
@@ -142,6 +145,13 @@ export function initAmbient() {
     const showerSwell = .92 + Math.sin(t * .19) * .055 + Math.sin(t * .43) * .025;
     let waterLevel = /waterfall|river|cascade/.test(scene) ? .16 : /lake|lagoon|oasis/.test(scene) ? .065 : 0;
     if (weather === 'flood') waterLevel = .2;
+    if (layers) {
+      windLevel = layers.wind ? Math.max(windLevel, .075) : 0;
+      rainLevel = layers.rain ? Math.max(rainLevel, .085) : 0;
+      surfLevel = layers.water ? Math.max(surfLevel, .045) : 0;
+      waterLevel = layers.water ? Math.max(waterLevel, .1) : 0;
+      humLevel = layers.music ? humLevel : 0;
+    }
     target(wind.gain.gain, windLevel * (1 + Math.sin(t * .27) * .08));
     target(wind.filter.frequency, windFrequency * (1 + Math.sin(t * .11) * .12), 2);
     target(surf.gain.gain, surfLevel, 2);
@@ -150,7 +160,16 @@ export function initAmbient() {
     target(rain.gain.gain, rainLevel * showerSwell);
     target(rainBody.gain.gain, rainLevel * .65 * showerSwell);
     target(hum.gain.gain, humLevel); target(hum.source.frequency, humFrequency, 2);
-    if (t >= nextChirp) {
+    if (layers) {
+      if (layers.crickets && t >= nextCricket) {
+        nextCricket = t + 2.7 + Math.random() * 1.8;
+        chirp('cricket');
+      }
+      if (layers.birds && t >= nextBird) {
+        nextBird = t + 7 + Math.random() * 6;
+        chirp('bird');
+      }
+    } else if (t >= nextChirp) {
       nextChirp = t + 8 + Math.random() * 11;
       const hour = new Date().getHours(), night = hour < 5 || hour >= 18;
       if (!['storm', 'blizzard', 'sandstorm'].includes(weather)) {
@@ -181,6 +200,7 @@ export function initAmbient() {
   }
 
   function setEnabled(value) {
+    if (value && !enabled) nextBird = nextCricket = context?.currentTime || 0;
     enabled = Boolean(value); clearTimeout(suspendTimer);
     if (!context) { if (enabled && navigator.userActivation?.isActive) void unlock(); notify(); return enabled; }
     if (!enabled) {
@@ -200,8 +220,19 @@ export function initAmbient() {
     notify(); return volume;
   }
 
+  function getLayers() { return layers ? { ...layers } : null; }
+  function setLayers(value) {
+    if (value !== null && (typeof value !== 'object' || Array.isArray(value))) return getLayers();
+    const next = value === null ? null : Object.fromEntries(layerKeys.map(key => [key, Boolean(value[key])]));
+    if (next?.crickets && !layers?.crickets) nextCricket = 0;
+    if (next?.birds && !layers?.birds) nextBird = 0;
+    if (next?.music && !layers?.music) musicStep = 0;
+    layers = next;
+    update(); notify(); return getLayers();
+  }
+
   function thunder() {
-    if (!active() || context.currentTime - lastThunder < 5) return;
+    if (!active() || (layers && !layers.rain) || context.currentTime - lastThunder < 5) return;
     const t = context.currentTime; lastThunder = t;
     // A gradual, rolling synthetic rumble with a longer distant tail.
     const source = context.createBufferSource(), filter = context.createBiquadFilter(), gain = context.createGain();
@@ -220,7 +251,7 @@ export function initAmbient() {
   }
   document.addEventListener('visibilitychange', visibilityChanged);
   return {
-    unlock, setEnabled, setVolume, thunder,
+    unlock, setEnabled, setVolume, setLayers, getLayers, thunder,
     isEnabled: () => enabled,
     getVolume: () => volume,
     setScene(name) { scene = String(name || 'islands').toLowerCase(); musicStep = 0; update(); },

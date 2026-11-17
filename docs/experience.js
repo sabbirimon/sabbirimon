@@ -1,3 +1,4 @@
+import { initSoundMixer } from './sound-mixer.js';
 import { initWorld, WORLD_ART } from './world.js';
 import { initWeather, WEATHER_TYPES } from './weather.js';
 import { initAmbient } from './ambient.js';
@@ -147,7 +148,7 @@ export function initExperience(){
  document.addEventListener('visibilitychange',()=>scheduleLoop(false));
  function leaveCyber(){if(state.cyber){state.cyber=false;beforeCyber=null;}}
  function chooseMode(mode){leaveCyber();state.mode=mode;if(mode==='live'){state.phase=livePhase;state.weather=liveWeather;if(state.autoScene)state.scene=LIVE_SCENES[livePhase][0];}if(mode==='loop'){const found=WORLD_PRESETS.findIndex(p=>p.scene===state.scene&&p.phase===state.phase&&p.weather===state.weather);loopIndex=found>=0?found:0;Object.assign(state,WORLD_PRESETS[loopIndex]);}scheduleLoop();apply();}
- function cyber(){if(state.cyber&&beforeCyber){const snapshot=beforeCyber;beforeCyber=null;Object.assign(state,snapshot.state);ambient.setEnabled(snapshot.ambient);}else{beforeCyber={state:{...state},ambient:ambient.isEnabled()};Object.assign(state,{mode:'custom',scene:'cyberpunk',phase:'twilight',weather:'rain',accent:'#66f4ff',background:'#120721',cyber:true});}scheduleLoop();apply();toast(state.cyber?'NEON DYSTOPIA · Cyberpunk world online.':'Your previous world is back.');}
+ function cyber(){if(state.cyber&&beforeCyber){const snapshot=beforeCyber;beforeCyber=null;Object.assign(state,snapshot.state);}else{beforeCyber={state:{...state}};Object.assign(state,{mode:'custom',scene:'cyberpunk',phase:'twilight',weather:'drizzle',intensity:'gentle',density:.45,power:.65,accent:'#66f4ff',background:'#120721',cyber:true});resumeWeather();}scheduleLoop();apply();toast(state.cyber?'NEON DYSTOPIA · Cyberpunk world online.':'Your previous world is back.');}
  function setMotion(value){wantsMotion=Boolean(value);const enabled=wantsMotion&&!reduced.matches;document.body.dataset.motion=enabled?'on':'off';root.style.scrollBehavior=enabled?'smooth':'auto';world.setMotion(enabled);weather.setMotion(enabled);for(const button of [motionButton,q('.studio-motion')]){button.textContent=`Motion: ${enabled?'on':reduced.matches?'reduced':'off'}`;button.setAttribute('aria-pressed',String(enabled));}document.dispatchEvent(new CustomEvent('imon:motion',{detail:{enabled}}));scheduleLoop(false);syncDialogWorlds();sync();}
  const toggleMotion=()=>{if(reduced.matches){toast('Your device prefers reduced motion. Animations stay still.');return;}setMotion(!wantsMotion);write('imon-motion',wantsMotion?'on':'off');};
  const toggleAmbient=()=>{ambient.setEnabled(!ambient.isEnabled());write('imon-ambient-v2',ambient.isEnabled()?'on':'off');syncSound();};
@@ -167,7 +168,7 @@ export function initExperience(){
  for(const b of [motionButton,q('.studio-motion'),q('.preview-motion'),quickWeather.querySelector('.quick-motion')])b.addEventListener('click',toggleMotion);
  for(const b of [ambientButton,q('.studio-ambient'),q('.preview-ambient'),quickWeather.querySelector('.quick-ambient')])b.addEventListener('click',toggleAmbient);
  for(const b of [sfxButton,q('.studio-sfx')])b.addEventListener('click',toggleSfx);
- document.addEventListener('imon:sound',syncSound);document.addEventListener('imon:ambient',syncSound);reduced.addEventListener('change',()=>setMotion(wantsMotion));
+ document.addEventListener('imon:sound',syncSound);document.addEventListener('imon:ambient',()=>{soundVolume=ambient.getVolume();sync();});reduced.addEventListener('change',()=>setMotion(wantsMotion));
  $('#collect-coin')?.addEventListener('click',()=>coinCount>=5?world.resetCoins():world.collectNext());
  document.querySelectorAll('[data-theme-choice]').forEach(b=>b.addEventListener('click',()=>{leaveCyber();state.mode='custom';state.phase=b.dataset.themeChoice;stopLoop();apply();}));
  $('#auto-theme')?.addEventListener('click',()=>chooseMode(state.mode==='live'?'loop':'live'));
@@ -186,5 +187,6 @@ export function initExperience(){
  if(initialQuery.get('world')==='cyberpunk')cyber();
  if(WEATHER_TYPES.includes(initialQuery.get('weather'))){state.mode='custom';state.weather=initialQuery.get('weather');apply();}
  void initLocalContext({onPhase(phase){const changed=phase!==livePhase;livePhase=phase;if(liveMeta.status==='unavailable'&&liveMeta.description!=='Checking local weather…')liveWeather=phase==='twilight'?'fireflies':'wind';if(state.mode==='live'){state.phase=phase;state.weather=liveWeather;if(changed&&state.autoScene&&wantsMotion&&!reduced.matches&&!document.hidden)state.scene=LIVE_SCENES[phase][0];apply();}},onWeather(value,meta){liveMeta=meta;liveWeather=meta.status==='unavailable'?(livePhase==='twilight'?'fireflies':'wind'):value;if(state.mode==='live'){state.weather=liveWeather;apply();}else syncConditions();},onLocation(value){location=value;syncConditions();},onClock({time,zone}){clockLabel.textContent=`${time} · ${zone.replaceAll('_',' ')}`;q('.studio-clock').textContent=time;q('.studio-zone').textContent=zone.replaceAll('_',' ');}}).then(controller=>{localContext=controller;});
+ initSoundMixer(ambient);
  return{world,ambient,weather,showStudio,getState:()=>({...state}),setMode:chooseMode};
 }

@@ -40,7 +40,7 @@ API outages do not justify invented headlines or a live label on stale data. Kee
 
 ## Audio and game behavior
 
-Music, ambience, and game sound effects all start **off**. The Music & ambience switch enables optional sounds generated with the browser’s Web Audio API, including rain, wind, water, and thunder; these are synthesized sounds, not recordings. Browser audio starts only after a user gesture. A separate game-effects switch uses `audio.js`, while the ambience volume control saves its setting locally. Hidden tabs suspend ambience. No audio library or new runtime dependency is required.
+Music, ambience, and game sound effects all start **off**. The sound mixer lets visitors combine rain, wind, water, birds, crickets, and music, generated with the browser’s Web Audio API. Crickets are preselected for a first visit, but the master playback control stays off until the visitor plays audio. The mixer remembers selected layers and volume locally when browser storage is available. Weather can also generate optional thunder ambience. These sounds are synthesized, not recordings. Browser audio starts only after a user gesture. A separate game-effects switch uses `audio.js`. Hidden tabs suspend ambience. No audio library or new runtime dependency is required.
 
 Ludo uses an explicit local variant: roll six to release a token, exact roll to finish, and four tokens home to win. Starting/starred squares are safe; captures on other squares return all rival tokens there to their yards. A six, capture, or finishing token grants one bonus roll. Three consecutive sixes forfeit the third roll without undoing prior moves. Stacks do not block, and a capture is not required before entering the home lane. Human players share one device; computer seats act locally.
 
@@ -70,7 +70,7 @@ The visible weather control deck offers Light rain, Heavy rain, Snow, Thundersto
 
 Live mode follows the visitor’s browser time and automatically rotates phase-appropriate illustrated scenes at 1, 5, 15 or 60-minute intervals. Manual scenery selection disables rotation. Rotation pauses in hidden tabs and with Motion Off or the operating system’s reduced-motion preference; the site respects that preference. Unavailable real weather uses a clearly labeled decorative firefly/wind fallback. Scenery, colors, motion, weather intensity, density, strength, and sound-volume preferences are stored locally when browser storage is available.
 
-Weather uses Canvas 2D and audio uses Web Audio, with no new dependencies. For browser QA, check each main-deck effect and its Studio preview, pause/play, all intensity settings, the independent sliders, sound off on entry, user-enabled audio, and reduced motion. Keep the run/check and publishing commands above as the release workflow.
+Weather uses Canvas 2D and audio uses Web Audio, with no new dependencies. For browser QA, check each main-deck effect and its Studio preview, pause/play, all intensity settings, the independent sliders, sound off on entry, mixer layer combinations and saved selections, user-enabled audio, and reduced motion. Keep the run/check and publishing commands above as the release workflow.
 
 ## Search and sharing
 
@@ -79,3 +79,7 @@ The homepage has a descriptive title and summary, an HTTPS canonical URL, Open G
 `docs/robots.txt` allows crawling and points to `https://imon.com.bd/sitemap.xml`. The sitemap lists only the canonical homepage and `/gridworks/`; scene query strings and section fragments are not separate pages. Keep metadata and the sitemap aligned when adding real routes. The existing social preview is `docs/social-card.png`.
 
 These files help crawlers understand the site; indexing and ranking are not guaranteed. After publishing, the owner can submit the sitemap and inspect both URLs in Google Search Console. Maintenance references: [Google’s SEO starter guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide), [site-name structured data](https://developers.google.com/search/docs/appearance/site-names), and [sitemap guidance](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap). No SEO package or tracking script is required.
+
+### Final weather polish
+
+Rain uses layered smooth strokes with weather-dependent drop sizes, flow and gust angles; wind, fog, clouds and lightning use soft drawing with subtle reflection ripples. Snow, stars and firefly lights are intentionally small. Foreground trees sway, and wind turbines rotate faster as wind strength increases. Cyberpunk uses gentle, sparse drizzle and retains the sound preference. The main weather deck and World Studio share density, strength and intensity settings.

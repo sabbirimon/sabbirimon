@@ -5,7 +5,17 @@ import { initWeather, WEATHER_TYPES } from '../docs/weather.js';
 function harness(run) {
   const descriptors = new Map(), events = new Map(), frames = new Map();
   let now = 0, serial = 0, draws = [];
-  const context = { clearRect(){draws=[];}, fillRect(...args){draws.push([...args,this.fillStyle,this.globalAlpha??1]);}, globalAlpha:1 };
+  let path=[],transform=[0,0,1,1],stack=[];
+  const paint=value=>typeof value==='object'?JSON.stringify(value):value;
+  const gradient=(kind,args)=>({kind,args,stops:[],addColorStop(at,color){this.stops.push([at,color]);}});
+  const context = {
+    clearRect(){draws=[];},fillRect(...args){draws.push([...args,paint(this.fillStyle),this.globalAlpha??1]);},globalAlpha:1,
+    createLinearGradient(...args){return gradient('linear',args);},createRadialGradient(...args){return gradient('radial',args);},
+    save(){stack.push([...transform]);},restore(){transform=stack.pop()||transform;},translate(x,y){transform[0]+=x;transform[1]+=y;},scale(x,y){transform[2]*=x;transform[3]*=y;},
+    beginPath(){path=[];},moveTo(...args){path.push(['move',...args]);},lineTo(...args){path.push(['line',...args]);},bezierCurveTo(...args){path.push(['bezier',...args]);},quadraticCurveTo(...args){path.push(['quadratic',...args]);},arc(...args){path.push(['arc',...args]);},ellipse(...args){path.push(['ellipse',...args]);},
+    stroke(){draws.push([path[0]?.[1]??0,path[0]?.[2]??0,this.lineWidth,0,paint(this.strokeStyle),this.globalAlpha,'stroke',structuredClone(path)]);},
+    fill(){draws.push([transform[0],transform[1],transform[2],transform[3],paint(this.fillStyle),this.globalAlpha,'fill',structuredClone(path)]);}
+  };
   const canvas = {style:{},setAttribute(){},getContext:()=>context,remove(){this.removed=true;}};
   const hero = {style:{}}, media = {matches:false,addEventListener(type,callback){events.set('media:'+type,callback);},removeEventListener(){}};
   const body = {dataset:{},append(){}}, document = {body,documentElement:{},hidden:false,createElement:()=>canvas,getElementById:()=>hero,addEventListener(type,fn){events.set(type,fn);},removeEventListener(){}};
@@ -63,4 +73,13 @@ test('independent density and power controls change count and speed within bound
   const delta=(a,b)=>a.reduce((sum,draw,i)=>sum+Math.min(Math.abs(draw[1]-b[i][1]),h.canvas.height-Math.abs(draw[1]-b[i][1])),0)/a.length;
   assert(delta(fastA,fastB)>delta(slowA,slowB)*2,'More power produces visibly faster snow');
   weather.setDensity(99);assert(h.draws.length<800);weather.destroy();
+}));
+
+
+test('smooth weather uses curves, tapered gradients and reflected lightning without altering pixel snow',()=>harness(h=>{
+ const weather=initWeather();weather.setWeather('rain');assert.equal(h.canvas.style.imageRendering,'auto');assert(h.draws.some(d=>d[6]==='stroke'&&d[4].includes('linear')));
+ weather.setWeather('wind');assert(h.draws.some(d=>d[7]?.some(segment=>segment[0]==='bezier')));
+ weather.setWeather('fog');assert(h.draws.some(d=>d[6]==='fill'&&d[4].includes('radial')));
+ weather.setWeather('lightning');h.step(1200);h.step(1280);assert(h.draws.some(d=>d[7]?.some(segment=>segment[0]==='quadratic')),'Reflection ripples accompany the bolt');
+ weather.setWeather('snow');assert.equal(h.canvas.style.imageRendering,'pixelated');assert(h.draws.every(d=>d[2]<=2&&d[3]<=2),'Small snowflake sizes remain unchanged');weather.destroy();
 }));

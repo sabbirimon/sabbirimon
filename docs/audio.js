@@ -36,7 +36,7 @@ export function initGameSoundControls() {
     }
   }
   function decorate(dialog) {
-    if (dialog.id === 'world-studio' || dialog.querySelector('.arcade-sound, .game-sound-toggle')) return;
+    if (['world-studio','sound-mixer-dialog'].includes(dialog.id) || dialog.querySelector('.arcade-sound, .game-sound-toggle')) return;
     const header = dialog.querySelector('header'); if (!header) return;
     const button = document.createElement('button'); button.type = 'button'; button.className = 'game-sound-toggle';
     button.title = 'Shared game sound effects. Ambient audio has its own switch.';

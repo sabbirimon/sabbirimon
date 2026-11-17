@@ -82,7 +82,7 @@ My roots are in DevOps and networking: Linux, containers, Kubernetes, and the ra
 
 **[Daily Tech Quest](https://imon.com.bd/#news)** — fresh tech MCQs in 5, 20, or 30-question rounds, scores, and live tech, science & space news.
 
-Explore animated pixel worlds with local-time lighting and customizable colors. Try light or heavy rain, snow, lightning, clouds, wind, fog, and fireflies from the weather controls, or preview them in World Studio. Tune the intensity, density, and strength—or pause the animation. Music and ambience start off, with optional generated weather sounds and a volume control. Games support keyboard and touch, with personal progress saved on your device.
+Explore animated pixel worlds with local-time lighting and customizable colors. Try light or heavy rain, snow, lightning, clouds, wind, fog, and fireflies from the weather controls, or preview them in World Studio. Tune the intensity, density, and strength—or pause the animation. Sound starts off; mix optional synthesized rain, wind, water, birds, crickets, and music, with your selections saved on your device. Games support keyboard and touch, with personal progress saved on your device.
 
 **[Enter World Studio →](https://imon.com.bd/)** · **[Try Cyberpunk mode →](https://imon.com.bd/?world=cyberpunk)**
 
