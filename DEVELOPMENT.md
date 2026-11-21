@@ -19,11 +19,13 @@ node --test tests/*.test.mjs
 python3 scripts/check-site.py
 ```
 
-The static checker validates local references, imports, offline assets, source HTML IDs, and daily data. It intentionally ignores unused legacy bundles under `docs/assets/`. Browser QA remains necessary for layout and interaction. During local service-worker development, close other local preview tabs and unregister this site's worker if a previous cache obscures changes.
+The static checker validates local references, imports, offline assets, source HTML IDs, daily data, and the `docs/CNAME` custom-domain declaration. Browser QA remains necessary for layout and interaction. During local service-worker development, close other local preview tabs and unregister this site's worker if a previous cache obscures changes.
 
 ## Publishing and daily content
 
 Select **GitHub Actions** as the repository's Pages source. `.github/workflows/pages.yml` tests and deploys `docs/` on pushes to `main`, manual runs, and daily at **06:15 Asia/Dhaka** (`00:15 UTC`). GitHub may delay scheduled runs.
+
+The custom domain is declared twice on purpose: in the repository's Pages settings and in `docs/CNAME`. The file keeps the published artifact self-describing, so a settings reset cannot silently drop the domain. DNS for the apex must stay **DNS only** (grey cloud): GitHub Pages already serves a valid certificate for `imon.com.bd`, and a proxied record can serve a stale cached `301` that redirects the apex to itself.
 
 Every run refreshes the public JSON, stamps the service-worker cache version with the Dhaka date and run ID, checks the site, and uploads the deployment artifact. Generated daily changes are included in that artifact; the workflow does **not** commit them back to the repository.
 

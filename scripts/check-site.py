@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / 'docs'
 PUBLIC_HOST = 'sabbirimon.github.io'
 PUBLIC_PATH = '/sabbirimon/'
+CANONICAL_HOST = 'imon.com.bd'
 errors = []
 checked = set()
 html_documents = {}
@@ -120,13 +121,25 @@ def main():
         if not (DOCS / required).is_file():
             fail(f'docs/{required}: required published file is missing')
 
+    # The custom domain must be declared in the published artifact, not only in
+    # the repository's Pages settings, so it survives a settings reset.
+    cname_path = DOCS / 'CNAME'
+    if not cname_path.is_file():
+        fail('docs/CNAME: the custom domain declaration is missing')
+    else:
+        cname = cname_path.read_text().strip()
+        if cname != CANONICAL_HOST:
+            fail(f'docs/CNAME: expected {CANONICAL_HOST!r}, found {cname!r}')
+        elif '\n' in cname_path.read_text().strip():
+            fail('docs/CNAME: the custom domain declaration must be a single line')
+
     for path in list(DOCS.glob('*.html')) + list((DOCS / 'gridworks').glob('*.html')):
         page = parse_page(path)
         for value, kind in page.references:
             check_reference(value, path, kind)
 
-    # Inspect current first-party modules/styles only. Old fingerprinted bundles
-    # in docs/assets/ and the retired Workbox runtime are deliberately excluded.
+    # Inspect current first-party modules/styles only. The retired Workbox
+    # runtime is deliberately excluded.
     for path in list(DOCS.glob('*.css')) + list((DOCS / 'gridworks').glob('*.css')):
         text = path.read_text()
         for value in re.findall(r'''url\(\s*['"]?([^)'"\s]+)['"]?\s*\)''', text):
