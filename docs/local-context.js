@@ -4,15 +4,17 @@
  *
  * Sources (verified against their primary API documentation):
  * https://ipapi.co/api/#location-of-clients-ip — browser/client-IP JSON endpoint.
+ * https://freeipapi.com/api — browser/client-IP JSON endpoint (fallback).
  * https://open-meteo.com/en/docs — current weather_code/is_day, daily sunrise and
  * sunset, timezone=auto, and the WMO weather-code mapping.
  * https://open-meteo.com/en/licence — weather-data attribution/license.
  *
- * The browser contacts ipapi and Open-Meteo directly; those services receive the
- * normal network IP. Only rounded coordinates are sent to Open-Meteo. This site
- * has no tracking server. The 30-minute local cache contains city/weather only:
- * no IP address, coordinates, postal code, or device geolocation is persisted.
- * IP lookup may be unavailable because of CORS, blocking, or provider limits.
+ * The browser contacts the IP provider and Open-Meteo directly; those services
+ * receive the normal network IP. Only rounded coordinates are sent to Open-Meteo.
+ * This site has no tracking server. The 30-minute local cache contains
+ * city/weather only: no IP address, coordinates, postal code, or device
+ * geolocation is persisted. IP lookup may be unavailable because of CORS,
+ * blocking, or provider limits.
  */
 const CACHE_KEY = 'imon-local-weather-v1';
 const CACHE_TTL = 30 * 60 * 1000;
@@ -27,6 +29,17 @@ const WMO_LABELS = {
   85: 'Snow showers', 86: 'Heavy snow showers', 95: 'Thunderstorm',
   96: 'Thunderstorm with hail', 97: 'Heavy thunderstorm', 99: 'Thunderstorm with hail'
 };
+
+// IP geolocation providers, tried in order until one answers. Each entry maps
+// its own response shape onto {latitude, longitude, city}. ipapi.co is first
+// but it now answers API requests with a Cloudflare challenge page (HTTP 403
+// without CORS headers), so freeipapi.com carries the lookup when it fails.
+const IP_PROVIDERS = [
+  { url: 'https://ipapi.co/json/', pick: data => ({ latitude: data.latitude, longitude: data.longitude, city: data.city || data.region }) },
+  { url: 'https://freeipapi.com/api/json', pick: data => ({ latitude: data.latitude, longitude: data.longitude, city: data.cityName || data.regionName }) }
+];
+export const IP_PROVIDER_URLS = IP_PROVIDERS.map(provider => provider.url);
+export const pickIpPlace = (index, data) => IP_PROVIDERS[index].pick(data);
 
 export function phaseForHour(hour) {
   if (!Number.isFinite(hour)) return 'twilight';
@@ -107,6 +120,27 @@ export async function initLocalContext({ onPhase, onWeather, onLocation, onClock
   function metadata(data, status) {
     return { status, code: data.code, description: weatherDescription(data.code), updatedAt: data.savedAt, isDay: data.isDay, sunrise: data.sunrise, sunset: data.sunset, timezone: data.timezone, attribution: 'Open-Meteo' };
   }
+
+  async function locateByIp() {
+    let lastError;
+    for (const provider of IP_PROVIDERS) {
+      let data;
+      try {
+        data = await fetchJson(provider.url);
+      } catch (error) {
+        lastError = error;
+        continue;
+      }
+      const place = provider.pick(data);
+      if (!Number.isFinite(place.latitude) || !Number.isFinite(place.longitude)) {
+        lastError = new Error('Provider unavailable');
+        continue;
+      }
+      const city = typeof place.city === 'string' && place.city.trim() ? place.city.trim() : 'Approximate area';
+      return { latitude: place.latitude, longitude: place.longitude, city };
+    }
+    throw lastError || new Error('Provider unavailable');
+  }
   function applyWeather(data, status, source) {
     lastCity = data.city; lastSource = source;
     emit(onLocation, { city: data.city, source, status: 'ready', weatherStatus: status });
@@ -139,10 +173,10 @@ export async function initLocalContext({ onPhase, onWeather, onLocation, onClock
     const task = (async () => {
       let city = '', source = 'browser';
       try {
-        const place = await fetchJson('https://ipapi.co/json/');
+        const place = await locateByIp();
         if (stopped || id !== requestId) return { status: 'cancelled' };
         const coords = roundedCoordinates(place.latitude, place.longitude);
-        city = typeof place.city === 'string' && place.city.trim() ? place.city.trim() : typeof place.region === 'string' ? place.region : 'Approximate area';
+        city = place.city;
         source = 'ip'; lastCity = city; lastSource = source;
         emit(onLocation, { city, source, status: 'ready', weatherStatus: 'loading' });
         return await loadWeather(coords, city, source, id);
