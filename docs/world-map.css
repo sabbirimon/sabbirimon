@@ -1,0 +1,35 @@
+/* The world map — pixel art, drawn from the country outlines. No tiles, no tracking. */
+.world-map-section { background: linear-gradient(180deg, transparent, rgba(11,16,38,.5)); }
+/* The map sits on its own full-width row, and the picker and the country list
+   share the row below it. Every box spans the same width, so the left and
+   right edges line up down the whole section. */
+.world-map-panel { display: grid; grid-template-columns: minmax(0,1fr); gap: 20px; }
+.world-map { background: #0d1a12; border: 2px solid #c9a227; border-radius: 10px; padding: 14px; box-shadow: 0 0 0 1px rgba(201,162,39,.35), inset 0 0 40px rgba(0,0,0,.55); position: relative; }
+.world-map::before { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(201,162,39,.4); border-radius: 6px; pointer-events: none; }
+.world-map-svg { display: block; width: 100%; height: auto; aspect-ratio: 100000 / 38683; shape-rendering: crispEdges; image-rendering: pixelated; }
+.world-map-grid line { stroke: rgba(201,162,39,.11); stroke-width: 2; shape-rendering: crispEdges; }
+.world-map-shape { fill: #2f6b3a; stroke: #8fd46a; stroke-width: 3; stroke-linejoin: miter; shape-rendering: crispEdges; cursor: pointer; transition: fill .16s ease; }
+.world-map-shape:hover { fill: #3f8a4c; stroke: #c9f59a; }
+.world-map-shape.is-selected { fill: var(--gold); stroke: #fff3b0; stroke-width: 5; }
+.world-map-marker-halo { fill: rgba(250,204,21,.22); stroke: #fff3b0; stroke-width: 3; shape-rendering: crispEdges; animation: world-map-pulse 1.9s ease-out infinite; }
+.world-map-marker-dot { fill: #fff3b0; shape-rendering: crispEdges; }
+@keyframes world-map-pulse { 0% { r: 12; opacity: .95; } 100% { r: 30; opacity: 0; } }
+/* The right column is a card that matches the map's frame: same border colour,
+   same radius, same padding, so the two boxes read as one row. */
+/* The caption and the picker share the row above the list. The list spans the
+   full width of the section, so its box lines up with the map box above it. */
+.world-map-side { display: grid; grid-template-columns: minmax(0,1fr) minmax(220px,300px); gap: 12px 20px; min-width: 0; align-items: end; }
+.world-map-caption { grid-column: 1; grid-row: 1; font-size: 13px; line-height: 1.6; color: var(--muted); margin: 0; }
+.world-map-picker { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: 7px; }
+.world-map-picker label { font-family: var(--pixel); font-size: 10px; color: var(--gold); letter-spacing: .06em; }
+.world-map-picker select { width: 100%; padding: 11px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 10px; font-family: var(--body); font-size: 14px; cursor: pointer; }
+.world-map-picker select:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.world-map-list { grid-column: 1 / -1; grid-row: 2; list-style: none; margin: 0; padding: 0; height: 236px; overflow-y: auto; border: 2px solid #c9a227; border-radius: 10px; background: #0d1a12; box-shadow: 0 0 0 1px rgba(201,162,39,.35); display: grid; grid-template-columns: repeat(auto-fill,minmax(168px,1fr)); align-content: start; }
+.world-map-list li { border-bottom: 1px solid rgba(42,48,73,.6); }
+.world-map-country-button { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; padding: 9px 12px; background: none; border: 0; color: var(--muted); font-family: var(--body); font-size: 13px; cursor: pointer; }
+.world-map-country-button:hover { color: var(--text); background: rgba(120,160,255,.12); }
+.world-map-flag { font-size: 16px; line-height: 1; flex: none; }
+.world-map-country-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.world-map-list li.is-active .world-map-country-button { color: var(--gold); background: rgba(250,204,21,.1); }
+@media (max-width: 900px) { .world-map-side { grid-template-columns: minmax(0,1fr); } .world-map-caption { grid-column: 1; grid-row: 1; } .world-map-picker { grid-column: 1; grid-row: 2; } .world-map-list { grid-column: 1; grid-row: 3; height: 240px; } }
+@media (prefers-reduced-motion: reduce) { .world-map-marker-halo { animation: none; } .world-map-shape { transition: none; } }

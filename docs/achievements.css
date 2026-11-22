@@ -1,0 +1,29 @@
+/* The visitor's profile: a level, an XP bar, and a wall of badges. */
+.achievements-section { background: linear-gradient(180deg, transparent, rgba(11,16,38,.55)); }
+.achievement-panel { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 22px; align-items: start; }
+.achievement-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+.achievement-level { display: flex; align-items: center; gap: 14px; }
+.achievement-level-badge { font-family: var(--pixel); font-size: 24px; line-height: 1; color: var(--gold); border: 2px solid var(--gold); border-radius: 10px; padding: 10px 12px; background: rgba(250,204,21,.08); }
+.achievement-level-name { font-family: var(--pixel); font-size: 15px; color: var(--text); }
+.achievement-level-name span { display: block; font-family: var(--body); font-size: 12px; color: var(--muted); letter-spacing: .02em; margin-top: 6px; }
+.achievement-xp { font-family: var(--pixel); font-size: 13px; color: var(--gold); margin-left: auto; }
+.achievement-bar { width: 100%; height: 12px; margin: 18px 0 8px; appearance: none; border: 1px solid var(--line); border-radius: 999px; background: rgba(3,7,25,.9); overflow: hidden; }
+.achievement-bar::-webkit-progress-bar { background: rgba(3,7,25,.9); }
+.achievement-bar::-webkit-progress-value { background: linear-gradient(90deg, var(--gold), #fbbf24); }
+.achievement-bar::-moz-progress-bar { background: linear-gradient(90deg, var(--gold), #fbbf24); }
+.achievement-count { font-size: 12px; color: var(--muted); }
+.achievement-next { margin: 14px 0 0; font-size: 13px; line-height: 1.6; color: var(--text); }
+.achievement-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px,1fr)); gap: 12px; }
+.achievement { display: grid; grid-template-columns: 34px minmax(0,1fr); grid-template-areas: "icon name" "icon note"; gap: 2px 12px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.achievement-icon { grid-area: icon; width: 34px; height: 34px; display: grid; place-items: center; font-family: var(--pixel); font-size: 15px; border-radius: 9px; background: rgba(177,187,209,.1); color: var(--muted); }
+.achievement-name { grid-area: name; font-family: var(--pixel); font-size: 11px; color: var(--muted); }
+.achievement-note { grid-area: note; font-size: 12px; line-height: 1.5; color: var(--muted); }
+.achievement.is-locked { opacity: .55; }
+.achievement.is-unlocked { border-color: rgba(250,204,21,.45); background: rgba(250,204,21,.06); }
+.achievement.is-unlocked .achievement-icon { background: rgba(250,204,21,.14); color: var(--gold); }
+.achievement.is-unlocked .achievement-name { color: var(--text); }
+.achievement-bronze.is-unlocked .achievement-icon { color: #d08c5a; }
+.achievement-silver.is-unlocked .achievement-icon { color: #cbd5e1; }
+.achievement-gold.is-unlocked .achievement-icon { color: var(--gold); }
+@media (max-width: 900px) { .achievement-panel { grid-template-columns: minmax(0,1fr); } }
+@media (prefers-reduced-motion: reduce) { .achievement-bar { transition: none; } }
