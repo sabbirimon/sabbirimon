@@ -38,6 +38,23 @@ The interpreter stops a runaway loop with two guards, because a phone is much sl
 
 `docs/ai-lab.webmanifest` gives the lab its own installable identity on a phone, separate from the main site manifest. Below 900px the course rail becomes a drawer and the brief comes first, so a learner lands on the current exercise instead of a list of fifty-four. Safe-area insets keep the page clear of a notch and the home indicator.
 
+## The Code Lab
+
+`docs/lab.html` is the browser practice lab for HTML, CSS and JavaScript. The page is split in two: the lesson on the left, the workbench on the right. The workbench holds a file rail, a tab bar, an editor, a live preview and a terminal, so a learner can write code and see it run without leaving the page.
+
+The lab is a set of small modules, each with pure exported helpers and all DOM access inside its `init` body:
+
+- `docs/lab-notes.js` holds the note library. Each note explains one tag, property or API. An exercise names what it is about in its `requirements`, and the matching notes are shown; an exercise that names nothing falls back to the general notes for its language.
+- `docs/lab-chapters.js` holds the fourteen chapters. Each carries a goal, study material with worked examples, the exam instructions and the outcome, so the panel above the rail teaches before the task is attempted.
+- `docs/lab-feedback.js` turns a wrong answer into "what is wrong, where it is, and how to fix it". It finds the first line that breaks the rule the checker was looking for and names the file it is in.
+- `docs/lab-reward.js` pays out the coins on a correct answer. The coins fly once per exercise, so the same exercise cannot be farmed for points.
+- `docs/lab-progress.js` draws the track under the course bar — every chapter and how far through it the learner is.
+- `docs/lab-lookup.js` searches a free public service for what other people have written about the tag or property the learner just met. See the third-party services list below.
+
+`docs/lab-curriculum.js` imports the Codédex `html-101` and `css-101` courses from `docs/data/lab-curriculum.json` and turns each entry into a runnable exercise with a real checker. The importer must carry the entry's `requirements` through, because the notes panel and the lookup both read them.
+
+`docs/lab.html` pins the brief to the top of the lesson column and gives the workbench the viewport height, so the editor never scrolls away and the space under the code carries the notes rather than emptiness. `docs/lab-layout.css` overrides `docs/lab.css` and must load after it — `tests/css.test.mjs` checks that order, because a stylesheet that loads in the wrong order silently loses every rule it sets.
+
 ## Publishing and daily content
 
 Select **GitHub Actions** as the repository's Pages source. `.github/workflows/pages.yml` tests and deploys `docs/` on pushes to `main`, manual runs, and daily at **06:15 Asia/Dhaka** (`00:15 UTC`). GitHub may delay scheduled runs.
@@ -54,6 +71,7 @@ python3 scripts/refresh-daily.py
 - **Science & space:** [The Space Devs / Spaceflight News API](https://github.com/TheSpaceDevs/spaceflightnewsapi) supplies publisher headlines and original story links, without reproducing article bodies. Both news feeds refresh every 30 minutes while visible and have independent daily/offline snapshots.
 - **Quiz:** [Open Trivia DB](https://opentdb.com/) supplies 30 daily computer questions under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Its attribution and license link travel with each pack. Question order and answer choices are shuffled, and entities are decoded. If the API is unavailable, the dated pack uses the original local question bank instead. Visitors can choose 5, 20, or 30 questions.
 - **Weather:** [ipapi](https://ipapi.co/api/) estimates a city from the visitor's public IP; VPNs, networks, and provider limits can make it inaccurate or unavailable. Rounded coordinates are sent to [Open-Meteo](https://open-meteo.com/) for weather, with its [attribution/license](https://open-meteo.com/en/licence). The live clock and day/night phase always use the browser's local time zone. Precise device location is requested only through an explicit location control. City/weather cache data stays in the browser; IP addresses and coordinates are not persisted by the site.
+- **Code Lab lookup:** [The Stack Exchange API](https://api.stackexchange.com/docs) answers the Code Lab's "Search for it" button with real questions from Stack Overflow, so a learner can read how other people use a tag or property without leaving the page. It is free, needs no key, and sends `Access-Control-Allow-Origin: *`, so the browser calls it directly from the static site. Only the search words are sent — never the learner's code. The service reports its own daily request allowance; when it is spent the panel says so and the built-in notes stay on screen. MDN's search API was the first choice, but it sends no CORS header, so a static host cannot call it at all.
 
 API outages do not justify invented headlines or a live label on stale data. Keep the existing unavailable/cached states and source attributions when changing these modules.
 

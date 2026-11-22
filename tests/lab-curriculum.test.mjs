@@ -132,6 +132,24 @@ test('toExercise skips a malformed entry instead of throwing',()=>{
  assert.deepEqual(toExercises(null),[]);
 });
 
+test('toExercise carries the requirements through the import',()=>{
+ const exercise=toExercise({id:'a',title:'T',requirements:['h1','p']});
+ assert.deepEqual(exercise.requirements,['h1','p']);
+ // A missing or malformed list is an empty list, never a crash.
+ assert.deepEqual(toExercise({id:'a',title:'T'}).requirements,[]);
+ assert.deepEqual(toExercise({id:'a',title:'T',requirements:'nope'}).requirements,[]);
+ assert.deepEqual(toExercise({id:'a',title:'T',requirements:['h1','',null,7]}).requirements,['h1']);
+});
+
+test('every imported exercise keeps its requirements',()=>{
+ const withRequirements=payload.exercises.filter(entry=>Array.isArray(entry.requirements)&&entry.requirements.length);
+ assert.ok(withRequirements.length>0,'the curriculum should name what the exercises are about');
+ for(const entry of withRequirements){
+  const exercise=toExercise(entry);
+  assert.ok(exercise.requirements.length>0,entry.id+' lost its requirements');
+ }
+});
+
 test('loadCurriculum returns an empty course when the file cannot be read',async()=>{
  const empty=await loadCurriculum(async()=>({ok:false}));
  assert.deepEqual(empty.exercises,[]);

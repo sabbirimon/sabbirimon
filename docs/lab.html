@@ -9,7 +9,7 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="nes.css"><link rel="stylesheet" href="wordmark.css">
-<link rel="stylesheet" href="lab.css">
+<link rel="stylesheet" href="lab.css"><link rel="stylesheet" href="lab-layout.css">
 <script>document.documentElement.classList.remove('no-js');</script>
 </head>
 <body class="lab-page">
@@ -31,11 +31,8 @@
 <main class="lab-layout">
   <!-- The lesson ------------------------------------------------------ -->
   <section class="lab-lesson" aria-labelledby="lab-title">
-    <nav class="lab-rail" aria-label="Exercises">
-      <h2 class="lab-rail-title" data-pixel-text>Course</h2>
-      <ol class="lab-rail-list" data-lab-rail></ol>
-    </nav>
-
+    <!-- The brief is pinned to the top of the column, so the exercise is
+         always in view no matter how long the course rail is. -->
     <article class="lab-brief">
       <p class="lab-kicker" data-lab-brief-kicker data-pixel-text>Markup basics</p>
       <h1 class="lab-title" id="lab-title" data-lab-title data-pixel-text>Your first tag</h1>
@@ -49,15 +46,24 @@
           <li>Press <strong>Check answer</strong> when you think it is right.</li>
         </ol>
       </div>
-
-      <p class="lab-status" data-lab-status role="status" aria-live="polite"></p>
-
-      <div class="lab-help">
-        <h2 class="lab-help-title" data-pixel-text>Help</h2>
-        <p>If you get stuck, press <strong>Reset</strong> to bring the starting code back, then work through it one step at a time.</p>
-        <p class="lab-help-note">Everything runs in your browser. Nothing you type is sent anywhere.</p>
-      </div>
     </article>
+
+    <!-- The learning panel: the goal, the study material, how the answer is
+         checked and what you can do afterwards. It sits under the brief so
+         the task is read first and the teaching follows. -->
+    <div class="lab-learn" data-lab-learn></div>
+
+    <!-- The rail scrolls on its own, below the pinned brief. -->
+    <nav class="lab-rail" aria-label="Exercises">
+      <h2 class="lab-rail-title" data-pixel-text>Course</h2>
+      <ol class="lab-rail-list" data-lab-rail></ol>
+    </nav>
+
+    <div class="lab-help">
+      <h2 class="lab-help-title" data-pixel-text>Help</h2>
+      <p>If you get stuck, press <strong>Reset</strong> to bring the starting code back, then work through it one step at a time.</p>
+      <p class="lab-help-note">Everything runs in your browser. Nothing you type is sent anywhere.</p>
+    </div>
   </section>
 
   <!-- The workbench --------------------------------------------------- -->
@@ -75,25 +81,73 @@
       </div>
     </div>
 
-    <div class="lab-editor-pane">
-      <div class="lab-editor" role="tabpanel" aria-label="Code editor">
-        <label class="sr-only" for="lab-editor-html">HTML editor</label>
-        <textarea id="lab-editor-html" class="lab-code" data-lab-editor="html" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off"></textarea>
-        <label class="sr-only" for="lab-editor-css">CSS editor</label>
-        <textarea id="lab-editor-css" class="lab-code" data-lab-editor="css" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" hidden></textarea>
-        <label class="sr-only" for="lab-editor-js">JavaScript editor</label>
-        <textarea id="lab-editor-js" class="lab-code" data-lab-editor="js" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" hidden></textarea>
+    <!-- The scrolling middle of the workbench. -->
+    <div class="lab-work-scroll">
+      <div class="lab-editor-pane">
+        <div class="lab-editor" role="tabpanel" aria-label="Code editor">
+          <label class="sr-only" for="lab-editor-html">HTML editor</label>
+          <textarea id="lab-editor-html" class="lab-code" data-lab-editor="html" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off"></textarea>
+          <label class="sr-only" for="lab-editor-css">CSS editor</label>
+          <textarea id="lab-editor-css" class="lab-code" data-lab-editor="css" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" hidden></textarea>
+          <label class="sr-only" for="lab-editor-js">JavaScript editor</label>
+          <textarea id="lab-editor-js" class="lab-code" data-lab-editor="js" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" hidden></textarea>
+        </div>
+        <div class="lab-preview">
+          <h2 class="lab-pane-title" data-pixel-text>Preview</h2>
+          <iframe class="lab-preview-frame" data-lab-preview title="Live preview" sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>
       </div>
-      <div class="lab-preview">
-        <h2 class="lab-pane-title" data-pixel-text>Preview</h2>
-        <iframe class="lab-preview-frame" data-lab-preview title="Live preview" sandbox="allow-scripts allow-same-origin"></iframe>
-      </div>
-    </div>
 
-    <div class="lab-terminal">
-      <h2 class="lab-pane-title" data-pixel-text>Terminal</h2>
-      <ol class="lab-console" data-lab-console role="log" aria-live="polite" aria-label="Console output"></ol>
-      <iframe class="lab-script-frame" data-lab-script title="Script sandbox" sandbox="allow-scripts"></iframe>
+      <!-- What the exercise is about --------------------------------- -->
+      <div class="lab-notes">
+        <div class="lab-notes-head">
+          <h2 class="lab-notes-title" data-pixel-text>What this teaches</h2>
+          <p class="lab-notes-sub" data-lab-notes-sub></p>
+        </div>
+        <div class="lab-notes-body" data-lab-notes></div>
+      </div>
+
+      <!-- The documentation lookup ---------------------------------- -->
+      <!-- The search service answers a question about a tag or a
+           property with what other people have written about it. The
+           panel is hidden until a learner asks for something. -->
+      <div class="lab-lookup" data-lab-lookup hidden>
+        <div class="lab-lookup-head">
+          <h2 class="lab-lookup-title" data-pixel-text>How others use it</h2>
+          <p class="lab-lookup-status" data-lab-lookup-status role="status" aria-live="polite"></p>
+        </div>
+        <ul class="lab-lookup-list" data-lab-lookup-list></ul>
+        <p class="lab-lookup-credit">Searched live on Stack Overflow — a free, keyless public question index. Only the search words are sent.</p>
+      </div>
+
+      <!-- The terminal --------------------------------------------- -->
+      <div class="lab-terminal">
+        <div class="lab-terminal-head">
+          <h2 class="lab-pane-title" data-pixel-text>Terminal</h2>
+          <button type="button" class="lab-terminal-clear" data-lab-clear>Clear</button>
+        </div>
+        <ol class="lab-console" data-lab-console role="log" aria-live="polite" aria-label="Console output"></ol>
+        <iframe class="lab-script-frame" data-lab-script title="Script sandbox" sandbox="allow-scripts"></iframe>
+      </div>
+
+      <!-- The reward ------------------------------------------------ -->
+      <div class="lab-reward" data-lab-reward hidden aria-live="polite">
+        <div class="lab-reward-coins" data-lab-reward-coins aria-hidden="true"></div>
+        <p class="lab-reward-text" data-lab-reward-text></p>
+      </div>
+
+      <!-- The feedback ---------------------------------------------- -->
+      <div class="lab-feedback" data-lab-feedback hidden>
+        <div class="lab-feedback-head">
+          <h2 class="lab-feedback-title" data-pixel-text>What went wrong</h2>
+          <span class="lab-feedback-where" data-lab-feedback-where></span>
+        </div>
+        <ul class="lab-feedback-list" data-lab-feedback-list></ul>
+        <div class="lab-feedback-fix">
+          <h3 class="lab-feedback-fix-title" data-pixel-text>How to fix it</h3>
+          <pre class="lab-feedback-code" data-lab-feedback-code><code></code></pre>
+        </div>
+      </div>
     </div>
 
     <!-- The course bar ------------------------------------------- -->
@@ -101,6 +155,7 @@
       <p class="lab-coursebar-chapter" data-lab-chapter data-pixel-text>Markup basics</p>
       <p class="lab-coursebar-counter" data-lab-counter data-pixel-text>Exercise 1 / 10</p>
       <progress class="lab-progress" data-lab-progress max="10" value="0" aria-label="Course progress"></progress>
+      <p class="lab-coursebar-track" data-lab-track></p>
       <div class="lab-coursebar-actions">
         <button type="button" class="nes-button nes-button-dark lab-back" data-lab-prev><span data-pixel-text>Back</span></button>
         <button type="button" class="nes-button nes-button-gold lab-next-action" data-lab-done hidden><span data-pixel-text>Done</span></button>

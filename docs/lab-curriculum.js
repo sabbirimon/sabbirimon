@@ -189,6 +189,12 @@ export function toExercise(entry) {
       js: typeof starter.js === 'string' ? starter.js : ''
     },
     check: makeChecker(entry),
+    // The requirements name the tags, properties and APIs the exercise is
+    // about. They drive the notes panel and the documentation lookup, so
+    // they have to survive the import.
+    requirements: Array.isArray(entry.requirements)
+      ? entry.requirements.filter(item => typeof item === 'string' && item.trim())
+      : [],
     origin: typeof entry.origin === 'string' ? entry.origin : '',
     source: typeof entry.source === 'string' ? entry.source : ''
   };

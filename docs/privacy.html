@@ -33,7 +33,7 @@
 <li><strong>No analytics, no tracking pixels, no advertising beacons, no fingerprinting.</strong> Nothing on this site measures who you are or follows you around the web.</li>
 <li><strong>No server-side visitor logging.</strong> This is a static site on GitHub Pages. There is no application server that could keep a log of you.</li>
 <li><strong>Your game scores, quiz results, and settings stay in your browser</strong> unless you choose to sign in, in which case they are saved to a database row that only you can read.</li>
-<li><strong>Three kinds of free public API are contacted</strong> so the page can show local weather and live headlines. Each one receives the ordinary network information that any website request reveals — your IP address.</li>
+<li><strong>A handful of free public APIs are contacted</strong> so the page can show local weather, live headlines, and — only when you press the button — answers to your own code questions. Each one receives the ordinary network information that any website request reveals — your IP address.</li>
 <li><strong>Nothing is sold, shared, or used for ads.</strong> There is no third party that profiles you because of this site.</li>
 </ul>
 </section>
@@ -84,6 +84,12 @@
 <td>A second source of headlines for the tech, AI and science feeds, so a single provider being down does not blank the section. The API takes one tag at a time, so the site requests them one after another with a short pause rather than all at once.</td>
 <td>Your IP address and the tag names requested — <code>webdev</code>, <code>programming</code>, <code>tech</code>, <code>ai</code>, <code>machinelearning</code>, <code>llm</code>, <code>tutorial</code>, <code>space</code>, <code>science</code>. No cookies, no referrer, no credentials.</td>
 <td><a href="https://dev.to/privacy" target="_blank" rel="noopener noreferrer">DEV Community privacy ↗</a></td>
+</tr>
+<tr>
+<td>Stack Exchange<span class="privacy-service-note">api.stackexchange.com — only from the Code Lab</span></td>
+<td>Searches the public Stack Overflow question index when you press "Look it up" in the Code Lab, so you can read how other people use an HTML tag, a CSS property or a JavaScript method without leaving the page. It is a free, keyless API.</td>
+<td>The search words only — for example <code>p HTML element</code> or <code>padding CSS property</code> — plus your IP address and the standard request headers. No cookies, no referrer, no credentials, and nothing about the code you have written. The service reports its own daily request allowance, which is never sent back to this site.</td>
+<td><a href="https://stackoverflow.com/help/privacy-policy" target="_blank" rel="noopener noreferrer">Stack Overflow privacy ↗</a></td>
 </tr>
 <tr>
 <td>Cloudflare DNS-over-HTTPS<span class="privacy-service-note">Only from the DNS lookup tool</span></td>
@@ -179,6 +185,7 @@
 <li><strong>Your postal code, city, or device location</strong> from the browser geolocation API. The location permission is optional, only used if you press "Use my location", and its result is rounded the same way and then discarded.</li>
 <li><strong>Any browsing behaviour</strong> — which pages you visited, how long you stayed, what you clicked, what you searched for.</li>
 <li><strong>Anything from the "Daily" section you did not ask for</strong> — the site reads public headline feeds and nothing else.</li>
+<li><strong>The code you write in the Code Lab.</strong> It stays in the editor and the preview frame in your own browser. Only a tag or property name you explicitly ask about is sent to the Stack Exchange search, and never the code around it.</li>
 </ul>
 </section>
 

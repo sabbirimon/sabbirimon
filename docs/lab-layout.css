@@ -1,0 +1,921 @@
+/* The lab workbench layout.
+   `docs/lab.css` is minified and holds the original rules. This file
+   loads after it and overrides them.
+
+   The problem this solves: the lesson column grew with the course rail,
+   so the exercise brief was pushed far down the page, and the workbench
+   on the right ended in a stretch of empty space. The learner had to
+   scroll to read the task, and then scroll again to find the editor.
+
+   The fix has three parts:
+
+   1. The whole page stops scrolling. The top bar and the course bar stay
+      put, the lesson column scrolls on its own, and the workbench holds
+      the viewport height with the editor growing to fill it.
+   2. The brief is pinned to the top of the lesson column, so the task is
+      always in view. Only the rail scrolls underneath it.
+   3. The space under the editor carries the explanation panel, so the
+      bottom of the workbench is never empty. */
+
+/* The page itself ----------------------------------------------------- */
+
+.lab-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* The top bar and the course bar are part of the fixed frame. */
+.lab-topbar {
+  flex: none;
+  height: 60px;
+  padding-block: 0;
+}
+
+.lab-layout {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: calc(100vh - 60px);
+  overflow: hidden;
+}
+
+/* The lesson ---------------------------------------------------------- */
+
+/* The lesson column is its own scroll area. */
+.lab-lesson {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  padding: 0 28px 28px;
+  gap: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--lab-rim-strong) transparent;
+}
+
+/* The brief sits at the top of the column and stays there. It is the
+   task, so it should never be the thing that has scrolled away. */
+.lab-brief {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 26px 0 20px;
+  background: var(--bg);
+  border-bottom: 2px solid var(--lab-rim);
+}
+
+/* The instructions sit inside the pinned brief, right under the lead, so
+   they are read once and are never far below the title. */
+.lab-instructions {
+  margin-bottom: 0;
+}
+
+/* The kicker and the title are drawn as SVG, so they are inline-flex and
+   would sit on the same line with no gap. Making them block puts the
+   exercise name under the chapter, where it belongs. */
+.lab-kicker,
+.lab-title {
+  display: block;
+}
+
+.lab-kicker {
+  margin-bottom: 8px;
+}
+
+/* The rail scrolls under the pinned brief. It starts below it, so the
+   first chapter heading is never hidden behind the brief. */
+.lab-rail {
+  margin-top: 22px;
+  background: var(--lab-panel);
+  border: 2px solid var(--lab-rim);
+  padding: 18px 16px 20px;
+}
+
+/* The help box sits at the very bottom of the column. */
+.lab-help {
+  margin-top: 22px;
+}
+
+/* The status line lives with the brief, so the answer to "did it work?"
+   is always in view. */
+.lab-status {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  margin: 0;
+  padding: 12px 0 10px;
+  background: var(--bg);
+  font-family: var(--pixel);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* The workbench ------------------------------------------------------- */
+
+/* The workbench is a column of its own: the tab bar is fixed at the top,
+   the course bar is fixed at the bottom, and the middle scrolls. That way
+   neither bar ever sits on top of the code or the notes. */
+.lab-work {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  padding: 16px 20px 0;
+}
+
+.lab-work-top {
+  flex: none;
+  position: relative;
+  z-index: 4;
+}
+
+/* The scrolling middle of the workbench. The editor, the notes, the
+   terminal, the reward and the feedback all live in here. */
+.lab-work-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--lab-rim-strong) transparent;
+  padding-bottom: 18px;
+}
+
+/* The editor pane grows to fill the space the workbench has left, so
+   there is never a stretch of empty page below the code. */
+.lab-editor-pane {
+  flex: 1 1 auto;
+  min-height: 300px;
+}
+
+.lab-code {
+  min-height: 100%;
+  height: 100%;
+}
+
+.lab-preview-frame {
+  min-height: 100%;
+  height: 100%;
+}
+
+/* The learning panel --------------------------------------------------- */
+
+/* The goal, the study material, how the answer is checked and what you
+   can do afterwards. It sits under the pinned brief, so the task is read
+   first and the teaching follows it. */
+.lab-learn {
+  margin-top: 22px;
+  display: grid;
+  gap: 12px;
+}
+
+.lab-learn-block {
+  background: var(--lab-panel);
+  border: 2px solid var(--lab-rim);
+  padding: 16px 18px 18px;
+}
+
+.lab-learn-block-title {
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lab-gold);
+  margin: 0 0 10px;
+}
+
+.lab-learn-block-body {
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0 0 10px;
+}
+
+.lab-learn-block-outcome {
+  font-family: var(--body);
+  font-size: 13px;
+  line-height: 1.6;
+  color: #7f8db3;
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--lab-rim);
+}
+
+.lab-learn-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lab-learn-topics li {
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  color: #9fb3d9;
+  background: #0d1430;
+  border: 1px solid var(--lab-rim);
+  padding: 3px 7px;
+}
+
+.lab-learn-material {
+  display: grid;
+  gap: 10px;
+}
+
+.lab-learn-card {
+  background: #0d1430;
+  border: 2px solid var(--lab-rim);
+  padding: 13px 15px 14px;
+  min-width: 0;
+}
+
+.lab-learn-card-title {
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #f8fafc;
+  margin: 0 0 6px;
+}
+
+.lab-learn-card-body {
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.lab-learn-code {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  background: var(--lab-code-bg);
+  border-left: 3px solid var(--lab-blue);
+  font-family: 'Hack', 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #e2e8f0;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* The notes ------------------------------------------------------------ */
+
+/* The panel that sits under the editor. It explains what the exercise is
+   about, so the bottom of the workbench carries reading rather than
+   emptiness. */
+.lab-notes {
+  flex: none;
+  margin-top: 14px;
+  background: var(--lab-panel);
+  border: 2px solid var(--lab-rim);
+  padding: 16px 18px 18px;
+}
+
+.lab-notes-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.lab-notes-title {
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lab-gold);
+  margin: 0;
+}
+
+.lab-notes-sub {
+  font-family: var(--body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: #7f8db3;
+  margin: 0;
+}
+
+/* The notes sit side by side when there is room for them. */
+.lab-notes-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.lab-note {
+  background: #0d1430;
+  border: 2px solid var(--lab-rim);
+  padding: 13px 15px 14px;
+  min-width: 0;
+}
+
+.lab-note-title {
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #f8fafc;
+  margin: 0 0 6px;
+}
+
+.lab-note-body {
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.lab-note-example {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  background: var(--lab-code-bg);
+  border-left: 3px solid var(--lab-blue);
+  font-family: 'Hack', 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #e2e8f0;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* The documentation lookup ------------------------------------------- */
+
+/* The panel that answers "what is this tag, officially?". It is fed by
+   the MDN search service, so it only appears when a learner asks. */
+.lab-lookup {
+  flex: none;
+  margin-top: 14px;
+  background: var(--lab-panel);
+  border: 2px solid var(--lab-blue);
+  padding: 16px 18px 18px;
+}
+
+.lab-lookup-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.lab-lookup-title {
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lab-blue);
+  margin: 0;
+}
+
+.lab-lookup-status {
+  font-family: var(--body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: #7f8db3;
+  margin: 0;
+}
+
+.lab-lookup-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.lab-lookup-item {
+  background: #0d1430;
+  border: 2px solid var(--lab-rim);
+  padding: 12px 14px 13px;
+  min-width: 0;
+}
+
+.lab-lookup-link {
+  display: inline-block;
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--lab-blue);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(20, 173, 255, 0.4);
+}
+
+.lab-lookup-link:hover,
+.lab-lookup-link:focus-visible {
+  color: #7fd4ff;
+  border-bottom-color: #7fd4ff;
+}
+
+.lab-lookup-summary {
+  font-family: var(--body);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 6px 0 0;
+}
+
+.lab-lookup-error .lab-lookup-summary {
+  color: #ffb3b8;
+}
+
+.lab-lookup-credit {
+  font-family: var(--pixel);
+  font-size: 8px;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  color: #5f6c92;
+  margin: 12px 0 0;
+}
+
+/* The button on each note card that asks the service about that term. */
+.lab-note-lookup {
+  margin-top: 12px;
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #9fb3d9;
+  background: transparent;
+  border: 1px solid var(--lab-rim);
+  padding: 4px 9px;
+  cursor: pointer;
+}
+
+.lab-note-lookup:hover,
+.lab-note-lookup:focus-visible {
+  color: #e2e8f0;
+  border-color: var(--lab-blue);
+}
+
+/* The terminal and the course bar -------------------------------------- */
+
+.lab-terminal {
+  flex: none;
+  margin-top: 14px;
+}
+
+/* The head row carries the title and the clear button, so the terminal
+   has a proper bar instead of a floating heading. */
+.lab-terminal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.lab-terminal-head .lab-pane-title {
+  margin: 0;
+}
+
+.lab-terminal-clear {
+  font-family: var(--pixel);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #7f8db3;
+  background: transparent;
+  border: 1px solid var(--lab-rim);
+  padding: 4px 9px;
+  cursor: pointer;
+}
+
+.lab-terminal-clear:hover {
+  color: #e2e8f0;
+  border-color: var(--lab-rim-strong);
+}
+
+.lab-coursebar {
+  flex: none;
+  position: relative;
+  z-index: 5;
+  margin: 0 -20px;
+  padding: 10px 20px;
+  background: var(--bg);
+  border-top: 2px solid var(--lab-rim);
+  gap: 12px;
+}
+
+/* The track takes a whole row of its own, so the chapter and the counter
+   stay on the line with the buttons. The minimum width of zero lets the
+   chapter row shrink and scroll instead of stretching the page. */
+.lab-coursebar-track {
+  flex: 1 1 100%;
+  min-width: 0;
+  order: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+/* The progress track ---------------------------------------------------- */
+
+/* The track sits under the course bar. It says how far through the
+   course the learner is, and how far through each chapter. */
+.lab-track-summary {
+  flex: none;
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  color: #7f8db3;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* The chapters run in one row that scrolls sideways, so a course with
+   fourteen chapters does not push the notes off the screen. */
+.lab-track-list {
+  display: flex;
+  flex: 1 1 240px;
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: nowrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 3px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.lab-track-list::-webkit-scrollbar {
+  display: none;
+}
+
+.lab-track-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  background: #0d1430;
+  border: 1px solid var(--lab-rim);
+  padding: 3px 8px;
+  font-family: var(--pixel);
+  font-size: 8px;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  color: #7f8db3;
+  white-space: nowrap;
+}
+
+.lab-track-item[data-state="current"] {
+  border-color: var(--lab-blue);
+  color: #e2e8f0;
+}
+
+.lab-track-item[data-state="complete"] {
+  border-color: var(--lab-gold);
+  color: var(--lab-gold);
+}
+
+.lab-track-name {
+  white-space: nowrap;
+}
+
+.lab-track-count {
+  opacity: 0.75;
+}
+
+/* The bar in the chip is a thin line, not a block, so the chip stays one
+   line tall. */
+.lab-track-bar {
+  display: block;
+  width: 34px;
+  height: 3px;
+  background: #1b2547;
+  overflow: hidden;
+}
+
+.lab-track-fill {
+  display: block;
+  height: 100%;
+  background: var(--lab-gold);
+}
+
+/* The reward ------------------------------------------------------------ */
+
+/* The reward panel appears when an answer is right. The coins fly out of
+   it and the total counts up. */
+.lab-reward {
+  position: relative;
+  flex: none;
+  margin-top: 14px;
+  background: var(--lab-panel);
+  border: 2px solid var(--lab-gold);
+  padding: 18px 18px 19px;
+  /* The coins fly above the panel, so the overflow is visible rather than
+     clipped. */
+  overflow: visible;
+  z-index: 3;
+}
+
+.lab-reward-coins {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.lab-coin {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  font-family: var(--pixel);
+  font-size: 13px;
+  line-height: 1;
+  color: var(--lab-gold);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.lab-reward[data-stage="coins"] .lab-coin {
+  animation: lab-coin-fly 780ms cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  animation-delay: var(--coin-delay, 0ms);
+}
+
+@keyframes lab-coin-fly {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4) rotate(0deg); }
+  18% { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(calc(var(--coin-spin) * 0.4)); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--coin-x)), calc(-50% + var(--coin-y))) scale(0.7) rotate(var(--coin-spin)); }
+}
+
+.lab-reward-text {
+  font-family: var(--pixel);
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--lab-gold);
+  margin: 0;
+}
+
+.lab-reward[data-stage="solve"] .lab-reward-text {
+  animation: lab-reward-pop 420ms ease-out;
+}
+
+@keyframes lab-reward-pop {
+  0% { transform: scale(0.94); opacity: 0; }
+  60% { transform: scale(1.03); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* The feedback ----------------------------------------------------------- */
+
+/* The panel that says what is wrong, where it is and how to fix it. */
+.lab-feedback {
+  flex: none;
+  margin-top: 14px;
+  background: var(--lab-panel);
+  border: 2px solid #d64550;
+  padding: 16px 18px 18px;
+}
+
+.lab-feedback-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.lab-feedback-title {
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ff8f97;
+  margin: 0;
+}
+
+.lab-feedback-where {
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  color: #ffb3b8;
+  background: rgba(214, 69, 80, 0.18);
+  border: 1px solid rgba(214, 69, 80, 0.5);
+  padding: 3px 8px;
+}
+
+.lab-feedback-list {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+}
+
+.lab-feedback-item {
+  background: #0d1430;
+  border: 2px solid var(--lab-rim);
+  padding: 11px 13px 12px;
+}
+
+.lab-feedback-item-title {
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #f8fafc;
+  margin: 0 0 5px;
+}
+
+.lab-feedback-item-body {
+  font-family: var(--body);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.lab-feedback-fix-title {
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lab-gold);
+  margin: 0 0 7px;
+}
+
+.lab-feedback-code {
+  margin: 0;
+  padding: 11px 13px;
+  background: var(--lab-code-bg);
+  border-left: 3px solid var(--lab-blue);
+  font-family: 'Hack', 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #e2e8f0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.lab-feedback-code code {
+  font: inherit;
+}
+
+/* Narrow screens ------------------------------------------------------ */
+
+/* Below 1100px the two columns stack, so the page has to scroll again
+   and the fixed frame is switched off. */
+@media (max-width: 1100px) {
+  .lab-page {
+    height: auto;
+    overflow: visible;
+  }
+  .lab-layout {
+    height: auto;
+    overflow: visible;
+  }
+  .lab-lesson {
+    overflow: visible;
+    height: auto;
+    padding: 0 28px 40px;
+  }
+  .lab-brief {
+    position: static;
+    padding: 26px 0 0;
+    border-bottom: 0;
+  }
+  .lab-instructions {
+    margin-bottom: 20px;
+  }
+  .lab-rail {
+    margin-top: 26px;
+  }
+  .lab-help {
+    margin-top: 22px;
+  }
+  .lab-status {
+    position: static;
+    padding: 0;
+  }
+  .lab-work {
+    height: auto;
+    overflow: visible;
+    padding: 18px 26px 40px;
+  }
+  .lab-work-scroll {
+    overflow: visible;
+    height: auto;
+    padding-bottom: 0;
+  }
+  .lab-editor-pane {
+    min-height: 420px;
+  }
+  .lab-code {
+    min-height: 420px;
+    height: auto;
+  }
+  .lab-preview-frame {
+    min-height: 380px;
+    height: auto;
+  }
+  .lab-coursebar {
+    position: sticky;
+    bottom: 0;
+    margin: 0 -26px;
+    padding: 12px 26px;
+  }
+}
+
+@media (max-width: 780px) {
+  .lab-lesson {
+    padding: 0 18px 32px;
+  }
+  .lab-work {
+    padding: 18px 14px 32px;
+  }
+  .lab-coursebar {
+    margin: 0 -14px;
+    padding: 10px 14px;
+  }
+  .lab-notes {
+    padding: 14px 14px 16px;
+  }
+  .lab-lookup {
+    padding: 14px 14px 16px;
+  }
+  .lab-notes-body {
+    grid-template-columns: 1fr;
+  }
+  .lab-learn-block {
+    padding: 14px 14px 16px;
+  }
+  .lab-reward,
+  .lab-feedback {
+    padding: 14px 14px 16px;
+  }
+  .lab-track-bar {
+    width: 32px;
+  }
+}
+
+/* A phone ----------------------------------------------------------- */
+
+/* The top bar has one row and no wrapping. The wordmark and the nav
+   shrink; the nav keeps its links but with a tighter gap. */
+@media (max-width: 560px) {
+  .lab-topbar {
+    gap: 10px;
+    padding: 0 12px;
+    flex-wrap: nowrap;
+  }
+  .lab-brand {
+    gap: 8px;
+    font-size: 12px;
+    min-width: 0;
+  }
+  .lab-brand [data-wordmark] {
+    display: none;
+  }
+  .lab-topnav {
+    gap: 12px;
+    margin-left: auto;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+  .lab-xp {
+    flex: none;
+    font-size: 10px;
+  }
+}
+
+/* Reduced motion ------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-brief,
+  .lab-status,
+  .lab-work-top,
+  .lab-coursebar {
+    transition: none;
+  }
+  /* The coins do not fly when the motion is reduced. The panel still
+     appears, so the learner still sees the reward. */
+  .lab-reward[data-stage="coins"] .lab-coin {
+    animation: none;
+    opacity: 0;
+  }
+  .lab-reward[data-stage="solve"] .lab-reward-text {
+    animation: none;
+  }
+}

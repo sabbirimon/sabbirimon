@@ -18,6 +18,12 @@
 
 import { loadCurriculum } from './lab-curriculum.js';
 import { renderPixelText } from './pixel-type.js';
+import { initLabNotes } from './lab-notes.js';
+import { initLabLearn } from './lab-chapters.js';
+import { initLabFeedback, buildFeedback } from './lab-feedback.js';
+import { initLabReward } from './lab-reward.js';
+import { initLabProgress } from './lab-progress.js';
+import { initLabLookup } from './lab-lookup.js';
 
 /** The localStorage key that holds the learner's progress. */
 export const LAB_PROGRESS_KEY = 'imon-lab-progress-v1';
@@ -50,6 +56,7 @@ export const EXERCISES = [
     title: 'Your first tag',
     chapter: 'Markup basics',
     xp: 10,
+    requirements: ['p'],
     brief: 'Every web page starts with an HTML element. Add a second paragraph below the one that is already there.',
     starter: { html: '<p>I am a paragraph.</p>', css: '', js: '' },
     check: ({ html }) => {
@@ -64,6 +71,7 @@ export const EXERCISES = [
     title: 'Give it a heading',
     chapter: 'Markup basics',
     xp: 10,
+    requirements: ['h1', 'p'],
     brief: 'A heading tells the reader what the page is about. Turn the first paragraph into a level-one heading and add a paragraph underneath it.',
     starter: { html: '<p>My page</p>', css: '', js: '' },
     check: ({ html }) => {
@@ -78,6 +86,7 @@ export const EXERCISES = [
     title: 'Make a list',
     chapter: 'Markup basics',
     xp: 15,
+    requirements: ['ul', 'li'],
     brief: 'Lists group related things. Turn the three separate paragraphs into one unordered list.',
     starter: { html: '<p>Apples</p>\n<p>Pears</p>\n<p>Plums</p>', css: '', js: '' },
     check: ({ html }) => {
@@ -93,6 +102,7 @@ export const EXERCISES = [
     title: 'Paint it blue',
     chapter: 'Styling basics',
     xp: 10,
+    requirements: ['color'],
     brief: 'CSS decides how things look. Set the colour of the heading to blue.',
     starter: { html: '<h1>Hello</h1>', css: 'h1 {\n  /* change me */\n}', js: '' },
     check: ({ css }) => {
@@ -107,6 +117,7 @@ export const EXERCISES = [
     title: 'Give it a box',
     chapter: 'Styling basics',
     xp: 15,
+    requirements: ['padding', 'background-color'],
     brief: 'Every element is a box. Give the paragraph a background colour and some padding.',
     starter: { html: '<p>Boxed in</p>', css: 'p {\n  \n}', js: '' },
     check: ({ css }) => {
@@ -121,6 +132,7 @@ export const EXERCISES = [
     title: 'One rule, many parts',
     chapter: 'Styling basics',
     xp: 20,
+    requirements: ['font-weight'],
     brief: 'A selector can target every list item at once. Make every item in the list bold.',
     starter: { html: '<ul>\n  <li>One</li>\n  <li>Two</li>\n</ul>', css: '/* target the items */\n', js: '' },
     check: ({ css }) => {
@@ -135,6 +147,7 @@ export const EXERCISES = [
     title: 'Name a number',
     chapter: 'Logic basics',
     xp: 10,
+    requirements: ['variable', 'console.log'],
     brief: 'A variable gives a value a name. Declare a variable called `score` and set it to 42, then log it.',
     starter: { html: '', css: '', js: '// declare the score here\n' },
     check: ({ js }) => {
@@ -150,6 +163,7 @@ export const EXERCISES = [
     title: 'Ask a question',
     chapter: 'Logic basics',
     xp: 20,
+    requirements: ['condition'],
     brief: 'An `if` picks between two paths. Log "big" when the number is above 10, and "small" otherwise.',
     starter: { html: '', css: '', js: 'const n = 42;\n// add an if\n' },
     check: ({ js }) => {
@@ -165,6 +179,7 @@ export const EXERCISES = [
     title: 'Say it again',
     chapter: 'Logic basics',
     xp: 20,
+    requirements: ['loop'],
     brief: 'A loop repeats a block of code. Log "tick" five times using a for loop.',
     starter: { html: '', css: '', js: '// write a for loop\n' },
     check: ({ js }) => {
@@ -180,6 +195,7 @@ export const EXERCISES = [
     title: 'Make a function',
     chapter: 'Logic basics',
     xp: 25,
+    requirements: ['function', 'return'],
     brief: 'A function takes an input and gives back an answer. Write a function called `double` that returns its argument multiplied by two, then log `double(21)`.',
     starter: { html: '', css: '', js: '// write the double function\n' },
     check: ({ js }) => {
@@ -494,6 +510,24 @@ export function initLab(root = document) {
   const nextButton = root?.querySelector?.('[data-lab-next]');
   const doneButton = root?.querySelector?.('[data-lab-done]');
   const credit = root?.querySelector?.('[data-lab-credit]');
+  const clearButton = root?.querySelector?.('[data-lab-clear]');
+  const kicker = root?.querySelector?.('[data-lab-brief-kicker]');
+  // The documentation panel. It asks a free, keyless search service
+  // about whatever tag or property the learner picks.
+  const lookup = initLabLookup(root);
+  // The explanation panel under the editor. It fills the space below the
+  // code with what the exercise is actually teaching. The lookup callback
+  // is what makes each note card searchable.
+  const notes = initLabNotes(root, (term, language) => lookup?.lookup(term, language));
+  // The learning panel: goal, study material, how the answer is checked
+  // and what you can do afterwards.
+  const learn = initLabLearn(root);
+  // The panel that says what is wrong, where it is and how to fix it.
+  const feedback = initLabFeedback(root);
+  // The celebration that pays out coins on a correct answer.
+  const reward = initLabReward(root);
+  // The progress track under the course bar.
+  const track = initLabProgress(root);
 
   const reduced = () => globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
 
@@ -554,16 +588,33 @@ export function initLab(root = document) {
       status.dataset.state = result.ok ? 'ok' : 'error';
     }
     if (result.ok) {
+      const firstTime = !state.solved.has(state.exercise.id);
       state.solved.add(state.exercise.id);
       const progress = mergeLabProgress(readLabProgress(), { solved: [state.exercise.id] });
       progress.xp = earnedXp(progress);
       writeLabProgress(progress);
       updateXp(progress.xp);
       updateRail();
-      print('info', `+${state.exercise.xp} XP · ${result.message}`);
+      updateCounter();
+      // The wrong-answer panel is cleared, because the answer is right now.
+      feedback?.hide();
+      // The coins only fly the first time an exercise is solved, so the
+      // learner cannot farm the same exercise for points.
+      if (firstTime) {
+        reward?.show(state.exercise, state.exercise.xp || 0, progress.xp);
+        print('info', `+${state.exercise.xp} XP · ${result.message}`);
+      } else {
+        reward?.hide();
+        print('info', `Already solved. ${result.message}`);
+      }
     } else {
+      reward?.hide();
+      // The failure is explained: what is wrong, where it is, and how to
+      // fix it.
+      const detail = feedback?.show(buildFeedback({ ...state.buffers }, result));
       print('error', result.message);
       if (result.hint) print('warn', 'Hint: ' + result.hint);
+      if (detail?.where) print('info', `Look at ${detail.where.file}, line ${detail.where.line}.`);
     }
     return result;
   }
@@ -658,6 +709,9 @@ export function initLab(root = document) {
     if (prevButton) prevButton.hidden = !neighbourExercise(state.exercise.id, 'prev');
     if (nextButton) nextButton.hidden = !neighbourExercise(state.exercise.id, 'next');
     if (doneButton) doneButton.hidden = !state.solved.has(state.exercise.id);
+    // The track under the bar lists every chapter and how far through it
+    // the learner is.
+    track?.render(labChapters(), list, state.solved, state.exercise.chapter, earnedXp({ solved: [...state.solved] }));
   }
 
   function selectTab(language) {
@@ -677,9 +731,23 @@ export function initLab(root = document) {
     state.exercise = next;
     state.buffers = { ...next.starter };
     for (const [name, editor] of Object.entries(editors)) if (editor) editor.value = state.buffers[name];
-    if (title) { title.textContent = next.title; drawPixelText(title); }
+    // The kicker names the chapter and the title names the exercise. They
+    // are drawn separately, so the title is set after the kicker.
+    if (kicker) {
+      kicker.textContent = next.chapter || 'Exercise';
+      drawPixelText(kicker);
+    }
+    if (title) {
+      title.textContent = next.title;
+      drawPixelText(title);
+    }
     if (brief) brief.textContent = next.brief;
     if (status) { status.textContent = ''; status.removeAttribute('data-state'); }
+    feedback?.hide();
+    reward?.hide();
+    lookup?.hide();
+    notes?.render(next);
+    learn?.render(next.chapter);
     refreshAll();
     updateRail();
     updateCounter();
@@ -700,6 +768,27 @@ export function initLab(root = document) {
     if (language) selectTab(language);
   };
 
+  /**
+   * Look one term up in the documentation service.
+   *
+   * The panel is hidden while the request is in flight, then filled in
+   * either with the pages the service found or with the reason it could
+   * not be reached. The built-in notes stay on screen either way.
+   */
+  const onNoteLookup = event => {
+    const button = event.target?.closest?.('[data-lab-note-lookup]');
+    if (!button) return;
+    const term = button.dataset.labNoteLookup;
+    if (!term) return;
+    const language = state.exercise?.language || 'html';
+    lookup?.hide();
+    print('info', `Looking up “${term}”…`);
+    lookup?.lookup(term, language).then(result => {
+      if (result?.ok) print('info', `Found ${result.pages.length} question(s) for “${term}”.`);
+      else print('warn', 'The search service could not be reached.');
+    });
+  };
+
   const onMessage = event => {
     const data = event.data;
     if (!data || data.source !== 'imon-lab') return;
@@ -713,14 +802,21 @@ export function initLab(root = document) {
 
   for (const editor of Object.values(editors)) editor?.addEventListener('input', onEditorInput);
   root?.querySelector?.('[data-lab-tabs]')?.addEventListener('click', onTabClick);
+  root?.querySelector?.('[data-lab-notes]')?.addEventListener('click', onNoteLookup);
   runButton?.addEventListener('click', () => { refreshAll(); print('info', 'Ran the code.'); });
   checkButton?.addEventListener('click', check);
   resetButton?.addEventListener('click', () => {
     state.buffers = { ...state.exercise.starter };
     for (const [name, editor] of Object.entries(editors)) if (editor) editor.value = state.buffers[name];
     if (status) { status.textContent = ''; status.removeAttribute('data-state'); }
+    feedback?.hide();
+    reward?.hide();
     refreshAll();
     print('info', 'Reset to the starting code.');
+  });
+  clearButton?.addEventListener('click', () => {
+    clearConsole();
+    print('info', 'Terminal cleared.');
   });
   globalThis.addEventListener('message', onMessage);
 
