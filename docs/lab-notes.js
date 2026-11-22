@@ -102,7 +102,28 @@ export const NOTES = {
   'map': { title: 'The map', body: 'map builds a new array by running a function over every item of the old one.', example: 'const doubled = scores.map(n => n * 2);' },
   'filter': { title: 'The filter', body: 'filter keeps the items a test says to keep, and returns them as a new array.', example: 'const best = scores.filter(n => n > 50);' },
   'forEach': { title: 'The forEach', body: 'forEach runs a function once per item. It does not build a new array.', example: 'scores.forEach(n => console.log(n));' },
-  template: { title: 'The template literal', body: 'A template literal uses backticks and can drop a value into the text with ${}.', example: 'const line = `You scored ${score} points`;' }
+  template: { title: 'The template literal', body: 'A template literal uses backticks and can drop a value into the text with ${}.', example: 'const line = `You scored ${score} points`;' },
+
+  /* The words the JavaScript quiz asks about ------------------------- */
+  script: { title: 'The script element', body: 'A script element holds JavaScript. A code element shows code to the reader without running it, which is a different job entirely.', example: '<script src="app.js"></script>' },
+  comment: { title: 'The comment', body: 'A comment is a note the engine ignores. // runs to the end of the line; /* */ runs to the next */.', example: '/* a note for the reader */\n// another one' },
+  case: { title: 'Case sensitivity', body: 'JavaScript compares names letter by letter, so total and Total are two different names and only one of them holds your value.', example: 'const total = 10;\nconsole.log(Total); // ReferenceError' },
+  const: { title: 'The const binding', body: 'const declares a name that cannot be reassigned. It is the default for anything that will not change.', example: 'const MAX = 10;' },
+  typeof: { title: 'The typeof operator', body: 'typeof gives back the name of a type as a string, which is how you check what a value actually is.', example: 'typeof "hello"; // "string"' },
+  undefined: { title: 'The undefined value', body: 'A name that was declared but never given a value holds undefined. null is a value you choose on purpose, to say "nothing here" yourself.', example: 'let score;\nconsole.log(score); // undefined' },
+  nan: { title: 'The not-a-number value', body: 'NaN comes out of maths that cannot work, such as 0 / 0. It is the only value that is not equal to itself, so compare it with Number.isNaN.', example: 'Number.isNaN(0 / 0); // true' },
+  '===': { title: 'The strict equality', body: '=== compares the value and the type together, so 5 === "5" is false. A single = assigns instead of comparing.', example: '5 === "5"; // false' },
+  operator: { title: 'The operator', body: 'An operator does something to values. + adds numbers but joins text, and % gives back what is left over after a division.', example: '7 % 3; // 1' },
+  'string method': { title: 'The string method', body: 'A method is a function that belongs to a value. String methods give back a new string and leave the original alone.', example: '"hello".toUpperCase(); // "HELLO"' },
+  'template literal': { title: 'The template literal', body: 'A template literal uses backticks, and ${name} drops the value of name straight into the text without joining it by hand.', example: 'const line = `Hello ${name}`;' },
+  'array method': { title: 'The array method', body: 'Array methods work on a list. Most of them give back a new array and leave the old one untouched.', example: 'scores.map(n => n * 2);' },
+  'object property': { title: 'The property', body: 'A property is a key–value pair on an object. Both notations work: user.age and user["age"] do the same thing when the name is a plain word.', example: 'user.age = 30;' },
+  json: { title: 'The JSON format', body: 'JSON is text that holds data. It uses curly braces for objects, square brackets for arrays, and double quotes around every name.', example: '{"name": "Imon", "level": 2}' },
+  parameter: { title: 'The parameter', body: 'A parameter is a name in the definition for a value the caller passes in. The value that arrives is the argument.', example: 'function double(n) {\n  return n * 2;\n}' },
+  'arrow function': { title: 'The arrow function', body: 'An arrow function writes its parameters, then the arrow, then the body. It has no own this, which is why it suits short callbacks.', example: 'const double = n => n * 2;' },
+  if: { title: 'The if statement', body: 'An if statement runs its block only when the condition is true. A false condition means the block is skipped and the code carries on.', example: 'if (score > 50) {\n  console.log("passed");\n}' },
+  for: { title: 'The for loop', body: 'A for loop takes three things: where to start, when to stop, and what to change each time round.', example: 'for (let i = 0; i < 5; i++) {\n  console.log(i);\n}' },
+  break: { title: 'The break', body: 'break leaves the loop altogether. continue is the one that skips to the next item and carries on round the loop.', example: 'for (const n of list) {\n  if (n < 0) break;\n}' }
 };
 
 /**

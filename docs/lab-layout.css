@@ -148,6 +148,13 @@
   min-height: 300px;
 }
 
+/* The quiz panel stands in for the editor pane, so it grows the same way
+   and the workbench does not collapse when a quiz is open. */
+.lab-quiz {
+  flex: 1 1 auto;
+  min-height: 300px;
+}
+
 .lab-code {
   min-height: 100%;
   height: 100%;
@@ -855,6 +862,20 @@
   }
   .lab-track-bar {
     width: 32px;
+  }
+  .lab-quiz {
+    padding: 20px 16px 24px;
+  }
+  .lab-quiz-question {
+    font-size: 18px;
+  }
+  .lab-quiz-option {
+    min-height: 50px;
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+  .lab-quiz-retry {
+    align-self: stretch;
   }
 }
 

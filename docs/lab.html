@@ -84,10 +84,15 @@
 
       <div class="lab-instructions">
         <h2 class="lab-instructions-title" data-pixel-text>Instructions</h2>
-        <ol class="lab-steps">
+        <ol class="lab-steps" data-lab-steps-code>
           <li>Write your code in the editor on the right.</li>
           <li>Press <strong>Run</strong> to see the result and read the console.</li>
           <li>Press <strong>Check answer</strong> when you think it is right.</li>
+        </ol>
+        <ol class="lab-steps" data-lab-steps-quiz hidden>
+          <li>Read the question in the panel on the right.</li>
+          <li>Pick one of the four answers.</li>
+          <li>You are told straight away whether it was right, and a wrong answer explains itself.</li>
         </ol>
       </div>
     </article>
@@ -105,7 +110,8 @@
 
     <div class="lab-help">
       <h2 class="lab-help-title" data-pixel-text>Help</h2>
-      <p>If you get stuck, press <strong>Reset</strong> to bring the starting code back, then work through it one step at a time.</p>
+      <p data-lab-help-code>If you get stuck, press <strong>Reset</strong> to bring the starting code back, then work through it one step at a time.</p>
+      <p data-lab-help-quiz hidden>A wrong answer shows you the right one and the reason, and you can try again. Press <strong>Try again</strong> to have another go.</p>
       <p class="lab-help-note">Everything runs in your browser. Nothing you type is sent anywhere.</p>
     </div>
   </section>
@@ -127,6 +133,17 @@
 
     <!-- The scrolling middle of the workbench. -->
     <div class="lab-work-scroll">
+      <!-- The quiz panel ------------------------------------------- -->
+      <!-- A quiz exercise has no editor. The panel takes the place of the
+           editor and the preview, and asks one question at a time. -->
+      <div class="lab-quiz" data-lab-quiz hidden>
+        <p class="lab-quiz-progress" data-lab-quiz-progress hidden></p>
+        <h2 class="lab-quiz-question" id="lab-quiz-question" data-lab-quiz-question tabindex="-1"></h2>
+        <div class="lab-quiz-options" data-lab-quiz-options role="radiogroup" aria-labelledby="lab-quiz-question"></div>
+        <p class="lab-quiz-verdict" data-lab-quiz-verdict role="status" aria-live="polite" tabindex="-1"></p>
+        <button type="button" class="nes-button nes-button-gold lab-quiz-retry" data-lab-quiz-retry hidden><span data-pixel-text>Try again</span></button>
+      </div>
+
       <div class="lab-editor-pane">
         <div class="lab-editor" role="tabpanel" aria-label="Code editor">
           <label class="sr-only" for="lab-editor-html">HTML editor</label>

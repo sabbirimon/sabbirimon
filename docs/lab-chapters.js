@@ -421,6 +421,29 @@ export const CHAPTERS = {
     ],
     exam: 'The checker reads your script as text and looks for the constructs the exercise names — the variable, the function, the selector, the event.',
     outcome: 'You can reach into a page and change it in response to what a person does.'
+  },
+
+  'JavaScript · Quiz': {
+    goal: 'Check what you know about the words JavaScript uses. Twenty-five questions, one topic at a time, and an answer that explains itself when you get it wrong.',
+    material: [
+      {
+        title: 'The topics this chapter covers',
+        body: 'The questions follow the order a beginner meets the language: the syntax first, then the data it holds, then the things you can do with it.',
+        code: 'Syntax & comments\nVariables & types\nOperators\nStrings\nArrays\nObjects\nFunctions\nConditions & loops'
+      },
+      {
+        title: 'How the questions are marked',
+        body: 'You pick one of four answers. A wrong answer shows you the right one and why, and you can try the question again — so a mistake costs you nothing but the time to read it.',
+        code: 'const total = 42;\n// typeof total is "number"'
+      },
+      {
+        title: 'Further reading',
+        body: 'The w3schools JavaScript quiz covers the same ground. Every question on this page was written for IMON.world; only the topic list was inspired by it.',
+        code: 'https://www.w3schools.com/js/js_quiz.asp'
+      }
+    ],
+    exam: 'You pick one of four answers. A wrong answer shows you the right one and the reason, and you can try again. You earn XP the first time you get a question right.',
+    outcome: 'You know what the words mean, so the code in the rest of the course stops looking like a wall of symbols.'
   }
 };
 

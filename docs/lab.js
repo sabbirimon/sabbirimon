@@ -25,6 +25,8 @@ import { initLabReward } from './lab-reward.js';
 import { initLabProgress } from './lab-progress.js';
 import { initLabLookup } from './lab-lookup.js';
 import { formatLine, initTerminalPanel } from './lab-output.js';
+import { quizExercises, QUIZ_CHAPTER } from './lab-quiz.js';
+import { initLabQuiz } from './lab-quiz-ui.js';
 
 /** The localStorage key that holds the learner's progress. */
 export const LAB_PROGRESS_KEY = 'imon-lab-progress-v1';
@@ -206,7 +208,13 @@ export const EXERCISES = [
       if (!/double\s*\(\s*21\s*\)/.test(js)) return { ok: false, message: 'double(21) is never called.', hint: 'Log the result: console.log(double(21));' };
       return { ok: true, message: '42, as it should be. Functions are reusable tools.' };
     }
-  }
+  },
+
+  /* -- the JavaScript quiz ------------------------------------------ */
+  /* The knowledge check. Each question is an exercise with no editor:
+     the learner picks one of four answers, a wrong answer explains
+     itself, and the XP is paid the first time a question is right. */
+  ...quizExercises()
 ];
 
 /* ------------------------------------------------------------------ *
@@ -525,6 +533,12 @@ export function initLab(root = document) {
   const credit = root?.querySelector?.('[data-lab-credit]');
   const clearButton = root?.querySelector?.('[data-lab-clear]');
   const kicker = root?.querySelector?.('[data-lab-brief-kicker]');
+  // The help text is different for a quiz, because there is no code to
+  // reset and no file to open.
+  const helpCode = root?.querySelector?.('[data-lab-help-code]');
+  const helpQuiz = root?.querySelector?.('[data-lab-help-quiz]');
+  const stepsCode = root?.querySelector?.('[data-lab-steps-code]');
+  const stepsQuiz = root?.querySelector?.('[data-lab-steps-quiz]');
   // The documentation panel. It asks a free, keyless search service
   // about whatever tag or property the learner picks.
   const lookup = initLabLookup(root);
@@ -541,6 +555,20 @@ export function initLab(root = document) {
   const reward = initLabReward(root);
   // The progress track under the course bar.
   const track = initLabProgress(root);
+  // The quiz panel. A quiz exercise has no editor, so this panel takes
+  // the place of the code pane.
+  const quiz = initLabQuiz(root);
+  // The tab bar and the code pane are hidden while a quiz is open.
+  const tabBar = root?.querySelector?.('[data-lab-tabs]');
+  const editorPane = root?.querySelector?.('.lab-editor-pane');
+
+  /**
+   * Is the current exercise a quiz?
+   *
+   * The kind is on the exercise itself, so a new kind of exercise only
+   * has to say so once.
+   */
+  const isQuiz = () => state.exercise?.kind === 'quiz';
 
   const reduced = () => globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
 
@@ -623,7 +651,10 @@ export function initLab(root = document) {
   function check() {
     let result;
     try {
-      result = state.exercise.check({ ...state.buffers });
+      // A quiz checker reads the chosen answer; a code checker reads the
+      // editor buffers. Both are handed everything, because a checker
+      // only ever looks at the keys it cares about.
+      result = state.exercise.check({ ...state.buffers, chosen: quiz?.chosen?.() });
     } catch (error) {
       result = { ok: false, message: 'The checker hit an error: ' + (error?.message || error) };
     }
@@ -658,13 +689,19 @@ export function initLab(root = document) {
       }
     } else {
       reward?.hide();
-      // The failure is explained: what is wrong, where it is, and how to
-      // fix it.
-      const detail = feedback?.show(buildFeedback({ ...state.buffers }, result));
       print('error', result.message);
       if (result.hint) print('warn', 'Hint: ' + result.hint);
-      if (detail?.where) print('info', `Look at ${detail.where.file}, line ${detail.where.line}.`);
+      // The code panel explains a wrong answer by pointing at the file and
+      // the line. A quiz has no file, so the panel is skipped and the
+      // quiz verdict and the terminal do the explaining instead.
+      if (!isQuiz()) {
+        const detail = feedback?.show(buildFeedback({ ...state.buffers }, result));
+        if (detail?.where) print('info', `Look at ${detail.where.file}, line ${detail.where.line}.`);
+      }
     }
+    // The panel is told the verdict last, so it shows the same answer the
+    // terminal printed.
+    if (isQuiz()) quiz?.judge?.(result);
     return result;
   }
 
@@ -764,6 +801,8 @@ export function initLab(root = document) {
   }
 
   function selectTab(language) {
+    // A quiz has no files to choose between, so the tab bar stays put.
+    if (isQuiz()) return;
     for (const tab of tabs) {
       const active = tab.dataset.labTab === language;
       tab.setAttribute('aria-selected', active ? 'true' : 'false');
@@ -797,7 +836,38 @@ export function initLab(root = document) {
     lookup?.hide();
     notes?.render(next);
     learn?.render(next.chapter);
-    refreshAll();
+    // A quiz takes the place of the code pane, and the tab bar goes with
+    // it — there is no file to choose.
+    if (next.kind === 'quiz') {
+      if (editorPane) editorPane.hidden = true;
+      if (tabBar) tabBar.hidden = true;
+      // There is nothing to run and nothing to check: picking an answer
+      // is the whole interaction. Reset goes too — a quiz has no starting
+      // code to bring back.
+      if (runButton) runButton.hidden = true;
+      if (checkButton) checkButton.hidden = true;
+      if (resetButton) resetButton.hidden = true;
+      if (helpCode) helpCode.hidden = true;
+      if (helpQuiz) helpQuiz.hidden = false;
+      if (stepsCode) stepsCode.hidden = true;
+      if (stepsQuiz) stepsQuiz.hidden = false;
+      const list = allExercises();
+      const position = list.findIndex(exercise => exercise.id === next.id) + 1;
+      quiz?.render(next, position, list.length);
+      clearConsole();
+    } else {
+      if (editorPane) editorPane.hidden = false;
+      if (tabBar) tabBar.hidden = false;
+      if (runButton) runButton.hidden = false;
+      if (checkButton) checkButton.hidden = false;
+      if (resetButton) resetButton.hidden = false;
+      if (helpCode) helpCode.hidden = false;
+      if (helpQuiz) helpQuiz.hidden = true;
+      if (stepsCode) stepsCode.hidden = false;
+      if (stepsQuiz) stepsQuiz.hidden = true;
+      quiz?.hide();
+      refreshAll();
+    }
     updateRail();
     updateCounter();
     return next;
@@ -852,7 +922,20 @@ export function initLab(root = document) {
   for (const editor of Object.values(editors)) editor?.addEventListener('input', onEditorInput);
   root?.querySelector?.('[data-lab-tabs]')?.addEventListener('click', onTabClick);
   root?.querySelector?.('[data-lab-notes]')?.addEventListener('click', onNoteLookup);
-  runButton?.addEventListener('click', () => { refreshAll(); print('info', 'Ran the code.'); });
+  // A pick is checked the moment it is made, so the learner is told
+  // straight away whether the answer was right.
+  quiz?.onPick?.(() => { check(); });
+  // Trying again puts the question back the way it was. It is the same
+  // thing as pressing reset.
+  quiz?.onRetry?.(() => {
+    if (status) { status.textContent = ''; status.removeAttribute('data-state'); }
+    panel?.setState?.('idle');
+  });
+  runButton?.addEventListener('click', () => {
+    if (isQuiz()) return;
+    refreshAll();
+    print('info', 'Ran the code.');
+  });
   checkButton?.addEventListener('click', check);
   resetButton?.addEventListener('click', () => {
     state.buffers = { ...state.exercise.starter };
@@ -860,6 +943,12 @@ export function initLab(root = document) {
     if (status) { status.textContent = ''; status.removeAttribute('data-state'); }
     feedback?.hide();
     reward?.hide();
+    if (isQuiz()) {
+      quiz?.reset?.();
+      panel?.setState?.('idle');
+      clearConsole();
+      return;
+    }
     refreshAll();
     print('info', 'Reset to the starting code.');
   });

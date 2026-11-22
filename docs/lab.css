@@ -474,6 +474,163 @@
   background: #0b1026;
 }
 
+/* The quiz ----------------------------------------------------------
+   A quiz exercise has no editor. The panel stands in for the editor and
+   the preview: the question at the top, four answers below it, and the
+   verdict under those. */
+.lab-quiz {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 26px 28px 30px;
+  background: var(--lab-panel);
+  border: 2px solid var(--lab-rim);
+  min-height: 420px;
+}
+
+.lab-quiz[hidden] {
+  display: none;
+}
+
+.lab-quiz-progress {
+  margin: 0;
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lab-blue);
+}
+
+.lab-quiz-question {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #f8fafc;
+  max-width: 60ch;
+}
+
+.lab-quiz-question:focus {
+  outline: none;
+}
+
+.lab-quiz-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 0;
+}
+
+.lab-quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 56px;
+  padding: 12px 18px;
+  text-align: left;
+  font-family: var(--body);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #cbd5e1;
+  background: var(--lab-panel-2);
+  border: 2px solid var(--lab-rim-strong);
+  cursor: pointer;
+}
+
+.lab-quiz-option:hover {
+  border-color: var(--lab-blue);
+  color: #f8fafc;
+  background: #16203f;
+}
+
+.lab-quiz-option:focus-visible {
+  outline: 3px solid var(--lab-blue);
+  outline-offset: 2px;
+}
+
+/* The letter badge on the left of each answer. */
+.lab-quiz-letter {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  font-family: var(--pixel);
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--lab-gold);
+  background: #0a0f24;
+  border: 2px solid var(--lab-rim-strong);
+}
+
+.lab-quiz-option-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* The right answer. */
+.lab-quiz-option-correct {
+  border-color: var(--lab-lime);
+  color: #ecfccb;
+  background: #14240a;
+}
+
+.lab-quiz-option-correct .lab-quiz-letter {
+  color: var(--lab-lime);
+  border-color: #4d7c0f;
+}
+
+/* The wrong answer the learner picked. */
+.lab-quiz-option-wrong {
+  border-color: var(--lab-red);
+  color: #ffe4e6;
+  background: #2b0b14;
+}
+
+.lab-quiz-option-wrong .lab-quiz-letter {
+  color: var(--lab-red);
+  border-color: #9f1239;
+}
+
+.lab-quiz-verdict {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+.lab-quiz-verdict:focus {
+  outline: none;
+}
+
+.lab-quiz-verdict[data-tone='right'] {
+  color: var(--lab-lime);
+}
+
+.lab-quiz-verdict[data-tone='wrong'] {
+  color: var(--lab-red);
+}
+
+.lab-quiz-retry {
+  align-self: flex-start;
+  min-height: 42px;
+  padding: 8px 14px;
+}
+
+.lab-quiz-retry span {
+  font-family: var(--pixel);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 1px;
+}
+
 /* The terminal ------------------------------------------------------
    The reference terminal is a dark slab with a bar across the top. The
    values are coloured by what they are, so the learner can see the type
