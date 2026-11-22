@@ -1,0 +1,185 @@
+/* NES-style pixel borders.
+   The border is drawn with `border-image` fed by a tiny inline SVG, so every
+   edge keeps its chunky 2px staircase instead of being anti-aliased. The
+   same technique builds the card, the inputs and the buttons.
+
+   Usage:
+     .nes-border        6px staircase border, light fill
+     .nes-border-dark   6px staircase border, dark fill
+     .nes-border-sm     2px compact staircase border
+     .nes-button        stacked pixel button (face + 6px bottom shadow)
+     .nes-button-blue   the same, in the sign-in blue
+     .nes-balloon       speech bubble with a pixel tail            */
+
+:root {
+  --nes-ink: #020617;
+  --nes-paper: #ffffff;
+  --nes-paper-soft: #f1f5f9;
+  --nes-paper-input: #f8fafc;
+  --nes-line: #cbd5e1;
+  --nes-line-soft: #e2e8f0;
+  --nes-line-dark: #475569;
+  --nes-muted: #64748b;
+  --nes-blue: #14adff;
+  --nes-blue-deep: #0065ab;
+  --nes-blue-edge: #00568d;
+  --nes-sun: #facc15;
+  --nes-sun-deep: #a16207;
+  --nes-lime: #92cc41;
+}
+
+/* The staircase tile. One 6×6 pixel of a rounded-ish corner, tiled by
+   `border-image` into the four edges and the corners. */
+.nes-border {
+  position: relative;
+  border-style: solid;
+  border-width: 0;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath fill-rule='evenodd' d='M4 0H3V1H2V2H1V3H0V5H1V6H2V7H3V8H5V7H6V6H7V5H8V3H7V2H6V1H5V0ZM5 1V2H6V3H7V5H6V6H5V7H3V6H2V5H1V3H2V2H3V1Z' fill='%23CBD5E1'/%3E%3C/svg%3E") 3 / 6px / 0px stretch;
+  background-color: var(--nes-paper);
+  /* The clip-path keeps the staircase corners transparent so the border
+     image is not squared off by the element box. */
+  clip-path: polygon(6px 0px, 6px 2px, 4px 2px, 4px 4px, 2px 4px, 2px 6px, 0px 6px, 0px calc(100% - 6px), 2px calc(100% - 6px), 2px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 2px), 6px calc(100% - 2px), 6px 100%, calc(100% - 6px) 100%, calc(100% - 6px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 6px), 100% calc(100% - 6px), 100% 6px, calc(100% - 6px) 6px, calc(100% - 6px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 0px);
+}
+
+.nes-border-dark {
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath fill-rule='evenodd' d='M4 0H3V1H2V2H1V3H0V5H1V6H2V7H3V8H5V7H6V6H7V5H8V3H7V2H6V1H5V0ZM5 1V2H6V3H7V5H6V6H5V7H3V6H2V5H1V3H2V2H3V1Z' fill='%23475569'/%3E%3C/svg%3E") 3 / 6px / 0px stretch;
+}
+
+/* The compact 2px tile, used on inputs and small chips.
+   The tile is a full rectangle ring: the outer two pixels of a 6×6 cell
+   are drawn, so `slice 2` cuts exactly at the ring's inner edge and the
+   straight edges stay solid while the corners step in by one pixel. */
+.nes-border-sm {
+  border-style: solid;
+  border-width: 2px;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath d='M2 0h2v1H2zM1 1h1v1H1zM4 1h1v1H4zM0 2h1v2H0zM5 2h1v2H5zM1 4h1v1H1zM4 4h1v1H4zM2 5h2v1H2z' fill='%2394A3B8'/%3E%3C/svg%3E") 2 / 2px / 2px stretch;
+  background-clip: padding-box;
+}
+
+/* Speech bubble with a pixel tail on the lower-left. */
+.nes-balloon {
+  position: relative;
+  display: inline-block;
+  border-style: solid;
+  border-width: 0;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill-rule='evenodd' d='M3 1 h1 v1 h-1 z M4 1 h1 v1 h-1 z M2 2 h1 v1 h-1 z M5 2 h1 v1 h-1 z M1 3 h1 v1 h-1 z M6 3 h1 v1 h-1 z M1 4 h1 v1 h-1 z M6 4 h1 v1 h-1 z M2 5 h1 v1 h-1 z M5 5 h1 v1 h-1 z M3 6 h1 v1 h-1 z M4 6 h1 v1 h-1 z' fill='%23CBD5E1'/%3E%3C/svg%3E") 3 / 3 / 2 stretch;
+  background-color: var(--nes-paper-soft);
+  color: var(--nes-ink);
+}
+
+/* Stacked pixel button: a face at z-index 1 and a 6px bottom slab at
+   z-index 0. Pressing the button slides the face down onto the slab. */
+.nes-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  min-height: 50px;
+  font-family: var(--pixel);
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  color: var(--nes-ink);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.nes-button::before,
+.nes-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nes-button::before {
+  z-index: 1;
+  height: calc(100% - 4px);
+  background-color: var(--nes-paper);
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath d='M2 0H3V1H2V0ZM3 0H4V1H3V0ZM1 1H2V2H1V1ZM4 1H5V2H4V1ZM0 2H1V3H0V2ZM5 2H6V3H5V2ZM0 3H1V4H0V3ZM5 3H6V4H5V3ZM1 4H2V5H1V4ZM4 4H5V5H4V4ZM2 5H3V6H2V5ZM3 5H4V6H3V5Z' fill='%2364748B'/%3E%3C/svg%3E") 2 / 2px / 2px stretch;
+}
+
+.nes-button::after {
+  z-index: 0;
+  height: calc(100% - 6px);
+  top: 6px;
+  background-color: var(--nes-line-soft);
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath d='M2 0H3V1H2V0ZM3 0H4V1H3V0ZM1 1H2V2H1V1ZM4 1H5V2H4V1ZM0 2H1V3H0V2ZM5 2H6V3H5V2ZM0 3H1V4H0V3ZM5 3H6V4H5V3ZM1 4H2V5H1V4ZM4 4H5V5H4V4ZM2 5H3V6H2V5ZM3 5H4V6H3V5Z' fill='%2364748B'/%3E%3C/svg%3E") 2 / 2px / 2px stretch;
+}
+
+.nes-button > * {
+  position: relative;
+  z-index: 2;
+}
+
+.nes-button:hover:not(:disabled)::before {
+  background-color: #f8fafc;
+}
+
+.nes-button:active:not(:disabled)::before {
+  transform: translateY(4px);
+}
+
+.nes-button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+/* The blue sign-in button. */
+.nes-button-blue {
+  color: #ffffff;
+}
+
+.nes-button-blue::before {
+  background-color: var(--nes-blue);
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath d='M2 0H3V1H2V0ZM3 0H4V1H3V0ZM1 1H2V2H1V1ZM4 1H5V2H4V1ZM0 2H1V3H0V2ZM5 2H6V3H5V2ZM0 3H1V4H0V3ZM5 3H6V4H5V3ZM1 4H2V5H1V4ZM4 4H5V5H4V4ZM2 5H3V6H2V5ZM3 5H4V6H3V5Z' fill='%2300568D'/%3E%3C/svg%3E") 2 / 2px / 2px stretch;
+}
+
+.nes-button-blue::after {
+  background-color: var(--nes-blue-deep);
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath d='M2 0H3V1H2V0ZM3 0H4V1H3V0ZM1 1H2V2H1V1ZM4 1H5V2H4V1ZM0 2H1V3H0V2ZM5 2H6V3H5V2ZM0 3H1V4H0V3ZM5 3H6V4H5V3ZM1 4H2V5H1V4ZM4 4H5V5H4V4ZM2 5H3V6H2V5ZM3 5H4V6H3V5Z' fill='%2300568D'/%3E%3C/svg%3E") 2 / 2px / 2px stretch;
+}
+
+.nes-button-blue:hover:not(:disabled)::before {
+  background-color: #3ec1ff;
+}
+
+/* The green accent used for secondary confirmations. */
+.nes-button-lime {
+  color: var(--nes-ink);
+}
+
+.nes-button-lime::before {
+  background-color: var(--nes-lime);
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath d='M2 0H3V1H2V0ZM3 0H4V1H3V0ZM1 1H2V2H1V1ZM4 1H5V2H4V1ZM0 2H1V3H0V2ZM5 2H6V3H5V2ZM0 3H1V4H0V3ZM5 3H6V4H5V3ZM1 4H2V5H1V4ZM4 4H5V5H4V4ZM2 5H3V6H2V5ZM3 5H4V6H3V5Z' fill='%234D7C0F'/%3E%3C/svg%3E") 2 / 2px / 2px stretch;
+}
+
+.nes-button-lime::after {
+  background-color: #6f9c1f;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath d='M2 0H3V1H2V0ZM3 0H4V1H3V0ZM1 1H2V2H1V1ZM4 1H5V2H4V1ZM0 2H1V3H0V2ZM5 2H6V3H5V2ZM0 3H1V4H0V3ZM5 3H6V4H5V3ZM1 4H2V5H1V4ZM4 4H5V5H4V4ZM2 5H3V6H2V5ZM3 5H4V6H3V5Z' fill='%234D7C0F'/%3E%3C/svg%3E") 2 / 2px / 2px stretch;
+}
+
+/* Sun-yellow button with the house gold shadow. */
+.nes-button-sun {
+  color: var(--nes-ink);
+}
+
+.nes-button-sun::before {
+  background-color: var(--nes-sun);
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath d='M2 0H3V1H2V0ZM3 0H4V1H3V0ZM1 1H2V2H1V1ZM4 1H5V2H4V1ZM0 2H1V3H0V2ZM5 2H6V3H5V2ZM0 3H1V4H0V3ZM5 3H6V4H5V3ZM1 4H2V5H1V4ZM4 4H5V5H4V4ZM2 5H3V6H2V5ZM3 5H4V6H3V5Z' fill='%23a16207'/%3E%3C/svg%3E") 2 / 2px / 2px stretch;
+}
+
+.nes-button-sun::after {
+  background-color: var(--nes-sun-deep);
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 6 6'%3E%3Cpath d='M2 0H3V1H2V0ZM3 0H4V1H3V0ZM1 1H2V2H1V1ZM4 1H5V2H4V1ZM0 2H1V3H0V2ZM5 2H6V3H5V2ZM0 3H1V4H0V3ZM5 3H6V4H5V3ZM1 4H2V5H1V4ZM4 4H5V5H4V4ZM2 5H3V6H2V5ZM3 5H4V6H3V5Z' fill='%23a16207'/%3E%3C/svg%3E") 2 / 2px / 2px stretch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nes-button:active:not(:disabled)::before {
+    transform: none;
+  }
+}

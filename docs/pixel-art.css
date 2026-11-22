@@ -1,0 +1,121 @@
+/* Pixel-art animations — inline SVG sprites drawn on a crisp 48×48 grid.
+   Every animation is a stack of frames; CSS reveals one frame at a time so
+   the animation keeps running without any JavaScript. */
+.pixel-art {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 120px;
+  background: #060a1a;
+  border: 2px solid var(--line, #2a3049);
+  box-shadow: 0 4px #050814;
+}
+
+.pixel-art-svg {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+/* Every frame is drawn in the same place. Only the active one is visible. */
+.pixel-art-frame {
+  display: none;
+}
+
+/* The chosen animation is written to the container as an attribute, so the
+   frame rules are keyed off that attribute rather than a class. */
+[data-pixel-art-animation="robot"] .pixel-art-frame-0,
+[data-pixel-art-animation="robot"] .pixel-art-frame-1 {
+  display: block;
+  animation: pixel-art-bob 1.4s steps(2, end) infinite;
+}
+
+[data-pixel-art-animation="robot"] .pixel-art-frame-1 {
+  animation-name: pixel-art-bob-alt;
+}
+
+[data-pixel-art-animation="terminal"] .pixel-art-frame-0,
+[data-pixel-art-animation="terminal"] .pixel-art-frame-1 {
+  display: block;
+  animation: pixel-art-blink 1s steps(1, end) infinite;
+}
+
+[data-pixel-art-animation="gear"] .pixel-art-frame-0,
+[data-pixel-art-animation="gear"] .pixel-art-frame-1 {
+  display: block;
+  animation: pixel-art-turn 1.2s steps(2, end) infinite;
+}
+
+[data-pixel-art-animation="bird"] .pixel-art-frame-0,
+[data-pixel-art-animation="bird"] .pixel-art-frame-1 {
+  display: block;
+  animation: pixel-art-step 0.6s steps(2, end) infinite;
+}
+
+[data-pixel-art-animation="cat"] .pixel-art-frame-0,
+[data-pixel-art-animation="cat"] .pixel-art-frame-1 {
+  display: block;
+  animation: pixel-art-wave 0.9s steps(2, end) infinite;
+}
+
+/* The CRT mascot blinks: the lit face swaps in for a beat, then returns. */
+[data-pixel-art-animation="crt"] .pixel-art-frame-0,
+[data-pixel-art-animation="crt"] .pixel-art-frame-1 {
+  display: block;
+  animation: pixel-art-crt 1.6s steps(1, end) infinite;
+}
+
+[data-pixel-art-animation="crt"] .pixel-art-frame-1 {
+  animation-name: pixel-art-crt-alt;
+}
+
+@keyframes pixel-art-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(2px); }
+}
+
+@keyframes pixel-art-bob-alt {
+  0%, 100% { transform: translateY(2px); }
+  50% { transform: translateY(0); }
+}
+
+/* The CRT bobs gently while its face switches on and off. */
+@keyframes pixel-art-crt {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes pixel-art-crt-alt {
+  0%, 100% { transform: translateY(-2px); }
+  50% { transform: translateY(0); }
+}
+
+@keyframes pixel-art-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes pixel-art-turn {
+  0% { transform: rotate(0deg); transform-origin: 50% 50%; }
+  100% { transform: rotate(90deg); transform-origin: 50% 50%; }
+}
+
+@keyframes pixel-art-step {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+
+@keyframes pixel-art-wave {
+  0%, 100% { transform: rotate(0deg); transform-origin: 20% 90%; }
+  50% { transform: rotate(-8deg); transform-origin: 20% 90%; }
+}
+
+/* Without motion the sprite still shows its first frame. */
+@media (prefers-reduced-motion: reduce) {
+  .pixel-art-frame {
+    animation: none !important;
+  }
+  [data-pixel-art-animation] .pixel-art-frame-1 {
+    display: none;
+  }
+}

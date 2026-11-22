@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#030719">
+<title>Signing in · IMON.world</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="auth.css">
+<script>document.documentElement.classList.remove('no-js');</script>
+</head>
+<body class="auth-callback">
+<main class="auth-callback-card">
+  <p class="auth-kicker">IMON.WORLD</p>
+  <h1 class="auth-callback-title">Signing you in…</h1>
+  <p class="auth-callback-status" data-callback-status role="status" aria-live="polite">Finishing the sign-in.</p>
+  <noscript>
+    <p class="auth-notice">Signing in needs JavaScript. Enable it to complete the sign-in.</p>
+  </noscript>
+  <div class="auth-callback-actions">
+    <a class="auth-button" href="./">Back to IMON.world</a>
+  </div>
+</main>
+<script type="module">
+import { exchangeCodeForSession, isConfigured, getSession } from './auth.js';
+
+const statusNode = document.querySelector('[data-callback-status]');
+const titleNode = document.querySelector('.auth-callback-title');
+const actions = document.querySelector('.auth-callback-actions');
+
+function setStatus(message, state) {
+  if (statusNode) { statusNode.textContent = message; statusNode.dataset.state = state || ''; }
+}
+function setTitle(text) { if (titleNode) titleNode.textContent = text; }
+
+// The page that started the flow is remembered in sessionStorage, so the
+// player lands back where they left off. The default is the home page.
+function returnTarget() {
+  try {
+    const stored = sessionStorage.getItem('imon-auth-return-page');
+    if (stored) { sessionStorage.removeItem('imon-auth-return-page'); return stored; }
+  } catch { /* Storage is optional. */ }
+  return './';
+}
+
+async function run() {
+  const params = new URLSearchParams(location.search);
+  const error = params.get('error_description') || params.get('error');
+  const code = params.get('code');
+
+  if (!isConfigured()) {
+    setTitle('Sign-in failed');
+    setStatus('Sign-in is not configured yet. Please try again later.', 'error');
+    return;
+  }
+  if (error) {
+    setTitle('Sign-in failed');
+    setStatus(`Sign-in failed — ${error}`, 'error');
+    return;
+  }
+  if (!code) {
+    const existing = getSession();
+    if (existing) { setTitle('Signed in'); setStatus('You are already signed in.', 'ok'); location.replace(returnTarget()); return; }
+    setTitle('Sign-in failed');
+    setStatus('Sign-in failed — no authorization code was returned.', 'error');
+    return;
+  }
+
+  const session = await exchangeCodeForSession(code);
+  if (!session) {
+    setTitle('Sign-in failed');
+    setStatus('Sign-in failed — the authorization code could not be exchanged. Please try again.', 'error');
+    return;
+  }
+  setTitle('Signed in');
+  setStatus('Signed in. Taking you back to IMON.world…', 'ok');
+  location.replace(returnTarget());
+}
+
+run();
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#020617">
+<title>Log in · IMON.world</title>
+<meta name="description" content="Sign in to IMON.world and carry your pixel-game high scores and quiz results between devices.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="nes.css">
+<link rel="stylesheet" href="auth.css">
+<link rel="stylesheet" href="pixel-art.css">
+<script>document.documentElement.classList.remove('no-js');</script>
+</head>
+<body class="auth-page">
+<div class="auth-sky" aria-hidden="true">
+  <span class="auth-star" style="left:6%;top:12%"></span>
+  <span class="auth-star" style="left:14%;top:31%"></span>
+  <span class="auth-star auth-star-blue" style="left:23%;top:8%"></span>
+  <span class="auth-star auth-star-yellow" style="left:31%;top:46%"></span>
+  <span class="auth-star" style="left:41%;top:19%"></span>
+  <span class="auth-star auth-star-blue" style="left:52%;top:6%"></span>
+  <span class="auth-star" style="left:61%;top:38%"></span>
+  <span class="auth-star auth-star-yellow" style="left:71%;top:14%"></span>
+  <span class="auth-star auth-star-blue" style="left:83%;top:42%"></span>
+  <span class="auth-star" style="left:91%;top:22%"></span>
+  <span class="auth-star auth-star-blue" style="left:9%;top:64%"></span>
+  <span class="auth-star" style="left:37%;top:71%"></span>
+  <span class="auth-star auth-star-yellow" style="left:79%;top:68%"></span>
+  <span class="auth-star auth-star-blue" style="left:57%;top:82%"></span>
+  <span class="auth-star" style="left:25%;top:88%"></span>
+  <span class="auth-star" style="left:95%;top:79%"></span>
+</div>
+<div class="auth-land" aria-hidden="true"></div>
+
+<main class="auth-stage">
+  <div class="auth-brand">
+    <span class="auth-brand-mark" aria-hidden="true">I</span>
+    <span class="auth-brand-text">IMON<span class="auth-brand-end">.WORLD</span></span>
+  </div>
+
+  <div class="auth-container">
+    <div class="auth-mascot-row">
+      <div class="auth-mascot" data-pixel-art aria-hidden="true"></div>
+      <p class="auth-bubble nes-balloon">Log in to resume your journey</p>
+    </div>
+
+    <div class="auth-card nes-border">
+      <noscript>
+        <p class="auth-notice">Signing in needs JavaScript. Enable it to carry your scores between devices.</p>
+      </noscript>
+
+      <p class="auth-notice" data-auth-status hidden></p>
+
+      <div class="auth-social">
+        <button type="button" class="nes-button auth-provider" data-auth-provider="google">
+          <svg viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62Z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33Z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58Z"/></svg>
+          <span>Google</span>
+        </button>
+        <button type="button" class="nes-button auth-provider" data-auth-provider="github">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.5 21.6c.6.1.8-.2.8-.5v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.6-1.3-1.6-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6a4.7 4.7 0 0 1 1.2-3.2c-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2a4.7 4.7 0 0 1 1.2 3.2c0 4.7-2.8 5.7-5.5 6 .5.4.8 1.1.8 2.2V22c0 .3.2.6.8.5A11.1 11.1 0 0 0 12 .9Z"/></svg>
+          <span>GitHub</span>
+        </button>
+      </div>
+
+      <div class="auth-divider">
+        <span class="auth-divider-line" aria-hidden="true"></span>
+        <span>OR</span>
+        <span class="auth-divider-line" aria-hidden="true"></span>
+      </div>
+
+      <form data-auth-email-form>
+        <div class="auth-field">
+          <label for="auth-email">Email</label>
+          <input class="nes-border-sm" id="auth-email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+        </div>
+        <div class="auth-field">
+          <label for="auth-password">Password</label>
+          <input class="nes-border-sm" id="auth-password" name="password" type="password" autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <button type="submit" class="nes-button nes-button-blue auth-submit"><span>Log in</span></button>
+      </form>
+
+      <p class="auth-links">
+        Need an account? <a href="#" data-auth-signup>Sign up</a>
+      </p>
+      <p class="auth-links auth-links-single">
+        <a href="#" data-auth-reset>Reset password</a>
+      </p>
+
+      <p class="auth-foot">Signing in keeps your high scores and quiz results safe between devices. Your account is only used for that.</p>
+    </div>
+  </div>
+</main>
+<script type="module">
+import { initAuth, isConfigured, configurationMessage } from './auth.js';
+import { initPixelArt } from './pixel-art.js';
+// The CRT bot is the house mascot, so it always greets you. The bubble
+// message changes on every load so the page never looks the same twice.
+initPixelArt(document, 'crt');
+const greetings = [
+  'Log in to resume your journey',
+  'Log in to resume your journey~',
+  'Beep beep boop. Ready to play?',
+  'Welcome back, player. Log in!',
+  'Your scores are waiting for you'
+];
+const bubble = document.querySelector('.auth-bubble');
+if (bubble) bubble.textContent = greetings[Math.floor(Math.random() * greetings.length)];
+initAuth(document);
+// Email + password is a Supabase extra that can be switched on later. The
+// controls are present and styled now, so nothing has to move when it is.
+const form = document.querySelector('[data-auth-email-form]');
+const status = document.querySelector('[data-auth-status]');
+function say(message, state) {
+  if (!status) return;
+  status.textContent = message;
+  status.hidden = !message;
+  if (state) status.dataset.state = state;
+}
+if (form) form.addEventListener('submit', event => { event.preventDefault(); say('Email sign-in is not enabled yet. Use Google or GitHub above.', 'error'); });
+document.querySelector('[data-auth-signup]')?.addEventListener('click', event => { event.preventDefault(); say('Email sign-up is not enabled yet. Use Google or GitHub above.', 'error'); });
+document.querySelector('[data-auth-reset]')?.addEventListener('click', event => { event.preventDefault(); say('Password reset is not enabled yet. Use Google or GitHub above.', 'error'); });
+if (!isConfigured() && status) say(configurationMessage() || 'Sign-in is not configured yet.', 'info');
+</script>
+</body>
+</html>

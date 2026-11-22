@@ -1,0 +1,521 @@
+/* IMON authentication — sign-in chrome for the site header and the login page.
+   The login page follows the codedex.io visual system: a deep blue night sky
+   with pixel stars, a pixel CRT mascot, a white card with a stepped pixel
+   border, and 3D pixel buttons with a hard bottom shadow.
+
+   House palette and fonts only. Every rule is namespaced with `.auth-`. */
+
+/* Header control ------------------------------------------------------- */
+.auth-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 11px 14px;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--line);
+  box-shadow: 0 3px #050814;
+  transition: color .15s, border-color .15s, filter .15s;
+}
+
+.auth-button:hover:not(:disabled) {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.auth-button:disabled {
+  color: var(--muted);
+  opacity: .7;
+  cursor: not-allowed;
+}
+
+.auth-button svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.auth-name {
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  color: var(--gold);
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.auth-status {
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.auth-status[hidden] {
+  display: none;
+}
+
+/* Night sky ------------------------------------------------------------ */
+.auth-page {
+  min-height: 100vh;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 70% at 50% 0%, #0b1a5e 0%, transparent 60%),
+    linear-gradient(180deg, #030721 0%, #050b4b 45%, #061033 72%, #0a1a63 100%);
+  color: var(--text);
+  font-family: var(--body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px 120px;
+}
+
+/* Pixel stars: small plus-shaped sparkles that twinkle. */
+.auth-sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.auth-star {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: #ffffff;
+  clip-path: polygon(40% 0, 60% 0, 60% 40%, 100% 40%, 100% 60%, 60% 60%, 60% 100%, 40% 100%, 40% 60%, 0 60%, 0 40%, 40% 40%);
+  opacity: .85;
+  animation: auth-twinkle 3.4s steps(1, end) infinite;
+}
+
+.auth-star-blue {
+  background: #75d1ff;
+  animation-duration: 4.1s;
+  animation-delay: .6s;
+}
+
+.auth-star-yellow {
+  background: #fde047;
+  animation-duration: 3.8s;
+  animation-delay: 1.2s;
+}
+
+@keyframes auth-twinkle {
+  0%, 100% { opacity: .15; }
+  50% { opacity: 1; }
+}
+
+/* The pixel landscape along the bottom edge. */
+.auth-land {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 150px;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(8, 26, 92, .55) 40%, #0a1f78 100%);
+  clip-path: polygon(
+    0% 100%, 0% 62%, 6% 62%, 6% 44%, 13% 44%, 13% 55%, 21% 55%, 21% 32%, 28% 32%,
+    28% 48%, 36% 48%, 36% 25%, 44% 25%, 44% 40%, 52% 40%, 52% 58%, 60% 58%, 60% 35%,
+    68% 35%, 68% 50%, 76% 50%, 76% 30%, 83% 30%, 83% 46%, 91% 46%, 91% 38%, 100% 38%,
+    100% 100%);
+}
+
+/* The stage that centres the card -------------------------------------- */
+.auth-stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  width: 100%;
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-family: var(--pixel);
+  font-size: 20px;
+  letter-spacing: 1px;
+  line-height: 1.4;
+  color: #f8fafc;
+}
+
+.auth-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 34px;
+  font-size: 17px;
+  color: #231b07;
+  background: var(--gold);
+  border: 3px solid #f4ab22;
+  box-shadow: 3px 0 #79511d, -3px 0 #79511d, 0 3px #79511d, 0 -3px #ffe380;
+}
+
+.auth-brand-end {
+  color: #94a3b8;
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  max-width: 485px;
+}
+
+/* Mascot and speech bubble --------------------------------------------- */
+.auth-mascot-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.auth-mascot {
+  flex-shrink: 0;
+  width: 102px;
+  height: 102px;
+}
+
+.auth-mascot .pixel-art {
+  width: 102px;
+  height: 102px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.auth-bubble {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 16px 18px;
+  font-family: var(--pixel);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: .5px;
+  text-shadow: #e2e8f0 0 2px 0;
+}
+
+/* The pixel tail on the bubble's lower-left corner. */
+.auth-bubble::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  bottom: -9px;
+  width: 14px;
+  height: 14px;
+  background: var(--nes-paper-soft, #f1f5f9);
+  border-right: 2px solid #cbd5e1;
+  border-bottom: 2px solid #cbd5e1;
+  transform: rotate(45deg);
+}
+
+/* The card -------------------------------------------------------------- */
+.auth-card {
+  width: 100%;
+  max-width: 485px;
+  background: #ffffff;
+  color: #020617;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* `nes-border` supplies the stepped pixel frame and the corner clip. */
+}
+
+/* Social buttons ------------------------------------------------------- */
+.auth-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.auth-provider {
+  flex: 1 1 200px;
+  min-width: 200px;
+  color: #020617;
+}
+
+.auth-provider svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.auth-provider span {
+  font-family: var(--pixel);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* Divider -------------------------------------------------------------- */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: #64748b;
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.68px;
+}
+
+.auth-divider-line {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+}
+
+/* Fields --------------------------------------------------------------- */
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.auth-field label {
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #475569;
+}
+
+/* The pixel frame is applied to the input itself, so this rule has to
+   out-specify `.auth-field input` below. */
+.auth-field input.nes-border-sm {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  background-color: #f8fafc;
+  background-clip: padding-box;
+  color: #020617;
+  font-family: var(--body);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.auth-field input.nes-border-sm::placeholder {
+  color: #64748b;
+}
+
+.auth-field input.nes-border-sm:focus {
+  outline: none;
+  background-color: #f1f5f9;
+}
+
+.auth-submit {
+  width: 100%;
+}
+
+.auth-submit span {
+  font-family: var(--pixel);
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: 1px;
+}
+
+/* Footer links --------------------------------------------------------- */
+.auth-links {
+  margin: 0;
+  text-align: center;
+  font-family: var(--body);
+  font-size: 16px;
+  font-weight: 500;
+  color: #020617;
+}
+
+.auth-links a {
+  color: #0065ab;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.auth-links a:hover {
+  color: #00568d;
+}
+
+.auth-foot {
+  margin: 0;
+  text-align: center;
+  font-family: var(--body);
+  font-size: 13px;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.auth-foot a {
+  color: #0065ab;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.auth-foot a:hover {
+  color: #00568d;
+}
+
+.auth-notice {
+  margin: 0;
+  padding: 11px 13px;
+  background: #def1ff;
+  border: 2px solid #14adff;
+  color: #064874;
+  font-family: var(--body);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* A genuine failure is red; "not enabled yet" is only a notice. */
+.auth-notice[data-state="error"] {
+  background: #ffe4e6;
+  border-color: #f43f5e;
+  color: #881337;
+}
+
+.auth-notice[hidden] {
+  display: none;
+}
+
+/* Dark card on the callback page --------------------------------------- */
+.auth-callback {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  display: grid;
+  place-items: center;
+  padding: 40px 20px;
+}
+
+.auth-callback-card {
+  width: 100%;
+  max-width: 460px;
+  text-align: center;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  box-shadow: 0 6px #050814;
+  padding: 34px 28px;
+}
+
+.auth-callback-card .auth-kicker {
+  color: var(--gold);
+}
+
+.auth-callback-title {
+  font-family: var(--pixel);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.auth-callback-status {
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+
+.auth-callback-status[data-state="ok"] {
+  color: var(--accent);
+}
+
+.auth-callback-status[data-state="error"] {
+  color: var(--danger);
+}
+
+.auth-callback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.auth-callback-actions .auth-button {
+  background: var(--gold);
+  color: #231b07;
+  border-color: var(--gold);
+  text-decoration: none;
+}
+
+.auth-callback-actions .auth-button:hover {
+  color: #231b07;
+  filter: brightness(1.1);
+}
+
+/* Small screens -------------------------------------------------------- */
+@media (max-width: 560px) {
+  .auth-page {
+    padding: 28px 16px 90px;
+  }
+  .auth-card {
+    padding: 22px 18px;
+  }
+  .auth-mascot-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .auth-bubble {
+    text-align: left;
+  }
+  .auth-brand {
+    font-size: 16px;
+  }
+  .auth-brand-mark {
+    width: 26px;
+    height: 30px;
+    font-size: 14px;
+  }
+}
+
+/* Reduced motion ------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .auth-star {
+    animation: none;
+    opacity: .7;
+  }
+  .auth-provider:active,
+  .auth-submit:active {
+    transform: none;
+  }
+}
