@@ -16,6 +16,7 @@ import { initCommandPalette } from './command-palette-ui.js';
 import { initAchievements } from './achievements-ui.js';
 import { initSiteNav } from './site-nav.js';
 import { initGitHubStats } from './github-stats.js';
+import { initPixelDisplay } from './pixel-display.js';
 const $ = s => document.querySelector(s);
 const read = (key, fallback) => { try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; } };
 let toastTimer;
@@ -23,6 +24,9 @@ function toast(message) { $('#toast').textContent = message; $('#toast').classLi
 document.addEventListener('imon:toast', event => toast(event.detail));
 // The site name is drawn as pixel art, not typed in a font.
 initWordmark(document);
+// The page headings use the wide pixel face, which is drawn rather than
+// downloaded, so it never shifts the layout when the font arrives.
+initPixelDisplay(document);
 initExperience();
 initPlayerCard();
 initOrbs();

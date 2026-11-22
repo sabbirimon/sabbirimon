@@ -1,0 +1,38 @@
+/* The wide display face ------------------------------------------------- */
+/* The page headings are drawn as pixel art rather than set in a font, so
+   they read as part of the same artwork as the rest of the site and they
+   never shift the layout when a font arrives.
+
+   The drawing is an inline SVG with a viewBox, so one set of glyphs
+   serves every size: the pixels scale with the element's own font size. */
+
+.pixel-display {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  image-rendering: pixelated;
+}
+
+/* The element that holds the drawing keeps the space the drawing needs and
+   stops the text from showing through behind it. The element keeps its own
+   font size, because the text has already been replaced by the drawing, so
+   there is no leftover line box to collapse. */
+[data-pixel-display] {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+}
+
+/* The drawing carries its own width in ems and an automatic height. An SVG
+   with a viewBox keeps its proportions, so when a heading is too wide for a
+   narrow screen the whole drawing shrinks to fit and the letters get shorter
+   with it, rather than being cut off at the edge. */
+[data-pixel-display] .pixel-display {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}
+
+[data-pixel-display][data-pixel-display-drawn="true"] {
+  line-height: 1;
+}
