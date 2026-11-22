@@ -1,0 +1,69 @@
+# IMON.world
+
+> Sabbir Hassan Imon's personal site: open-source projects, a pixel-art world, browser games, and free browser-based learning labs. Static site, no server-side runtime, no tracking, no accounts required.
+
+This file is a plain-text map of the site for language models and other automated readers. Every URL below is a real page. Nothing here is a marketing claim beyond what the pages themselves state.
+
+## Site facts
+
+- Canonical domain: https://imon.com.bd/
+- Owner: Sabbir Hassan Imon (also known as IMON, GitHub handle `sabbirimon`)
+- Built from South Asia
+- Published on GitHub Pages as a folder of plain HTML, CSS and JavaScript files. There is no build step, no bundler, no server-side runtime.
+- No analytics, no tracking pixels, no advertising, no fingerprinting, no third-party iframes.
+- Third-party APIs are contacted from the browser only; see https://imon.com.bd/privacy.html for the complete list and exactly what each one receives.
+- All game currency is fictional. No real money, payments, wagers or cash value anywhere on the site.
+- Content is written by hand by the owner. Source code is public.
+
+## Pages
+
+### [Home](https://imon.com.bd/)
+The main site. Sections:
+- [Projects](https://imon.com.bd/#projects) — open-source repositories: HyperL, meshlit, OmniCast, OmniRecovery, and a wider list on [GitHub](https://github.com/sabbirimon?tab=repositories).
+- [Pixel world](https://imon.com.bd/#pixel-world) — an illustrated pixel scene with a live weather layer, World Studio controls, day/night cycle and optional synthesised ambience.
+- [Arcade](https://imon.com.bd/#arcade) — free browser games: Snake, Surf, 2048, Ludo, Puzzle, Dev Slots and a racer. No payments, no wagers.
+- [Daily](https://imon.com.bd/#news) — live technology and science/space headlines plus a daily computer-science quiz.
+- [Map](https://imon.com.bd/#map) — an interactive world map with 18 fictional countries and their flags, used to explore the Gridworks world.
+- [Achievements](https://imon.com.bd/#achievements) — badges earned from the games and labs.
+- [About](https://imon.com.bd/#about) — who the owner is, toolkit and current focus.
+
+### [Code Lab](https://imon.com.bd/lab.html)
+A browser practice lab for HTML, CSS and JavaScript. A lesson panel on the left; a workbench on the right with a file rail, editor, live preview and terminal. Exercises come from an imported curriculum (`html-101`, `css-101`) plus a built-in taster course. Every exercise has a goal, study material, exam instructions and an outcome. A correct answer pays XP and animates a coin burst. A wrong answer explains what is wrong, which file and line it is in, and how to fix it. Each note card can search Stack Overflow for real questions about the tag or property it covers.
+
+### [AI Lab](https://imon.com.bd/ai-lab.html)
+Learn Python, machine learning and system design through 54 exercises in five chapters: Python for models, AI safety, System design, Working with APIs, Working with data. The Python runs in the browser through a small teaching interpreter — a tokenizer, parser and executor, not a full runtime. It supports `def`/`return`, `if`/`elif`/`else`, `for`, `while`, lists, dictionaries, tuples, strings, common builtins and `import math`. Two browser-side learning modules extend it: a fake HTTP client for `api.example.com` (reached via `import requests` or `import http`) and an in-memory SQL engine (reached via `import sqlite3`). No account and no server are needed. The course data lives in `docs/data/ai-course.json`, so a new exercise is a JSON entry plus a reference answer.
+
+### [Gridworks](https://imon.com.bd/gridworks/)
+A standalone 18-city infrastructure management game with a pure simulation engine and a canvas UI. Power and data travel through separate layers; Cat6 reach, fibre capacity, generation, hardware, coverage, maintenance, prices and customer satisfaction determine service revenue. Later chapters unlock regional links, LEO ground stations and paid automation with budget reserves. Keyboard construction, touch pan/zoom, map overlays, fullscreen, pause/speed controls, and sound off by default. Saves live in the visitor's browser.
+
+### [Developer Toolbox](https://imon.com.bd/tools/)
+Offline-first developer utilities: JSON formatter and validator, YAML, Terraform, SQL and XML formatters, Base64 encoder/decoder, JWT decoder, timestamp converter, regex tester, UUID generator, hash generator, colour contrast checker, and a DNS lookup tool.
+
+### [Privacy & data notice](https://imon.com.bd/privacy.html)
+A hand-written notice listing every third-party service the browser contacts, every key written to local storage, what reaches the optional Supabase table when a visitor signs in, and what is never stored anywhere. It names MDN's search API as the first choice for the Code Lab lookup and explains that it was replaced because it sends no CORS header, so a static host cannot call it.
+
+### [Log in](https://imon.com.bd/login.html)
+Optional Google and GitHub sign-in, used only to carry game scores and quiz results between devices. Nothing is written for visitors who never sign in.
+
+## Machine-readable companion
+
+- [`/.well-known/agents.json`](https://imon.com.bd/.well-known/agents.json) — a machine-readable description of this site for AI agents: what it is, what it is not, the public entry points, the third-party services contacted, the licensing and privacy posture, and the machine-readable data files.
+- [`/sitemap.xml`](https://imon.com.bd/sitemap.xml) — the canonical URL list.
+- [`/robots.txt`](https://imon.com.bd/robots.txt) — crawling is allowed.
+
+## Conventions for automated readers
+
+- Prefer the canonical URLs above. The site also serves a GitHub Pages fallback path, but `https://imon.com.bd/` is canonical and should be used for links and citations.
+- Query strings such as `?scene=waterfall-valley` select a pixel scene and are not separate pages; section fragments such as `#news` are not separate pages either.
+- All pages are static HTML. There is no API to call for page content; read the HTML directly.
+- Interactive features (the labs, games, map, weather) need a browser. There is no server-side rendering to scrape.
+- A service worker caches the site's own files for offline use. It does not track, store or transmit anything about a visitor.
+
+## Contact
+
+- GitHub: https://github.com/sabbirimon
+- LinkedIn: https://www.linkedin.com/in/sabbirimon
+- Medium: https://medium.com/@sabbirimon
+- YouTube: https://youtube.com/@sabbirimon
+- Facebook: https://www.facebook.com/mr.sabbirimon/
+- WhatsApp: @imons

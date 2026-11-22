@@ -1,0 +1,130 @@
+{
+  "$schema": "https://imon.com.bd/.well-known/agents.json",
+  "name": "IMON.world",
+  "version": "1.0.0",
+  "description": "Sabbir Hassan Imon's personal site: open-source projects, an interactive pixel world, free browser games, and browser-based coding, AI and system-design learning labs.",
+  "canonicalUrl": "https://imon.com.bd/",
+  "owner": {
+    "name": "Sabbir Hassan Imon",
+    "alternateNames": ["IMON", "sabbirimon"],
+    "profileUrl": "https://imon.com.bd/#about",
+    "profiles": {
+      "github": "https://github.com/sabbirimon",
+      "linkedin": "https://www.linkedin.com/in/sabbirimon",
+      "medium": "https://medium.com/@sabbirimon",
+      "youtube": "https://youtube.com/@sabbirimon",
+      "facebook": "https://www.facebook.com/mr.sabbirimon/"
+    }
+  },
+  "site": {
+    "type": "static-site",
+    "hosting": "GitHub Pages",
+    "serverSideRuntime": false,
+    "buildStep": false,
+    "bundler": false,
+    "languages": ["html", "css", "javascript", "python (browser-side teaching interpreter)"],
+    "contentLanguage": "en",
+    "mobileReady": true,
+    "serviceWorker": {
+      "enabled": true,
+      "purpose": "Offline caching of the site's own static files",
+      "tracksVisitors": false
+    },
+    "privacyPolicy": "https://imon.com.bd/privacy.html",
+    "privacySummary": "No analytics, no tracking pixels, no advertising, no fingerprinting and no server-side visitor logging. A small number of free public APIs are contacted directly from the browser, each of which necessarily sees the visitor's IP address.",
+    "textSummary": "https://imon.com.bd/llms.txt",
+    "sitemap": "https://imon.com.bd/sitemap.xml",
+    "robots": "https://imon.com.bd/robots.txt"
+  },
+  "entryPoints": [
+    {
+      "path": "/",
+      "title": "IMON | Sabbir Hassan Imon — Open Source & Pixel Games",
+      "description": "The main site: open-source projects, a live pixel world with weather, free browser games, daily headlines and a quiz, an interactive world map, and achievements.",
+      "sections": [
+        { "id": "projects", "title": "Projects", "summary": "Open-source repositories and what each one does." },
+        { "id": "pixel-world", "title": "Pixel world", "summary": "An illustrated scene with a live weather layer, World Studio controls, a day/night cycle and optional synthesised ambience." },
+        { "id": "arcade", "title": "Arcade", "summary": "Free browser games: Snake, Surf, 2048, Ludo, Puzzle, Dev Slots and a racer." },
+        { "id": "news", "title": "Daily", "summary": "Live technology and science/space headlines plus a daily computer-science quiz." },
+        { "id": "map", "title": "Map", "summary": "An interactive world map of 18 fictional countries with flags, tied to the Gridworks campaign." },
+        { "id": "achievements", "title": "Achievements", "summary": "Badges earned from the games and the labs." },
+        { "id": "about", "title": "About", "summary": "Who the owner is, the toolkit and the current focus." }
+      ]
+    },
+    {
+      "path": "/lab.html",
+      "title": "Code Lab",
+      "summary": "A browser practice lab for HTML, CSS and JavaScript: lesson panel, file rail, editor, live preview and terminal. Exercises carry a goal, study material, exam instructions and an outcome; correct answers pay XP, wrong answers explain what is wrong, where and how to fix it."
+    },
+    {
+      "path": "/ai-lab.html",
+      "title": "AI Lab",
+      "summary": "Learn Python, machine learning and system design through 54 exercises in five chapters. Python runs in the browser through a small teaching interpreter, with a fake HTTP client and an in-memory SQL engine."
+    },
+    {
+      "path": "/gridworks/",
+      "title": "IMON Gridworks",
+      "summary": "A standalone 18-city infrastructure management game with a pure simulation engine and a canvas UI. Power and data travel through separate layers; later chapters unlock regional links, LEO ground stations and paid automation."
+    },
+    {
+      "path": "/tools/",
+      "title": "Developer Toolbox",
+      "summary": "Offline-first developer utilities: JSON/YAML/Terraform/SQL/XML formatters, Base64, JWT decoder, timestamp converter, regex tester, UUID generator, hash generator, colour contrast checker, DNS lookup."
+    },
+    {
+      "path": "/privacy.html",
+      "title": "Privacy & data notice",
+      "summary": "Every third-party service the browser contacts, every local storage key, what reaches the optional database on sign-in, and what is never stored."
+    },
+    {
+      "path": "/login.html",
+      "title": "Log in",
+      "summary": "Optional Google and GitHub sign-in for carrying game scores between devices."
+    }
+  ],
+  "machineReadable": [
+    { "path": "/llms.txt", "format": "text/plain", "description": "A hand-written plain-text map of the site for language models." },
+    { "path": "/.well-known/agents.json", "format": "application/json", "description": "This file." },
+    { "path": "/sitemap.xml", "format": "application/xml", "description": "Canonical URL list." },
+    { "path": "/robots.txt", "format": "text/plain", "description": "Crawling policy." },
+    { "path": "/manifest.webmanifest", "format": "application/manifest+json", "description": "Installable web app identity for the main site." },
+    { "path": "/ai-lab.webmanifest", "format": "application/manifest+json", "description": "Installable web app identity for the AI Lab, separate from the main site." },
+    { "path": "/data/news.json", "format": "application/json", "description": "The daily headline snapshot." },
+    { "path": "/data/science.json", "format": "application/json", "description": "The daily science and space headline snapshot." },
+    { "path": "/data/quiz.json", "format": "application/json", "description": "The daily 30-question computer-science quiz pack." },
+    { "path": "/data/quiz-bank.json", "format": "application/json", "description": "The original local question bank used when the quiz API is unavailable." },
+    { "path": "/data/ai-course.json", "format": "application/json", "description": "The AI Lab course: 54 exercises with briefs, requirements and reference answers." },
+    { "path": "/data/lab-curriculum.json", "format": "application/json", "description": "The imported Code Lab curriculum." },
+    { "path": "/art/world-countries.json", "format": "application/json", "description": "The 18 fictional countries on the world map." }
+  ],
+  "thirdPartyServices": [
+    { "host": "ipapi.co", "purpose": "Approximate city lookup from the visitor's IP address.", "when": "Weather widget, first choice." },
+    { "host": "freeipapi.com", "purpose": "Approximate city lookup from the visitor's IP address.", "when": "Weather widget, fallback when ipapi.co does not answer." },
+    { "host": "api.open-meteo.com", "purpose": "Current conditions, day/night state, sunrise and sunset.", "when": "Weather widget. Receives rounded one-decimal coordinates." },
+    { "host": "hacker-news.firebaseio.com", "purpose": "Community-ranked technology headlines.", "when": "Daily section." },
+    { "host": "api.spaceflightnewsapi.net", "purpose": "Science and space headlines.", "when": "Daily section." },
+    { "host": "dev.to", "purpose": "Fallback headlines for the tech and science feeds.", "when": "Daily section, only when a preferred provider is unreachable." },
+    { "host": "api.stackexchange.com", "purpose": "Public Stack Overflow question search.", "when": "Code Lab lookup button. Only the search words are sent." },
+    { "host": "cloudflare-dns.com", "purpose": "DNS-over-HTTPS resolution of a domain the visitor types.", "when": "Tools page DNS lookup, only on an explicit button press." },
+    { "host": "supabase.co", "purpose": "Google and GitHub sign-in, and cloud save of game scores.", "when": "Only when the visitor chooses to sign in." }
+  ],
+  "content": {
+    "writtenBy": "the owner, by hand",
+    "generativeAI": "not used for page copy; AI-generated artwork is limited to three illustrated landscape backgrounds, and the generation prompts and provenance are published in the repository under docs/art/PROMPTS.md",
+    "thirdPartyAttribution": "Headlines are credited to Hacker News, the Spaceflight News API and DEV Community. Quiz questions come from Open Trivia DB under CC BY-SA 4.0, with attribution travelling with each pack. Weather data is by Open-Meteo. Code Lab lookup results are from Stack Overflow.",
+    "license": {
+      "siteContent": "Hand-written by the owner. All rights reserved unless stated otherwise.",
+      "thirdParty": "Individual sources keep their own licences; see the privacy notice and the in-page attribution."
+    }
+  },
+  "interactive": {
+    "requiresBrowser": true,
+    "requiresAccount": false,
+    "note": "Interactive features need a browser. There is no server-side rendering and no page-content API — read the HTML directly."
+  },
+  "contact": {
+    "github": "https://github.com/sabbirimon",
+    "email": null,
+    "whatsapp": "@imons"
+  }
+}

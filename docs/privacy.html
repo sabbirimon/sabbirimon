@@ -9,6 +9,8 @@
 <meta name="author" content="Sabbir Hassan Imon">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://imon.com.bd/privacy.html">
+<link rel="alternate" type="text/plain" href="https://imon.com.bd/llms.txt" title="IMON.world in plain text for language models">
+<link rel="alternate" type="application/json" href="https://imon.com.bd/.well-known/agents.json" title="IMON.world machine-readable description for AI agents">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/press-start-2p.ttf" as="font" type="font/ttf" crossorigin>
@@ -35,6 +37,7 @@
 <li><strong>Your game scores, quiz results, and settings stay in your browser</strong> unless you choose to sign in, in which case they are saved to a database row that only you can read.</li>
 <li><strong>A handful of free public APIs are contacted</strong> so the page can show local weather, live headlines, and — only when you press the button — answers to your own code questions. Each one receives the ordinary network information that any website request reveals — your IP address.</li>
 <li><strong>Nothing is sold, shared, or used for ads.</strong> There is no third party that profiles you because of this site.</li>
+<li><strong>The site describes itself to search engines and AI agents in plain text.</strong> A static file and a small JSON file list what this site is, which pages exist and which public APIs it uses. They are read by the crawler or agent that asks for them; they are not sent to any third party and they carry no information about you.</li>
 </ul>
 </section>
 
@@ -198,6 +201,22 @@
 </div>
 <p class="privacy-lede">One thing worth naming plainly: the site does use cookies — but only the ones a website cannot function without. If you sign in, the Supabase session needs a cookie to stay signed in. If you do not sign in, no cookie identifies you, and the site's own features do not need one.</p>
 <p class="privacy-lede">There is also a service worker (<code>sw.js</code>) that caches the site's own files in your browser so the games keep working offline. It stores static assets of this site — HTML, CSS, JavaScript, images — in the browser's cache storage. It does not cache, store, or transmit anything about you, and it does not run any tracking.</p>
+</section>
+
+<section class="privacy-section" aria-labelledby="agents-title">
+<h2 id="agents-title">How the site describes itself to AI agents</h2>
+<p class="privacy-lede">Two plain files let a search engine or an AI agent understand this site without guessing. Both are static, public, and carry nothing about you.</p>
+<dl class="privacy-defs">
+<div>
+<dt><code>/llms.txt</code></dt>
+<dd>A hand-written plain-text map of the site — what each page is, which public APIs the site contacts, and how it is built.<small>Written by hand, not generated. It names the real pages, and the site checker fails the build if it points at a page that does not exist.</small></dd>
+</div>
+<div>
+<dt><code>/.well-known/agents.json</code></dt>
+<dd>The same information as structured JSON: entry points, machine-readable data files, third-party hosts, and the privacy posture of each one.<small>Also checked by the site checker — a stale path in it fails the build.</small></dd>
+</div>
+</dl>
+<p class="privacy-note">Asking for either file is an ordinary web request, so the service that serves it sees your IP address. Nothing else is involved: no account, no cookie, no identifier, and nothing about you is written into either file.</p>
 </section>
 
 <section class="privacy-section" aria-labelledby="not-title">

@@ -2,3 +2,22 @@ User-agent: *
 Allow: /
 
 Sitemap: https://imon.com.bd/sitemap.xml
+
+# A plain-text map of the site, for language models and other
+# automated readers.
+# https://llmstxt.org/
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Bytespider
+Allow: /
+
+# A machine-readable description of the site for AI agents.
+# https://imon.com.bd/.well-known/agents.json

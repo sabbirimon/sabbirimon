@@ -31,6 +31,11 @@ class Page(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.ids = Counter()
         self.references = []
+        self.canonical = None
+        self.robots = None
+        self.has_title = False
+        self.has_description = False
+        self.jsonld = []
 
     def handle_starttag(self, tag, attributes):
         attrs = dict(attributes)
@@ -47,6 +52,18 @@ class Page(HTMLParser):
                     self.references.append((item.strip().split()[0], f'{tag}[srcset]'))
         if tag == 'meta' and attrs.get('property') in ('og:image', 'og:video') and attrs.get('content'):
             self.references.append((attrs['content'], 'social media asset'))
+        if tag == 'title' and not self.has_title:
+            self.has_title = True
+        if tag == 'meta':
+            name = (attrs.get('name') or '').lower()
+            if name == 'description' and attrs.get('content'):
+                self.has_description = True
+            elif name == 'robots' and attrs.get('content'):
+                self.robots = attrs['content']
+        if tag == 'link':
+            relations = {item.lower() for item in (attrs.get('rel') or '').split()}
+            if 'canonical' in relations and attrs.get('href'):
+                self.canonical = attrs['href']
 
     handle_startendtag = handle_starttag
 
@@ -114,6 +131,169 @@ def valid_question(question):
             and all(isinstance(option, str) and option.strip() for option in question['options'])
             and len(set(question['options'])) == 4
             and type(question.get('answer')) is int and 0 <= question['answer'] < 4)
+
+
+def check_canonical_and_sitemap():
+    """A page in the sitemap must declare itself as canonical.
+
+    The sitemap says which URLs exist; the canonical tag says which URL is
+    the real one. When the two disagree, a search engine can index the
+    same page under two addresses, so the two lists are checked against
+    each other here. A page that opts out with `noindex` is left alone.
+    """
+    sitemap_path = DOCS / 'sitemap.xml'
+    if not sitemap_path.is_file():
+        fail('docs/sitemap.xml: the sitemap is missing')
+        return
+    listed = re.findall(r'<loc>\s*([^<]+?)\s*</loc>', sitemap_path.read_text())
+    if not listed:
+        fail('docs/sitemap.xml: the sitemap lists no URLs')
+        return
+
+    for url in listed:
+        path = urlsplit(url).path
+        page_path = DOCS / path.lstrip('/')
+        if page_path.is_dir():
+            page_path = page_path / 'index.html'
+        if not page_path.is_file():
+            fail(f'docs/sitemap.xml: the listed page {url} does not exist in docs/')
+            continue
+        page = parse_page(page_path)
+        if page.robots and 'noindex' in page.robots.lower():
+            continue
+        if not page.canonical:
+            fail(f'{label(page_path)}: the page is in the sitemap but declares no canonical URL')
+        elif page.canonical.rstrip('/') != url.rstrip('/'):
+            fail(f'{label(page_path)}: canonical URL {page.canonical!r} does not match the sitemap entry {url!r}')
+        if not page.has_description:
+            fail(f'{label(page_path)}: the page has no meta description')
+
+
+def check_jsonld():
+    """Structured data must be valid JSON with the fields a reader needs.
+
+    A malformed JSON-LD block is silently ignored by every search engine,
+    so a broken one costs the page its rich result without any visible
+    error. Every block on every page is parsed here.
+    """
+    for path in list(DOCS.glob('*.html')) + list((DOCS / 'gridworks').glob('*.html')):
+        text = path.read_text()
+        blocks = re.findall(r'<script[^>]*type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+                            text, re.DOTALL | re.IGNORECASE)
+        for block in blocks:
+            try:
+                data = json.loads(block)
+            except ValueError as error:
+                fail(f'{label(path)}: invalid JSON-LD: {error}')
+                continue
+            # A `@graph` carries its `@context` on the parent object, so the
+            # context is only required on a standalone block.
+            standalone = not (isinstance(data, dict) and '@graph' in data)
+            if standalone and not (isinstance(data, dict) and data.get('@context')):
+                fail(f'{label(path)}: the JSON-LD block needs an @context')
+            nodes = data.get('@graph') if isinstance(data, dict) and '@graph' in data else [data]
+            if not isinstance(nodes, list) or not nodes:
+                fail(f'{label(path)}: the JSON-LD block has no nodes')
+                continue
+            for node in nodes:
+                if not isinstance(node, dict):
+                    fail(f'{label(path)}: every JSON-LD node must be an object')
+                    continue
+                if not node.get('@type'):
+                    fail(f'{label(path)}: every JSON-LD node needs an @type')
+
+
+def check_agent_files():
+    """The machine-readable files must stay in step with the real site.
+
+    They are the first thing a language model or a crawler reads, so a
+    stale link here is worse than no file at all. Every entry point and
+    every machine-readable path is checked against the files on disk.
+    """
+    agents_path = DOCS / '.well-known' / 'agents.json'
+    agents = load_json(agents_path)
+    if not isinstance(agents, dict):
+        fail('docs/.well-known/agents.json: expected a JSON object')
+    else:
+        if agents.get('canonicalUrl') != f'https://{CANONICAL_HOST}/':
+            fail('docs/.well-known/agents.json: canonicalUrl must be the apex domain')
+        site = agents.get('site')
+        if not isinstance(site, dict):
+            fail('docs/.well-known/agents.json: a site object is required')
+        else:
+            for key in ('privacyPolicy', 'textSummary', 'sitemap', 'robots'):
+                value = site.get(key)
+                if not isinstance(value, str) or not value.startswith('https://'):
+                    fail(f'docs/.well-known/agents.json: site.{key} must be an HTTPS URL')
+        entries = agents.get('entryPoints')
+        if not isinstance(entries, list) or not entries:
+            fail('docs/.well-known/agents.json: entryPoints must be a non-empty list')
+        else:
+            for entry in entries:
+                if not isinstance(entry, dict):
+                    fail('docs/.well-known/agents.json: every entry point must be an object')
+                    continue
+                path = entry.get('path')
+                if not isinstance(path, str) or not path.startswith('/'):
+                    fail(f'docs/.well-known/agents.json: bad entry point path {path!r}')
+                    continue
+                if not entry_point_exists(path):
+                    fail(f'docs/.well-known/agents.json: entry point {path} does not exist in docs/')
+        readable = agents.get('machineReadable')
+        if not isinstance(readable, list) or not readable:
+            fail('docs/.well-known/agents.json: machineReadable must be a non-empty list')
+        else:
+            for item in readable:
+                if not isinstance(item, dict):
+                    fail('docs/.well-known/agents.json: every machine-readable entry must be an object')
+                    continue
+                path = item.get('path')
+                if not isinstance(path, str) or not path.startswith('/'):
+                    fail(f'docs/.well-known/agents.json: bad machine-readable path {path!r}')
+                    continue
+                if not entry_point_exists(path):
+                    fail(f'docs/.well-known/agents.json: machine-readable path {path} does not exist in docs/')
+        services = agents.get('thirdPartyServices')
+        if not isinstance(services, list) or not services:
+            fail('docs/.well-known/agents.json: thirdPartyServices must be a non-empty list')
+        else:
+            for service in services:
+                if not isinstance(service, dict) or not service.get('host'):
+                    fail('docs/.well-known/agents.json: every third-party service needs a host')
+
+    llms_path = DOCS / 'llms.txt'
+    if not llms_path.is_file():
+        fail('docs/llms.txt: the plain-text site map is missing')
+    else:
+        text = llms_path.read_text()
+        if not text.startswith('# '):
+            fail('docs/llms.txt: the file must open with a level-one heading')
+        if f'https://{CANONICAL_HOST}/' not in text:
+            fail(f'docs/llms.txt: the canonical address https://{CANONICAL_HOST}/ must appear in the text')
+        if 'privacy.html' not in text:
+            fail('docs/llms.txt: the privacy notice must be linked from the plain-text map')
+        # Every local page named in the file has to exist, or the map is
+        # sending a reader to a 404.
+        for match in re.findall(r'https://imon\.com\.bd/([A-Za-z0-9._/-]*)', text):
+            if match and not entry_point_exists('/' + match):
+                fail(f'docs/llms.txt: the linked path /{match} does not exist in docs/')
+
+    robots_path = DOCS / 'robots.txt'
+    if robots_path.is_file():
+        robots = robots_path.read_text()
+        if f'Sitemap: https://{CANONICAL_HOST}/sitemap.xml' not in robots:
+            fail('docs/robots.txt: the sitemap declaration must point at the canonical address')
+
+
+def entry_point_exists(path):
+    """Does a site path such as '/lab.html' or '/gridworks/' exist?"""
+    relative = path.lstrip('/')
+    if not relative:
+        return (DOCS / 'index.html').is_file()
+    target = DOCS / relative
+    if target.is_dir():
+        target = target / 'index.html'
+    return target.is_file()
 
 
 def main():
@@ -207,6 +387,10 @@ def main():
                     fail(f'docs/data/news.json: story {story["id"]} needs an HTTP(S) source URL')
             except ValueError:
                 fail(f'docs/data/news.json: invalid source URL for story {story["id"]}')
+
+    check_agent_files()
+    check_canonical_and_sitemap()
+    check_jsonld()
 
     if errors:
         print('\n'.join(f'ERROR: {message}' for message in errors), file=sys.stderr)

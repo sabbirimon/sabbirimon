@@ -113,9 +113,24 @@ Weather uses Canvas 2D and audio uses Web Audio, with no new dependencies. For b
 
 The homepage has a descriptive title and summary, an HTTPS canonical URL, Open Graph and Twitter sharing metadata, and JSON-LD for the public Person and WebSite identities. Names and topics match visible content: Sabbir Hassan Imon, IMON, open-source projects, local-first AI, Android, and pixel browser games. There is no hidden keyword text or invented credential.
 
-`docs/robots.txt` allows crawling and points to `https://imon.com.bd/sitemap.xml`. The sitemap lists only the canonical homepage and `/gridworks/`; scene query strings and section fragments are not separate pages. Keep metadata and the sitemap aligned when adding real routes. The existing social preview is `docs/social-card.png`.
+`docs/robots.txt` allows crawling and points to `https://imon.com.bd/sitemap.xml`. The sitemap lists the canonical homepage and the real sub-pages; scene query strings and section fragments are not separate pages. Keep metadata and the sitemap aligned when adding real routes. The existing social preview is `docs/social-card.png`.
+
+Every page in the sitemap declares its own `<link rel="canonical">` pointing at the exact sitemap entry, and carries a description. `scripts/check-site.py` fails the build when a listed page has no canonical tag, when that tag disagrees with the sitemap, when a page has no description, or when any JSON-LD block on any page is malformed. Those four rules exist because each one fails silently in production: a missing canonical splits one page across two addresses, and a broken JSON-LD block is ignored by every crawler without an error anywhere.
+
+Each sub-page carries its own structured data type: `LearningResource` for the two labs, `VideoGame` for Gridworks, `WebApplication` for the toolbox, and the `Person`/`WebSite` graph on the homepage.
 
 These files help crawlers understand the site; indexing and ranking are not guaranteed. After publishing, the owner can submit the sitemap and inspect both URLs in Google Search Console. Maintenance references: [Google’s SEO starter guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide), [site-name structured data](https://developers.google.com/search/docs/appearance/site-names), and [sitemap guidance](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap). No SEO package or tracking script is required.
+
+### Describing the site to AI agents
+
+Two static files let a language model or a crawler understand the site without guessing at it:
+
+- `docs/llms.txt` is a hand-written plain-text map: what the site is, what each page does, which public APIs it contacts, and the conventions an automated reader should follow (use the canonical URLs, read the HTML directly, no page-content API exists).
+- `docs/.well-known/agents.json` is the same information as structured JSON — entry points, machine-readable data files, third-party hosts and the reason each is contacted, the content and licensing posture, and the privacy summary.
+
+Both are linked from every page with `<link rel="alternate">`, and both are listed in `robots.txt` alongside the crawler-specific rules. `scripts/check-site.py` parses both and fails the build when an entry point or machine-readable path does not exist on disk, so the map cannot drift away from the real site.
+
+Both files are static and carry nothing about a visitor. Asking for one is an ordinary web request, so the host that serves it sees an IP address — the same as any other request to the site. `docs/privacy.html` explains this in its own section.
 
 ### Final weather polish
 
