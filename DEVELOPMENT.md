@@ -21,6 +21,23 @@ python3 scripts/check-site.py
 
 The static checker validates local references, imports, offline assets, source HTML IDs, daily data, and the `docs/CNAME` custom-domain declaration. Browser QA remains necessary for layout and interaction. During local service-worker development, close other local preview tabs and unregister this site's worker if a previous cache obscures changes.
 
+## The AI lab
+
+`docs/ai-lab.html` teaches Python, machine learning and system design through 54 exercises in five chapters: Python for models, AI safety, System design, Working with APIs and Working with data. The course lives in `docs/data/ai-course.json` and is loaded at runtime, so a new exercise is a JSON entry and a reference answer, with no build step.
+
+The Python runs in the browser. `docs/ai-lab.js` is a teaching interpreter — a tokenizer, a statement parser, an expression parser and a statement executor — not a Python runtime. It covers `def`/`return`, `if`/`elif`/`else`, `for`, `while`, lists, dictionaries, tuples, strings, the common builtins and `import math`. It is deliberately small: an exercise that needs a feature the subset does not have will teach the wrong lesson.
+
+Two learning modules extend it, and both are pure browser-side code:
+
+- `docs/ai-api.js` is a fake HTTP client for `api.example.com` with users, documents, search, health and a predict route. `import requests` and `import http` both reach it. It returns a status code and a body, retries on a 5xx or a 429, never retries on a 404, and supports a timeout and headers. It never touches the network.
+- `docs/ai-sql.js` is an in-memory SQL engine. `import sqlite3` gives a connection with `execute`, `query`, `tables` and `close`, plus `CREATE`, `INSERT`, `SELECT`, `UPDATE`, `DELETE` and `DROP TABLE`, `WHERE` with `AND`/`OR`/`NOT`/`LIKE`/`IN`/`IS NULL`, `ORDER BY`, `LIMIT`, and the `SUM`/`COUNT`/`AVG`/`MIN`/`MAX` aggregates. Each run starts with a fresh database.
+
+Neither module needs a server. This is deliberate: GitHub Pages serves static files only, so a lab that required a backend would not work on the published site.
+
+The interpreter stops a runaway loop with two guards, because a phone is much slower than a laptop: a step count, which catches a runaway loop quickly on a fast machine, and a wall-clock budget, which is the real limit. A legitimate program is never stopped on a slow device by the step count alone.
+
+`docs/ai-lab.webmanifest` gives the lab its own installable identity on a phone, separate from the main site manifest. Below 900px the course rail becomes a drawer and the brief comes first, so a learner lands on the current exercise instead of a list of fifty-four. Safe-area insets keep the page clear of a notch and the home indicator.
+
 ## Publishing and daily content
 
 Select **GitHub Actions** as the repository's Pages source. `.github/workflows/pages.yml` tests and deploys `docs/` on pushes to `main`, manual runs, and daily at **06:15 Asia/Dhaka** (`00:15 UTC`). GitHub may delay scheduled runs.
