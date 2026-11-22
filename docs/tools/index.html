@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#030719">
+<title>Developer Toolbox · IMON.world</title>
+<meta name="description" content="A fast, offline-first developer toolbox: JSON formatter, Base64 encoder, JWT decoder, timestamp converter, regex tester, UUID generator, hash generator and colour contrast checker.">
+<meta name="author" content="Sabbir Hassan Imon">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://imon.com.bd/tools/">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./style.css">
+<script>document.documentElement.classList.remove('no-js');</script>
+</head>
+<body class="tools-page">
+<a class="skip-link" href="#tool-main">Skip to the tools</a>
+
+<header class="tools-header">
+  <a class="tools-brand" href="../" aria-label="IMON.world — back to the homepage">
+    <span class="brand-mark" aria-hidden="true">▦</span>
+    <span class="tools-brand-text">IMON<b>.WORLD</b></span>
+  </a>
+  <nav class="tools-nav" aria-label="Page navigation">
+    <a href="../">← Back to IMON.world</a>
+  </nav>
+</header>
+
+<main id="tool-main" class="tools-main" data-tools>
+  <div class="tools-intro">
+    <p class="eyebrow">DEVELOPER TOOLBOX</p>
+    <h1>Small tools, no server.</h1>
+    <p class="tools-lede">Every tool on this page runs entirely in your browser. Nothing is uploaded, nothing is sent over the network, and everything keeps working offline once the page is cached.</p>
+  </div>
+
+  <noscript>
+    <p class="tools-notice">The toolbox tools need JavaScript to run. The page itself still works without it — enable JavaScript to use the tools below.</p>
+  </noscript>
+
+  <div class="tool-tabs" role="tablist" aria-label="Developer tools">
+    <button type="button" role="tab" id="tab-json" aria-controls="panel-json" aria-selected="true" class="is-active" tabindex="0">JSON</button>
+    <button type="button" role="tab" id="tab-base64" aria-controls="panel-base64" aria-selected="false" tabindex="-1">BASE64</button>
+    <button type="button" role="tab" id="tab-jwt" aria-controls="panel-jwt" aria-selected="false" tabindex="-1">JWT</button>
+    <button type="button" role="tab" id="tab-timestamp" aria-controls="panel-timestamp" aria-selected="false" tabindex="-1">TIMESTAMP</button>
+    <button type="button" role="tab" id="tab-regex" aria-controls="panel-regex" aria-selected="false" tabindex="-1">REGEX</button>
+    <button type="button" role="tab" id="tab-uuid" aria-controls="panel-uuid" aria-selected="false" tabindex="-1">UUID</button>
+    <button type="button" role="tab" id="tab-hash" aria-controls="panel-hash" aria-selected="false" tabindex="-1">HASH</button>
+    <button type="button" role="tab" id="tab-colour" aria-controls="panel-colour" aria-selected="false" tabindex="-1">COLOUR</button>
+    <button type="button" role="tab" id="tab-slug" aria-controls="panel-slug" aria-selected="false" tabindex="-1">SLUG</button>
+    <button type="button" role="tab" id="tab-dns" aria-controls="panel-dns" aria-selected="false" tabindex="-1">DNS</button>
+    <button type="button" role="tab" id="tab-headers" aria-controls="panel-headers" aria-selected="false" tabindex="-1">HEADERS</button>
+    <button type="button" role="tab" id="tab-ip" aria-controls="panel-ip" aria-selected="false" tabindex="-1">IP/CIDR</button>
+    <button type="button" role="tab" id="tab-port" aria-controls="panel-port" aria-selected="false" tabindex="-1">PORT</button>
+    <button type="button" role="tab" id="tab-ua" aria-controls="panel-ua" aria-selected="false" tabindex="-1">UA BUILD</button>
+    <button type="button" role="tab" id="tab-yaml" aria-controls="panel-yaml" aria-selected="false" tabindex="-1">YAML</button>
+    <button type="button" role="tab" id="tab-tf" aria-controls="panel-tf" aria-selected="false" tabindex="-1">TERRAFORM</button>
+    <button type="button" role="tab" id="tab-sql" aria-controls="panel-sql" aria-selected="false" tabindex="-1">SQL</button>
+    <button type="button" role="tab" id="tab-xml" aria-controls="panel-xml" aria-selected="false" tabindex="-1">XML</button>
+  </div>
+
+  <!-- JSON ------------------------------------------------------------ -->
+  <section class="tool-panel" id="panel-json" role="tabpanel" aria-labelledby="tab-json" tabindex="0">
+    <h2 class="tool-title">JSON formatter</h2>
+    <p class="tool-desc">Pretty-print or minify JSON, and get exact line and column numbers when something is malformed.</p>
+    <div class="tool-grid">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="json-input">JSON input</label>
+        </div>
+        <textarea id="json-input" spellcheck="false" autocomplete="off" placeholder='{"name":"imon","tags":["pixel","open-source"]}'></textarea>
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="json-output">Output</label>
+          <div class="tool-seg">
+            <button type="button" class="seg-button" id="json-view-plain" aria-pressed="true" data-view="plain">Plain</button>
+            <button type="button" class="seg-button" id="json-view-highlighted" aria-pressed="false" data-view="highlighted">Highlighted</button>
+          </div>
+          <button type="button" class="copy-chip" data-copy-target="json-output">Copy</button>
+        </div>
+        <textarea id="json-output" readonly spellcheck="false" aria-live="polite"></textarea>
+        <pre class="tool-code" id="json-highlight" aria-live="polite" hidden></pre>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="json-format">Format</button>
+      <button type="button" class="tool-button" id="json-minify">Minify</button>
+      <label class="tool-select" for="json-indent">Indent
+        <select id="json-indent">
+          <option value="2">2 spaces</option>
+          <option value="4">4 spaces</option>
+        </select>
+      </label>
+    </div>
+    <p class="tool-error" id="json-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- Base64 ---------------------------------------------------------- -->
+  <section class="tool-panel" id="panel-base64" role="tabpanel" aria-labelledby="tab-base64" tabindex="0" hidden>
+    <h2 class="tool-title">Base64 encoder &amp; decoder</h2>
+    <p class="tool-desc">UTF-8 safe. Emoji, accents and non-Latin scripts survive the round trip.</p>
+    <div class="tool-grid">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="b64-input">Text or Base64 input</label>
+        </div>
+        <textarea id="b64-input" rows="12" spellcheck="false" autocomplete="off" placeholder="Type a message, or paste a Base64 string to decode."></textarea>
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="b64-output">Result</label>
+          <button type="button" class="copy-chip" data-copy-target="b64-output">Copy</button>
+        </div>
+        <textarea id="b64-output" rows="12" readonly spellcheck="false"></textarea>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="b64-run">Run</button>
+      <label class="tool-select" for="b64-mode">Mode
+        <select id="b64-mode">
+          <option value="encode">Encode → Base64</option>
+          <option value="decode">Decode ← Base64</option>
+        </select>
+      </label>
+    </div>
+    <p class="tool-error" id="b64-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- JWT ------------------------------------------------------------- -->
+  <section class="tool-panel" id="panel-jwt" role="tabpanel" aria-labelledby="tab-jwt" tabindex="0" hidden>
+    <h2 class="tool-title">JWT decoder</h2>
+    <p class="tool-desc">Reads the header and payload of a JSON Web Token.</p>
+    <p class="tool-warning"><strong>Signature NOT verified.</strong> This tool only base64url-decodes the token. It never checks the signature, so the contents are untrusted — never paste a secret into it.</p>
+    <div class="tool-grid">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="jwt-input">JWT token</label>
+        </div>
+        <textarea id="jwt-input" rows="12" spellcheck="false" autocomplete="off" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NSJ9.signature"></textarea>
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="jwt-output">Decoded token</label>
+          <button type="button" class="copy-chip" data-copy-target="jwt-output">Copy</button>
+        </div>
+        <textarea id="jwt-output" rows="12" readonly spellcheck="false" aria-live="polite"></textarea>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="jwt-decode">Decode</button>
+    </div>
+    <div class="claim-list" id="jwt-claims" aria-live="polite"></div>
+    <p class="tool-error" id="jwt-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- Timestamp ------------------------------------------------------- -->
+  <section class="tool-panel" id="panel-timestamp" role="tabpanel" aria-labelledby="tab-timestamp" tabindex="0" hidden>
+    <h2 class="tool-title">Timestamp converter</h2>
+    <p class="tool-desc">Unix seconds in, ISO 8601 out — or the other way around.</p>
+    <div class="tool-grid">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="ts-input">Value to convert</label>
+        </div>
+        <input type="text" id="ts-input" autocomplete="off" spellcheck="false" placeholder="1700000000 or 2023-11-14T22:13:20.000Z">
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="ts-output">Converted value</label>
+          <button type="button" class="copy-chip" data-copy-target="ts-output">Copy</button>
+        </div>
+        <textarea id="ts-output" rows="6" readonly spellcheck="false" aria-live="polite"></textarea>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="ts-run">Convert</button>
+      <button type="button" class="tool-button" id="ts-now">Now</button>
+      <label class="tool-select" for="ts-direction">Direction
+        <select id="ts-direction">
+          <option value="toIso">Unix → ISO 8601</option>
+          <option value="toUnix">ISO 8601 → Unix</option>
+        </select>
+      </label>
+      <label class="tool-select" for="ts-zone">Time zone
+        <select id="ts-zone">
+          <option value="local">Local time</option>
+          <option value="utc">UTC</option>
+        </select>
+      </label>
+    </div>
+    <p class="tool-error" id="ts-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- Regex ----------------------------------------------------------- -->
+  <section class="tool-panel" id="panel-regex" role="tabpanel" aria-labelledby="tab-regex" tabindex="0" hidden>
+    <h2 class="tool-title">Regex tester</h2>
+    <p class="tool-desc">Test a pattern against multi-line text and see every match with its capture groups.</p>
+    <div class="tool-grid tool-grid-regex">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="regex-pattern">Pattern</label>
+        </div>
+        <input type="text" id="regex-pattern" autocomplete="off" spellcheck="false" placeholder="(\w+)@(\w+\.\w+)">
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="regex-flags">Flags</label>
+        </div>
+        <input type="text" id="regex-flags" autocomplete="off" spellcheck="false" placeholder="gim" aria-describedby="regex-flags-hint">
+        <small class="tool-hint" id="regex-flags-hint">Supported: g, i, m, s, u, y</small>
+      </div>
+    </div>
+    <div class="tool-field">
+      <div class="tool-field-head">
+        <label for="regex-input">Test text</label>
+      </div>
+      <textarea id="regex-input" rows="8" spellcheck="false" autocomplete="off" placeholder="One line of text per line — the g flag matches across all of them."></textarea>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="regex-run">Test pattern</button>
+    </div>
+    <div class="tool-field">
+      <div class="tool-field-head">
+        <label for="regex-output">Matches</label>
+        <button type="button" class="copy-chip" data-copy-target="regex-output">Copy</button>
+      </div>
+      <textarea id="regex-output" rows="10" readonly spellcheck="false" aria-live="polite"></textarea>
+    </div>
+    <p class="tool-error" id="regex-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- UUID ------------------------------------------------------------ -->
+  <section class="tool-panel" id="panel-uuid" role="tabpanel" aria-labelledby="tab-uuid" tabindex="0" hidden>
+    <h2 class="tool-title">UUID generator</h2>
+    <p class="tool-desc">Version 4 UUIDs, generated locally with the browser's cryptographic random source.</p>
+    <div class="tool-field">
+      <div class="tool-field-head">
+        <label for="uuid-output">Generated UUIDs</label>
+        <button type="button" class="copy-chip" data-copy-target="uuid-output">Copy all</button>
+      </div>
+      <textarea id="uuid-output" rows="6" readonly spellcheck="false" aria-live="polite"></textarea>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="uuid-generate">Generate</button>
+      <label class="tool-select" for="uuid-count">How many
+        <select id="uuid-count">
+          <option value="1">1</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
+      </label>
+    </div>
+    <div class="uuid-list" id="uuid-list"></div>
+    <p class="tool-error" id="uuid-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- Hash ------------------------------------------------------------ -->
+  <section class="tool-panel" id="panel-hash" role="tabpanel" aria-labelledby="tab-hash" tabindex="0" hidden>
+    <h2 class="tool-title">Hash generator</h2>
+    <p class="tool-desc">SHA-1, SHA-256, SHA-384 and SHA-512, computed with the Web Crypto API.</p>
+    <p class="tool-warning"><strong>Verification only.</strong> These are plain, fast hashes — there is no key stretching here. Do not use them to store passwords; use a dedicated password hashing function such as Argon2 or bcrypt.</p>
+    <div class="tool-grid">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="hash-input">Text to hash</label>
+        </div>
+        <textarea id="hash-input" rows="10" spellcheck="false" autocomplete="off" placeholder="Paste the text you want to verify."></textarea>
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="hash-output">Hex digest</label>
+          <button type="button" class="copy-chip" data-copy-target="hash-output">Copy</button>
+        </div>
+        <textarea id="hash-output" rows="10" readonly spellcheck="false" aria-live="polite"></textarea>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="hash-run">Hash</button>
+      <label class="tool-select" for="hash-algorithm">Algorithm
+        <select id="hash-algorithm">
+          <option value="SHA-256">SHA-256</option>
+          <option value="SHA-1">SHA-1</option>
+          <option value="SHA-384">SHA-384</option>
+          <option value="SHA-512">SHA-512</option>
+        </select>
+      </label>
+    </div>
+    <p class="tool-error" id="hash-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- Colour ---------------------------------------------------------- -->
+  <section class="tool-panel" id="panel-colour" role="tabpanel" aria-labelledby="tab-colour" tabindex="0" hidden>
+    <h2 class="tool-title">Colour converter &amp; contrast</h2>
+    <p class="tool-desc">HEX, RGB and HSL for two colours, plus the WCAG 2.1 contrast ratio between them.</p>
+    <div class="tool-grid">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="colour-a">Colour A (HEX)</label>
+        </div>
+        <input type="text" id="colour-a" value="#9eda68" autocomplete="off" spellcheck="false" placeholder="#9eda68">
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="colour-b">Colour B (HEX)</label>
+        </div>
+        <input type="text" id="colour-b" value="#030719" autocomplete="off" spellcheck="false" placeholder="#030719">
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="colour-run">Convert &amp; compare</button>
+      <span class="contrast-badge" id="colour-badge" hidden></span>
+    </div>
+    <div class="tool-field">
+      <div class="tool-field-head">
+        <label for="colour-output">Conversion result</label>
+        <button type="button" class="copy-chip" data-copy-target="colour-output">Copy</button>
+      </div>
+      <textarea id="colour-output" rows="10" readonly spellcheck="false" aria-live="polite"></textarea>
+    </div>
+    <p class="tool-error" id="colour-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- Slug ------------------------------------------------------------ -->
+  <section class="tool-panel" id="panel-slug" role="tabpanel" aria-labelledby="tab-slug" tabindex="0" hidden>
+    <h2 class="tool-title">Slug generator</h2>
+    <p class="tool-desc">Turns any title into a clean, URL-safe slug.</p>
+    <div class="tool-grid">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="slug-input">Text to slugify</label>
+        </div>
+        <input type="text" id="slug-input" autocomplete="off" spellcheck="false" placeholder="Hello, World! — Episode 01">
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="slug-output">Slug</label>
+          <button type="button" class="copy-chip" data-copy-target="slug-output">Copy</button>
+        </div>
+        <input type="text" id="slug-output" readonly>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="slug-run">Slugify</button>
+    </div>
+    <p class="tool-error" id="slug-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- DNS ------------------------------------------------------------- -->
+  <section class="tool-panel" id="panel-dns" role="tabpanel" aria-labelledby="tab-dns" tabindex="0" hidden>
+    <h2 class="tool-title">DNS lookup</h2>
+    <p class="tool-desc">Resolve A, AAAA, MX, NS and TXT records over DNS-over-HTTPS.</p>
+    <p class="tool-warning"><strong>This is the one tool that leaves your browser.</strong> The lookup is sent to Cloudflare's DNS-over-HTTPS endpoint (<code>cloudflare-dns.com</code>) together with the domain name you type. Nothing else on this page is uploaded. If the request fails — blocked by CORS, offline, or filtered by an ad blocker — the tool says so and shows no records rather than inventing one.</p>
+    <div class="tool-grid tool-grid-regex">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="dns-name">Domain name</label>
+        </div>
+        <input type="text" id="dns-name" autocomplete="off" spellcheck="false" placeholder="imon.com.bd">
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="dns-type">Record type</label>
+        </div>
+        <select id="dns-type">
+          <option value="A">A — IPv4 address</option>
+          <option value="AAAA">AAAA — IPv6 address</option>
+          <option value="MX">MX — mail exchanger</option>
+          <option value="NS">NS — name server</option>
+          <option value="TXT">TXT — text record</option>
+        </select>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="dns-lookup">Look up</button>
+    </div>
+    <p class="tool-status" id="dns-status" aria-live="polite"></p>
+    <div class="tool-table" id="dns-results" aria-live="polite"></div>
+    <p class="tool-error" id="dns-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- HTTP headers ---------------------------------------------------- -->
+  <section class="tool-panel" id="panel-headers" role="tabpanel" aria-labelledby="tab-headers" tabindex="0" hidden>
+    <h2 class="tool-title">HTTP header inspector</h2>
+    <p class="tool-desc">Paste raw HTTP request or response headers and get them parsed into a name/value table, with duplicate and malformed lines flagged.</p>
+    <p class="tool-warning"><strong>Runs entirely offline.</strong> Nothing is sent anywhere — the text you paste is parsed locally in your browser.</p>
+    <div class="tool-field">
+      <div class="tool-field-head">
+        <label for="header-input">Raw headers</label>
+      </div>
+      <textarea id="header-input" rows="12" spellcheck="false" autocomplete="off" placeholder="GET /tools/ HTTP/1.1&#10;Host: imon.com.bd&#10;Accept: */*&#10;Accept-Encoding: gzip, deflate, br"></textarea>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="header-parse">Parse headers</button>
+    </div>
+    <p class="tool-status" id="header-summary" aria-live="polite"></p>
+    <div class="tool-table" id="header-table" aria-live="polite"></div>
+    <p class="tool-error" id="header-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- IP / CIDR ------------------------------------------------------- -->
+  <section class="tool-panel" id="panel-ip" role="tabpanel" aria-labelledby="tab-ip" tabindex="0" hidden>
+    <h2 class="tool-title">IP &amp; CIDR calculator</h2>
+    <p class="tool-desc">Network, broadcast, host range, masks and binary forms for any IPv4 address and prefix length. Also converts a decimal integer to IPv4 and back.</p>
+    <p class="tool-warning"><strong>Runs entirely offline.</strong> Every calculation happens locally in your browser.</p>
+    <div class="tool-grid tool-grid-regex">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="ip-input">IPv4 address</label>
+        </div>
+        <input type="text" id="ip-input" autocomplete="off" spellcheck="false" placeholder="192.168.1.10">
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="ip-prefix">Prefix length</label>
+        </div>
+        <input type="text" id="ip-prefix" value="24" autocomplete="off" spellcheck="false" placeholder="24">
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="ip-run">Calculate</button>
+    </div>
+    <div class="tool-table" id="ip-table" aria-live="polite"></div>
+    <div class="tool-grid tool-grid-regex">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="ip-decimal-input">Decimal integer</label>
+        </div>
+        <input type="text" id="ip-decimal-input" autocomplete="off" spellcheck="false" placeholder="3232235777">
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="ip-decimal-output">IPv4</label>
+          <button type="button" class="copy-chip" data-copy-target="ip-decimal-output">Copy</button>
+        </div>
+        <input type="text" id="ip-decimal-output" readonly spellcheck="false" aria-live="polite">
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="tool-button" id="ip-decimal-run">Convert decimal</button>
+    </div>
+    <p class="tool-error" id="ip-error" role="status" aria-live="polite" hidden></p>
+    <p class="tool-error" id="ip-decimal-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- Port ------------------------------------------------------------ -->
+  <section class="tool-panel" id="panel-port" role="tabpanel" aria-labelledby="tab-port" tabindex="0" hidden>
+    <h2 class="tool-title">Port checker</h2>
+    <p class="tool-desc">Validate a port number and look up the well-known service that usually lives on it.</p>
+    <p class="tool-warning"><strong>This tool does not scan anything.</strong> It never opens a connection, never touches the network and never probes your machine — it only validates the number you type and matches it against a static list of registered service ports.</p>
+    <div class="tool-field">
+      <div class="tool-field-head">
+        <label for="port-input">Port number</label>
+      </div>
+      <input type="text" id="port-input" autocomplete="off" spellcheck="false" placeholder="443">
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="port-run">Check port</button>
+    </div>
+    <p class="tool-status" id="port-summary" aria-live="polite"></p>
+    <div class="tool-table" id="port-table" aria-live="polite"></div>
+    <p class="tool-error" id="port-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- UA builder ------------------------------------------------------ -->
+  <section class="tool-panel" id="panel-ua" role="tabpanel" aria-labelledby="tab-ua" tabindex="0" hidden>
+    <h2 class="tool-title">User-agent &amp; header builder</h2>
+    <p class="tool-desc">Build a copy-ready request header set for a browser or device profile.</p>
+    <p class="tool-warning"><strong>Runs entirely offline.</strong> These are static, publicly known header templates — nothing is sent anywhere and no live browser is fingerprinted.</p>
+    <div class="tool-grid tool-grid-regex">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="ua-profile">Browser / device profile</label>
+        </div>
+        <select id="ua-profile">
+          <option value="chrome-windows">Chrome on Windows</option>
+          <option value="chrome-macos">Chrome on macOS</option>
+          <option value="safari-macos">Safari on macOS</option>
+          <option value="firefox-windows">Firefox on Windows</option>
+          <option value="edge-windows">Edge on Windows</option>
+          <option value="safari-ios">Mobile Safari on iOS</option>
+          <option value="chrome-android">Chrome on Android</option>
+        </select>
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="ua-output">Copy-ready headers</label>
+          <button type="button" class="copy-chip" data-copy-target="ua-output">Copy</button>
+        </div>
+        <textarea id="ua-output" rows="6" readonly spellcheck="false" aria-live="polite"></textarea>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="ua-build">Build headers</button>
+      <button type="button" class="tool-button" id="ua-copy-all">Copy all</button>
+    </div>
+    <div class="tool-table" id="ua-table" aria-live="polite"></div>
+    <p class="tool-error" id="ua-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- YAML ------------------------------------------------------------ -->
+  <section class="tool-panel" id="panel-yaml" role="tabpanel" aria-labelledby="tab-yaml" tabindex="0" hidden>
+    <h2 class="tool-title">YAML formatter</h2>
+    <p class="tool-desc">Re-indent a YAML document with a hand-written indentation parser, or minify it onto one line. Malformed YAML is reported with its line number.</p>
+    <p class="tool-warning"><strong>Subset parser.</strong> This tool reads the block-style YAML that appears in configuration files — nested maps, lists, flow collections, quoted scalars and block scalars. Anchors, aliases, tags, multi-document streams and complex keys are out of scope, and a document using them falls back to a conservative line-based re-indent (the panel says so when it happens).</p>
+    <div class="tool-grid">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="yaml-input">YAML input</label>
+        </div>
+        <textarea id="yaml-input" spellcheck="false" autocomplete="off" placeholder="name: imon&#10;tags:&#10;  - pixel&#10;  - open-source"></textarea>
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="yaml-output">Output</label>
+          <div class="tool-seg">
+            <button type="button" class="seg-button" id="yaml-view-plain" aria-pressed="true" data-view="plain">Plain</button>
+            <button type="button" class="seg-button" id="yaml-view-highlighted" aria-pressed="false" data-view="highlighted">Highlighted</button>
+          </div>
+          <button type="button" class="copy-chip" data-copy-target="yaml-output">Copy</button>
+        </div>
+        <textarea id="yaml-output" readonly spellcheck="false" aria-live="polite"></textarea>
+        <pre class="tool-code" id="yaml-highlight" aria-live="polite" hidden></pre>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="yaml-format">Format</button>
+      <button type="button" class="tool-button" id="yaml-minify">Minify</button>
+    </div>
+    <p class="tool-error" id="yaml-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- Terraform ------------------------------------------------------- -->
+  <section class="tool-panel" id="panel-tf" role="tabpanel" aria-labelledby="tab-tf" tabindex="0" hidden>
+    <h2 class="tool-title">Terraform formatter</h2>
+    <p class="tool-desc">Normalise HCL to two-space indentation and align the <code>=</code> signs of consecutive attributes. Unbalanced braces or brackets are reported with their line number.</p>
+    <div class="tool-grid">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="tf-input">Terraform / HCL input</label>
+        </div>
+        <textarea id="tf-input" spellcheck="false" autocomplete="off" placeholder="resource &quot;aws_s3_bucket&quot; &quot;site&quot; {&#10;  bucket = &quot;my-bucket&quot;&#10;  acl    = &quot;private&quot;&#10;}"></textarea>
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="tf-output">Output</label>
+          <div class="tool-seg">
+            <button type="button" class="seg-button" id="tf-view-plain" aria-pressed="true" data-view="plain">Plain</button>
+            <button type="button" class="seg-button" id="tf-view-highlighted" aria-pressed="false" data-view="highlighted">Highlighted</button>
+          </div>
+          <button type="button" class="copy-chip" data-copy-target="tf-output">Copy</button>
+        </div>
+        <textarea id="tf-output" readonly spellcheck="false" aria-live="polite"></textarea>
+        <pre class="tool-code" id="tf-highlight" aria-live="polite" hidden></pre>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="tf-format">Format</button>
+    </div>
+    <p class="tool-error" id="tf-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- SQL ------------------------------------------------------------- -->
+  <section class="tool-panel" id="panel-sql" role="tabpanel" aria-labelledby="tab-sql" tabindex="0" hidden>
+    <h2 class="tool-title">SQL formatter</h2>
+    <p class="tool-desc">Uppercase the keywords, tidy the whitespace and put the major clauses on their own lines. Unbalanced parentheses are reported with their line number.</p>
+    <div class="tool-grid">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="sql-input">SQL input</label>
+        </div>
+        <textarea id="sql-input" spellcheck="false" autocomplete="off" placeholder="select id, name from users where age &gt; 18 group by id order by name"></textarea>
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="sql-output">Output</label>
+          <div class="tool-seg">
+            <button type="button" class="seg-button" id="sql-view-plain" aria-pressed="true" data-view="plain">Plain</button>
+            <button type="button" class="seg-button" id="sql-view-highlighted" aria-pressed="false" data-view="highlighted">Highlighted</button>
+          </div>
+          <button type="button" class="copy-chip" data-copy-target="sql-output">Copy</button>
+        </div>
+        <textarea id="sql-output" readonly spellcheck="false" aria-live="polite"></textarea>
+        <pre class="tool-code" id="sql-highlight" aria-live="polite" hidden></pre>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="sql-format">Format</button>
+    </div>
+    <p class="tool-error" id="sql-error" role="status" aria-live="polite" hidden></p>
+  </section>
+
+  <!-- XML ------------------------------------------------------------- -->
+  <section class="tool-panel" id="panel-xml" role="tabpanel" aria-labelledby="tab-xml" tabindex="0" hidden>
+    <h2 class="tool-title">XML formatter &amp; viewer</h2>
+    <p class="tool-desc">Pretty-print XML with correct indentation, or collapse it back onto a single line. Mismatched or unclosed tags are reported with their line number.</p>
+    <div class="tool-grid">
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="xml-input">XML input</label>
+        </div>
+        <textarea id="xml-input" spellcheck="false" autocomplete="off" placeholder="&lt;catalog&gt;&#10;  &lt;book id=&quot;1&quot;&gt;Pixel Art&lt;/book&gt;&#10;&lt;/catalog&gt;"></textarea>
+      </div>
+      <div class="tool-field">
+        <div class="tool-field-head">
+          <label for="xml-output">Output</label>
+          <div class="tool-seg">
+            <button type="button" class="seg-button" id="xml-view-plain" aria-pressed="true" data-view="plain">Plain</button>
+            <button type="button" class="seg-button" id="xml-view-highlighted" aria-pressed="false" data-view="highlighted">Highlighted</button>
+          </div>
+          <button type="button" class="copy-chip" data-copy-target="xml-output">Copy</button>
+        </div>
+        <textarea id="xml-output" readonly spellcheck="false" aria-live="polite"></textarea>
+        <pre class="tool-code" id="xml-highlight" aria-live="polite" hidden></pre>
+      </div>
+    </div>
+    <div class="tool-actions">
+      <button type="button" class="pixel-button" id="xml-format">Format</button>
+      <button type="button" class="tool-button" id="xml-minify">Minify</button>
+    </div>
+    <p class="tool-error" id="xml-error" role="status" aria-live="polite" hidden></p>
+  </section>
+</main>
+
+<footer class="tools-footer">
+  <p>IMON.world · Developer Toolbox · runs offline, sends nothing.</p>
+  <p><a href="../">← Back to IMON.world</a></p>
+</footer>
+
+<script type="module">
+  import { initTools } from './tools.js';
+  initTools();
+</script>
+</body>
+</html>

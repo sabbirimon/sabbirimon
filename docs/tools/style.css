@@ -1,0 +1,275 @@
+/* Developer Toolbox — tools-specific styles. House palette and fonts only. */
+@font-face{font-family:Pixel;src:url('../fonts/press-start-2p.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}@font-face{font-family:Mulish;src:url('../fonts/mulish-regular.ttf') format('truetype');font-style:normal;font-weight:400 600;font-display:swap}@font-face{font-family:Mulish;src:url('../fonts/mulish-extra-bold.ttf') format('truetype');font-style:normal;font-weight:700 900;font-display:swap}
+
+:root{color-scheme:dark;--bg:#030719;--surface:#0b1026;--line:#2a3049;--text:#f5f5fc;--muted:#b1bbd1;--gold:#facc15;--accent:#9eda68;--accent-rgb:158,218,104;--pixel:Pixel,'Courier New',monospace;--body:Mulish,system-ui,sans-serif;--danger:#fca5a5;--danger-rgb:252,165,165}
+
+body.tools-page{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+body.tools-page a{color:inherit;text-decoration:none}
+body.tools-page a:hover{color:var(--gold)}
+body.tools-page h1,body.tools-page h2,body.tools-page p{margin:0}
+body.tools-page button,body.tools-page input,body.tools-page select,body.tools-page textarea{font:inherit;color:inherit}
+body.tools-page button{cursor:pointer}
+body.tools-page [hidden]{display:none!important}
+body.tools-page :focus-visible{outline:3px solid #facc15;outline-offset:6px}
+
+.skip-link{position:fixed;top:-70px;left:20px;z-index:200;padding:10px;background:var(--gold);color:var(--bg);font-family:var(--pixel);font-size:11px}
+.skip-link:focus{top:12px}
+
+/* Header ------------------------------------------------------------ */
+.tools-header{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:16px max(5%,calc((100vw - 1180px)/2));border-bottom:1px solid var(--line);background:#030719f5}
+.tools-brand{display:flex;align-items:center;gap:14px;font-family:var(--pixel);font-size:14px;line-height:1.6}
+.tools-brand .brand-mark{display:grid;place-items:center;width:30px;height:32px;background:var(--gold);color:#34241d;font-size:16px;transform:scale(.7);border:3px solid #f4ab22;box-shadow:3px 0 #79511d,-3px 0 #79511d,0 3px #79511d,0 -3px #ffe380}
+.tools-brand-text{color:var(--muted)}
+.tools-brand-text b{color:var(--gold)}
+.tools-nav{font-size:14px;font-weight:800}
+
+/* Main -------------------------------------------------------------- */
+.tools-main{flex:1;width:100%;max-width:1180px;margin:0 auto;padding:38px max(5%,20px) 60px}
+.tools-intro{margin-bottom:30px}
+.tools-intro .eyebrow{font-family:var(--pixel);font-size:11px;letter-spacing:1px;color:var(--gold);background:none;padding:0;text-shadow:none;margin-bottom:14px}
+.tools-intro h1{font-family:var(--pixel);font-size:clamp(22px,3.2vw,38px);line-height:1.6;letter-spacing:-1px;text-shadow:3px 4px 0 #16304d;margin-bottom:16px}
+.tools-lede{font-size:16px;line-height:1.8;color:var(--muted);max-width:70ch}
+.tools-notice{border:2px solid var(--gold);background:#1b1704;color:#fde68a;padding:14px 16px;font-size:14px;margin-bottom:24px}
+
+/* Tabs -------------------------------------------------------------- */
+.tool-tabs{display:flex;flex-wrap:wrap;gap:8px;padding-bottom:14px;border-bottom:2px solid var(--line);margin-bottom:26px}
+.tool-tabs [role="tab"]{font-family:var(--pixel);font-size:11px;line-height:1.6;padding:11px 13px;background:var(--surface);color:var(--muted);border:2px solid var(--line);box-shadow:0 3px #050814}
+.tool-tabs [role="tab"]:hover{color:var(--text);border-color:#4c5675}
+.tool-tabs [role="tab"].is-active{background:var(--gold);border-color:#a16207;color:#231b07;box-shadow:0 3px #79511d}
+
+/* Without JavaScript the tabs cannot switch panels, so show every tool as a
+   plain stacked document and hide the tab bar. The page still renders. */
+.no-js .tool-tabs{display:none}
+.no-js .tool-panel[hidden]{display:block!important}
+.no-js .tool-panel{margin-bottom:26px}
+.no-js .tool-actions{display:none}
+/* The field head carries the label, so it must stay visible without JS. */
+.no-js .tool-field-head{background:var(--surface)}
+
+/* Panels ------------------------------------------------------------ */
+/* Every panel child shares one 24px gutter so the title, the fields and the
+   action row all start and end on the same vertical line. */
+.tool-panel{background:var(--surface);border:2px solid var(--line);padding:22px 24px 24px;box-shadow:0 5px #050814}
+.tool-panel-head{padding:0}
+.tool-title{font-family:var(--pixel);font-size:16px;line-height:1.7;color:var(--gold);margin:0 0 10px}
+.tool-desc{font-size:14px;color:var(--muted);margin:0}
+.tool-warning{border-left:4px solid var(--gold);background:#1b1704;color:#fde68a;padding:12px 14px;font-size:13px;line-height:1.7;margin:16px 0 0}
+.tool-warning strong{color:#fff}
+
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin:20px 0 0;align-items:stretch}
+.tool-grid-regex{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.tool-field{display:flex;flex-direction:column;min-width:0}
+
+/* Every field — input or output — uses the same .tool-field-head bar. The bar
+   is a fixed 40px tall so every label in a panel lands on one baseline, and
+   the Copy chip is pinned to the right edge of the bar it belongs to. */
+.tool-field-head{display:flex;align-items:center;justify-content:space-between;gap:12px;height:40px;min-height:40px;padding:0 0 0 2px;margin-bottom:8px;border-bottom:2px solid var(--line)}
+.tool-field-head label{font-family:var(--pixel);font-size:10px;line-height:1.6;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin:0;display:block;min-width:0;overflow-wrap:anywhere}
+/* Fallback for any field whose label is not wrapped in a .tool-field-head:
+   give the bare label the identical 40px bar so it still lands on the same
+   baseline as the wrapped labels until the markup is converted. */
+.tool-field>label:first-child{display:flex;align-items:center;height:40px;min-height:40px;margin:0 0 8px;padding:0 0 0 2px;border-bottom:2px solid var(--line);font-family:var(--pixel);font-size:10px;line-height:1.6;letter-spacing:1px;color:var(--gold);text-transform:uppercase}
+.tool-hint{font-size:12px;color:var(--muted)}
+
+.tool-panel textarea,.tool-panel input[type="text"],.tool-panel select{background:#060a1a;border:2px solid var(--line);color:var(--text);padding:11px 12px;font-size:14px;line-height:1.6;width:100%;min-width:0}
+/* Every editable field gets the same monospace face as the code panes. A
+   textarea with no explicit font-family falls back to the browser's default
+   serif, which reads as a warmer, browner colour beside the code output. */
+/* body.tools-page textarea{font:inherit} is a shorthand that sets
+   font-family:inherit, so the code font is re-stated with a matching
+   `body.tools-page` prefix to win on specificity as well as order. */
+body.tools-page .tool-panel textarea{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.6;resize:vertical;white-space:pre;overflow-wrap:normal;overflow-x:auto;color:var(--text);text-align:left}
+body.tools-page .tool-panel input[type="text"]{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;color:var(--text);text-align:left}
+.tool-panel textarea[readonly]{background:#04071a;color:#cfe6b9}
+.tool-panel input[readonly]{color:#cfe6b9}
+.tool-panel select{cursor:pointer}
+/* Fixed control heights so every pane in a .tool-grid resolves to exactly the
+   same box. Textareas are the tall pane; single-line inputs and selects share
+   one shorter height so a mixed row still lines up edge to edge. */
+.tool-grid .tool-field textarea{height:260px}
+.tool-grid .tool-field input[type="text"],.tool-grid .tool-field select{height:46px}
+.tool-grid .tool-field select{padding:0 12px}
+/* A grid that mixes a single-line input with a textarea would otherwise end
+   in two different heights. The textarea sets the row height and the
+   single-line control stretches to match, so both panes end on one line. */
+.tool-grid:has(.tool-field textarea) .tool-field input[type="text"],
+.tool-grid:has(.tool-field textarea) .tool-field select{height:260px}
+/* A stretched single-line control keeps its text on the vertical centre so it
+   still reads as a one-line field inside a tall pane — but the text itself
+   still starts at the top of the field, matching every other input. */
+.tool-grid:has(.tool-field textarea) .tool-field input[type="text"]{padding-top:11px;padding-bottom:11px;line-height:1.6}
+/* A hint sits inside the header bar's sibling flow but must never push the
+   control out of alignment — it is a caption, not a row. */
+.tool-field .tool-hint{margin-top:6px;line-height:1.5}
+
+/* Actions ----------------------------------------------------------- */
+/* One row, one rhythm: every button and every select in .tool-actions is the
+   same 44px tall and shares the same baseline, so the row never looks lopsided. */
+.tool-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:20px;padding:0}
+.tool-panel .pixel-button{font-family:var(--pixel);font-size:12px;line-height:1.8;display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:13px 20px;border:2px solid var(--button-border,#a16207);background:var(--button-fill,var(--gold));color:var(--button-text,#231b07);box-shadow:0 4px 0 var(--button-border,#a16207);height:44px;min-height:44px;transition:transform .13s,filter .15s}
+.tool-panel .pixel-button:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.tool-panel .pixel-button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--button-border,#a16207)}
+/* body.tools-page button{font:inherit} outranks a bare class, so the chrome
+   font is re-stated here at matching specificity. */
+body.tools-page .tool-button{font-family:var(--pixel);font-size:12px;line-height:1.8;display:inline-flex;align-items:center;justify-content:center;padding:13px 18px;height:44px;min-height:44px;background:var(--surface);color:var(--text);border:2px solid var(--line);box-shadow:0 4px #050814}
+body.tools-page .tool-button:hover{border-color:var(--gold);color:var(--gold)}
+.tool-select{display:flex;align-items:center;gap:10px;height:44px;font-family:var(--pixel);font-size:10px;line-height:1.6;letter-spacing:1px;color:var(--gold);text-transform:uppercase}
+.tool-select select{width:auto;min-width:150px;height:44px;padding:0 12px;font-family:var(--body);font-size:14px;line-height:1.6;text-transform:none;letter-spacing:0}
+
+/* Copy chips -------------------------------------------------------- */
+/* The chip lives in the field header but is welded to the top-right corner of
+   the control it copies: it steps down over the header's rule and its bottom
+   edge merges with the control's top border, so it reads as a tab on the
+   pane, never floating in free space. The negative margin cancels the step so
+   the header keeps its exact height and every label stays on one baseline. */
+body.tools-page .copy-chip{font-family:var(--pixel);font-size:10px;line-height:1.6;padding:8px 11px;background:#151c33;color:var(--muted);border:2px solid var(--line);border-bottom-color:var(--surface);white-space:nowrap;align-self:flex-end;margin-bottom:-10px;transition:color .15s,border-color .15s,background .15s}
+body.tools-page .copy-chip:hover{border-color:var(--gold);border-bottom-color:var(--surface);color:var(--gold)}
+body.tools-page .copy-chip.is-copied{background:#1c3f33;border-color:var(--accent);border-bottom-color:var(--surface);color:var(--accent)}
+
+/* Standalone fields -------------------------------------------------- */
+/* A .tool-field that sits directly in the panel (not inside a .tool-grid)
+   still uses the same gutter and the same fixed control height, so a full
+   width pane is the same box as a half width one. */
+.tool-panel>.tool-field{margin:20px 0 0}
+.tool-panel>.tool-field textarea{height:220px}
+.tool-panel>.tool-field input[type="text"],.tool-panel>.tool-field select{height:46px}
+
+/* Errors and warnings ------------------------------------------------ */
+/* Red is reserved for a failure; a warning is blue. The two never share a
+   colour, so a reader can tell them apart without reading the words. */
+.tool-error{font-family:var(--pixel);font-size:10px;line-height:1.8;color:#ffd4d4;background:rgba(var(--danger-rgb),.14);border:2px solid var(--danger);border-left-width:5px;padding:11px 13px;margin:16px 0 0;word-break:break-word}
+.tool-error::before{content:'ERROR ';color:var(--danger);letter-spacing:1px}
+/* The warning strip swaps the label and the colour so the two never read the
+   same way. */
+.tool-warn::before{content:'WARN ';color:#7db4f5;letter-spacing:1px}
+/* A warning strip, used where a tool succeeded but flagged something. */
+.tool-warn{font-family:var(--pixel);font-size:10px;line-height:1.8;color:#cfe6ff;background:rgba(56,132,222,.14);border:2px solid #3884de;border-left-width:5px;padding:11px 13px;margin:16px 0 0;word-break:break-word}
+.tool-warn::before{content:'WARN ';color:#7db4f5;letter-spacing:1px}
+
+/* Diagnostics inside the highlighted output pane --------------------- */
+/* The same two colours as the strips above, so a message reads the same way
+   whether it lands in the pane or under it. */
+.diag{display:block;padding:2px 0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.6;white-space:pre-wrap}
+.diag-error{color:#ff9b9b;background:rgba(var(--danger-rgb),.13)}
+.diag-warn{color:#8fc2ff;background:rgba(56,132,222,.13)}
+.diag-icon{display:inline-block;font-weight:700;margin-right:6px}
+/* The offending line itself is tinted inside the highlighted source. */
+.tok-err-line{display:block;background:rgba(var(--danger-rgb),.2);box-shadow:inset 3px 0 var(--danger)}
+.tok-warn-line{display:block;background:rgba(56,132,222,.2);box-shadow:inset 3px 0 #3884de}
+
+/* JWT claims -------------------------------------------------------- */
+.claim-list{display:flex;flex-direction:column;gap:8px;margin:16px 0 0}
+.claim-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;background:#060a1a;border:1px solid var(--line);padding:9px 13px}
+.claim-key{font-family:var(--pixel);font-size:10px;letter-spacing:1px;color:var(--gold);text-transform:uppercase}
+.claim-value{font-size:13px;color:var(--text);text-align:right;word-break:break-word}
+
+/* UUID list --------------------------------------------------------- */
+.uuid-list{display:flex;flex-direction:column;gap:8px;margin:16px 0 0}
+.uuid-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:#060a1a;border:1px solid var(--line);padding:9px 13px}
+.uuid-row code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;color:#cfe6b9;word-break:break-all}
+
+/* Contrast badge ---------------------------------------------------- */
+.contrast-badge{font-family:var(--pixel);font-size:10px;line-height:1.6;padding:9px 13px;border:2px solid var(--line);color:var(--muted)}
+.contrast-badge.pass-aaa{background:#1c3f33;border-color:var(--accent);color:var(--accent)}
+.contrast-badge.pass-aa{background:#2a2a12;border-color:var(--gold);color:var(--gold)}
+.contrast-badge.fail{background:#482a3b;border-color:var(--danger);color:var(--danger)}
+
+/* Code panes and syntax highlighting -------------------------------- */
+/* A highlighted result lives in a <pre class="tool-code"> that sits where the
+   textarea was, so both views share one box and one baseline. */
+.tool-code{margin:0;background:#04071a;border:2px solid var(--line);color:var(--text);padding:11px 12px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.6;height:260px;min-width:0;overflow:auto;white-space:pre;overflow-wrap:normal}
+.tool-grid .tool-code{height:260px}
+.tool-panel>.tool-field .tool-code{height:220px}
+
+/* Token colours — one distinct colour per category, VS Code style, so a
+   reader can tell a key from a string from a number at a glance. Every hue is
+   a tint of the house palette: gold, accent green, danger red and the muted
+   blue-grey family. */
+.tok-key{color:var(--gold)}
+.tok-str{color:#7dd3fc}
+.tok-num{color:var(--accent)}
+.tok-bool{color:#c4b5fd}
+.tok-null{color:var(--danger)}
+.tok-keyword{color:#f0abfc;font-weight:700}
+.tok-comment{color:#6b7690;font-style:italic}
+.tok-punct{color:var(--muted)}
+/* Terraform block names and identifiers get their own tint so a resource type
+   never reads like an ordinary attribute name. */
+.tok-type{color:#5eead4}
+/* A JSON/YAML number that is also a unit-bearing value stays numeric. */
+.tok-unit{color:#fdba74}
+/* The pane background behind highlighted code matches the readonly textarea
+   so switching between plain and highlighted does not flash a different box. */
+.tool-code{background:#04071a}
+
+/* Segmented plain / highlighted switch ------------------------------ */
+/* body.tools-page button{font:inherit} outranks a bare class, so the Pixel
+   font is re-stated here at matching specificity. */
+body.tools-page .tool-seg{display:inline-flex;align-items:center;border:2px solid var(--line);background:#060a1a;flex:0 0 auto}
+body.tools-page .tool-seg .seg-button{font-family:var(--pixel);font-size:9px;line-height:1.6;letter-spacing:1px;text-transform:uppercase;padding:7px 10px;background:transparent;color:var(--muted);border:0;cursor:pointer}
+body.tools-page .tool-seg .seg-button:hover{color:var(--text)}
+body.tools-page .tool-seg .seg-button[aria-pressed="true"]{background:var(--gold);color:#231b07}
+/* The field head now carries three items. The label gives up space first so
+   the switch and the copy chip keep their size and stay on one line. */
+.tool-field-head .tool-seg+.copy-chip,.tool-field-head .tool-seg~.copy-chip{margin-left:-4px}
+/* A label that shares the bar with the switch keeps to one line, but it is
+   never cut off mid-word — it shrinks to its smallest readable size first and
+   only then gives up the extra letters. */
+.tool-field-head:has(.tool-seg) label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1 auto}
+/* The switch and the copy chip never shrink, so the label is what gives way
+   when the bar is too narrow. */
+.tool-field-head:has(.tool-seg) .tool-seg{flex:0 0 auto}
+.tool-field-head:has(.tool-seg) .copy-chip{flex:0 0 auto}
+
+/* Footer ------------------------------------------------------------ */
+.tools-footer{border-top:1px solid var(--line);padding:24px max(5%,20px);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px}
+
+@media(max-width:640px){
+ .tools-main{padding-top:26px}
+ .tool-panel{padding:20px 16px}
+ .tool-grid{grid-template-columns:1fr}
+ .tool-title{font-size:14px}
+ .tool-actions{padding:0}
+ .tool-select{width:100%;height:auto;flex-direction:column;align-items:flex-start;gap:6px}
+ .tool-select select{width:100%}
+ .claim-row{flex-direction:column;align-items:flex-start}
+ .claim-value{text-align:left}
+}
+/* Stacked panes below 640px still need room for the chip, so the header keeps
+   its bar and the chip stays welded to the pane it copies. */
+@media(max-width:420px){
+ .tool-field-head{gap:8px}
+ .tool-field-head label{font-size:9px;letter-spacing:0}
+ body.tools-page .copy-chip{padding:8px 9px;font-size:9px}
+}
+
+/* Reduced motion ---------------------------------------------------- */
+@media(prefers-reduced-motion:reduce){
+ body.tools-page *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+ .tool-panel .pixel-button:hover{transform:none}
+ .tool-panel .pixel-button:active{transform:none}
+}
+
+/* New tools: DNS, headers, IP/CIDR, port, UA builder ----------------- */
+/* A status line is a neutral caption, not an error: it carries progress and
+   summary text for the new tools. */
+.tool-status{font-family:var(--pixel);font-size:10px;line-height:1.8;letter-spacing:.5px;color:var(--muted);margin:16px 0 0;word-break:break-word}
+.tool-status:empty{margin:0}
+/* A built table of key/value rows, shared by every table-shaped tool. */
+.tool-table{margin:16px 0 0}
+.tool-table:empty{margin:0}
+.tool-grid-table{width:100%;border-collapse:collapse;background:#060a1a;border:2px solid var(--line);font-size:13px}
+.tool-grid-table th,.tool-grid-table td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;word-break:break-word}
+.tool-grid-table th{font-family:var(--pixel);font-size:10px;line-height:1.6;letter-spacing:1px;color:var(--gold);text-transform:uppercase;background:rgba(var(--accent-rgb),.06);width:34%;white-space:normal}
+.tool-grid-table td{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--text)}
+/* The DNS and UA tools list plain name/value pairs instead of a table. */
+.kv-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;background:#060a1a;border:1px solid var(--line);padding:9px 13px}
+.kv-row + .kv-row{margin-top:8px}
+.kv-key{font-family:var(--pixel);font-size:10px;letter-spacing:1px;color:var(--gold);text-transform:uppercase}
+.kv-value{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;color:var(--text);text-align:right;word-break:break-all}
+/* Code inside a warning paragraph keeps the monospace stack. */
+.tool-warning code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;color:#fff}
+@media(max-width:640px){
+ .tool-grid-table th{width:auto}
+ .kv-value{text-align:left}
+}
