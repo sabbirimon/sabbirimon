@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import random
 import sys
+import time
 import urllib.request
 from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
@@ -25,8 +26,40 @@ def write(name, data):
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / name).write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
 
+def devto(tags):
+    """Fetch DEV Community articles for a set of tags.
+
+    The API takes one tag at a time and it also refuses requests that arrive
+    together: several tags fetched side by side come back as the plain text
+    "Retry later" instead of JSON. The tags are therefore asked for one after
+    another with a short pause between them. A tag that fails is skipped
+    rather than failing the whole lookup.
+    """
+    batches = []
+    for tag in tags:
+        if batches: time.sleep(0.4)
+        try: batches.append(fetch(f'https://dev.to/api/articles?tag={tag}&per_page=12'))
+        except Exception: batches.append([])
+    records = []
+    seen = set()
+    for item in [item for batch in batches for item in batch]:
+        if not isinstance(item.get('id'), int) or item['id'] in seen: continue
+        link = item.get('url', '')
+        if urlparse(link).scheme not in ('https', 'http'): continue
+        if not item.get('title') or not item.get('published_timestamp'): continue
+        published = dt.datetime.fromisoformat(item['published_timestamp'].replace('Z', '+00:00'))
+        seen.add(item['id'])
+        records.append({'id': item['id'], 'title': item['title'], 'url': link, 'time': published.timestamp(), 'publisher': item.get('user', {}).get('name') or 'DEV Community'})
+    return records
+
 def news():
-    try:
+    """Refresh the technology headlines.
+
+    Hacker News is the preferred source. The DEV Community API stands in
+    when it is unreachable, so a single service going down does not leave
+    the section without any headlines.
+    """
+    def hacker_news():
         base = 'https://hacker-news.firebaseio.com/v0/'
         ids = fetch(base + 'topstories.json')[:18]
         def item(id):
@@ -41,14 +74,30 @@ def news():
             if urlparse(link).scheme not in ('https', 'http'): continue
             records.append({'id': s['id'], 'title': html.unescape(s['title']), 'url': link, 'score': s.get('score', 0), 'time': s['time'], 'comments': s.get('descendants', 0)})
         if len(records) < 3: raise ValueError('Insufficient valid news records')
-        write('news.json', {'updated': NOW, 'source': 'Hacker News', 'sourceUrl': 'https://news.ycombinator.com/', 'stories': records[:12]})
-        print(f'News: {len(records[:12])} community headlines refreshed')
+        return records[:12], 'Hacker News', 'https://news.ycombinator.com/'
+    try:
+        records, source, source_url = hacker_news()
+        write('news.json', {'updated': NOW, 'source': source, 'sourceUrl': source_url, 'stories': records})
+        print(f'News: {len(records)} community headlines refreshed from {source}')
     except Exception as exc:
-        print(f'News unavailable; retaining last successful snapshot: {exc}', file=sys.stderr)
-        if not (OUT / 'news.json').exists(): write('news.json', {'updated': None, 'source': 'Hacker News', 'sourceUrl': 'https://news.ycombinator.com/', 'stories': []})
+        print(f'Hacker News unavailable ({exc}); trying the DEV Community API', file=sys.stderr)
+        try:
+            records = devto(['webdev', 'programming', 'tech'])[:12]
+            if len(records) < 3: raise ValueError('Insufficient fallback news records')
+            write('news.json', {'updated': NOW, 'source': 'DEV Community', 'sourceUrl': 'https://dev.to/', 'stories': records})
+            print(f'News: {len(records)} community headlines refreshed from DEV Community')
+        except Exception as fallback:
+            print(f'News unavailable; retaining last successful snapshot: {fallback}', file=sys.stderr)
+            if not (OUT / 'news.json').exists(): write('news.json', {'updated': None, 'source': 'Hacker News', 'sourceUrl': 'https://news.ycombinator.com/', 'stories': []})
 
 def science():
-    try:
+    """Refresh the science and space headlines.
+
+    The Spaceflight News API is a small community service that goes down
+    without warning, so the DEV Community API carries the feed when it is
+    unreachable.
+    """
+    def spaceflight():
         raw = fetch('https://api.spaceflightnewsapi.net/v4/articles/?limit=12')
         records = []
         for item in raw.get('results', []):
@@ -56,11 +105,21 @@ def science():
             published = dt.datetime.fromisoformat(item['published_at'].replace('Z', '+00:00'))
             records.append({'id': item['id'], 'title': item['title'], 'url': item['url'], 'time': published.timestamp(), 'publisher': item.get('news_site', 'Spaceflight News')})
         if not records: raise ValueError('No science stories returned')
-        write('science.json', {'updated': NOW, 'source': 'Spaceflight News API', 'sourceUrl': 'https://www.spaceflightnewsapi.net/', 'stories': records})
-        print(f'Science: {len(records)} space and science headlines refreshed')
+        return records, 'Spaceflight News API', 'https://www.spaceflightnewsapi.net/'
+    try:
+        records, source, source_url = spaceflight()
+        write('science.json', {'updated': NOW, 'source': source, 'sourceUrl': source_url, 'stories': records})
+        print(f'Science: {len(records)} space and science headlines refreshed from {source}')
     except Exception as exc:
-        print(f'Science unavailable; retaining last successful snapshot: {exc}', file=sys.stderr)
-        if not (OUT / 'science.json').exists(): write('science.json', {'updated': None, 'source': 'Spaceflight News API', 'stories': []})
+        print(f'Spaceflight News API unavailable ({exc}); trying the DEV Community API', file=sys.stderr)
+        try:
+            records = devto(['space', 'science'])[:12]
+            if len(records) < 3: raise ValueError('Insufficient fallback science records')
+            write('science.json', {'updated': NOW, 'source': 'DEV Community', 'sourceUrl': 'https://dev.to/', 'stories': records})
+            print(f'Science: {len(records)} space and science headlines refreshed from DEV Community')
+        except Exception as fallback:
+            print(f'Science unavailable; retaining last successful snapshot: {fallback}', file=sys.stderr)
+            if not (OUT / 'science.json').exists(): write('science.json', {'updated': None, 'source': 'Spaceflight News API', 'stories': []})
 
 def quiz():
     rng = random.Random('IMON:' + TODAY)

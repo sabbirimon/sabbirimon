@@ -31,3 +31,11 @@ body{transition:background-color 1.4s ease,color .5s ease}.site-header nav{gap:2
 
 /* A visible invitation to the playable arcade. */
 .play-games-button{--button-fill:#d77aff;--button-border:#7939a2;--button-text:#21142f;box-shadow:0 5px #632780,0 0 24px #db64ff26}.controller-icon{width:27px;height:22px;flex:none;image-rendering:pixelated;animation:controller-float 3s ease-in-out infinite}.arcade-invitation{color:#b1ffcd;font-size:12px;line-height:1.7;margin:19px 0 0;text-shadow:0 2px 5px #09152b}.hero-content .hero-location{margin-top:14px}@keyframes controller-float{0%,100%{transform:rotate(-7deg) translateY(0)}50%{transform:rotate(7deg) translateY(-3px)}}@media(max-width:650px){.arcade-invitation{font-size:13px;max-width:310px;margin:18px auto 0}.controller-icon{width:22px;height:18px}}
+/* Header chrome — tighter sign-in and GitHub controls, and the Lab link.
+   The header was giving the two right-hand buttons more room than the
+   navigation needed, so both are trimmed to the size of their content. */
+.site-header{gap:20px}
+.site-header nav{gap:26px}
+.auth-button{padding:9px 12px;font-size:9px;letter-spacing:.5px}
+.github-link{padding:8px 12px;gap:8px;font-size:12px}
+@media(max-width:900px){.site-header nav{gap:18px}.auth-button{padding:8px 10px}.github-link{padding:7px 10px}}
