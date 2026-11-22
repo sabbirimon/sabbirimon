@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#020617">
+<title>Code Lab · IMON.world</title>
+<meta name="description" content="Practice HTML, CSS and JavaScript right in your browser. Write code, see it run live, and earn XP for every exercise you solve.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="nes.css"><link rel="stylesheet" href="wordmark.css">
+<link rel="stylesheet" href="lab.css">
+<script>document.documentElement.classList.remove('no-js');</script>
+</head>
+<body class="lab-page">
+<a class="lab-skip" href="#lab-work">Skip to the workbench</a>
+
+<header class="lab-topbar">
+  <a class="lab-brand" href="./">
+    <span class="lab-brand-mark" aria-hidden="true">I</span>
+    <span class="lab-brand-text" data-wordmark>IMON.WORLD</span>
+  </a>
+  <nav class="lab-topnav" aria-label="Lab">
+    <a href="./">Home</a>
+    <a href="./tools/">Tools</a>
+    <a href="./login.html">Sign in</a>
+  </nav>
+  <p class="lab-xp nes-pixel-badge"><span aria-hidden="true">★</span> <span data-lab-xp>0 XP</span></p>
+</header>
+
+<main class="lab-layout">
+  <!-- The lesson ------------------------------------------------------ -->
+  <section class="lab-lesson" aria-labelledby="lab-title">
+    <nav class="lab-rail" aria-label="Exercises">
+      <h2 class="lab-rail-title" data-pixel-text>Course</h2>
+      <ol class="lab-rail-list" data-lab-rail></ol>
+    </nav>
+
+    <article class="lab-brief">
+      <p class="lab-kicker" data-lab-brief-kicker data-pixel-text>Markup basics</p>
+      <h1 class="lab-title" id="lab-title" data-lab-title data-pixel-text>Your first tag</h1>
+      <p class="lab-lead" data-lab-brief></p>
+
+      <div class="lab-instructions">
+        <h2 class="lab-instructions-title" data-pixel-text>Instructions</h2>
+        <ol class="lab-steps">
+          <li>Write your code in the editor on the right.</li>
+          <li>Press <strong>Run</strong> to see the result and read the console.</li>
+          <li>Press <strong>Check answer</strong> when you think it is right.</li>
+        </ol>
+      </div>
+
+      <p class="lab-status" data-lab-status role="status" aria-live="polite"></p>
+
+      <div class="lab-help">
+        <h2 class="lab-help-title" data-pixel-text>Help</h2>
+        <p>If you get stuck, press <strong>Reset</strong> to bring the starting code back, then work through it one step at a time.</p>
+        <p class="lab-help-note">Everything runs in your browser. Nothing you type is sent anywhere.</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- The workbench --------------------------------------------------- -->
+  <section class="lab-work" id="lab-work" aria-label="Workbench">
+    <div class="lab-work-top">
+      <div class="lab-tabs" role="tablist" aria-label="File" data-lab-tabs>
+        <button type="button" role="tab" class="lab-tab" data-lab-tab="html" aria-selected="false" tabindex="-1" data-pixel-text>index.html</button>
+        <button type="button" role="tab" class="lab-tab" data-lab-tab="css" aria-selected="false" tabindex="-1" data-pixel-text>style.css</button>
+        <button type="button" role="tab" class="lab-tab" data-lab-tab="js" aria-selected="false" tabindex="-1" data-pixel-text>script.js</button>
+      </div>
+      <div class="lab-actions">
+        <button type="button" class="nes-button nes-button-blue lab-run" data-lab-run><span data-pixel-text>Run</span></button>
+        <button type="button" class="nes-button nes-button-lime lab-check" data-lab-check><span data-pixel-text>Check answer</span></button>
+        <button type="button" class="nes-button lab-reset" data-lab-reset><span data-pixel-text>Reset</span></button>
+      </div>
+    </div>
+
+    <div class="lab-editor-pane">
+      <div class="lab-editor" role="tabpanel" aria-label="Code editor">
+        <label class="sr-only" for="lab-editor-html">HTML editor</label>
+        <textarea id="lab-editor-html" class="lab-code" data-lab-editor="html" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off"></textarea>
+        <label class="sr-only" for="lab-editor-css">CSS editor</label>
+        <textarea id="lab-editor-css" class="lab-code" data-lab-editor="css" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" hidden></textarea>
+        <label class="sr-only" for="lab-editor-js">JavaScript editor</label>
+        <textarea id="lab-editor-js" class="lab-code" data-lab-editor="js" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" hidden></textarea>
+      </div>
+      <div class="lab-preview">
+        <h2 class="lab-pane-title" data-pixel-text>Preview</h2>
+        <iframe class="lab-preview-frame" data-lab-preview title="Live preview" sandbox="allow-scripts allow-same-origin"></iframe>
+      </div>
+    </div>
+
+    <div class="lab-terminal">
+      <h2 class="lab-pane-title" data-pixel-text>Terminal</h2>
+      <ol class="lab-console" data-lab-console role="log" aria-live="polite" aria-label="Console output"></ol>
+      <iframe class="lab-script-frame" data-lab-script title="Script sandbox" sandbox="allow-scripts"></iframe>
+    </div>
+
+    <!-- The course bar ------------------------------------------- -->
+    <div class="lab-coursebar">
+      <p class="lab-coursebar-chapter" data-lab-chapter data-pixel-text>Markup basics</p>
+      <p class="lab-coursebar-counter" data-lab-counter data-pixel-text>Exercise 1 / 10</p>
+      <progress class="lab-progress" data-lab-progress max="10" value="0" aria-label="Course progress"></progress>
+      <div class="lab-coursebar-actions">
+        <button type="button" class="nes-button nes-button-dark lab-back" data-lab-prev><span data-pixel-text>Back</span></button>
+        <button type="button" class="nes-button nes-button-gold lab-next-action" data-lab-done hidden><span data-pixel-text>Done</span></button>
+        <button type="button" class="nes-button nes-button-blue lab-next-action" data-lab-next><span data-pixel-text>Next</span></button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="lab-foot">
+  <p>Built for practice. Every exercise runs locally in your browser — no account, no upload, no tracking.</p>
+</footer>
+
+<script type="module">
+import { initLab, EXERCISES, findExercise } from './lab.js';
+import { initWordmark } from './logo.js';
+import { initPixelText } from './pixel-type.js';
+
+const root = document.querySelector('.lab-page');
+// The site name is drawn as pixel art, and the chrome headings use the
+// narrow display face rather than the very wide Press Start 2P.
+initWordmark(document);
+initPixelText(document);
+// The exercise comes from the query string so the chapter rail can link
+// straight to a lesson. The imported course is fetched first, because a
+// linked lesson may be one of the imported ones. An unknown id falls back
+// to the first exercise.
+const requested = new URLSearchParams(location.search).get('exercise');
+
+const lab = initLab(root);
+
+// The imported Codédex course is fetched and added to the rail. The
+// built-in taster course stays first, so the page is usable either way.
+lab.importCourse().then(() => {
+  const exercise = findExercise(requested);
+  if (exercise && root) {
+    root.dataset.labExercise = exercise.id;
+    lab.loadExercise(exercise.id);
+  }
+});
+
+// The rail links to real pages, so they must reload the page rather than
+// being swallowed by the tab handler. The handler is bound on the rail
+// itself because the rail is redrawn once the course is imported.
+document.querySelector('[data-lab-rail]')?.addEventListener('click', event => {
+  const link = event.target.closest('[data-lab-rail-item]');
+  if (!link) return;
+  const id = link.dataset.labRailItem;
+  if (findExercise(id) && id !== lab.state.exercise.id) {
+    event.preventDefault();
+    lab.loadExercise(id);
+    history.replaceState(null, '', '?exercise=' + encodeURIComponent(id));
+    document.querySelector('.lab-brief')?.scrollIntoView({ block: 'start' });
+  }
+});
+</script>
+</body>
+</html>

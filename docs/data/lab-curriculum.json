@@ -1,0 +1,1452 @@
+{
+ "source": "Codédex course repositories (html-101 and css-101 are MIT licensed) and the w3schools module demos",
+ "license": "MIT",
+ "licenseUrl": "https://github.com/codedex-io/html-101/blob/main/LICENSE",
+ "repo": "https://github.com/codedex-io",
+ "exercises": [
+  {
+   "id": "cx-1-elements-01-star",
+   "language": "html",
+   "title": "Shooting Star",
+   "chapter": "HTML · Elements",
+   "xp": 20,
+   "brief": "A date needs a heading. Turn the date line into a level-two heading and add a paragraph that says what the page is about.",
+   "starter": {
+    "html": "<!-- Shooting Star 💫 -->\n\n\n<!-- write your <h2> here -->\n<p>Create a magical website!</p>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h2"
+   ],
+   "forbidden": [],
+   "source": "html-101/1-elements/01_star.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-1-elements-02-elemental",
+   "language": "html",
+   "title": "Elemental",
+   "chapter": "HTML · Elements",
+   "xp": 20,
+   "brief": "The four elements each need their own paragraph. Keep them all inside the body element.",
+   "starter": {
+    "html": "<!-- Elemental 🔮 -->\n\n\n<body>\n  <!-- write your <p> here -->\n  <!-- write your <p> here -->\n  <!-- write your <p> here -->\n  <!-- write your <p> here -->\n</body>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "p"
+   ],
+   "forbidden": [],
+   "source": "html-101/1-elements/02_elemental.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-1-elements-03-newspaper",
+   "language": "html",
+   "title": "Newspaper",
+   "chapter": "HTML · Elements",
+   "xp": 20,
+   "brief": "A newspaper needs a masthead. Give the paper a level-one headline and keep the article body underneath.",
+   "starter": {
+    "html": "<!-- Newspaper 📰 -->\n\n\n<body>\n  <!-- write your <h1> here -->\n  <h3>Jan. 30, 1991</h3>\n  <p>Two cancer patients yesterday became the first people to receive<br>\n     gene therapy in an attempt to defeat otherwise incurable tumors.</p>\n  <p>In a simple procedure that lasted barely 20 minutes, the patients, a<br>\n     29-year-old woman and a 42-year-old man, were each infused with<br> \n     about 100 million white blood cells. The cells enfolded a genetically<br>\n     engineered copy of a gene that makes a potent anti-cancer enzyme.</p>\n</body>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1"
+   ],
+   "forbidden": [],
+   "source": "html-101/1-elements/03_newspaper.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-1-elements-04-corporate",
+   "language": "html",
+   "title": "Corporate Talk",
+   "chapter": "HTML · Elements",
+   "xp": 20,
+   "brief": "Write a short corporate announcement. Start with a level-one headline.",
+   "starter": {
+    "html": "<!-- Corporate Talk 👨🏻‍💼 -->\n\n\n<body>\n  <p>\n    <b>Cutting Down, Ramping Up: </b>\n    We have a robust strategy for <s>low-hanging fruits</s> mission-critical objectives that move the needle <i>at all costs</i>. \n    It's time to double down on <b>revenue growth</b> while <u>cutting costs</u>. \n    This is a win-win initiative; a win for us and our amazing shareholders!\n  </p>\n  <p>\n    P.S. After several strong sales months, we are printing <b>Employee Appreciation Tees</b>! \n    Will go on sale Monday.\n  </p>\n</body>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1"
+   ],
+   "forbidden": [],
+   "source": "html-101/1-elements/04_corporate.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-1-elements-05-chef",
+   "language": "html",
+   "title": "Sous-Chef",
+   "chapter": "HTML · Elements",
+   "xp": 20,
+   "brief": "Write a chef's specials board. Give it a level-one headline, then list each dish.",
+   "starter": {
+    "html": "<!-- Sous-Chef 🧑‍🍳 -->\n\n\n<body>\n  <!-- write your <h1> here -->\n  <p>Ingredients:</p>\n  <ul>\n    <li>🧈 2 sticks unsalted butter</li>\n    <li>🥣 3 cups all-purpose flour</li>\n    <li>🥄 1 tablespoon baking powder</li>\n    <li>🧂 1/2 teaspoon salt</li>\n    <li>🍬 1/4 cup sugar</li>\n    <li>🥚 4 large eggs</li>\n    <li>🌼 1 tablespoon vanilla extract</li>\n    <li>🥛 1/4 cup whole milk</li>\n  </ul>\n  <p>Instructions:</p>\n  <ol>\n    <li>Preheat the oven to 350° F.</li>\n    <li>Butter two cake pans and line the bottoms with parchment paper.</li>\n    <li>Butter the parchment and dust the pans with flour.</li>\n    <li>Whisk 3 cups flour, the baking powder and salt in a bowl until combined.</li>\n    <li>Beat the butter and the sugar in a large bowl with a mixer until light and fluffy.</li>\n    <li>Beat in the eggs, vanilla, and flour, slowly, until smooth.</li>\n    <li>Divide the batter between the prepared pans and put them in the preheated oven.</li>\n    <li>Bake for 30-35 minutes, until the cakes are lightly golden on top.</li>\n    <li>Transfer to racks and let cool 10 minutes, then remove the parchment.</li>\n    <li>Enjoy! 🤌</li>\n  </ol>\n</body>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1"
+   ],
+   "forbidden": [],
+   "source": "html-101/1-elements/05_chef.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-1-elements-06-pet",
+   "language": "html",
+   "title": "Lost Pet",
+   "chapter": "HTML · Elements",
+   "xp": 20,
+   "brief": "Write a lost pet notice. Give it a level-one headline and a paragraph with the details.",
+   "starter": {
+    "html": "<!-- Lost Pet 😿 -->\n\n\n<body>\n  <h3>Missing Cat: Jules</h3>\n  <img src=\"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\">\n  <p>3 year old cat with white fur and black eyes. Last seen on 123 Glendon Street.<br></p>\n  <p>If seen, please call <a href=\"tel:212-325-4981\">this number</a>. Thank you.</p>\n</body>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1"
+   ],
+   "forbidden": [],
+   "source": "html-101/1-elements/06_pet.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-1-elements-07-band",
+   "language": "html",
+   "title": "Favorite Band",
+   "chapter": "HTML · Elements",
+   "xp": 20,
+   "brief": "Write a band page. Headline it with the band name, then add a paragraph and a list of their hits.",
+   "starter": {
+    "html": "<!-- Favorite Band 🎸 -->\n\n\n<body>\n  <h2>BLACKPINK 💕</h2>\n  <img src=\"https://raw.githubusercontent.com/codedex-io/html-101/main/1-elements/blackpink.jpg\">\n  <p><a href=\"https://en.wikipedia.org/wiki/Blackpink\">BLACKPINK</a> is a <b>South Korean</b> <i>girl group</i> formed by YG Entertainment. The group debuted in August 2016.<br>\n  They are currently the world's most successful Korean girl group. Their fandom name is BLINK. 🫰</p>\n  <h4>The members are:</h4>\n  <ul>\n    <li>Jisoo: Vocals</li>\n    <li>Jennie: Lead Vocals</li>\n    <li>Rosé: Main Vocals</li>\n    <li>Lisa: Main Dancer, Maknae</li>\n  </ul>\n  Here is a <a href=\"https://www.blackpinkmusic.com/\">link</a> to BLACKPINK's website!\n  <h4>Their <u>top 5</u> songs are:</h4>\n  <ol>\n    <li>마지막처럼 (As If It's Your Last) - 2017</li>\n    <li>뚜두뚜두 (DDU-DU DDU-DU) - 2018</li>\n    <li>How You Like That - 2020</li>\n    <li>Kill This Love - 2019 </li>\n    <li>붐바야 (BOOMBAYAH) - 2016</li>\n  </ol>\n  <marquee>Hwaiting! 🫰</marquee>\n</body>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1"
+   ],
+   "forbidden": [],
+   "source": "html-101/1-elements/07_band.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-2-structure-08-blueprint",
+   "language": "html",
+   "title": "Blueprint",
+   "chapter": "HTML · Structure",
+   "xp": 20,
+   "brief": "Write a blueprint summary. Give the plan a level-one headline and describe the build in a paragraph.",
+   "starter": {
+    "html": "<!-- Blueprint 🛠️ -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Place your page title here.</title>\n  </head>\n  <body>\n    <p>\n      Place your paragraph text here.\n    </p>\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1"
+   ],
+   "forbidden": [],
+   "source": "html-101/2-structure/08_blueprint.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-2-structure-09-family-tree",
+   "language": "html",
+   "title": "Family Tree",
+   "chapter": "HTML · Structure",
+   "xp": 20,
+   "brief": "Map out a family tree. Headline it, then list the members of each generation in an unordered list.",
+   "starter": {
+    "html": "<!-- Family Tree 🌳 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Family Tree</title>\n  </head>\n  <body>\n    <!-- write your <h1> here -->\n    <p>🏡 Hometown: Springfield, IL</p>\n    <!-- write your <ul> here -->\n      <li>Patty Bouvier (Twin)</li>\n      <li>Selma Bouvier (Twin)</li>\n    </ul>\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "ul"
+   ],
+   "forbidden": [],
+   "source": "html-101/2-structure/09_family_tree.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-2-structure-10-craigslist-ad",
+   "language": "html",
+   "title": "Craigslist Ad",
+   "chapter": "HTML · Structure",
+   "xp": 20,
+   "brief": "Write a classified ad. Headline it, describe the item, and give it a price.",
+   "starter": {
+    "html": "<!-- Craigslist Ad 💸 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>For Sale: Didgeridoo. Needs work</title>\n  </head>\n  <body>\n    <!-- This is a level 2 heading. -->\n    <h2>Didgeridoo. Needs work</h2>\n\n    <!-- This is an image of a didgeridoo, a musical instrument. -->\n    <img src=\"https://i.imgur.com/TrXO7Sa.png\" width=\"250\">\n\n    <!-- This paragraph describes the image above. -->\n    <p>Australian Aboriginal Didgeridoo. Needs work. Free to good home</p>\n\n    <ul>\n      <li>do NOT contact me with unsolicited services or offers</li>\n    </ul>\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1"
+   ],
+   "forbidden": [],
+   "source": "html-101/2-structure/10_craigslist_ad.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-2-structure-11-wiki-article",
+   "language": "html",
+   "title": "Wiki Article",
+   "chapter": "HTML · Structure",
+   "xp": 20,
+   "brief": "Write an encyclopedia entry. Headline it, then write at least two paragraphs of body text.",
+   "starter": {
+    "html": "<!-- Wiki Article 🌐 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Wiki Article</title>\n  </head>\n  <body>\n    <!-- write your <h1> here -->\n    <img width=\"250\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Shigeru_Miyamoto_20150610_%28cropped%29.jpg/440px-Shigeru_Miyamoto_20150610_%28cropped%29.jpg\" alt=\"Shigeru Miyamoto Wikipedia image\" />\n    <!-- write your <p> here -->\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "p"
+   ],
+   "forbidden": [],
+   "source": "html-101/2-structure/11_wiki_article.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-2-structure-12-lorem-ipsum",
+   "language": "html",
+   "title": "Lorem Ipsum",
+   "chapter": "HTML · Structure",
+   "xp": 20,
+   "brief": "Write a placeholder article. Headline it and add paragraphs of body copy.",
+   "starter": {
+    "html": "<!-- Lorem Ipsum 🖋️ -->\n\n\n<!DOCTYPE html>\n<html>\n<head>\n  <title>Draft Title</title>\n</head>\n<body>\n  <!-- write your <h1> here -->\n  \n  <a href=\"#heading-1\">Heading 1</a>\n  <a href=\"#heading-2\">Heading 2</a>\n\n  <div class=\"section\">\n    <h2 class=\"heading\" id=\"heading-1\">Heading 1</h2>\n    <!-- write your <p> here -->\n    <!-- write your <p> here -->\n  </div>\n\n  <div class=\"section\">\n    <h2 class=\"heading\" id=\"heading-2\">Heading 2</h2>\n    <!-- write your <p> here -->\n    <!-- write your <p> here -->\n  </div>\n\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "p"
+   ],
+   "forbidden": [],
+   "source": "html-101/2-structure/12_lorem_ipsum.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-2-structure-13-power-rangers",
+   "language": "html",
+   "title": "Power Rangers",
+   "chapter": "HTML · Structure",
+   "xp": 20,
+   "brief": "Write a hero team profile. Headline it and list the members in an unordered list.",
+   "starter": {
+    "html": "<!-- Power Rangers 🦖 -->\n\n\n<!DOCTYPE html>\n<html>\n<head>\n  <title>Power Rangers</title>\n  <style>\n    .ranger-div {\n      width: 50%;\n      height: 100px;\n    }\n    \n    #red-ranger {\n      background-color: red;\n    }\n    \n    #blue-ranger {\n      background-color: blue;\n    }\n    \n    #black-ranger {\n      background-color: black;\n    }\n    \n    #yellow-ranger {\n      background-color: yellow;\n    }\n    \n    #pink-ranger {\n      background-color: pink;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"ranger-div\" id=\"red-ranger\">\n  </div>\n  <div class=\"ranger-div\" id=\"blue-ranger\">\n  </div>\n  <div class=\"ranger-div\" id=\"black-ranger\">\n  </div>\n  <div class=\"ranger-div\" id=\"yellow-ranger\">\n  </div>\n  <div class=\"ranger-div\" id=\"pink-ranger\">\n  </div>  \n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "ul"
+   ],
+   "forbidden": [],
+   "source": "html-101/2-structure/13_power_rangers.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-2-structure-14-top-8",
+   "language": "html",
+   "title": "Myspace Top 8",
+   "chapter": "HTML · Structure",
+   "xp": 20,
+   "brief": "Write a ranked top-eight list. Headline it and use an ordered list so the ranking is numbered.",
+   "starter": {
+    "html": "<!-- Myspace Top 8 🧑‍🤝‍🧑 -->\n\n\n<!DOCTYPE html>\n<html>\n<head>\n  <title>MySpace Top 8</title>\n  <style>\n    .friend-card {\n      display: inline-block;\n      margin: 1px;\n      text-align: center;\n    }\n    \n    .friend-name {\n      color: blue;\n    }\n    \n    body {\n      width: 85%;\n      margin: auto;\n    }\n    \n    h1 {\n      text-align: left;\n    }\n    \n    img {\n      border: 3px solid blue;\n    }\n  \n    #top-8-wrapper {\n      text-align: center;\n    }\n  </style>\n</head>\n<body>\n  <div id=\"top-8-wrapper\">\n    <!-- write your <h1> here -->\n    <div class=\"top-8-row\">\n      <div class=\"friend-card\">\n        <h2 class=\"friend-name\">My Friend Tom</h2>\n        <img src=\"https://i.imgur.com/d9USJcY.jpeg\" alt=\"Tom from MySpace\">\n      </div>\n\n      <div class=\"friend-card\">\n        <h2 class=\"friend-name\">My Friend Tom</h2>\n        <img src=\"https://i.imgur.com/d9USJcY.jpeg\" alt=\"Tom from MySpace\">\n      </div>\n\n      <div class=\"friend-card\">\n        <h2 class=\"friend-name\">My Friend Tom</h2>\n        <img src=\"https://i.imgur.com/d9USJcY.jpeg\" alt=\"Tom from MySpace\">\n      </div>\n\n      <div class=\"friend-card\">\n        <h2 class=\"friend-name\">My Friend Tom</h2>\n        <img src=\"https://i.imgur.com/d9USJcY.jpeg\" alt=\"Tom from MySpace\">\n      </div>\n    </div>\n\n    <div class=\"top-8-row\">\n      <div class=\"friend-card\">\n        <h2 class=\"friend-name\">My Friend Tom</h2>\n        <img src=\"https://i.imgur.com/d9USJcY.jpeg\" alt=\"Tom from MySpace\">\n      </div>\n\n      <div class=\"friend-card\">\n        <h2 class=\"friend-name\">My Friend Tom</h2>\n        <img src=\"https://i.imgur.com/d9USJcY.jpeg\" alt=\"Tom from MySpace\">\n      </div>\n\n      <div class=\"friend-card\">\n        <h2 class=\"friend-name\">My Friend Tom</h2>\n        <img src=\"https://i.imgur.com/d9USJcY.jpeg\" alt=\"Tom from MySpace\">\n      </div>\n\n      <div class=\"friend-card\">\n        <h2 class=\"friend-name\">My Friend Tom</h2>\n        <img src=\"https://i.imgur.com/d9USJcY.jpeg\" alt=\"Tom from MySpace\">\n      </div>\n    </div>\n  </div>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "ol"
+   ],
+   "forbidden": [],
+   "source": "html-101/2-structure/14_top_8.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-3-forms-15-google",
+   "language": "html",
+   "title": "Google Search",
+   "chapter": "HTML · Forms",
+   "xp": 20,
+   "brief": "Build a search page. Headline it and put a search form on the page.",
+   "starter": {
+    "html": "<!-- Google Search 🔍 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Google</title>\n  </head>\n  <body>\n    <!-- write your <form> here -->\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "form"
+   ],
+   "forbidden": [],
+   "source": "html-101/3-forms/15_google.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-3-forms-15-google-bonus",
+   "language": "html",
+   "title": "Google",
+   "chapter": "HTML · Forms",
+   "xp": 20,
+   "brief": "Build a search page with a bonus feature. Headline it and put a search form on the page.",
+   "starter": {
+    "html": "<!-- Google 🔎 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Google</title>\n  </head>\n  <body style=\"text-align:center;\">\n    <img src=\"https://i.imgur.com/jwq8Eke.jpeg\" />\n    <!-- write your <form> here -->\n    <a href=\"http://www.google.com/more.html\">More Google!</a>\n    <p>Copyright ©1999 Google Inc.</p>\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "form"
+   ],
+   "forbidden": [],
+   "source": "html-101/3-forms/15_google_bonus.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-3-forms-16-sign-up",
+   "language": "html",
+   "title": "Sign Up",
+   "chapter": "HTML · Forms",
+   "xp": 20,
+   "brief": "Build a sign-up page. Headline it and add a form with the fields a new account needs.",
+   "starter": {
+    "html": "<!-- Sign Up 👤 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Sign Up</title>\n  </head>\n  <body>\n    <!-- write your <form> here -->\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "form"
+   ],
+   "forbidden": [],
+   "source": "html-101/3-forms/16_sign_up.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-3-forms-17-sign-up",
+   "language": "html",
+   "title": "Sign Up v2",
+   "chapter": "HTML · Forms",
+   "xp": 20,
+   "brief": "Build a sign-up page. Headline it and add a form with the fields a new account needs.",
+   "starter": {
+    "html": "<!-- Sign Up v2 👤 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Sign Up</title>\n  </head>\n  <body>\n    <!-- write your <form> here -->\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "form"
+   ],
+   "forbidden": [],
+   "source": "html-101/3-forms/17_sign_up.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-3-forms-18-rsvp",
+   "language": "html",
+   "title": "RSVP",
+   "chapter": "HTML · Forms",
+   "xp": 20,
+   "brief": "Build an RSVP page. Headline it and add a form so guests can reply.",
+   "starter": {
+    "html": "<!-- RSVP 🎈 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>RSVP</title>\n  </head>\n  <body>\n    <!-- write your <form> here -->\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "form"
+   ],
+   "forbidden": [],
+   "source": "html-101/3-forms/18_rsvp.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-3-forms-19-contact-us",
+   "language": "html",
+   "title": "Contact Us",
+   "chapter": "HTML · Forms",
+   "xp": 20,
+   "brief": "Build a contact page. Headline it and add a form for people to send a message.",
+   "starter": {
+    "html": "<!-- Contact Us 💬 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Contact Us</title>\n  </head>\n  <body>\n    <!-- write your <form> here -->\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "form"
+   ],
+   "forbidden": [],
+   "source": "html-101/3-forms/19_contact_us.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-3-forms-20-welp",
+   "language": "html",
+   "title": "Welp!",
+   "chapter": "HTML · Forms",
+   "xp": 20,
+   "brief": "Build a review page. Headline it and add a form so visitors can leave a review.",
+   "starter": {
+    "html": "<!-- Welp! ⭐ -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Welp! ⭐</title>\n  </head>\n  <body>\n    <!-- write your <form> here -->\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "form"
+   ],
+   "forbidden": [],
+   "source": "html-101/3-forms/20_welp.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-3-forms-20-welp-nyc",
+   "language": "html",
+   "title": "Welp! Public Bathrooms",
+   "chapter": "HTML · Forms",
+   "xp": 20,
+   "brief": "Build a city guide page. Headline it and add a form so visitors can rate a place.",
+   "starter": {
+    "html": "<!-- Welp! Public Bathrooms 🧻 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Welp! 🧻</title>\n  </head>\n  <body>\n    <!-- write your <form> here -->\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "form"
+   ],
+   "forbidden": [],
+   "source": "html-101/3-forms/20_welp_nyc.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-4-semantic-html-22-the-header",
+   "language": "html",
+   "title": "The Header",
+   "chapter": "HTML · Semantic HTML",
+   "xp": 20,
+   "brief": "Give the page a header. Wrap the top of the page in a <header> element.",
+   "starter": {
+    "html": "<!-- The Header 🌐 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>My Blog</title>\n  </head>\n  <body>\n    <!-- From Exercise 22 -->\n    <!-- write your <header> here -->\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "header"
+   ],
+   "forbidden": [],
+   "source": "html-101/4-semantic-html/22_the_header.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-4-semantic-html-23-main-footer",
+   "language": "html",
+   "title": "Main & Footer",
+   "chapter": "HTML · Semantic HTML",
+   "xp": 20,
+   "brief": "Split the page into a main region and a footer. Use <main> for the content and <footer> for the closing part.",
+   "starter": {
+    "html": "<!-- Main & Footer 🦶🏽 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>My Blog</title>\n  </head>\n  <body>\n    <header>\n      <h1>My Blog</h1>\n      <nav>\n        <ul>\n          <li><a href=\"#about-section\">About</a></li>\n          <li><a href=\"#stories-section\">Stories</a></li>\n          <li><a href=\"#contact-section\">Contact</a></li>\n        </ul>\n      </nav>\n    </header>\n    <!-- From Exercise 23 -->\n    <br/>\n    <!-- write your <main> here -->\n    <!-- write your <footer> here -->\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "main",
+    "footer"
+   ],
+   "forbidden": [],
+   "source": "html-101/4-semantic-html/23_main_footer.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-4-semantic-html-24-blog-posts",
+   "language": "html",
+   "title": "Blog Posts",
+   "chapter": "HTML · Semantic HTML",
+   "xp": 20,
+   "brief": "Turn each post into its own article. Wrap every post in an <article> element.",
+   "starter": {
+    "html": "<!-- Blog Posts 📝 -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>My Blog</title>\n  </head>\n  <body>\n    <header>\n      <h1>My Blog</h1>\n      <nav>\n        <ul>\n          <li><a href=\"#about-section\">About</a></li>\n          <li><a href=\"#stories-section\">Stories</a></li>\n          <li><a href=\"#contact-section\">Contact</a></li>\n        </ul>\n      </nav>\n    </header>\n    <br/>\n    <main>\n      <!-- From Exercise 24 -->\n      <section id=\"about-section\">\n        <h2>About Me</h2>\n        <!-- write your <article> here -->\n      </section>\n      <br/>\n      <section id=\"stories-section\">\n        <h2>Stories</h2>\n        <!-- write your <article> here -->\n        <br/><hr/><br/>\n        <!-- write your <article> here -->\n        <br/><hr/><br/>\n        <!-- write your <article> here -->\n      </section>\n    </main>\n    <footer>\n      <ul>\n        <li>Codédex Daily © 2023</li>\n        <li><a href=\"/about\">About</a></li>\n        <li><a href=\"/blog\">Blog</a></li>\n      </ul>\n    </footer>\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "article"
+   ],
+   "forbidden": [],
+   "source": "html-101/4-semantic-html/24_blog_posts.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-4-semantic-html-25-figures",
+   "language": "html",
+   "title": "Figures",
+   "chapter": "HTML · Semantic HTML",
+   "xp": 20,
+   "brief": "Add a caption to each picture. Wrap every image in a <figure> and add a <figcaption>.",
+   "starter": {
+    "html": "<!-- Figures 🖼️ -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>My Blog</title>\n  </head>\n  <body>\n    <header>\n      <h1>My Blog</h1>\n      <nav>\n        <ul>\n          <li><a href=\"#about-section\">About</a></li>\n          <li><a href=\"#stories-section\">Stories</a></li>\n          <li><a href=\"#contact-section\">Contact</a></li>\n        </ul>\n      </nav>\n    </header>\n    <br/>\n    <main>\n      <section id=\"about-section\">\n        <h2>About Me</h2>\n        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\n      </section>\n      <br/>\n      <section id=\"stories-section\">\n        <h2>Stories</h2>\n        <article>\n          <!-- From Exercise 25 -->\n          <!-- write your <figure> here -->\n          <br/>\n          <h3>Title</h3>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\n        </article>\n        <br/><hr/><br/>\n        <article>\n          <!-- From Exercise 25 -->\n          <!-- write your <figure> here -->\n          <h3>Title</h3>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\n        </article>\n        <br/><hr/><br/>\n        <article>\n          <!-- From Exercise 25 -->\n          <!-- write your <figure> here -->\n          <br>\n          <h3>Title</h3>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\n        </article>\n      </section>\n    </main>\n    <footer>\n      <ul>\n        <li>Codédex Daily © 2023</li>\n        <li><a href=\"/about\">About</a></li>\n        <li><a href=\"/blog\">Blog</a></li>\n      </ul>\n    </footer>\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "figure",
+    "figcaption"
+   ],
+   "forbidden": [],
+   "source": "html-101/4-semantic-html/25_figures.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-4-semantic-html-26-final-touches",
+   "language": "html",
+   "title": "Final Touches",
+   "chapter": "HTML · Semantic HTML",
+   "xp": 20,
+   "brief": "Finish the page structure. Give it a <header>, a <main> and a <footer>.",
+   "starter": {
+    "html": "<!-- Final Touches 🖌️ -->\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <!-- From Challenge 26 -->\n    <style>\n      * {\n        margin: 0;\n        padding: 0;\n      }\n\n      li {\n        display: inline;\n      }\n\n      hr {\n        width: 95%;\n        margin: auto;\n      }\n    </style>\n    <title>My Blog</title>\n  </head>\n  <body>\n    <!-- write your <header> here -->\n    <br/>\n    <!-- write your <main> here -->\n    <!-- write your <footer> here -->\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "header",
+    "main",
+    "footer"
+   ],
+   "forbidden": [],
+   "source": "html-101/4-semantic-html/26_final_touches.html",
+   "origin": "Codédex html-101 (MIT)"
+  },
+  {
+   "id": "cx-1-selectors-01-picasso",
+   "language": "css",
+   "title": "Picasso",
+   "chapter": "CSS · Selectors",
+   "xp": 25,
+   "brief": "Use the id selectors to style the two hero sections.",
+   "starter": {
+    "html": "<!-- Picasso 🖌️ -->\n\n\n<!DOCTYPE html>\n<html>\n<head>\n \n <title>Mineo's Pizza House</title>\n</head>\n<body>\n <main>\n   <section id=\"hero-copy\">\n     <h1>Mineo's Pizza House 🍕</h1>\n   </section>\n   <section id=\"hero-img\">\n     <figure>\n       <img src=\"https://mineospizza.com/uploads/3/5/8/4/35845369/img-0307_orig.jpg\" alt=\"A small, 8-cut pepperoni pizza.\" width=\"250\"/>\n     </figure>\n   </section>\n   <footer>\n    <p>A Pittsburgh family-owned pizza restaurant since 1958.</p>\n   </footer>\n </main>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "#hero-copy",
+    "#hero-img"
+   ],
+   "forbidden": [],
+   "source": "css-101/1-selectors/01-picasso/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-1-selectors-02-syntax",
+   "language": "css",
+   "title": "Syntax",
+   "chapter": "CSS · Selectors",
+   "xp": 25,
+   "brief": "Set the paragraph's colour and font size.",
+   "starter": {
+    "html": "<!-- Syntax 🧱 -->\n\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  \n  <title>Commentary</title>\n</head>\n<body>\n  <p>Malcolm in the Middle</p>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "color",
+    "font-size"
+   ],
+   "forbidden": [],
+   "source": "css-101/1-selectors/02-syntax/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-1-selectors-03-selectors-1",
+   "language": "css",
+   "title": "Selectors Pt. 1",
+   "chapter": "CSS · Selectors",
+   "xp": 25,
+   "brief": "Style the heading and the paragraph separately.",
+   "starter": {
+    "html": "<!-- Selectors Pt. 1 👇 -->\n\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  \n  <title>Selectors</title>\n</head>\n<body>\n  <div>\n    <p class=\"line\" id=\"roses\">Roses are red.</p>\n    <p class=\"line\" id=\"violets\">Violets are blue.</p>\n    <p class=\"line\">CSS makes HTML</p>\n    <p class=\"line\">Look pretty for you.</p>\n  </div>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "p"
+   ],
+   "forbidden": [],
+   "source": "css-101/1-selectors/03-selectors-1/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-1-selectors-04-selectors-2",
+   "language": "css",
+   "title": "Selectors Pt. 2",
+   "chapter": "CSS · Selectors",
+   "xp": 25,
+   "brief": "Style the heading and the paragraph separately.",
+   "starter": {
+    "html": "<!-- Selectors Pt. 2 👪 -->\n\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  \n  <title>Document</title>\n</head>\n<body>\n  <h2>Continents 🗺️</h2>\n  <ul>\n    <li>Africa</li>\n    <li>Antarctica</li>\n    <li>Asia</li>\n    <li>Australia</li>\n    <li>Europe</li>\n    <li>North America</li>\n    <li>South America</li>\n  </ul>\n\n  <h2>Oceans By Size 🌊</h2>\n  <ol>\n    <li>Pacific</li>\n    <li>Atlantic</li>\n    <li>Indian</li>\n    <li>Antarctic/Southern</li>\n    <li>Arctic</li>\n  </ol>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "p"
+   ],
+   "forbidden": [],
+   "source": "css-101/1-selectors/04-selectors-2/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-1-selectors-05-concert-flyer",
+   "language": "css",
+   "title": "Concert Flyer",
+   "chapter": "CSS · Selectors",
+   "xp": 25,
+   "brief": "Style the heading and the paragraph separately.",
+   "starter": {
+    "html": "<!-- Concert Flyer 🎶 -->\n\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <!--  -->\n  <title>Musicodes NYC</title>\n</head>\n<body>\n  <main>\n    <header>\n      <img src=\"https://cdn.pixabay.com/photo/2017/10/16/23/02/brooklyn-2858985_960_720.png\" alt=\"New York City Skyline\" />\n      <h1>Musicodes NYC</h1>\n    </header>\n    <section id=\"night-1\">\n      <h2>Brandon & the Banshees</h2>\n      <h3>Act one · Act two</h3>\n      <p><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut aliquam ligula. Pellentesque ac maximus leo. Nam quis sodales mi. Donec eleifend fermentum posuere. Vestibulum nibh enim, vulputate id ipsum tristique, accumsan bibendum purus. Etiam lacinia, arcu in interdum semper, nulla erat tincidunt diam, ut sollicitudin ante felis sit amet justo. Nunc vel mauris egestas, interdum nunc eu, consectetur ex. Mauris blandit lacus nec volutpat fringilla. Praesent erat orci, tincidunt in lectus sed, posuere sodales ante. Integer ut massa ligula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam efficitur ultrices consequat. Nullam tempus ultrices enim, in tempus ex dapibus rhoncus.</b></p>\n    </section>\n    <section id=\"night-2\">\n      <h2>Lil' Prank</h2>\n      <h3>Act one · Act two</h3>\n      <p><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut aliquam ligula. Pellentesque ac maximus leo. Nam quis sodales mi. Donec eleifend fermentum posuere. Vestibulum nibh enim, vulputate id ipsum tristique, accumsan bibendum purus. Etiam lacinia, arcu in interdum semper, nulla erat tincidunt diam, ut sollicitudin ante felis sit amet justo. Nunc vel mauris egestas, interdum nunc eu, consectetur ex. Mauris blandit lacus nec volutpat fringilla. Praesent erat orci, tincidunt in lectus sed, posuere sodales ante. Integer ut massa ligula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam efficitur ultrices consequat. Nullam tempus ultrices enim, in tempus ex dapibus rhoncus.</b></p>\n    </section>\n  </main>\n  <footer>\n    <p>Art installations by</p>\n    <p><b>Name One · Name Two · Name Three</b></p>\n  </footer>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "h1",
+    "p"
+   ],
+   "forbidden": [],
+   "source": "css-101/1-selectors/05-concert-flyer/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-2-properties-06-rainbow",
+   "language": "css",
+   "title": "06-rainbow",
+   "chapter": "CSS · Properties",
+   "xp": 25,
+   "brief": "Give the rainbow its colours.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  \n  <title>Rainbow</title>\n</head>\n<body>\n  <h1>Top Three Colors of the Rainbow</h1>\n  <h2 id=\"first-color\">Green</h2>\n  <h2 id=\"second-color\">Purple</h2>\n  <h2 id=\"third-color\">Orange</h2>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "color"
+   ],
+   "forbidden": [],
+   "source": "css-101/2-properties/06-rainbow/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-2-properties-07-measurements",
+   "language": "css",
+   "title": "07-measurements",
+   "chapter": "CSS · Properties",
+   "xp": 25,
+   "brief": "Set a width and a height on the element.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  \n  <title>Measurements</title> \n</head>\n<body>\n  <h2>Absolute Units</h2>\n  <img id=\"absolute\" src=\"https://cdn.pixabay.com/photo/2013/07/13/10/51/football-157930_960_720.png\" alt=\"Soccer Ball\" />\n  <h2>Relative Units</h2>\n  <img id=\"relative\" src=\"https://cdn.pixabay.com/photo/2013/07/13/10/51/football-157930_960_720.png\" alt=\"Soccer Ball\" />\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "width",
+    "height"
+   ],
+   "forbidden": [],
+   "source": "css-101/2-properties/07-measurements/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-2-properties-08-five-families",
+   "language": "css",
+   "title": "Place text here.",
+   "chapter": "CSS · Properties",
+   "xp": 25,
+   "brief": "Set the font family.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  \n  <title>Five Families</title>\n</head>\n<body>\n  <p>\n    <!-- Place text here. -->\n  </p>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "font-family"
+   ],
+   "forbidden": [],
+   "source": "css-101/2-properties/08-five-families/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-2-properties-09-spellcheck",
+   "language": "css",
+   "title": "09-spellcheck",
+   "chapter": "CSS · Properties",
+   "xp": 25,
+   "brief": "Decorate the text with a line-through.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  \n  <title>Spellcheck</title>\n</head>\n<body>\n  <h4>The quick <span>brwn</span> fox jumped <span>overthe</span> lazy dogs.</h4>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "text-decoration"
+   ],
+   "forbidden": [],
+   "source": "css-101/2-properties/09-spellcheck/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-2-properties-10-wallpaper",
+   "language": "css",
+   "title": "10-wallpaper",
+   "chapter": "CSS · Properties",
+   "xp": 25,
+   "brief": "Give the page a background.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  \n  <title>Wallpaper</title>\n</head>\n<body>\n <div id=\"outer\">\n    <div id=\"inner\">\n    \n    </div>\n </div>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "background"
+   ],
+   "forbidden": [],
+   "source": "css-101/2-properties/10-wallpaper/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-2-properties-11-shorthands",
+   "language": "css",
+   "title": "Favorite song/artist here.",
+   "chapter": "CSS · Properties",
+   "xp": 25,
+   "brief": "Use the margin and padding shorthands.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  \n  <title>Shorthands</title>\n</head>\n<body>\n  <h1>Favorite Song</h1>\n  <p><!-- Favorite song/artist here. --></p>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "margin",
+    "padding"
+   ],
+   "forbidden": [],
+   "source": "css-101/2-properties/11-shorthands/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-2-properties-12-invitation",
+   "language": "css",
+   "title": "DATE HERE",
+   "chapter": "CSS · Properties",
+   "xp": 25,
+   "brief": "Give the invitation a border and a background.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n \n <title>Invitation</title>\n</head>\n<body>\n <div id=\"invite-wrapper\">\n   <h1>You're Invited!</h1>\n   <div id=\"invite-text\">\n     <p>\n       Come join us for a night of fun, laughter, and good company at the most exciting party of the year! We're thrilled to invite you to our exclusive soirée, where you'll rub shoulders with the city's most interesting and influential personalities.\n     </p>\n     <p>\n       Expect an unforgettable night filled with live music, delicious drinks, and mouthwatering hors d'oeuvres. The dress code is cocktail attire, so put on your most stylish outfit and get ready to mix and mingle with some of the brightest minds and biggest hearts around.\n     </p>\n     <p>\n       We can't wait to see you there!\n     </p>\n   </div>\n   <p id=\"itinerary\">\n       Date: <br/>\n       Time: <br/>\n       Location: <br/>\n       RSVP by <span><!-- DATE HERE --></span> to let us know you'll be joining!\n   </p>\n   <p>\n     Sincerely,\n   </p>\n   <span><!-- YOUR NAME --></span>\n </div>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "border",
+    "background"
+   ],
+   "forbidden": [],
+   "source": "css-101/2-properties/12-invitation/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-3-box-model-14-profile-status",
+   "language": "css",
+   "title": "Profile Status",
+   "chapter": "CSS · Box Model",
+   "xp": 25,
+   "brief": "Space the elements out with padding and margin, and add a border.",
+   "starter": {
+    "html": "<!-- Profile Status 👤 -->\n\n\n<div id=\"outside-wrapper\">\n  <img id=\"top-img\" src=\"https://images.unsplash.com/photo-1551027654-f7b9f56804c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80\" />\n\n  <ul id=\"post-list\">\n    <h2>My Feed</h2>\n    <li>\n      <div class=\"post-wrapper\">\n        <img class=\"post-img\" src=\"https://www.carnegielibrary.org/wp-content/uploads/2016/02/CLPMain_1080x600.jpg\" alt=\"Carnegie Library of Pittsburgh\"/>\n        <p>Visited the library! 📚 <b>#libraries</b> <b>#readingisawesome</b></p>\n      </div>\n    </li>\n    <hr />\n    <li>\n      <div class=\"post-wrapper\">\n        <img class=\"post-img\" src=\"https://media.giphy.com/media/AFHFoEv9fDOn7lIdlD/giphy.gif\" alt=\"GIF of two people fist-bumping with the caption 'YOU GOT THIS'\" />\n        <p>Carpe diem! <b>#wordsofencouragement</b> <b>#wordsofwisdom</b></p>\n      </div>\n    </li>\n  </ul>\n</div>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "padding",
+    "margin",
+    "border"
+   ],
+   "forbidden": [],
+   "source": "css-101/3-box-model/14-profile-status/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-3-box-model-15-wiggle-room",
+   "language": "css",
+   "title": "Wiggle Room",
+   "chapter": "CSS · Box Model",
+   "xp": 25,
+   "brief": "Give the content room to breathe with padding.",
+   "starter": {
+    "html": "<!-- Wiggle Room 🔲 -->\n\n\n<div id=\"outside-wrapper\" style=\"width:80%;\">\n  <img id=\"top-img\" src=\"https://images.unsplash.com/photo-1551027654-f7b9f56804c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80\" style=\"width:10em; height:10em;\" />\n\n  <ul id=\"post-list\">\n    <h2>My Feed</h2>\n    <li>\n      <div class=\"post-wrapper\">\n        <img class=\"post-img\" src=\"https://www.carnegielibrary.org/wp-content/uploads/2016/02/CLPMain_1080x600.jpg\" alt=\"Carnegie Library of Pittsburgh\" style=\"width:100%;\" />\n        <p>Visited the library! 📚 <b>#libraries</b> <b>#readingisawesome</b></p>\n      </div>\n    </li>\n    <li>\n      <div class=\"post-wrapper\">\n        <img class=\"post-img\" src=\"https://media.giphy.com/media/AFHFoEv9fDOn7lIdlD/giphy.gif\" alt=\"GIF of two people fist-bumping with the caption 'YOU GOT THIS'\" style=\"width:100%;\" />\n        <p>Carpe diem! <b>#wordsofencouragement</b> <b>#wordsofwisdom</b></p>\n      </div>\n    </li>\n  </ul>\n</div>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "padding"
+   ],
+   "forbidden": [],
+   "source": "css-101/3-box-model/15-wiggle-room/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-3-box-model-16-spaced-out",
+   "language": "css",
+   "title": "Spaced Out",
+   "chapter": "CSS · Box Model",
+   "xp": 25,
+   "brief": "Push the elements apart with margin.",
+   "starter": {
+    "html": "<!-- Spaced Out 🛰️ -->\n\n\n<div id=\"outside-wrapper\" style=\"width:80%;\">\n  <img id=\"top-img\" src=\"https://images.unsplash.com/photo-1551027654-f7b9f56804c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80\" style=\"width:10em; height:10em;\" />\n\n  <ul id=\"post-list\">\n    <h2>My Feed</h2>\n    <li>\n      <div class=\"post-wrapper\">\n        <img class=\"post-img\" src=\"https://www.carnegielibrary.org/wp-content/uploads/2016/02/CLPMain_1080x600.jpg\" alt=\"Carnegie Library of Pittsburgh\" style=\"width:100%;\" />\n        <p>Visited the library! 📚 <b>#libraries</b> <b>#readingisawesome</b></p>\n      </div>\n    </li>\n    <li>\n      <div class=\"post-wrapper\">\n        <img class=\"post-img\" src=\"https://media.giphy.com/media/AFHFoEv9fDOn7lIdlD/giphy.gif\" alt=\"GIF of two people fist-bumping with the caption 'YOU GOT THIS'\" style=\"width:100%;\" />\n        <p>Carpe diem! <b>#wordsofencouragement</b> <b>#wordsofwisdom</b></p>\n      </div>\n    </li>\n  </ul>\n</div>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "margin"
+   ],
+   "forbidden": [],
+   "source": "css-101/3-box-model/16-spaced-out/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-3-box-model-17-make-it-count",
+   "language": "css",
+   "title": "Make It Count",
+   "chapter": "CSS · Box Model",
+   "xp": 25,
+   "brief": "Give the box an exact width and height.",
+   "starter": {
+    "html": "<!-- Make It Count 📐 -->\n\n\n<div id=\"outside-wrapper\" style=\"width:80%;\">\n  <img id=\"top-img\" src=\"https://images.unsplash.com/photo-1551027654-f7b9f56804c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80\" style=\"width:10em; height:10em;\" />\n\n  <ul id=\"post-list\">\n    <h2>My Feed</h2>\n    <li>\n      <div class=\"post-wrapper\">\n        <img class=\"post-img\" src=\"https://www.carnegielibrary.org/wp-content/uploads/2016/02/CLPMain_1080x600.jpg\" alt=\"Carnegie Library of Pittsburgh\" style=\"width:100%;\" />\n        <p>Visited the library! 📚 <b>#libraries</b> <b>#readingisawesome</b></p>\n      </div>\n    </li>\n    <li>\n      <div class=\"post-wrapper\">\n        <img class=\"post-img\" src=\"https://media.giphy.com/media/AFHFoEv9fDOn7lIdlD/giphy.gif\" alt=\"GIF of two people fist-bumping with the caption 'YOU GOT THIS'\" style=\"width:100%;\" />\n        <p>Carpe diem! <b>#wordsofencouragement</b> <b>#wordsofwisdom</b></p>\n      </div>\n    </li>\n  </ul>\n</div>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "width",
+    "height"
+   ],
+   "forbidden": [],
+   "source": "css-101/3-box-model/17-make-it-count/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-3-box-model-18-local-library",
+   "language": "css",
+   "title": "Local Library",
+   "chapter": "CSS · Box Model",
+   "xp": 25,
+   "brief": "Give the cards padding and a border.",
+   "starter": {
+    "html": "<!-- Local Library 💳 -->\n\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n \n <title>Library</title>\n</head>\n<body>\n <header>\n </header>\n <nav>\n   <h1>Welcome to the Library!</h1>\n   <a class=\"nav-item\" href=\"#welcome\">Home</a>\n   <a class=\"nav-item\" href=\"#catalog-form\">Search</a>\n   <a class=\"nav-item\" href=\"#staff-picks\">Staff Picks</a>\n </nav>\n <main>\n   <section id=\"welcome\">\n     <p>\n       Guided by our dedication to literacy and learning and patron-focused services and programs, the Library is a fun space for using information and technology to build knowledge and foster community, social connection.\n     </p>\n   </section>\n   <section id=\"catalog\">\n     <form id=\"catalog-form\">\n       <input id=\"catalog-input\" type=\"text\" placeholder=\"Search the Catalog...\"/>\n       <input id=\"form-btn\" type=\"submit\" value=\"Search\" />\n     </form>\n   </section>\n   <section id=\"staff-picks\">\n     <h2>Staff Picks</h2>\n     <div class=\"staff-pick-row\">\n       <a><img class=\"staff-pick-img\" src=\"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1442129426i/231804.jpg\" alt=\"The Outsiders by S.E. Hinton\" /></a>\n       <a><img class=\"staff-pick-img\" src=\"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1457284880i/27220736.jpg\" alt=\"Shoe Dog by Phil Knight\"/></a>\n       <a><img class=\"staff-pick-img\" src=\"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1444887454i/26451798.jpg\" alt=\"Make: Getting Started with p5.js by Lauren McCarthy, Casey Reas, & Ben Fry\" /></a>\n     </div>\n     <div class=\"staff-pick-row\">\n       <a><img class=\"staff-pick-img\" src=\"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1586529806i/43599070.jpg\" alt=\"The Courage to be Happy by Ichiro Kishimi & Fumitake Koga\" /></a>\n       <a><img class=\"staff-pick-img\" src=\"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1546071216i/5907.jpg\" alt=\"The Hobbit by J.R.R. Tolkien\" /></a>\n       <a><img class=\"staff-pick-img\" src=\"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1386924362i/216088.jpg\" alt=\"Ripley's Believe It or Not!\"/></a>\n     </div>\n   </section>\n </main>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "padding",
+    "border"
+   ],
+   "forbidden": [],
+   "source": "css-101/3-box-model/18-local-library/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-4-layout-19-lines-and-blocks",
+   "language": "css",
+   "title": "19-lines-and-blocks",
+   "chapter": "CSS · Layout",
+   "xp": 25,
+   "brief": "Change how the element is displayed.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Lines & Blocks</title>\n  \n</head>\n<body>\n  <header>\n    <h1 id=\"header-title\">Rendezvous Tutoring</h1>\n    <p id=\"header-text\">Top-notch 1:1 Instructors!</p>\n    <nav>\n      <ul>\n        <li><a href=\"#story-section\">Story</a></li>\n        <li><a href=\"#services-section\">Services</a></li>\n        <li><a href=\"#contact-section\">Contact</a></li>\n      </ul>\n    </nav>\n  </header>\n  <main>\n    <section id=\"story-section\">\n      <h2>Our Story</h2>\n      <p>For over 15 years, we have provided an impactful, results-focused tutoring experience to all of our pupils!</p>\n      <p>It all started as homework-help between two friends at the library. One friend needed the other's help with algebra and how they could apply it in everyday life.</p>\n      <img id=\"story-image\" src=\"https://cdn.pixabay.com/photo/2022/11/21/09/43/success-7606515_1280.jpg\" alt=\"An image of someone growing success in tutoring\" />\n    </section>\n    <section id=\"services-section\">\n      <h2>Services</h2>\n      <p>We offer a multitude of tutoring services across many platforms, including:</p>\n      <ul>\n        <li>One-on-one tutoring sessions with seasoned industry professionals.</li>\n        <li>A vast tutoring network covering over 10 industries and over 50 skills, trades, and disciplines.</li>\n        <li>Chapter meetups for \"lightning round-ezvous\" events across 25 U.S. cities!</li>\n      </ul>\n    </section>\n    <footer id=\"contact-section\">\n      <h2>Contact</h2>\n      <p>Interested in upskilling with Rendezvous Tutoring? Feel free to sign-up with your e-mail below to learn more!</p>\n      <form>\n        <label for=\"email\">Email:</label>\n        <input type=\"email\" id=\"email\" placeholder=\"e-mail here\" required>\n        <input type=\"submit\" value=\"Sign up\">\n      </form>\n    </footer>\n  </main>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "display"
+   ],
+   "forbidden": [],
+   "source": "css-101/4-layout/19-lines-and-blocks/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-4-layout-20-go-with-the-flow",
+   "language": "css",
+   "title": "20-go-with-the-flow",
+   "chapter": "CSS · Layout",
+   "xp": 25,
+   "brief": "Change how the element is displayed.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Lines & Blocks</title>\n  \n</head>\n<body>\n  <header>\n    <h1 id=\"header-title\">Rendezvous Tutoring</h1>\n    <p id=\"header-text\">Top-notch 1:1 Instructors!</p>\n    <nav>\n      <ul>\n        <li><a href=\"#story-section\">Story</a></li>\n        <li><a href=\"#services-section\">Services</a></li>\n        <li><a href=\"#contact-section\">Contact</a></li>\n      </ul>\n    </nav>\n  </header>\n  <main>\n    <div id=\"notification-div\">\n      <details>\n        <summary><strong>New Course Offering!</strong>🎥📓</summary>\n        <p>We've got a new 6-week course on video editing where you get to meet one-on-one with an industry professional each week! Join <u>here</u>!</p>\n      </details>\n    </div>\n    <section id=\"story-section\">\n      <h2>Our Story</h2>\n      <p>For over 15 years, we have provided an impactful, results-focused tutoring experience to all of our pupils!</p>\n      <p>It all started as homework-help between two friends at the library. One friend needed the other's help with algebra and how they could apply it in everyday life.</p>\n      <img id=\"story-image\" src=\"https://cdn.pixabay.com/photo/2022/11/21/09/43/success-7606515_1280.jpg\" alt=\"\" />\n    </section>\n    <section id=\"services-section\">\n      <h2>Services</h2>\n      <p>We offer a multitude of tutoring services across many platforms, including:</p>\n      <ul>\n        <li>One-on-one tutoring sessions with seasoned industry professionals.</li>\n        <li>A vast tutoring network covering over 10 industries and over 50 skills, trades, and disciplines.</li>\n        <li>Chapter meetups for \"lightning round-ezvous\" events across 25 U.S. cities!</li>\n      </ul>\n    </section>\n    <footer id=\"contact-section\">\n      <h2>Contact</h2>\n      <p>Interested in upskilling with Rendezvous Tutoring? Feel free to sign-up with your e-mail below to learn more!</p>\n      <form>\n        <input type=\"email\" placeholder=\"e-mail here\" required />\n        <input type=\"submit\" value=\"Sign Up\" />\n      </form>\n    </footer>\n  </main>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "display"
+   ],
+   "forbidden": [],
+   "source": "css-101/4-layout/20-go-with-the-flow/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-4-layout-21-its-all-relative",
+   "language": "css",
+   "title": "21-its-all-relative",
+   "chapter": "CSS · Layout",
+   "xp": 25,
+   "brief": "Position the element relative to its parent.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Lines & Blocks</title>\n  \n</head>\n<body>\n  <header>\n    <h1 id=\"header-title\">Rendezvous Tutoring</h1>\n    <p id=\"header-text\">Top-notch 1:1 Instructors!</p>\n    <nav>\n      <ul>\n        <li><a href=\"#story-section\">Story</a></li>\n        <li><a href=\"#services-section\">Services</a></li>\n        <li><a href=\"#contact-section\">Contact</a></li>\n      </ul>\n    </nav>\n  </header>\n  <main>\n    <section id=\"story-section\">\n      <h2>Our Story</h2>\n      <p>For over 15 years, we have provided an impactful, results-focused tutoring experience to all of our pupils!</p>\n      <p>It all started as homework-help between two friends at the library. One friend needed the other's help with algebra and how they could apply it in everyday life.</p>\n      <img id=\"story-image\" src=\"https://cdn.pixabay.com/photo/2022/11/21/09/43/success-7606515_1280.jpg\" alt=\"\" />\n    </section>\n    <section id=\"services-section\">\n      <h2>Services</h2>\n      <div id=\"notification-div\">\n        <details>\n          <summary><strong>New Course Offering!</strong>🎥📓</summary>\n          <p>We've got a new 6-week course on video editing where you get to meet one-on-one with an industry professional each week! Join <u>here</u>!</p>\n        </details>\n      </div>\n      <p>We offer a multitude of tutoring services across many platforms, including:</p>\n      <ul>\n        <li>One-on-one tutoring sessions with seasoned industry professionals.</li>\n        <li>A vast tutoring network covering over 10 industries and over 50 skills, trades, and disciplines.</li>\n        <li>Chapter meetups for \"lightning round-ezvous\" events across 25 U.S. cities!</li>\n      </ul>\n    </section>\n    <footer id=\"contact-section\">\n      <h2>Contact</h2>\n      <p>Interested in upskilling with Rendezvous Tutoring? Feel free to sign-up with your e-mail below to learn more!</p>\n      <form>\n        <input type=\"email\" placeholder=\"e-mail here\" required />\n        <input type=\"submit\" value=\"Sign Up\" />\n      </form>\n    </footer>\n  </main>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "position",
+    "relative"
+   ],
+   "forbidden": [],
+   "source": "css-101/4-layout/21-its-all-relative/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-4-layout-22-absolute-removal",
+   "language": "css",
+   "title": "22-absolute-removal",
+   "chapter": "CSS · Layout",
+   "xp": 25,
+   "brief": "Take the element out of the flow with absolute positioning.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Lines & Blocks</title>\n  \n</head>\n<body>\n  <header>\n    <h1 id=\"header-title\">Rendezvous Tutoring</h1>\n    <p id=\"header-text\">Top-notch 1:1 Instructors!</p>\n    <nav>\n      <ul>\n        <li><a href=\"#story-section\">Story</a></li>\n        <li><a href=\"#services-section\">Services</a></li>\n        <li><a href=\"#contact-section\">Contact</a></li>\n      </ul>\n    </nav>\n  </header>\n  <main>\n    <div id=\"notification-div\">\n      <details>\n        <summary><strong>New Course Offering!</strong>🎥📓</summary>\n        <p>We've got a new 6-week course on video editing where you get to meet one-on-one with an industry professional each week! Join <u>here</u>!</p>\n      </details>\n    </div>\n    <section id=\"story-section\">\n      <h2>Our Story</h2>\n      <p>For over 15 years, we have provided an impactful, results-focused tutoring experience to all of our pupils!</p>\n      <p>It all started as homework-help between two friends at the library. One friend needed the other's help with algebra and how they could apply it in everyday life.</p>\n      <img id=\"story-image\" src=\"https://cdn.pixabay.com/photo/2022/11/21/09/43/success-7606515_1280.jpg\" alt=\"\" />\n    </section>\n    <section id=\"services-section\">\n      <h2>Services</h2>\n      <p>We offer a multitude of tutoring services across many platforms, including:</p>\n      <ul>\n        <li>One-on-one tutoring sessions with seasoned industry professionals.</li>\n        <li>A vast tutoring network covering over 10 industries and over 50 skills, trades, and disciplines.</li>\n        <li>Chapter meetups for \"lightning round-ezvous\" events across 25 U.S. cities!</li>\n      </ul>\n    </section>\n    <footer id=\"contact-section\">\n      <h2>Contact</h2>\n      <p>Interested in upskilling with Rendezvous Tutoring? Feel free to sign-up with your e-mail below to learn more!</p>\n      <form>\n        <input type=\"email\" placeholder=\"e-mail here\" required />\n        <input type=\"submit\" value=\"Sign Up\" />\n      </form>\n    </footer>\n  </main>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "position",
+    "absolute"
+   ],
+   "forbidden": [],
+   "source": "css-101/4-layout/22-absolute-removal/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-4-layout-23-fixed-banner",
+   "language": "css",
+   "title": "23-fixed-banner",
+   "chapter": "CSS · Layout",
+   "xp": 25,
+   "brief": "Pin the banner to the screen with fixed positioning.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Lines & Blocks</title>\n  \n</head>\n<body>\n  <header>\n    <h1 id=\"header-title\">Rendezvous Tutoring</h1>\n    <p id=\"header-text\">Top-notch 1:1 Instructors!</p>\n    <nav>\n      <ul>\n        <li><a href=\"#story-section\">Story</a></li>\n        <li><a href=\"#services-section\">Services</a></li>\n        <li><a href=\"#contact-section\">Contact</a></li>\n      </ul>\n    </nav>\n  </header>\n  <main>\n    <div id=\"notification-div\">\n      <details>\n        <summary><strong>New Course Offering!</strong>🎥📓</summary>\n        <p>We've got a new 6-week course on video editing where you get to meet one-on-one with an industry professional each week! Join <u>here</u>!</p>\n      </details>\n    </div>\n    <section id=\"story-section\">\n      <h2>Our Story</h2>\n      <p>For over 15 years, we have provided an impactful, results-focused tutoring experience to all of our pupils!</p>\n      <p>It all started as homework-help between two friends at the library. One friend needed the other's help with algebra and how they could apply it in everyday life.</p>\n      <img id=\"story-image\" src=\"https://cdn.pixabay.com/photo/2022/11/21/09/43/success-7606515_1280.jpg\" alt=\"\" />\n    </section>\n    <section id=\"services-section\">\n      <h2>Services</h2>\n      <p>We offer a multitude of tutoring services across many platforms, including:</p>\n      <ul>\n        <li>One-on-one tutoring sessions with seasoned industry professionals.</li>\n        <li>A vast tutoring network covering over 10 industries and over 50 skills, trades, and disciplines.</li>\n        <li>Chapter meetups for \"lightning round-ezvous\" events across 25 U.S. cities!</li>\n      </ul>\n    </section>\n    <footer id=\"contact-section\">\n      <h2>Contact</h2>\n      <p>Interested in upskilling with Rendezvous Tutoring? Feel free to sign-up with your e-mail below to learn more!</p>\n      <form>\n        <input type=\"email\" placeholder=\"e-mail here\" required />\n        <input type=\"submit\" value=\"Sign Up\" />\n      </form>\n    </footer>\n  </main>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "position",
+    "fixed"
+   ],
+   "forbidden": [],
+   "source": "css-101/4-layout/23-fixed-banner/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-4-layout-24-sticky-elements",
+   "language": "css",
+   "title": "24-sticky-elements",
+   "chapter": "CSS · Layout",
+   "xp": 25,
+   "brief": "Make the element stick as the page scrolls.",
+   "starter": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Lines & Blocks</title>\n  \n</head>\n<body>\n  <header>\n    <h1 id=\"header-title\">Rendezvous Tutoring</h1>\n    <p id=\"header-text\">Top-notch 1:1 Instructors!</p>\n    <nav>\n      <ul>\n        <li><a href=\"#story-section\">Story</a></li>\n        <li><a href=\"#services-section\">Services</a></li>\n        <li><a href=\"#contact-section\">Contact</a></li>\n      </ul>\n    </nav>\n  </header>\n  <main>\n    <div id=\"notification-div\">\n      <details>\n        <summary><strong>New Course Offering!</strong>🎥📓</summary>\n        <p>We've got a new 6-week course on video editing where you get to meet one-on-one with an industry professional each week! Join <u>here</u>!</p>\n      </details>\n    </div>\n    <section id=\"story-section\">\n      <h2>Our Story</h2>\n      <p>For over 15 years, we have provided an impactful, results-focused tutoring experience to all of our pupils!</p>\n      <p>It all started as homework-help between two friends at the library. One friend needed the other's help with algebra and how they could apply it in everyday life.</p>\n      <img id=\"story-image\" src=\"https://cdn.pixabay.com/photo/2022/11/21/09/43/success-7606515_1280.jpg\" alt=\"\" />\n    </section>\n    <section id=\"services-section\">\n      <h2>Services</h2>\n      <p>We offer a multitude of tutoring services across many platforms, including:</p>\n      <ul>\n        <li>One-on-one tutoring sessions with seasoned industry professionals.</li>\n        <li>A vast tutoring network covering over 10 industries and over 50 skills, trades, and disciplines.</li>\n        <li>Chapter meetups for \"lightning round-ezvous\" events across 25 U.S. cities!</li>\n      </ul>\n    </section>\n    <footer id=\"contact-section\">\n      <h2>Contact</h2>\n      <p>Interested in upskilling with Rendezvous Tutoring? Feel free to sign-up with your e-mail below to learn more!</p>\n      <form>\n        <input type=\"email\" placeholder=\"e-mail here\" required />\n        <input type=\"submit\" value=\"Sign Up\" />\n      </form>\n    </footer>\n  </main>\n</body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "position",
+    "sticky"
+   ],
+   "forbidden": [],
+   "source": "css-101/4-layout/24-sticky-elements/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-5-flexbox-26-in-the-flex",
+   "language": "css",
+   "title": "flex container",
+   "chapter": "CSS · Flexbox",
+   "xp": 25,
+   "brief": "Make the row a flex container.",
+   "starter": {
+    "html": "<!-- Write code below 💖-->\n\n<!doctype html>\n<html>\n  <head>\n    <title>Page Title</title>\n    \n  </head>\n  <body>\n    <div class=\"card-row\">\n      <!-- flex container -->\n      <div class=\"card\">1</div>\n      <!-- flex item -->\n      <div class=\"card\">2</div>\n      <!-- flex item -->\n      <div class=\"card\">3</div>\n      <!-- flex item -->\n    </div>\n    \n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "display",
+    "flex"
+   ],
+   "forbidden": [],
+   "source": "css-101/5-flexbox/26-in-the-flex/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-5-flexbox-27-directions",
+   "language": "css",
+   "title": "flex container",
+   "chapter": "CSS · Flexbox",
+   "xp": 25,
+   "brief": "Choose the direction the cards flow in.",
+   "starter": {
+    "html": "<!-- Write code below 💖-->\n\n<!doctype html>\n<html>\n  <head>\n    <title>Page Title</title>\n    \n  </head>\n  <body>\n    <div class=\"card-row\">\n      <!-- flex container -->\n      <div class=\"card\">1</div>\n      <!-- flex item -->\n      <div class=\"card\">2</div>\n      <!-- flex item -->\n      <div class=\"card\">3</div>\n      <!-- flex item -->\n    </div>\n    \n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "flex-direction"
+   ],
+   "forbidden": [],
+   "source": "css-101/5-flexbox/27-directions/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-5-flexbox-28-spacing",
+   "language": "css",
+   "title": "flex container",
+   "chapter": "CSS · Flexbox",
+   "xp": 25,
+   "brief": "Add a gap between the cards.",
+   "starter": {
+    "html": "<!-- Write code below 💖-->\n\n<!doctype html>\n<html>\n  <head>\n    <title>Page Title</title>\n    \n  </head>\n  <body>\n    <div class=\"card-row\">\n      <!-- flex container -->\n      <div class=\"card\">1</div>\n      <!-- flex item -->\n      <div class=\"card\">2</div>\n      <!-- flex item -->\n      <div class=\"card\">3</div>\n      <!-- flex item -->\n    </div>\n    \n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "gap"
+   ],
+   "forbidden": [],
+   "source": "css-101/5-flexbox/28-spacing/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-5-flexbox-29-cross-axis",
+   "language": "css",
+   "title": "29-cross-axis",
+   "chapter": "CSS · Flexbox",
+   "xp": 25,
+   "brief": "Align the cards on the cross axis.",
+   "starter": {
+    "html": "<!-- Write code below 💖-->\n\n<!doctype html>\n<html>\n  <head>\n    <title>Page Title</title>\n    \n  </head>\n  <body>\n    <div class=\"card-row\">\n      <div class=\"card\">center me! 🎯</div>\n    </div>\n    \n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "align-items"
+   ],
+   "forbidden": [],
+   "source": "css-101/5-flexbox/29-cross-axis/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-5-flexbox-30-flexible-sizing",
+   "language": "css",
+   "title": "30-flexible-sizing",
+   "chapter": "CSS · Flexbox",
+   "xp": 25,
+   "brief": "Let the cards grow to fill the row.",
+   "starter": {
+    "html": "<!-- Write code below 💖-->\n\n<!doctype html>\n<html>\n  <head>\n    <title>Page Title</title>\n    \n  </head>\n  <body>\n    <div class=\"card-row\">\n      <div class=\"card\">1</div>\n      <div class=\"card card-wide\">2</div>\n      <div class=\"card\">3</div>\n    </div>\n    \n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "flex"
+   ],
+   "forbidden": [],
+   "source": "css-101/5-flexbox/30-flexible-sizing/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-5-flexbox-31-pokemon-cards",
+   "language": "css",
+   "title": "31-pokemon-cards",
+   "chapter": "CSS · Flexbox",
+   "xp": 25,
+   "brief": "Lay the cards out in a flex row.",
+   "starter": {
+    "html": "<!-- Write code below 💖-->\n\n<!doctype html>\n<html>\n  <head>\n    <title>Pokémon Card Collection</title>\n    \n  </head>\n  <body>\n    <div class=\"card-collection\">\n      <div class=\"card-flip\">\n        <div class=\"card-inner\">\n          <div class=\"card-front\">\n            <img\n              src=\"https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg\"\n              alt=\"card back\"\n            />\n          </div>\n          <div class=\"card-back\">\n            <img\n              src=\"https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png\"\n              alt=\"Pikachu\"\n            />\n          </div>\n        </div>\n      </div>\n\n      <div class=\"card-flip\">\n        <div class=\"card-inner\">\n          <div class=\"card-front\">\n            <img\n              src=\"https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg\"\n              alt=\"card back\"\n            />\n          </div>\n          <div class=\"card-back\">\n            <img\n              src=\"https://assets.pokemon.com/assets/cms2/img/pokedex/full/006.png\"\n              alt=\"Charizard\"\n            />\n          </div>\n        </div>\n      </div>\n\n      <div class=\"card-flip\">\n        <div class=\"card-inner\">\n          <div class=\"card-front\">\n            <img\n              src=\"https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg\"\n              alt=\"card back\"\n            />\n          </div>\n          <div class=\"card-back\">\n            <img\n              src=\"https://assets.pokemon.com/assets/cms2/img/pokedex/full/007.png\"\n              alt=\"Squirtle\"\n            />\n          </div>\n        </div>\n      </div>\n\n      <div class=\"card-flip\">\n        <div class=\"card-inner\">\n          <div class=\"card-front\">\n            <img\n              src=\"https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg\"\n              alt=\"card back\"\n            />\n          </div>\n          <div class=\"card-back\">\n            <img\n              src=\"https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png\"\n              alt=\"Bulbasaur\"\n            />\n          </div>\n        </div>\n      </div>\n\n      <div class=\"card-flip\">\n        <div class=\"card-inner\">\n          <div class=\"card-front\">\n            <img\n              src=\"https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg\"\n              alt=\"card back\"\n            />\n          </div>\n          <div class=\"card-back\">\n            <img\n              src=\"https://assets.pokemon.com/assets/cms2/img/pokedex/full/094.png\"\n              alt=\"Gengar\"\n            />\n          </div>\n        </div>\n      </div>\n\n      <div class=\"card-flip\">\n        <div class=\"card-inner\">\n          <div class=\"card-front\">\n            <img\n              src=\"https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg\"\n              alt=\"card back\"\n            />\n          </div>\n          <div class=\"card-back\">\n            <img\n              src=\"https://assets.pokemon.com/assets/cms2/img/pokedex/full/143.png\"\n              alt=\"Snorlax\"\n            />\n          </div>\n        </div>\n      </div>\n    </div>\n    \n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [
+    "display",
+    "flex"
+   ],
+   "forbidden": [],
+   "source": "css-101/5-flexbox/31-pokemon-cards/index.html",
+   "origin": "Codédex css-101 (MIT)"
+  },
+  {
+   "id": "cx-challenge-for-rent",
+   "language": "html",
+   "title": "🏠 For Rent",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 🏠 For Rent -->\n\n<h1>Bright 1 Bedroom Apartment</h1>\n<h2>Williamsburg - $2,400/month</h2>\n<img src=\"https://listing-photos.b-cdn.net/listing_photos/FNVQ-pE5PAQUDlIkaOXSSg/jGeMHn-IMG_1446.jpg?height=410\" alt=\"An apartment \">\n<p>Spacious apartment with lots of natural light.</p>\n<p>Close to the L train, vintage shops, and restaurants.</p>\n\n<ul>\n  <li>Hardwood floors</li>\n  <li>In-unit laundry</li>\n  <li>Elevator</li>\n</ul>\n<a href=\"https://www.zillow.com/\">Zillow listing</a>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/elements/for-rent.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-challenge-garage-sale",
+   "language": "html",
+   "title": "🪴 Garage Sale",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 🪴 Garage Sale -->\n\n<h1>Lugia Pokémon card ($20 OBO)</h1>\n<p>Holographic. 1999 edition. Mint.</p>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/elements/garage-sale.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-challenge-map-directions",
+   "language": "html",
+   "title": "🗺️ Map Directions",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 🗺️ Map Directions -->\n\n<ol>\n  <li>Leave the house and turn right.</li>\n  <li>Walk two blocks.</li>\n  <li>Turn left at Main Street.</li>\n  <li>Walk one block.</li>\n  <li>The coffee shop is on the corner!</li>\n</ol>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/elements/map-directions.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-challenge-movie-review",
+   "language": "html",
+   "title": "🍿 Movie Review",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 🍿 Movie Review -->\n\n<h1>Mamma Mia 2 (2018)</h1>\n<p>⭐️⭐️⭐️⭐️</p>\n<p>love can be so awesome... and scary</p>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/elements/movie-review.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-challenge-packing-list",
+   "language": "html",
+   "title": "🧳 Packing List",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 🧳 Packing List -->\n\n<ul>\n  <li>shirts</li>\n  <li>shorts</li>\n  <li>swimsuit</li>\n  <li>toothbrush</li>\n  <li>toothpaste</li>\n</ul>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/elements/packing-list.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-challenge-ramen-restaurant",
+   "language": "html",
+   "title": "🍜 Ramen Restaurant",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 🍜 Ramen Restaurant -->\n\n<h2>Tonkotsu Ramen</h2>\n<img src=\"https://sudachirecipes.com/wp-content/uploads/2025/07/shoyu-ramen-new-thumb.png\">\n<p>Pork broth with classic thin noodles, topped with chashu, scallion, and chili oil.</p>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/elements/ramen-restaurant.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-challenge-bestie-fan-page",
+   "language": "html",
+   "title": "🫶 Bestie Fan Page",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 🫶 Bestie Fan Page -->\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Bestie Fan Page</title>\n  </head>\n  <body>\n    <h1>Joan</h1>\n    <img src=\"https://i.imgur.com/3Tggi0i.jpeg\" alt=\"Photo of my best friend\">\n    <br><a href=\"https://www.youtube.com\">Her favorite website is Youtube</a>\n    <ol type=\"A\">\n      <li>Always down to yap</li>\n      <li>Silliest person I know</li>\n      <li>Has a huge heart</li>\n    </ol>\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/structure/bestie-fan-page.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-challenge-i-spy",
+   "language": "html",
+   "title": "👁️ I Spy",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 👁️ I Spy -->\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>I Spy</title>\n    <style>\n      .object {\n        width: 50%;\n        height: 80px;\n      }\n\n      #desk {\n        background-color: brown;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>I spy with my little eye…</h1>\n\n    <div class=\"object\" id=\"desk\"></div>\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/structure/i-spy.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-challenge-juliens-art-mart",
+   "language": "html",
+   "title": "🎨 Julien's Art Mart",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 🎨 Julien's Art Mart -->\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Julien's Art Mart</title>\n\n    <style>\n      .product {\n        width: 50%;\n      }\n\n      #paints {\n        background-color: red;\n      }\n    </style>\n  </head>\n\n  <body>\n    <h1 id=\"store-title\">Julien's Art Mart</h1>\n\n    <!-- Selling painting materials -->\n\n    <a href=\"supplies.html\">Shop Supplies</a>\n\n    <div class=\"product\" id=\"paints\">\n      <p>Acrylic Paint Set</p>\n      <img src=\"https://www.paint-set.jpg\" alt=\"Acrylic paint set\">\n    </div>\n\n    <div class=\"product\" id=\"brushes\">\n      <p>Paint Brushes</p>\n    </div>\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/structure/juliens-art-mart.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-challenge-messy-closet",
+   "language": "html",
+   "title": "👕 Messy Closet",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 👕 Messy Closet -->\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>My Closet</title>\n  </head>\n  <body>\n    <h1>My Closet</h1>\n\n    <a href=\"#winter\">Winter</a>\n    <a href=\"#summer\">Summer</a>\n\n    <div class=\"closet-section\">\n      <h2 class=\"category\" id=\"winter\">Winter</h2>\n      <p>Coats, fleece-lined pants, and boots.</p>\n    </div>\n\n    <div class=\"closet-section\">\n      <h2 class=\"category\" id=\"summer\">Summer</h2>\n      <p>Tank tops, shorts, and sandals.</p>\n    </div>\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/structure/messy-closet.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-challenge-metamorphosis",
+   "language": "html",
+   "title": "🦋 Metamorphosis",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 🦋 Metamorphosis -->\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Butterfly Lifecycle</title>\n  </head>\n  <body>\n    <h1>Butterfly Lifecycle</h1>\n    <ol>\n      <li>🥚 Egg</li>\n      <li>🐛 Caterpillar</li>\n      <li>🌀 Chrysalis</li>\n      <li>🦋 Butterfly</li>\n    </ol>\n  </body>\n</html>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/structure/metamorphosis.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-challenge-song-lyrics",
+   "language": "html",
+   "title": "🎵 Song Lyrics",
+   "chapter": "Challenges · Freeform",
+   "xp": 30,
+   "brief": "A freeform build. Look at the preview and make it look the way you want it to.",
+   "starter": {
+    "html": "<!-- 🎵 Song Lyrics -->\n\n<h1>Cloudbusting - Kate Bush</h1>\n​​<!-- She sings about someone who treats her inconsistently \nand makes her feel high highs and low lows, so she \nsuppresses her love for them and tries to move on. -->\n<p>You're like my yo-yo</p>\n<p>That glowed in the dark</p>\n<p>What made it special</p>\n<p>Made it dangerous</p>\n<p>So I bury it</p>\n<p>And forget</p>",
+    "css": "",
+    "js": ""
+   },
+   "requirements": [],
+   "forbidden": [],
+   "freeform": true,
+   "source": "challenge-packs/html/structure/song-lyrics.html",
+   "origin": "Codédex challenge-packs"
+  },
+  {
+   "id": "cx-js-1-calculator",
+   "language": "js",
+   "title": "Build a calculator",
+   "chapter": "JavaScript · The Basics",
+   "xp": 30,
+   "brief": "A calculator reads two numbers and does the maths for you. Write a function called `add` that returns the sum of its two arguments, then log the answer for 19 and 23.",
+   "starter": {
+    "html": "",
+    "css": "",
+    "js": "// write the add function\n"
+   },
+   "requirements": [
+    "add"
+   ],
+   "forbidden": [],
+   "source": "w3schools/module/[js]calc with ja/calc.html",
+   "origin": "After the w3schools calculator demo"
+  },
+  {
+   "id": "cx-js-2-dom",
+   "language": "js",
+   "title": "Talk to the page",
+   "chapter": "JavaScript · The Basics",
+   "xp": 30,
+   "brief": "JavaScript reaches into the page through the DOM. Find the element with the id `greeting` and set its text to `Hello, world!`.",
+   "starter": {
+    "html": "<p id=\"greeting\">...</p>",
+    "css": "",
+    "js": "// find the element and change it\n"
+   },
+   "requirements": [
+    "getElementById",
+    "greeting",
+    "textContent"
+   ],
+   "forbidden": [],
+   "source": "w3schools/module/[js]recognition browser/recognition.html",
+   "origin": "After the w3schools DOM demo"
+  },
+  {
+   "id": "cx-js-3-event",
+   "language": "js",
+   "title": "Answer a click",
+   "chapter": "JavaScript · The Basics",
+   "xp": 35,
+   "brief": "Events let the page react. Add a click listener to the button with the id `go` that logs `clicked`.",
+   "starter": {
+    "html": "<button id=\"go\">Go</button>",
+    "css": "",
+    "js": "// listen for the click\n"
+   },
+   "requirements": [
+    "addEventListener",
+    "click",
+    "go"
+   ],
+   "forbidden": [],
+   "source": "w3schools/module/[js]slide show/index.html",
+   "origin": "After the w3schools slide show demo"
+  },
+  {
+   "id": "cx-js-4-object",
+   "language": "js",
+   "title": "Make an object",
+   "chapter": "JavaScript · The Basics",
+   "xp": 30,
+   "brief": "An object holds related values under keys. Create an object called `book` with a `title` and an `author`, then log the title.",
+   "starter": {
+    "html": "",
+    "css": "",
+    "js": "// make the book object\n"
+   },
+   "requirements": [
+    "book",
+    "title",
+    "author",
+    "console.log"
+   ],
+   "forbidden": [],
+   "source": "w3schools/module/[js]create object/Objects.html",
+   "origin": "After the w3schools objects demo"
+  },
+  {
+   "id": "cx-js-5-storage",
+   "language": "js",
+   "title": "Remember a value",
+   "chapter": "JavaScript · The Basics",
+   "xp": 35,
+   "brief": "localStorage keeps a value for next time. Save the number 42 under the key `score`, read it back and log it.",
+   "starter": {
+    "html": "",
+    "css": "",
+    "js": "// save and read the score\n"
+   },
+   "requirements": [
+    "localStorage",
+    "setItem",
+    "getItem",
+    "score"
+   ],
+   "forbidden": [],
+   "source": "w3schools/module/[jq]localstorage/indexx.html",
+   "origin": "After the w3schools localStorage demo"
+  },
+  {
+   "id": "cx-js-6-format",
+   "language": "js",
+   "title": "Format a price",
+   "chapter": "JavaScript · The Basics",
+   "xp": 35,
+   "brief": "Prices read better with thousands separators. Write a function called `formatPrice` that takes a number and returns it with a comma every three digits, then log `formatPrice(1234567)`.",
+   "starter": {
+    "html": "",
+    "css": "",
+    "js": "// write the formatPrice function\n"
+   },
+   "requirements": [
+    "formatPrice",
+    "return",
+    "replace",
+    "console.log"
+   ],
+   "forbidden": [
+    "eval"
+   ],
+   "source": "w3schools/module/[js]price format text field/index.html",
+   "origin": "After the w3schools price formatter demo"
+  }
+ ]
+}

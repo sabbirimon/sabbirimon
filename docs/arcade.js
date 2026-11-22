@@ -104,7 +104,7 @@ export function stepSurf(state, input, dt, difficulty = 'normal', random = Math.
 }
 
 function safeRead(key) { try { return Math.max(0, Number(localStorage.getItem(key)) || 0); } catch { return 0; } }
-function safeWrite(key, value) { try { localStorage.setItem(key, String(value)); } catch { /* Games still work in private storage modes. */ } }
+function safeWrite(key, value) { try { localStorage.setItem(key, String(value)); document.dispatchEvent(new CustomEvent('imon:progress', { detail: { key, value } })); } catch { /* Games still work in private storage modes. */ } }
 
 export function initArcade() {
   if (document.getElementById('arcade-modal')) return;

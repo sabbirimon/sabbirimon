@@ -1,0 +1,29 @@
+/* The drawn wordmark ------------------------------------------------- */
+/* The site name is pixel art, not a font. The letters are inline SVG, so
+   they scale like an image and never reflow. */
+
+.imon-wordmark {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  image-rendering: pixelated;
+}
+
+/* The element that holds the drawing keeps the space the word needs and
+   stops the text from showing through behind the SVG. */
+[data-wordmark] {
+  display: inline-flex;
+  align-items: center;
+}
+
+[data-wordmark][data-wordmark-drawn="true"] {
+  font-size: 0;
+  line-height: 0;
+}
+
+/* The footer mark is smaller than the header one. */
+.footer-brand .imon-wordmark {
+  transform: scale(.8);
+  transform-origin: left center;
+}

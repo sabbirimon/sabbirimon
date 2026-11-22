@@ -139,7 +139,7 @@ export function initSlots() {
   function completeSpin(outcome) {
     if (!dialog.open || !busy) return;
     const award = awardSpin(state,outcome);state=award.state;currentGrid=outcome.rows;currentResult=award.result;
-    try { localStorage.setItem(KEY,JSON.stringify(state)); } catch {}
+    try { localStorage.setItem(KEY,JSON.stringify(state)); document.dispatchEvent(new CustomEvent('imon:progress', { detail: { key: KEY, value: state } })); } catch {}
     cancelSpin();renderState();
     const lineResults=$('.slots-line-results');lineResults.hidden=false;
     lineResults.innerHTML=award.result.rowResults.map((result,i)=>`<span class="slots-line-${result.prizeTier}"><strong>ROW ${i+1}</strong> ${result.prizeTier.toUpperCase()} +${result.xp} XP</span>`).join('');

@@ -1,0 +1,722 @@
+/* The code lab — a Codédex-style exercise page.
+   The lesson lives on the left, the workbench on the right: a tab bar, a
+   code editor, a live preview and a terminal. The chrome is pixel; the
+   prose is the humanist body face, the same split the rest of the site
+   uses.
+
+   Every rule is namespaced with `.lab-`. */
+
+/* Tokens ------------------------------------------------------------ */
+.lab-page {
+  --lab-panel: #0b1026;
+  --lab-panel-2: #111834;
+  --lab-rim: #1e293b;
+  --lab-rim-strong: #2a3049;
+  --lab-blue: #14adff;
+  --lab-blue-deep: #0065ab;
+  --lab-gold: #facc15;
+  --lab-lime: #9eda68;
+  --lab-red: #f43f5e;
+  --lab-code-bg: #002451;
+  --lab-console-bg: #020617;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+}
+
+/* The pixel badge used for the XP counter. */
+.nes-pixel-badge {
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  color: var(--lab-gold);
+  background: #1a1608;
+  border: 2px solid #4a3c0d;
+  padding: 9px 13px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Skip link --------------------------------------------------------- */
+.lab-skip {
+  position: absolute;
+  top: -70px;
+  left: 16px;
+  z-index: 60;
+  padding: 10px 14px;
+  background: var(--lab-gold);
+  color: #231b07;
+  font-family: var(--pixel);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.lab-skip:focus {
+  top: 12px;
+}
+
+/* Top bar ----------------------------------------------------------- */
+.lab-topbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 14px max(4%, calc((100vw - 1560px) / 2));
+  background: #030719f5;
+  border-bottom: 1px solid var(--lab-rim-strong);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.lab-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--pixel);
+  font-size: 15px;
+  letter-spacing: 1px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.lab-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 32px;
+  font-size: 16px;
+  color: #231b07;
+  background: var(--lab-gold);
+  border: 3px solid #f4ab22;
+  box-shadow: 3px 0 #79511d, -3px 0 #79511d, 0 3px #79511d, 0 -3px #ffe380;
+}
+
+.lab-brand-end {
+  color: #94a3b8;
+}
+
+.lab-topnav {
+  display: flex;
+  gap: 18px;
+  margin-left: auto;
+  font-family: var(--pixel);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.lab-topnav a {
+  color: #94a3b8;
+}
+
+.lab-topnav a:hover {
+  color: var(--lab-gold);
+}
+
+/* The layout -------------------------------------------------------- */
+.lab-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 30rem) 1fr;
+  gap: 0;
+  align-items: start;
+  max-width: 1560px;
+  margin: 0 auto;
+}
+
+/* The lesson -------------------------------------------------------- */
+.lab-lesson {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding: 30px 28px 60px;
+  border-right: 1px solid var(--lab-rim);
+  min-width: 0;
+}
+
+/* The chapter rail */
+.lab-rail {
+  background: var(--lab-panel);
+  border: 2px solid var(--lab-rim);
+  padding: 18px 16px 20px;
+}
+
+.lab-rail-title {
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lab-gold);
+  margin: 0 0 14px;
+}
+
+.lab-rail-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lab-rail-list a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 500;
+  color: #cbd5e1;
+  border: 2px solid transparent;
+}
+
+.lab-rail-list a:hover {
+  background: var(--lab-panel-2);
+  border-color: var(--lab-rim);
+  color: #f8fafc;
+}
+
+.lab-rail-mark {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1;
+  color: var(--lab-muted, #64748b);
+  border: 2px solid var(--lab-rim-strong);
+  background: #0a0f24;
+}
+
+.lab-rail-list a[data-state="solved"] .lab-rail-mark {
+  color: var(--lab-lime);
+  border-color: #4d7c0f;
+  background: #14240a;
+}
+
+.lab-rail-list a[data-state="solved"] .lab-rail-label {
+  color: #94a3b8;
+  text-decoration: line-through;
+  text-decoration-color: #475569;
+}
+
+.lab-rail-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The brief */
+.lab-brief {
+  min-width: 0;
+}
+
+.lab-kicker {
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lab-blue);
+  margin: 0 0 10px;
+}
+
+.lab-title {
+  font-family: var(--pixel);
+  font-size: 21px;
+  line-height: 1.55;
+  letter-spacing: 1px;
+  color: #f8fafc;
+  margin: 0 0 14px;
+}
+
+.lab-lead {
+  font-family: var(--body);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0 0 24px;
+}
+
+.lab-instructions {
+  background: var(--lab-panel);
+  border: 2px solid var(--lab-rim);
+  padding: 18px 20px 20px;
+  margin-bottom: 20px;
+}
+
+.lab-instructions-title {
+  font-family: var(--body);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #f8fafc;
+  margin: 0 0 10px;
+}
+
+.lab-steps {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
+
+.lab-steps strong {
+  color: var(--lab-gold);
+  font-weight: 700;
+}
+
+.lab-status {
+  margin: 0 0 20px;
+  padding: 0;
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+.lab-status[data-state="ok"] {
+  color: var(--lab-lime);
+}
+
+.lab-status[data-state="error"] {
+  color: var(--lab-red);
+}
+
+.lab-help {
+  background: #101a3d;
+  border: 2px solid #24335e;
+  padding: 16px 18px 18px;
+}
+
+.lab-help-title {
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 8px;
+}
+
+.lab-help p {
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0 0 8px;
+}
+
+.lab-help p:last-child {
+  margin: 0;
+}
+
+.lab-help strong {
+  color: var(--lab-gold);
+}
+
+.lab-help-note {
+  color: #7f8db3 !important;
+  font-size: 13px !important;
+}
+
+/* The workbench ------------------------------------------------------ */
+.lab-work {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+  padding: 24px 26px 40px;
+}
+
+.lab-work-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  background: var(--lab-panel);
+  border: 2px solid var(--lab-rim);
+  border-bottom: 0;
+  padding: 12px 16px;
+}
+
+/* The tab bar */
+.lab-tabs {
+  display: flex;
+  gap: 4px;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.lab-tab {
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  background: #0a0f24;
+  border: 2px solid var(--lab-rim-strong);
+  border-bottom: 0;
+  padding: 9px 12px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.lab-tab:hover {
+  color: #f8fafc;
+  background: var(--lab-panel-2);
+}
+
+.lab-tab[aria-selected="true"] {
+  color: #231b07;
+  background: var(--lab-gold);
+  border-color: var(--lab-gold);
+}
+
+/* The action buttons */
+.lab-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lab-run,
+.lab-check,
+.lab-reset {
+  min-height: 42px;
+  padding: 8px 14px;
+}
+
+.lab-run span,
+.lab-check span,
+.lab-reset span {
+  font-family: var(--pixel);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 1px;
+}
+
+/* The editor and the preview sit side by side. */
+.lab-editor-pane {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 420px;
+  background: var(--lab-code-bg);
+  border: 2px solid var(--lab-rim);
+}
+
+.lab-editor {
+  display: flex;
+  min-width: 0;
+  border-right: 2px solid var(--lab-rim);
+}
+
+.lab-code {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  min-height: 420px;
+  padding: 16px 18px;
+  border: 0;
+  /* The Codédex editor is the deep blue one, not the near-black one. */
+  background: var(--lab-code-bg);
+  color: #e2e8f0;
+  font-family: 'Hack', 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  resize: none;
+  tab-size: 2;
+  outline: none;
+  white-space: pre;
+  overflow: auto;
+}
+
+.lab-code:focus {
+  background: #00306a;
+}
+
+.lab-preview {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #0b1026;
+}
+
+.lab-pane-title {
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  background: #0f1530;
+  border-bottom: 2px solid var(--lab-rim);
+  padding: 8px 14px;
+  margin: 0;
+}
+
+.lab-preview-frame {
+  flex: 1;
+  width: 100%;
+  min-height: 380px;
+  border: 0;
+  background: #0b1026;
+}
+
+/* The terminal */
+.lab-terminal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--lab-console-bg);
+  border: 2px solid var(--lab-rim);
+  border-top: 0;
+  min-height: 190px;
+}
+
+.lab-console {
+  list-style: none;
+  margin: 0;
+  padding: 12px 16px;
+  font-family: 'Hack', 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #e2e8f0;
+  max-height: 170px;
+  overflow: auto;
+}
+
+.lab-console-line {
+  display: flex;
+  gap: 10px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.lab-console-mark {
+  flex-shrink: 0;
+  color: var(--lab-blue);
+}
+
+.lab-console-error {
+  color: var(--lab-red);
+}
+
+.lab-console-error .lab-console-mark {
+  color: var(--lab-red);
+}
+
+.lab-console-warn {
+  color: var(--lab-gold);
+}
+
+.lab-console-warn .lab-console-mark {
+  color: var(--lab-gold);
+}
+
+.lab-console-info {
+  color: #94a3b8;
+}
+
+.lab-console-info .lab-console-mark {
+  color: #94a3b8;
+}
+
+/* The script frame is invisible: it exists only to run the learner's code
+   and post its console output back to the page. */
+.lab-script-frame {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+  left: -9999px;
+}
+
+/* The footer --------------------------------------------------------- */
+.lab-foot {
+  border-top: 1px solid var(--lab-rim);
+  padding: 20px max(4%, calc((100vw - 1560px) / 2));
+}
+
+.lab-foot p {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 13px;
+  line-height: 1.6;
+  color: #7f8db3;
+}
+
+/* The course bar ------------------------------------------------------ */
+/* The fixed strip along the bottom of the workbench: the chapter, how
+   far through the course the learner is, and the way on. */
+.lab-coursebar {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  background: #0f172a;
+  border-top: 3px solid var(--lab-rim-strong);
+}
+
+.lab-coursebar-chapter,
+.lab-coursebar-counter {
+  margin: 0;
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  color: #94a3b8;
+}
+
+.lab-coursebar-counter {
+  color: var(--lab-gold);
+}
+
+.lab-progress {
+  flex: 1 1 120px;
+  min-width: 90px;
+  height: 10px;
+  border: 2px solid var(--lab-rim-strong);
+  border-radius: 0;
+  background: #020617;
+  appearance: none;
+}
+
+.lab-progress::-webkit-progress-bar {
+  background: #020617;
+}
+
+.lab-progress::-webkit-progress-value {
+  background: var(--lab-lime);
+}
+
+.lab-progress::-moz-progress-bar {
+  background: var(--lab-lime);
+}
+
+.lab-coursebar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.lab-coursebar-actions .nes-button {
+  font-size: 10px;
+  min-height: 42px;
+  padding: 8px 14px;
+}
+
+/* The rail groups the exercises by chapter. */
+.lab-rail-group + .lab-rail-group {
+  margin-top: 18px;
+}
+
+.lab-rail-chapter {
+  margin: 0 0 6px;
+  font-family: var(--pixel);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lab-gold);
+}
+
+.lab-rail-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Narrow screens ----------------------------------------------------- */
+@media (max-width: 1100px) {
+  .lab-layout {
+    grid-template-columns: 1fr;
+  }
+  .lab-lesson {
+    border-right: 0;
+    border-bottom: 1px solid var(--lab-rim);
+  }
+}
+
+@media (max-width: 780px) {
+  .lab-topbar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .lab-topnav {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+  }
+  .lab-lesson {
+    padding: 22px 18px 40px;
+  }
+  .lab-work {
+    padding: 18px 14px 32px;
+  }
+  .lab-editor-pane {
+    grid-template-columns: 1fr;
+  }
+  .lab-editor {
+    border-right: 0;
+    border-bottom: 2px solid var(--lab-rim);
+  }
+  .lab-code {
+    min-height: 280px;
+  }
+  .lab-preview-frame {
+    min-height: 260px;
+  }
+  .lab-work-top {
+    padding: 10px 12px;
+  }
+  .lab-actions {
+    width: 100%;
+  }
+  .lab-run,
+  .lab-check,
+  .lab-reset {
+    flex: 1 1 120px;
+  }
+  .lab-title {
+    font-size: 17px;
+  }
+  .lab-coursebar {
+    gap: 10px;
+    padding: 10px 14px;
+  }
+  .lab-coursebar-actions {
+    width: 100%;
+    margin-left: 0;
+  }
+  .lab-coursebar-actions .nes-button {
+    flex: 1 1 100px;
+  }
+}
+
+/* Reduced motion ----------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .lab-run:active span,
+  .lab-check:active span,
+  .lab-reset:active span {
+    transform: none;
+  }
+}

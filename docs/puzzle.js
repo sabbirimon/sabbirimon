@@ -70,7 +70,7 @@ export function valid2048Board(board) {
 }
 
 function read(key) { try { return localStorage.getItem(key); } catch { return null; } }
-function write(key, value) { try { localStorage.setItem(key, value); } catch { /* Storage is optional. */ } }
+function write(key, value) { try { localStorage.setItem(key, value); document.dispatchEvent(new CustomEvent('imon:progress', { detail: { key, value } })); } catch { /* Storage is optional. */ } }
 function storedScore(value) { const number = Number(value); return Number.isSafeInteger(number) && number >= 0 ? number : 0; }
 function restoredState() {
   try {

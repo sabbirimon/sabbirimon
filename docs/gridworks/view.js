@@ -87,6 +87,7 @@ function saveCity(manual = false) {
   try {
     saves[currentKey()] = Engine.serialize(state);
     localStorage.setItem(SAVE_KEY, JSON.stringify(saves)); localStorage.setItem(META_KEY, JSON.stringify(meta));
+    document.dispatchEvent(new CustomEvent('imon:progress', { detail: { key: META_KEY, value: meta } }));
     storageAvailable = true; $('#hud-save').textContent = 'Saved in this browser';
     if (manual) { toast('City saved. Your next chapter can wait.'); playSound('click'); }
   } catch {

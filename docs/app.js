@@ -9,15 +9,20 @@ import { initQuiz } from './quiz.js';
 import { initNews } from './news.js';
 import { initGameSoundControls } from './audio.js';
 import { initOrbs } from './orbs.js';
+import { initAuth } from './auth.js';
+import { initWordmark } from './logo.js';
 const $ = s => document.querySelector(s);
 const read = (key, fallback) => { try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; } };
 let toastTimer;
 function toast(message) { $('#toast').textContent = message; $('#toast').classList.add('visible'); clearTimeout(toastTimer); toastTimer = setTimeout(() => $('#toast').classList.remove('visible'), 3500); }
 document.addEventListener('imon:toast', event => toast(event.detail));
+// The site name is drawn as pixel art, not typed in a font.
+initWordmark(document);
 initExperience();
 initPlayerCard();
 initOrbs();
 initArcade(); initLudo(); initPuzzle(); initSlots(); initRacer(); initQuiz(); initNews(); initGameSoundControls();
+initAuth();
 document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
   const filter = button.dataset.filter; let count = 0;
   document.querySelectorAll('[data-filter]').forEach(b => { b.classList.toggle('active', b === button); b.setAttribute('aria-pressed', String(b === button)); });

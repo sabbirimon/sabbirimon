@@ -73,7 +73,7 @@ export function stepRacer(state, input = {}, dt, random = Math.random) {
 function readBest() {
   try { const value = Number(localStorage.getItem(BEST_KEY)); return Number.isSafeInteger(value) && value >= 0 ? value : 0; } catch { return 0; }
 }
-function saveBest(value) { try { localStorage.setItem(BEST_KEY, String(value)); } catch { /* Racing works without storage. */ } }
+function saveBest(value) { try { localStorage.setItem(BEST_KEY, String(value)); document.dispatchEvent(new CustomEvent('imon:progress', { detail: { key: BEST_KEY, value } })); } catch { /* Racing works without storage. */ } }
 
 export function initRacer() {
   if (document.getElementById('racer-modal')) return;
