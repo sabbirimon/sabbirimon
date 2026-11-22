@@ -535,7 +535,12 @@ export function initAuth(root = document) {
     if (signInButton) {
       signInButton.disabled = true;
       signInButton.title = message;
-      signInButton.textContent = 'Sign in';
+      // The label lives in a span so the header can hide it on a phone
+      // without losing the button's shape. Writing to the button itself
+      // would throw that span away.
+      const label = signInButton.querySelector('.auth-button-label');
+      if (label) label.textContent = 'Sign in';
+      else signInButton.textContent = 'Sign in';
     }
     if (signOutButton) signOutButton.hidden = true;
   }

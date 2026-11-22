@@ -37,11 +37,13 @@
 }
 
 /* The nav takes the space it needs for its links and the wordmark gives up
-   the rest, so a link is never cut in half. */
+   the rest, so a link is never cut in half. The gap between links is fluid so
+   the row tightens before anything is clipped, and it never goes below 14px,
+   which keeps the links clearly separated. */
 .site-header nav {
   flex: 0 1 auto;
   min-width: 0;
-  gap: 26px;
+  gap: clamp(14px, 1.6vw, 26px);
   overflow: visible;
 }
 
@@ -72,6 +74,15 @@
   justify-content: center;
   padding: 0 13px;
   line-height: 1;
+}
+
+/* The account icon stands in for the label once the label has been hidden
+   for space, so the button never becomes an empty box. */
+.site-header .auth-button-icon {
+  display: none;
+  width: 16px;
+  height: 16px;
+  flex: none;
 }
 
 .site-header .github-link {
@@ -214,11 +225,6 @@
   .site-header nav a .nav-new {
     margin-left: 8px;
   }
-
-  /* The wordmark comes back in the folded layout, because there is room. */
-  .site-header .brand [data-wordmark] {
-    display: inline;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -227,7 +233,7 @@
   }
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1340px) {
   .site-header .command-palette-launcher kbd {
     display: none;
   }
@@ -250,9 +256,6 @@
   .site-header nav a .nav-new {
     display: none;
   }
-  .site-header nav {
-    gap: 20px;
-  }
 }
 
 @media (max-width: 1000px) {
@@ -260,9 +263,6 @@
     height: 66px;
     padding-inline: 28px;
     gap: 16px;
-  }
-  .site-header nav {
-    gap: 18px;
   }
   .site-header .command-palette-launcher > span:not(.command-palette-launcher-icon) {
     display: none;
@@ -277,8 +277,16 @@
     padding: 0 10px;
   }
   .site-header nav {
-    gap: 16px;
     font-size: 13px;
+  }
+  /* The wordmark comes back in the folded layout, because the nav has moved
+     out of the row and there is room for it again. This rule sits last so it
+     wins over the wider breakpoint that hides it. */
+  .site-header .brand [data-wordmark] {
+    display: inline;
+  }
+  .site-header .brand {
+    flex: none;
   }
 }
 
@@ -289,7 +297,6 @@
     gap: 12px;
   }
   .site-header nav {
-    gap: 14px;
     font-size: 12px;
   }
   .site-header nav a {
@@ -300,5 +307,25 @@
   }
   .site-header .github-link span {
     display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  /* On a phone the drawn wordmark is the first thing to go: the "I" mark
+     still says where you are, and the room is needed for the controls. */
+  .site-header .brand [data-wordmark] {
+    display: none;
+  }
+  /* The sign-in label goes too, leaving the account control as a compact
+     icon box that still reads as a button. */
+  .site-header .auth-button-label {
+    display: none;
+  }
+  .site-header .auth-button {
+    width: 38px;
+    padding: 0;
+  }
+  .site-header .auth-button-icon {
+    display: block;
   }
 }
