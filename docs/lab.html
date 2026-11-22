@@ -165,12 +165,18 @@
       </div>
 
       <!-- The terminal --------------------------------------------- -->
-      <div class="lab-terminal">
+      <div class="lab-terminal" data-lab-terminal data-lab-terminal-state="idle">
         <div class="lab-terminal-head">
-          <h2 class="lab-pane-title" data-pixel-text>Terminal</h2>
+          <h2 class="lab-pane-title">Terminal</h2>
           <button type="button" class="lab-terminal-clear" data-lab-clear>Clear</button>
         </div>
-        <ol class="lab-console" data-lab-console role="log" aria-live="polite" aria-label="Console output"></ol>
+        <div class="lab-terminal-body">
+          <ol class="lab-console" data-lab-console role="log" aria-live="polite" aria-label="Console output"></ol>
+          <div class="lab-terminal-empty" data-lab-terminal-empty>
+            <p class="lab-terminal-empty-title">Nothing here yet</p>
+            <p class="lab-terminal-empty-hint">Press <strong>Run</strong> to see what your code prints.</p>
+          </div>
+        </div>
         <iframe class="lab-script-frame" data-lab-script title="Script sandbox" sandbox="allow-scripts"></iframe>
       </div>
 

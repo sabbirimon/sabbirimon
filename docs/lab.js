@@ -24,6 +24,7 @@ import { initLabFeedback, buildFeedback } from './lab-feedback.js';
 import { initLabReward } from './lab-reward.js';
 import { initLabProgress } from './lab-progress.js';
 import { initLabLookup } from './lab-lookup.js';
+import { formatLine, initTerminalPanel } from './lab-output.js';
 
 /** The localStorage key that holds the learner's progress. */
 export const LAB_PROGRESS_KEY = 'imon-lab-progress-v1';
@@ -421,17 +422,26 @@ export function buildScriptFrame(js) {
     } catch (error) { /* the host went away; nothing to do */ }
   };
   var format = function (value) {
-    if (typeof value === 'string') return value;
-    if (value instanceof Error) return value.name + ': ' + value.message;
-    if (value === undefined) return 'undefined';
-    if (value === null) return 'null';
-    try { return JSON.stringify(value, null, 2); } catch (error) { return String(value); }
+    // A value is sent as a string, because that is the only thing that
+    // survives postMessage. The kind of the value is sent beside it, so
+    // the terminal can colour a number like a number and a string like
+    // a string. That difference is the whole point of the exercise, so
+    // it must not be lost on the way here.
+    if (typeof value === 'string') return { text: value, kind: 'text' };
+    if (value instanceof Error) return { text: value.name + ': ' + value.message, kind: 'text' };
+    if (value === undefined) return { text: 'undefined', kind: 'empty' };
+    if (value === null) return { text: 'null', kind: 'empty' };
+    if (typeof value === 'number') return { text: String(value), kind: 'number' };
+    if (typeof value === 'boolean') return { text: String(value), kind: 'boolean' };
+    try { return { text: JSON.stringify(value, null, 2), kind: 'plain' }; } catch (error) { return { text: String(value), kind: 'plain' }; }
   };
   ['log', 'info', 'warn', 'error'].forEach(function (level) {
     var original = console[level];
     console[level] = function () {
-      var args = Array.prototype.slice.call(arguments).map(format);
-      send('console', { level: level, args: args });
+      var values = Array.prototype.slice.call(arguments).map(format);
+      var args = values.map(function (value) { return value.text; });
+      var kinds = values.map(function (value) { return value.kind; });
+      send('console', { level: level, args: args, kinds: kinds });
       if (original) original.apply(console, arguments);
     };
   });
@@ -494,6 +504,9 @@ export function initLab(root = document) {
     js: root?.querySelector?.('[data-lab-editor="js"]')
   };
   const consoleList = root?.querySelector?.('[data-lab-console]');
+  // The terminal panel: the bar, the empty state and the rim that marks
+  // a failed check.
+  const panel = initTerminalPanel(root);
   const status = root?.querySelector?.('[data-lab-status]');
   const runButton = root?.querySelector?.('[data-lab-run]');
   const checkButton = root?.querySelector?.('[data-lab-check]');
@@ -548,10 +561,42 @@ export function initLab(root = document) {
     consoleList.append(line);
     while (consoleList.children.length > CONSOLE_HISTORY) consoleList.firstElementChild?.remove();
     consoleList.scrollTop = consoleList.scrollHeight;
+    panel?.showEmpty?.(false);
+  }
+
+  /**
+   * Print one entry from the sandbox, keeping the kind of each value.
+   *
+   * The kind is what lets a number be drawn like a number and a string
+   * like a string, which is the whole reason the terminal is styled the
+   * way it is.
+   */
+  function printEntry(entry) {
+    if (!consoleList) return;
+    const line = document.createElement('li');
+    line.className = `lab-console-line lab-console-${entry.level}`;
+    const mark = document.createElement('span');
+    mark.className = 'lab-console-mark';
+    mark.textContent = entry.prefix;
+    const body = document.createElement('span');
+    body.className = 'lab-console-text';
+    for (const run of entry.runs) {
+      const span = document.createElement('span');
+      span.className = 'lab-console-value';
+      span.style.color = run.colour;
+      span.textContent = run.text;
+      body.append(span);
+    }
+    line.append(mark, body);
+    consoleList.append(line);
+    while (consoleList.children.length > CONSOLE_HISTORY) consoleList.firstElementChild?.remove();
+    consoleList.scrollTop = consoleList.scrollHeight;
+    panel?.showEmpty?.(false);
   }
 
   function clearConsole() {
     if (consoleList) consoleList.textContent = '';
+    panel?.showEmpty?.(true);
   }
 
   /* -- preview ---------------------------------------------------- */
@@ -587,6 +632,10 @@ export function initLab(root = document) {
       status.textContent = result.message;
       status.dataset.state = result.ok ? 'ok' : 'error';
     }
+    // The terminal is rimmed in red when the check fails, the way the
+    // reference terminal does, so the learner sees the verdict without
+    // having to read the line.
+    panel?.setState?.(result.ok ? 'ok' : 'failed');
     if (result.ok) {
       const firstTime = !state.solved.has(state.exercise.id);
       state.solved.add(state.exercise.id);
@@ -793,10 +842,10 @@ export function initLab(root = document) {
     const data = event.data;
     if (!data || data.source !== 'imon-lab') return;
     if (data.kind === 'console') {
-      // The sandbox sends `{ source, kind, payload: { level, args } }`.
+      // The sandbox sends `{ source, kind, payload: { level, args, kinds } }`.
       const payload = data.payload || {};
-      const entry = formatConsoleEntry({ level: payload.level, args: payload.args });
-      print(entry.level, entry.text);
+      const entry = formatLine({ level: payload.level, args: payload.args, hints: payload.kinds });
+      printEntry(entry);
     }
   };
 
@@ -814,9 +863,11 @@ export function initLab(root = document) {
     refreshAll();
     print('info', 'Reset to the starting code.');
   });
+  // Clearing the terminal leaves nothing behind, so the empty state
+  // comes back and says the panel is waiting for a run. A line saying
+  // "cleared" would hide that message again straight away.
   clearButton?.addEventListener('click', () => {
     clearConsole();
-    print('info', 'Terminal cleared.');
   });
   globalThis.addEventListener('message', onMessage);
 

@@ -469,35 +469,23 @@
   margin-top: 14px;
 }
 
-/* The head row carries the title and the clear button, so the terminal
-   has a proper bar instead of a floating heading. */
-.lab-terminal-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 6px;
-}
-
-.lab-terminal-head .lab-pane-title {
-  margin: 0;
-}
-
+/* The head row is the terminal's bar; its look lives in lab.css. The
+   clear button sits inside that bar, so it is restyled here. */
 .lab-terminal-clear {
   font-family: var(--pixel);
   font-size: 9px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: #7f8db3;
+  color: #cbd5e1;
   background: transparent;
-  border: 1px solid var(--lab-rim);
+  border: 1px solid #475569;
   padding: 4px 9px;
   cursor: pointer;
 }
 
 .lab-terminal-clear:hover {
-  color: #e2e8f0;
-  border-color: var(--lab-rim-strong);
+  color: #f8fafc;
+  border-color: #64748b;
 }
 
 .lab-coursebar {
