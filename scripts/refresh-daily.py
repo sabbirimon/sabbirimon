@@ -10,11 +10,12 @@ import sys
 import time
 import urllib.request
 from urllib.parse import urlparse
-from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'docs' / 'data'
-TODAY = dt.datetime.now(ZoneInfo('Asia/Dhaka')).date().isoformat()
+# The daily pack rolls over at midnight UTC, so every visitor gets the same
+# questions on the same day.
+TODAY = dt.datetime.now(dt.timezone.utc).date().isoformat()
 NOW = dt.datetime.now(dt.timezone.utc).isoformat()
 
 def fetch(url):

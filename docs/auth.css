@@ -10,11 +10,14 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: none;
 }
 
 .auth-button {
   display: inline-flex;
   align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   gap: 9px;
   font-family: var(--pixel);
   font-size: 10px;

@@ -5,6 +5,8 @@
 .command-palette-launcher {
   display: inline-flex;
   align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   gap: 9px;
   font-family: var(--pixel);
   font-size: 10px;
@@ -32,6 +34,8 @@
 .command-palette-launcher kbd {
   font-family: var(--pixel);
   font-size: 9px;
+  line-height: 1.4;
+  white-space: nowrap;
   color: var(--muted);
   border: 1px solid var(--line);
   padding: 3px 5px;

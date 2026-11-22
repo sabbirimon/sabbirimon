@@ -14,6 +14,7 @@ import { initWordmark } from './logo.js';
 import { initWorldMap } from './world-map-ui.js';
 import { initCommandPalette } from './command-palette-ui.js';
 import { initAchievements } from './achievements-ui.js';
+import { initSiteNav } from './site-nav.js';
 const $ = s => document.querySelector(s);
 const read = (key, fallback) => { try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; } };
 let toastTimer;
@@ -29,6 +30,7 @@ initArcade(); initLudo(); initPuzzle(); initSlots(); initRacer(); initQuiz(); in
 initAuth();
 initCommandPalette();
 initAchievements();
+initSiteNav();
 document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
   const filter = button.dataset.filter; let count = 0;
   document.querySelectorAll('[data-filter]').forEach(b => { b.classList.toggle('active', b === button); b.setAttribute('aria-pressed', String(b === button)); });

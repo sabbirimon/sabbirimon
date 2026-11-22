@@ -1,7 +1,9 @@
 import { playSound } from './audio.js';
 export function scoreQuiz(answers, questions) { return answers.reduce((n, answer, i) => n + Number(answer === questions[i]?.answer), 0); }
 export function validQuestion(q) { return q && typeof q.question === 'string' && Array.isArray(q.options) && q.options.length === 4 && q.options.every(x => typeof x === 'string') && Number.isInteger(q.answer) && q.answer >= 0 && q.answer < 4; }
-const day = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Dhaka', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+// The daily pack rolls over at midnight UTC, so everyone gets the same
+// questions on the same day no matter where they are.
+const day = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 const get = (key, fallback) => { try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; } };
 export function initQuiz() {
   const dialog = document.createElement('dialog'); dialog.className = 'quiz-modal'; dialog.id = 'quiz-modal'; dialog.setAttribute('aria-labelledby', 'quiz-title');

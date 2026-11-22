@@ -1,0 +1,304 @@
+/* The site header — one row, one height, every control the same size.
+
+   The header used to let its parts size themselves, so the nav links, the
+   search launcher, the sign-in button and the GitHub link all came out at
+   different heights and wrapped onto two lines. Every rule here pins the
+   header row to a single height and gives each control the same box, so
+   nothing shifts or wraps no matter how long its label is.
+
+   `docs/style.css` is minified and holds the original header rules. This
+   file loads after it and overrides them. */
+
+.site-header {
+  height: 72px;
+  gap: 20px;
+  flex-wrap: nowrap;
+  /* The nav sits between the brand and the controls, and the controls are
+     pushed to the right edge. The nav is never squeezed below the width its
+     links need. */
+  justify-content: flex-start;
+}
+
+/* The controls are pinned to the right; the nav takes what is left over and
+   the wordmark gives up space first. */
+.site-header .command-palette-launcher {
+  margin-left: auto;
+}
+
+/* Nothing in the header is allowed to wrap onto a second line. */
+.site-header nav,
+.site-header nav a,
+.site-header .brand,
+.site-header .command-palette-launcher,
+.site-header .auth-bar,
+.site-header .auth-button,
+.site-header .github-link {
+  white-space: nowrap;
+}
+
+/* The nav takes the space it needs for its links and the wordmark gives up
+   the rest, so a link is never cut in half. */
+.site-header nav {
+  flex: 0 1 auto;
+  min-width: 0;
+  gap: 26px;
+  overflow: visible;
+}
+
+.site-header nav a {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+}
+
+/* The PLAY tag rides along with Arcade and never breaks onto its own line. */
+.site-header nav a .nav-new {
+  white-space: nowrap;
+  flex: none;
+  margin-left: 7px;
+  padding: 4px 6px;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* Every control in the right-hand cluster gets the same 38px box. */
+.site-header .command-palette-launcher,
+.site-header .auth-button,
+.site-header .github-link {
+  height: 38px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0 13px;
+  line-height: 1;
+}
+
+.site-header .github-link {
+  gap: 8px;
+}
+
+/* The search launcher keeps the keyboard hint on one line, and the hint is
+   the first thing to go when the header runs out of room. */
+.site-header .command-palette-launcher kbd {
+  flex: none;
+  white-space: nowrap;
+  line-height: 1;
+  padding: 3px 5px;
+}
+
+.site-header .command-palette-launcher .command-palette-launcher-icon {
+  flex: none;
+  line-height: 1;
+}
+
+.site-header .command-palette-launcher > span:not(.command-palette-launcher-icon) {
+  flex: none;
+}
+
+/* The wordmark gives up its "WORLD" half before any nav link is cut. */
+.site-header .brand {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.site-header .brand [data-wordmark] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The menu button ------------------------------------------------------ */
+
+/* Hidden on the wide layout, where the links are already on screen. */
+.nav-toggle {
+  display: none;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  box-shadow: 0 3px #050814;
+  cursor: pointer;
+}
+
+.nav-toggle:hover {
+  border-color: var(--gold);
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.nav-toggle-bars {
+  display: block;
+  width: 17px;
+}
+
+.nav-toggle-bars i {
+  display: block;
+  height: 2px;
+  background: var(--text);
+  margin: 3px 0;
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+/* The bars turn into a cross when the menu is open. */
+.site-header.is-nav-open .nav-toggle-bars i:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.site-header.is-nav-open .nav-toggle-bars i:nth-child(2) {
+  opacity: 0;
+}
+
+.site-header.is-nav-open .nav-toggle-bars i:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle-bars i {
+    transition: none;
+  }
+}
+
+/* The folded menu ------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  /* The nav becomes a panel that drops out of the header. It is still in the
+     document, so the links work with JavaScript switched off. */
+  .site-header nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 6px 0;
+    background: #060b1f;
+    border-bottom: 1px solid #262d40;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, .55);
+    /* Hidden until the menu button is pressed. */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  }
+
+  .site-header.is-nav-open nav {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .site-header nav a {
+    height: 44px;
+    padding: 0 24px;
+    border-bottom: 1px solid rgba(42, 48, 73, .55);
+    font-size: 15px;
+  }
+
+  .site-header nav a:last-child {
+    border-bottom: 0;
+  }
+
+  .site-header nav a .nav-new {
+    margin-left: 8px;
+  }
+
+  /* The wordmark comes back in the folded layout, because there is room. */
+  .site-header .brand [data-wordmark] {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header nav {
+    transition: none;
+  }
+}
+
+@media (max-width: 1180px) {
+  .site-header .command-palette-launcher kbd {
+    display: none;
+  }
+  .site-header .command-palette-launcher {
+    padding: 0 11px;
+  }
+  /* The wordmark is the first thing to go: the mark on its own still says
+     where you are. */
+  .site-header .brand [data-wordmark] {
+    display: none;
+  }
+  .site-header .brand {
+    flex: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  /* The PLAY badge is the first thing to go: it is decoration, and the nav
+     needs the room for real links. */
+  .site-header nav a .nav-new {
+    display: none;
+  }
+  .site-header nav {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .site-header {
+    height: 66px;
+    padding-inline: 28px;
+    gap: 16px;
+  }
+  .site-header nav {
+    gap: 18px;
+  }
+  .site-header .command-palette-launcher > span:not(.command-palette-launcher-icon) {
+    display: none;
+  }
+  .site-header .command-palette-launcher {
+    padding: 0 11px;
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header .auth-button {
+    padding: 0 10px;
+  }
+  .site-header nav {
+    gap: 16px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 700px) {
+  .site-header {
+    height: 62px;
+    padding-inline: 20px;
+    gap: 12px;
+  }
+  .site-header nav {
+    gap: 14px;
+    font-size: 12px;
+  }
+  .site-header nav a {
+    height: 32px;
+  }
+  .site-header .github-link {
+    padding: 0 9px;
+  }
+  .site-header .github-link span {
+    display: none;
+  }
+}
