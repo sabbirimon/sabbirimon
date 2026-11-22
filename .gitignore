@@ -2,3 +2,7 @@
 __pycache__/
 *.pyc
 node_modules/
+
+# Hookify rules are local to a checkout and are ignored by default. Tracked rules
+# stay disabled unless ECC_HOOKIFY_ALLOW_TRACKED=1 is set.
+.claude/hookify.*.local.md
