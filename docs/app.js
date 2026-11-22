@@ -8,6 +8,7 @@ import { initRacer } from './racer.js';
 import { initQuiz } from './quiz.js';
 import { initNews } from './news.js';
 import { initGameSoundControls } from './audio.js';
+import { initOrbs } from './orbs.js';
 const $ = s => document.querySelector(s);
 const read = (key, fallback) => { try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; } };
 let toastTimer;
@@ -15,6 +16,7 @@ function toast(message) { $('#toast').textContent = message; $('#toast').classLi
 document.addEventListener('imon:toast', event => toast(event.detail));
 initExperience();
 initPlayerCard();
+initOrbs();
 initArcade(); initLudo(); initPuzzle(); initSlots(); initRacer(); initQuiz(); initNews(); initGameSoundControls();
 document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
   const filter = button.dataset.filter; let count = 0;
