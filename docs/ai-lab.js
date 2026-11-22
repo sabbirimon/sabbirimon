@@ -25,6 +25,9 @@
  * below are pure so they can be tested under node.
  */
 
+import { createRequestsModule } from './ai-api.js';
+import { createSqliteModule } from './ai-sql.js';
+
 /** Where the AI course lives. */
 export const AI_COURSE_URL = './data/ai-course.json';
 
@@ -233,7 +236,7 @@ export function runPython(source, options = {}) {
   let steps = 0;
   const runtime = { output, maxSteps, steps: () => steps++ };
   const scope = { globals: Object.create(null), runtime };
-  const builtins = createBuiltins(output, options.math);
+  const builtins = createBuiltins(output, options.math, createModuleScope());
 
   try {
     const statements = parsePython(source);
@@ -268,7 +271,7 @@ export const MATH_MODULE = {
 /**
  * The standard-library-ish names the interpreter provides.
  */
-function createBuiltins(output, math) {
+function createBuiltins(output, math, modules) {
   const values = {
     len: value => (value == null ? 0 : value.length),
     abs: value => Math.abs(value),
@@ -318,7 +321,26 @@ function createBuiltins(output, math) {
   };
   if (math) Object.assign(values, math);
   values.print = (...args) => { output.push(args.map(value => formatValue(value)).join(' ')); };
+  // The learning modules ride along with the builtins, so the `import`
+  // statement can bind them into the program's scope.
+  if (modules) {
+    values.requests = modules.requests;
+    values.sqlite3 = modules.sqlite3;
+  }
   return values;
+}
+
+/**
+ * The learning modules a program can import.
+ *
+ * `requests` is a fake HTTP client and `sqlite3` is an in-memory database.
+ * Both are bound per run, so two programs never share their state.
+ */
+function createModuleScope() {
+  return {
+    requests: createRequestsModule(),
+    sqlite3: createSqliteModule()
+  };
 }
 
 /**
@@ -486,11 +508,14 @@ function executeStatement(statements, index, scope, builtins, runtime) {
   }
 
   if (head.value === 'import') {
-    // The only module the course imports is `math`, and it is bound as a
-    // plain object so that `math.exp(x)` reads the way it does in Python.
+    // The modules the course imports are bound as plain objects, so that
+    // `math.exp(x)` and `requests.get(url)` read the way they do in Python.
     const names = tokens.slice(1).filter(t => t.type === 'name').map(t => t.value);
     for (const name of names) {
       if (name === 'math') scope.globals.math = { ...MATH_MODULE };
+      else if (name === 'requests') scope.globals.requests = builtins.requests;
+      else if (name === 'http') scope.globals.http = builtins.requests;
+      else if (name === 'sqlite3') scope.globals.sqlite3 = builtins.sqlite3;
       else scope.globals[name] = {};
     }
     return index + 1;
@@ -978,12 +1003,43 @@ function callMethod(value, name, args, scope, builtins) {
     throw new Error(`A string has no "${name}" method.`);
   }
   if (value && typeof value === 'object') {
+    // A learning module, such as `requests` or a database handle, has its
+    // own dispatch because its methods need the module as `this`.
+    if (value.__sqlite || value.__sqlResult) return callModuleMethod(value, name, args);
+    // A plain object, such as the `math` module, holds plain functions.
+    // The object is passed as `this`, so a module method such as
+    // `requests.get(url)` can reach its own state.
+    if (typeof value[name] === 'function') return value[name].apply(value, args);
     if (name === 'keys') { return Object.keys(value); }
     if (name === 'values') { return Object.values(value); }
     if (name === 'items') { return Object.entries(value); }
     if (name === 'get') { return value[String(args[0])] ?? args[1] ?? null; }
-    // A plain object, such as the `math` module, holds plain functions.
-    if (typeof value[name] === 'function') return value[name](...args);
+  }
+  throw new Error(`That value has no "${name}" method.`);
+}
+
+/**
+ * Call a method that belongs to a learning module.
+ *
+ * The modules — `requests` and `sqlite3` — are objects whose methods need
+ * the module itself as `this`, and the SQLite handle needs its own
+ * dispatch because it returns cursors rather than plain values.
+ */
+function callModuleMethod(value, name, args) {
+  // A SQLite handle: `handle.execute(...)`, `handle.query(...)`.
+  if (value?.__sqlite) {
+    if (name === 'execute') return value.execute(args[0]);
+    if (name === 'executescript') return value.executescript(args[0]);
+    if (name === 'query') return value.query(args[0]);
+    if (name === 'tables') return value.tables();
+    if (name === 'close') return value.close();
+    throw new Error(`That database handle has no "${name}" method.`);
+  }
+  // A cursor: `cursor.fetchall()`, `cursor.fetchone()`.
+  if (value?.__sqlResult) {
+    if (name === 'fetchall') return value.fetchall();
+    if (name === 'fetchone') return value.fetchone();
+    throw new Error(`That result has no "${name}" method.`);
   }
   throw new Error(`That value has no "${name}" method.`);
 }
@@ -1177,6 +1233,9 @@ export function toAiExercise(entry) {
       design: typeof starter.design === 'string' ? starter.design : ''
     },
     check: kind === 'design' ? makeDesignChecker(entry) : makePythonChecker(entry),
+    // The expected output is kept on the exercise, so the brief can show
+    // the learner what they are aiming for.
+    expected: Array.isArray(entry.expected) ? entry.expected.filter(line => typeof line === 'string') : [],
     origin: typeof entry.origin === 'string' ? entry.origin : '',
     source: typeof entry.source === 'string' ? entry.source : ''
   };

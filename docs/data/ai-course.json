@@ -1,7 +1,7 @@
 {
   "source": "Original exercises written for IMON.world",
   "license": "MIT",
-  "version": 1,
+  "version": 2,
   "exercises": [
     {
       "id": "ai-count-tokens",
@@ -10,7 +10,9 @@
       "title": "Count the tokens",
       "xp": 15,
       "brief": "A tokenizer splits text into pieces. Write a function called `count_tokens` that takes a string and returns the number of whitespace-separated words in it, then print the answer for \"the quick brown fox\".",
-      "expected": ["4"],
+      "expected": [
+        "4"
+      ],
       "starter": {
         "python": "# count the words in a string\n\ndef count_tokens(text):\n    pass\n\nprint(count_tokens(\"the quick brown fox\"))\n"
       }
@@ -22,7 +24,9 @@
       "title": "Scale the scores",
       "xp": 20,
       "brief": "Model outputs arrive on any scale. Write `normalise` so it takes a list of numbers and divides each one by the largest value in the list. Print the result for [2, 4, 8].",
-      "expected": ["[0.25, 0.5, 1.0]"],
+      "expected": [
+        "[0.25, 0.5, 1.0]"
+      ],
       "starter": {
         "python": "def normalise(scores):\n    pass\n\nprint(normalise([2, 4, 8]))\n"
       }
@@ -34,7 +38,9 @@
       "title": "Softmax",
       "xp": 30,
       "brief": "Softmax turns raw scores into probabilities that add up to one. Write `softmax` that takes a list of numbers, subtracts the largest value from each one (so nothing overflows), exponentiates them, and divides each by the total. Print the result for [1, 2, 3].",
-      "expected": ["[0.09003057317038046, 0.24472847105479764, 0.6652409557748218]"],
+      "expected": [
+        "[0.09003057317038046, 0.24472847105479764, 0.6652409557748218]"
+      ],
       "starter": {
         "python": "import math\n\ndef softmax(scores):\n    pass\n\nprint(softmax([1, 2, 3]))\n"
       }
@@ -46,7 +52,9 @@
       "title": "Sliding window",
       "xp": 30,
       "brief": "A sliding window looks at every run of `size` items in a list. Write `windows` that returns each run of `size` numbers, in order. Print the result of `windows([1, 2, 3, 4], 2)`.",
-      "expected": ["[[1, 2], [2, 3], [3, 4]]"],
+      "expected": [
+        "[[1, 2], [2, 3], [3, 4]]"
+      ],
       "starter": {
         "python": "def windows(items, size):\n    pass\n\nprint(windows([1, 2, 3, 4], 2))\n"
       }
@@ -58,7 +66,9 @@
       "title": "Count the bigrams",
       "xp": 35,
       "brief": "A bigram is two words next to each other. Write `bigram_counts` that takes a list of words and returns a dictionary counting each pair. Print the result for [\"a\", \"b\", \"a\"].",
-      "expected": ["{'a b': 1, 'b a': 1}"],
+      "expected": [
+        "{'a b': 1, 'b a': 1}"
+      ],
       "starter": {
         "python": "def bigram_counts(words):\n    pass\n\nprint(bigram_counts([\"a\", \"b\", \"a\"]))\n"
       }
@@ -70,7 +80,9 @@
       "title": "Cosine similarity",
       "xp": 40,
       "brief": "Cosine similarity says how alike two vectors are, ignoring their size. Write `cosine` that takes two lists of numbers and returns the dot product divided by the two lengths. Print the result for [1, 0] and [1, 0].",
-      "expected": ["1.0"],
+      "expected": [
+        "1.0"
+      ],
       "starter": {
         "python": "import math\n\ndef cosine(a, b):\n    pass\n\nprint(cosine([1, 0], [1, 0]))\n"
       }
@@ -82,7 +94,9 @@
       "title": "The mean is the baseline",
       "xp": 30,
       "brief": "Every model has to beat the mean. Write `baseline` that takes a list of numbers and returns the average, then print the mean of [2, 4, 6, 8].",
-      "expected": ["5.0"],
+      "expected": [
+        "5.0"
+      ],
       "starter": {
         "python": "def baseline(values):\n    pass\n\nprint(baseline([2, 4, 6, 8]))\n"
       }
@@ -94,7 +108,9 @@
       "title": "Keep the best three",
       "xp": 30,
       "brief": "A model usually returns many candidates and the caller keeps the best few. Write `top_k` that returns the `k` largest numbers in a list, highest first. Print `top_k([3, 9, 1, 7], 2)`.",
-      "expected": ["[9, 7]"],
+      "expected": [
+        "[9, 7]"
+      ],
       "starter": {
         "python": "def top_k(values, k):\n    pass\n\nprint(top_k([3, 9, 1, 7], 2))\n"
       }
@@ -106,7 +122,9 @@
       "title": "Stay inside the budget",
       "xp": 40,
       "brief": "A request has a token budget. Write `truncate` that takes a list of tokens and a budget and returns only the first `budget` tokens. Print `truncate([1, 2, 3, 4, 5], 3)`.",
-      "expected": ["[1, 2, 3]"],
+      "expected": [
+        "[1, 2, 3]"
+      ],
       "starter": {
         "python": "def truncate(tokens, budget):\n    pass\n\nprint(truncate([1, 2, 3, 4, 5], 3))\n"
       }
@@ -118,7 +136,9 @@
       "title": "How often each word",
       "xp": 30,
       "brief": "Write `word_counts` that takes a sentence split into words and returns a dictionary of how many times each word appears. Print it for [\"a\", \"b\", \"a\"].",
-      "expected": ["{'a': 2, 'b': 1}"],
+      "expected": [
+        "{'a': 2, 'b': 1}"
+      ],
       "starter": {
         "python": "def word_counts(words):\n    pass\n\nprint(word_counts([\"a\", \"b\", \"a\"]))\n"
       }
@@ -130,7 +150,9 @@
       "title": "A leaky bucket",
       "xp": 40,
       "brief": "A leaky bucket shapes a bursty stream into a steady one. Write `leaky_bucket` that takes a list of arrivals per second and a capacity, and returns how many requests leave the bucket each second. Print `leaky_bucket([3, 0, 0, 4], 2)`.",
-      "expected": ["[2, 1, 0, 2]"],
+      "expected": [
+        "[2, 1, 0, 2]"
+      ],
       "starter": {
         "python": "def leaky_bucket(arrivals, capacity):\n    pass\n\nprint(leaky_bucket([3, 0, 0, 4], 2))\n"
       }
@@ -142,7 +164,9 @@
       "title": "Back off, then try again",
       "xp": 40,
       "brief": "When a call fails, wait twice as long before trying again. Write `backoff` that takes an attempt number starting at one and returns the wait in seconds: 1, 2, 4, 8. Print `backoff(4)`.",
-      "expected": ["8"],
+      "expected": [
+        "8"
+      ],
       "starter": {
         "python": "def backoff(attempt):\n    pass\n\nprint(backoff(4))\n"
       }
@@ -154,7 +178,10 @@
       "title": "Do not retry forever",
       "xp": 35,
       "brief": "Retries cost money and time, so they need a ceiling. Write `should_retry` that returns True only when the attempt number is below the limit. Print `should_retry(2, 3)` and `should_retry(3, 3)`.",
-      "expected": ["True", "False"],
+      "expected": [
+        "True",
+        "False"
+      ],
       "starter": {
         "python": "def should_retry(attempt, limit):\n    pass\n\nprint(should_retry(2, 3))\nprint(should_retry(3, 3))\n"
       }
@@ -166,7 +193,9 @@
       "title": "One request, one effect",
       "xp": 40,
       "brief": "A retried request must not charge twice. Write `is_duplicate` that takes the keys already seen and a new key, and returns True when the key was seen before. Print `is_duplicate([\"a\", \"b\"], \"b\")`.",
-      "expected": ["True"],
+      "expected": [
+        "True"
+      ],
       "starter": {
         "python": "def is_duplicate(seen, key):\n    pass\n\nprint(is_duplicate([\"a\", \"b\"], \"b\"))\n"
       }
@@ -178,7 +207,9 @@
       "title": "Did the cache answer?",
       "xp": 30,
       "brief": "Write `cache_status` that takes a cache dictionary and a key and returns \"hit\" when the key is in the cache and \"miss\" otherwise. Print `cache_status({\"a\": 1}, \"a\")`.",
-      "expected": ["hit"],
+      "expected": [
+        "hit"
+      ],
       "starter": {
         "python": "def cache_status(cache, key):\n    pass\n\nprint(cache_status({\"a\": 1}, \"a\"))\n"
       }
@@ -190,7 +221,9 @@
       "title": "A cache that understands",
       "xp": 45,
       "brief": "A semantic cache serves an old answer when the new question means the same thing. Write `semantic_cache` that takes a list of questions and returns the first one whose letters match the query exactly, or None. Print `semantic_cache([\"hello there\", \"bye\"], \"hello there\")`.",
-      "expected": ["hello there"],
+      "expected": [
+        "hello there"
+      ],
       "starter": {
         "python": "def semantic_cache(questions, query):\n    pass\n\nprint(semantic_cache([\"hello there\", \"bye\"], \"hello there\"))\n"
       }
@@ -202,7 +235,9 @@
       "title": "Open the breaker",
       "xp": 45,
       "brief": "A circuit breaker stops sending traffic to a service that keeps failing. Write `breaker_state` that takes a list of results where True means success and returns \"open\" when three failures in a row are found, otherwise \"closed\". Print `breaker_state([True, False, False, False])`.",
-      "expected": ["open"],
+      "expected": [
+        "open"
+      ],
       "starter": {
         "python": "def breaker_state(results):\n    pass\n\nprint(breaker_state([True, False, False, False]))\n"
       }
@@ -214,7 +249,9 @@
       "title": "How deep is the queue",
       "xp": 35,
       "brief": "Write `queue_depth` that takes a list of jobs, each with a `size`, and returns the total size still waiting. Print `queue_depth([1, 2, 3])`.",
-      "expected": ["6"],
+      "expected": [
+        "6"
+      ],
       "starter": {
         "python": "def queue_depth(jobs):\n    pass\n\nprint(queue_depth([1, 2, 3]))\n"
       }
@@ -226,7 +263,9 @@
       "title": "What does a call cost",
       "xp": 35,
       "brief": "Write `call_cost` that takes the number of input tokens, the number of output tokens and a price per thousand tokens for each, and returns the total cost. Print `call_cost(1000, 500, 0.002, 0.004)`.",
-      "expected": ["0.004"],
+      "expected": [
+        "0.004"
+      ],
       "starter": {
         "python": "def call_cost(input_tokens, output_tokens, input_price, output_price):\n    pass\n\nprint(call_cost(1000, 500, 0.002, 0.004))\n"
       }
@@ -238,7 +277,9 @@
       "title": "Spend the latency budget",
       "xp": 35,
       "brief": "A request has a latency budget split across several steps. Write `within_budget` that adds the given step times and returns True when the total is under the budget. Print `within_budget([100, 200], 500)`.",
-      "expected": ["True"],
+      "expected": [
+        "True"
+      ],
       "starter": {
         "python": "def within_budget(steps, budget):\n    pass\n\nprint(within_budget([100, 200], 500))\n"
       }
@@ -250,7 +291,9 @@
       "title": "Score the answers",
       "xp": 35,
       "brief": "Write `accuracy` that takes the predicted labels and the true labels and returns the share that match, as a number between zero and one. Print `accuracy([1, 0, 1], [1, 0, 0])`.",
-      "expected": ["0.6666666666666666"],
+      "expected": [
+        "0.6666666666666666"
+      ],
       "starter": {
         "python": "def accuracy(predicted, truth):\n    pass\n\nprint(accuracy([1, 0, 1], [1, 0, 0]))\n"
       }
@@ -262,7 +305,9 @@
       "title": "Where the model is wrong",
       "xp": 45,
       "brief": "Write `confusion` that takes the predicted labels and the true labels and returns a dictionary with the counts of true positives, true negatives, false positives and false negatives. Print it for [1, 0, 1] against [1, 0, 0].",
-      "expected": ["{'tp': 1, 'tn': 1, 'fp': 1, 'fn': 0}"],
+      "expected": [
+        "{'tp': 1, 'tn': 1, 'fp': 1, 'fn': 0}"
+      ],
       "starter": {
         "python": "def confusion(predicted, truth):\n    pass\n\nprint(confusion([1, 0, 1], [1, 0, 0]))\n"
       }
@@ -274,7 +319,9 @@
       "title": "Hide the personal data",
       "xp": 40,
       "brief": "Write `redact` that takes a list of names and returns the same list with every name replaced by the text \"REDACTED\". Print `redact([\"Ada\", \"Grace\"])`.",
-      "expected": ["['REDACTED', 'REDACTED']"],
+      "expected": [
+        "['REDACTED', 'REDACTED']"
+      ],
       "starter": {
         "python": "def redact(names):\n    pass\n\nprint(redact([\"Ada\", \"Grace\"]))\n"
       }
@@ -286,7 +333,9 @@
       "title": "Spot the injection",
       "xp": 45,
       "brief": "A prompt injection tries to make the model ignore its instructions. Write `looks_like_injection` that returns True when the text contains \"ignore previous\". Print `looks_like_injection(\"please ignore previous instructions\")`.",
-      "expected": ["True"],
+      "expected": [
+        "True"
+      ],
       "starter": {
         "python": "def looks_like_injection(text):\n    pass\n\nprint(looks_like_injection(\"please ignore previous instructions\"))\n"
       }
@@ -298,7 +347,9 @@
       "title": "Keep the answer grounded",
       "xp": 40,
       "brief": "A grounded answer has to point at a source. Write `has_grounding` that returns True only when the answer names at least one of the given sources. Print `has_grounding(\"the sky is blue, according to nasa\", [\"nasa\"])`.",
-      "expected": ["True"],
+      "expected": [
+        "True"
+      ],
       "starter": {
         "python": "def has_grounding(answer, sources):\n    pass\n\nprint(has_grounding(\"the sky is blue, according to nasa\", [\"nasa\"]))\n"
       }
@@ -310,7 +361,9 @@
       "title": "Run the eval suite",
       "xp": 45,
       "brief": "An eval suite is a list of cases with the answer you expect. Write `run_eval` that takes the cases and a function and returns the share of cases the function gets right. Print `run_eval([(1, 1), (2, 3)], lambda pair: pair[0] == pair[1])`.",
-      "expected": ["0.5"],
+      "expected": [
+        "0.5"
+      ],
       "starter": {
         "python": "def run_eval(cases, fn):\n    pass\n\nprint(run_eval([(1, 1), (2, 3)], lambda pair: pair[0] == pair[1]))\n"
       }
@@ -322,7 +375,9 @@
       "title": "Watch for drift",
       "xp": 45,
       "brief": "A model starts to drift when its accuracy falls below the threshold it was approved at. Write `has_drifted` that takes the current accuracy and the approved accuracy and returns True when the current score is lower. Print `has_drifted(0.8, 0.9)`.",
-      "expected": ["True"],
+      "expected": [
+        "True"
+      ],
       "starter": {
         "python": "def has_drifted(current, approved):\n    pass\n\nprint(has_drifted(0.8, 0.9))\n"
       }
@@ -334,7 +389,11 @@
       "title": "Rate limit the public API",
       "xp": 40,
       "brief": "Design what happens when 50,000 people call your public API at once. Explain how you would rate limit the traffic per user, what you would do with a request that goes over the limit, and how the service stays available when one user floods it.",
-      "ideas": ["rate-limit", "availability", "queue"],
+      "ideas": [
+        "rate-limit",
+        "availability",
+        "queue"
+      ],
       "minimumWords": 40,
       "starter": {
         "design": ""
@@ -347,7 +406,11 @@
       "title": "Give the call a deadline",
       "xp": 40,
       "brief": "Your service calls a slow third party that sometimes never answers. Explain how you would use a timeout and retry with backoff so that one slow call cannot hold up the whole request, and how you would fail fast when the dependency is clearly broken.",
-      "ideas": ["timeout", "retry", "circuit-breaker"],
+      "ideas": [
+        "timeout",
+        "retry",
+        "circuit-breaker"
+      ],
       "minimumWords": 40,
       "starter": {
         "design": ""
@@ -360,7 +423,11 @@
       "title": "Cache the expensive answers",
       "xp": 40,
       "brief": "Every request to your assistant costs money, and the same question arrives often. Explain how you would cache the answers, how long a cache entry should live, and how you would keep a stale entry from being served after the model changed.",
-      "ideas": ["cache", "versioning", "cost"],
+      "ideas": [
+        "cache",
+        "versioning",
+        "cost"
+      ],
       "minimumWords": 40,
       "starter": {
         "design": ""
@@ -373,7 +440,11 @@
       "title": "Never charge twice",
       "xp": 40,
       "brief": "A payment call timed out, so the client retried, and now the customer has been charged twice. Explain how you would make the write idempotent so that a retry is safe, and how the client would know which attempt was the real one.",
-      "ideas": ["idempotent", "retry", "timeout"],
+      "ideas": [
+        "idempotent",
+        "retry",
+        "timeout"
+      ],
       "minimumWords": 40,
       "starter": {
         "design": ""
@@ -386,7 +457,11 @@
       "title": "Scale from one machine",
       "xp": 45,
       "brief": "Your service starts on one machine and needs to serve a million users. Explain how you would scale it out over time, when you would add a read replica or a shard, and how the data store would keep up with the writes.",
-      "ideas": ["scaling", "sharding", "replication"],
+      "ideas": [
+        "scaling",
+        "sharding",
+        "replication"
+      ],
       "minimumWords": 40,
       "starter": {
         "design": ""
@@ -399,7 +474,11 @@
       "title": "Strong or eventual, pick one",
       "xp": 45,
       "brief": "A user updates their profile and immediately sees the old version on another page. Explain the consistency model you would choose, where you would relax it, and how you would keep the system available during a network split.",
-      "ideas": ["consistency", "availability", "partition-tolerance"],
+      "ideas": [
+        "consistency",
+        "availability",
+        "partition-tolerance"
+      ],
       "minimumWords": 40,
       "starter": {
         "design": ""
@@ -412,7 +491,11 @@
       "title": "Take the slow work off the path",
       "xp": 40,
       "brief": "Generating a report takes four minutes, and the user should not have to wait for it. Explain how you would use a queue and a background worker, and what you would do when the queue grows longer than the workers can handle.",
-      "ideas": ["queue", "backpressure", "monitoring"],
+      "ideas": [
+        "queue",
+        "backpressure",
+        "monitoring"
+      ],
       "minimumWords": 40,
       "starter": {
         "design": ""
@@ -425,7 +508,11 @@
       "title": "The user wrote the instructions",
       "xp": 50,
       "brief": "A user can put anything in the input box, including text that tries to make your assistant reveal its system prompt. Explain how you would treat untrusted input, where you would put the boundary between instruction and data, and how you would test for this before shipping.",
-      "ideas": ["prompt-injection", "testing", "sanitize"],
+      "ideas": [
+        "prompt-injection",
+        "testing",
+        "sanitize"
+      ],
       "minimumWords": 45,
       "starter": {
         "design": ""
@@ -438,7 +525,11 @@
       "title": "The model made it up",
       "xp": 50,
       "brief": "Your assistant confidently invented a citation that does not exist. Explain how you would ground the answers, how you would measure how often it happens, and what you would show the user when the model is not sure.",
-      "ideas": ["hallucination", "evaluation", "grounding"],
+      "ideas": [
+        "hallucination",
+        "evaluation",
+        "grounding"
+      ],
       "minimumWords": 45,
       "starter": {
         "design": ""
@@ -451,7 +542,11 @@
       "title": "Do not keep what you must not keep",
       "xp": 45,
       "brief": "People type their medical details into your assistant. Explain what personal data you would collect, what you would redact before sending it to a model, how long you would keep the logs, and who may read them.",
-      "ideas": ["privacy", "redact", "encryption"],
+      "ideas": [
+        "privacy",
+        "redact",
+        "encryption"
+      ],
       "minimumWords": 45,
       "starter": {
         "design": ""
@@ -464,7 +559,11 @@
       "title": "Prove it got better",
       "xp": 45,
       "brief": "You changed the prompt and the answers look different. Explain how you would build an eval set, how you would compare the two versions, and what you would watch for so that one good prompt does not hide a regression.",
-      "ideas": ["evaluation", "benchmark", "monitoring"],
+      "ideas": [
+        "evaluation",
+        "benchmark",
+        "monitoring"
+      ],
       "minimumWords": 45,
       "starter": {
         "design": ""
@@ -477,7 +576,11 @@
       "title": "Keep the bill under control",
       "xp": 45,
       "brief": "The bill for the model calls tripled this month. Explain where the tokens are going, how you would cut the cost without making the answers worse, and how you would make the spend visible before it becomes a surprise.",
-      "ideas": ["cost", "token-cost", "monitoring"],
+      "ideas": [
+        "cost",
+        "token-cost",
+        "monitoring"
+      ],
       "minimumWords": 45,
       "starter": {
         "design": ""
@@ -490,10 +593,216 @@
       "title": "Swap the model without a break",
       "xp": 45,
       "brief": "You want to move from one model to a new one, but the answers come out in a different shape. Explain how you would roll the change out, how you would keep the old model available, and how you would undo the change if it goes wrong.",
-      "ideas": ["migration", "deployment", "versioning"],
+      "ideas": [
+        "migration",
+        "deployment",
+        "versioning"
+      ],
       "minimumWords": 45,
       "starter": {
         "design": ""
+      }
+    },
+    {
+      "id": "ai-api-first-call",
+      "kind": "python",
+      "chapter": "Working with APIs",
+      "title": "Make the first call",
+      "xp": 20,
+      "brief": "An API call returns a response with a status code and a body. The lab ships a fake API at `https://api.example.com/users`. Write code that imports `requests`, makes a GET call to that address, and prints the status code. The answer is 200.",
+      "expected": [
+        "200"
+      ],
+      "starter": {
+        "python": "import requests\n\nresponse = requests.get(\"https://api.example.com/users\")\nprint(response.status_code)\n"
+      }
+    },
+    {
+      "id": "ai-api-read-json",
+      "kind": "python",
+      "chapter": "Working with APIs",
+      "title": "Read the body",
+      "xp": 25,
+      "brief": "A JSON body is a list of records. Write code that calls `https://api.example.com/users`, turns the body into Python objects with `response.json()`, and prints the name of every user. There are five of them, and the first is Ada Lovelace.",
+      "expected": [
+        "Ada Lovelace",
+        "Grace Hopper",
+        "Alan Turing",
+        "Katherine Johnson",
+        "Barbara Liskov"
+      ],
+      "starter": {
+        "python": "import requests\n\nresponse = requests.get(\"https://api.example.com/users\")\nfor user in response.json():\n    pass\n"
+      }
+    },
+    {
+      "id": "ai-api-check-status",
+      "kind": "python",
+      "chapter": "Working with APIs",
+      "title": "Check before you trust it",
+      "xp": 30,
+      "brief": "A call that fails still returns a response, so the status has to be checked before the body is read. Write code that calls `https://api.example.com/does-not-exist`, and prints `missing` when the status is 404 and `found` otherwise.",
+      "expected": [
+        "missing"
+      ],
+      "starter": {
+        "python": "import requests\n\nresponse = requests.get(\"https://api.example.com/does-not-exist\")\nif response.status_code == 404:\n    pass\nelse:\n    pass\n"
+      }
+    },
+    {
+      "id": "ai-api-search",
+      "kind": "python",
+      "chapter": "Working with APIs",
+      "title": "Send a query",
+      "xp": 30,
+      "brief": "A search is a URL with a query string on the end. Write code that calls `https://api.example.com/search?q=attention` and prints how many documents came back. One document matches.",
+      "expected": [
+        "1"
+      ],
+      "starter": {
+        "python": "import requests\n\nresponse = requests.get(\"https://api.example.com/search?q=attention\")\nprint(len(response.json()))\n"
+      }
+    },
+    {
+      "id": "ai-api-pagination",
+      "kind": "python",
+      "chapter": "Working with APIs",
+      "title": "Page through the results",
+      "xp": 35,
+      "brief": "A big list does not come in one piece. Write code that calls the documents endpoint with `?page=1` and `?page=2`, then prints how many documents came back in total. There are four documents.",
+      "expected": [
+        "4"
+      ],
+      "starter": {
+        "python": "import requests\n\ntotal = 0\nfor page in [1, 2]:\n    pass\nprint(total)\n"
+      }
+    },
+    {
+      "id": "ai-api-retry",
+      "kind": "python",
+      "chapter": "Working with APIs",
+      "title": "Try again, carefully",
+      "xp": 40,
+      "brief": "A request that fails with a server error is worth trying again; a request that fails with a 404 is not. Write code that calls the users endpoint, and if the status is 500 it tries a second time. Print the status code of the call that finally answered.",
+      "expected": [
+        "200"
+      ],
+      "starter": {
+        "python": "import requests\n\nresponse = requests.get(\"https://api.example.com/users\")\nif response.status_code == 500:\n    pass\nprint(response.status_code)\n"
+      }
+    },
+    {
+      "id": "ai-api-timeout",
+      "kind": "python",
+      "chapter": "Working with APIs",
+      "title": "Give it a deadline",
+      "xp": 40,
+      "brief": "A call with no deadline can hang forever, so every call needs one. Write code that sets a timeout of 5 seconds on the session, makes the call to the users endpoint, and prints the number of users that came back.",
+      "expected": [
+        "5"
+      ],
+      "starter": {
+        "python": "import requests\n\nrequests.timeout = 5\nresponse = requests.get(\"https://api.example.com/users\")\nprint(len(response.json()))\n"
+      }
+    },
+    {
+      "id": "ai-db-create",
+      "kind": "python",
+      "chapter": "Working with data",
+      "title": "Make the table",
+      "xp": 20,
+      "brief": "The lab ships an in-memory database. Write code that imports `sqlite3`, opens a database called `shop`, and creates a table called `orders` with the columns `id` (INTEGER), `item` (TEXT) and `price` (INTEGER). Then print the names of the tables.",
+      "expected": [
+        "['orders']"
+      ],
+      "starter": {
+        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\nprint(db.tables())\n"
+      }
+    },
+    {
+      "id": "ai-db-insert",
+      "kind": "python",
+      "chapter": "Working with data",
+      "title": "Put the rows in",
+      "xp": 25,
+      "brief": "Write code that creates a table `orders` with the columns `id`, `item` and `price`, inserts two rows — `(1, 'book', 12)` and `(2, 'pen', 2)` — and then prints how many rows the table holds.",
+      "expected": [
+        "2"
+      ],
+      "starter": {
+        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\nprint(len(db.query(\"SELECT id FROM orders\")))\n"
+      }
+    },
+    {
+      "id": "ai-db-select",
+      "kind": "python",
+      "chapter": "Working with data",
+      "title": "Ask a question",
+      "xp": 30,
+      "brief": "Write code that creates a table `orders`, inserts `(1, 'book', 12)`, `(2, 'pen', 2)` and `(3, 'lamp', 30)`, then asks for the items that cost more than 10 and prints each one. The answer is `book` and `lamp`, in that order.",
+      "expected": [
+        "book",
+        "lamp"
+      ],
+      "starter": {
+        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (3, 'lamp', 30)\")\nfor row in db.query(\"SELECT item FROM orders WHERE price > 10\"):\n    pass\n"
+      }
+    },
+    {
+      "id": "ai-db-order-limit",
+      "kind": "python",
+      "chapter": "Working with data",
+      "title": "Only the top two",
+      "xp": 35,
+      "brief": "Write code that creates a table `orders` with three rows — `(1, 'book', 12)`, `(2, 'pen', 2)` and `(3, 'lamp', 30)` — then asks for the two most expensive items and prints each one. The answer is `lamp` and `book`, in that order.",
+      "expected": [
+        "lamp",
+        "book"
+      ],
+      "starter": {
+        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (3, 'lamp', 30)\")\nfor row in db.query(\"SELECT item FROM orders ORDER BY price DESC LIMIT 2\"):\n    pass\n"
+      }
+    },
+    {
+      "id": "ai-db-update",
+      "kind": "python",
+      "chapter": "Working with data",
+      "title": "Change one row",
+      "xp": 35,
+      "brief": "Write code that creates a table `orders` with two rows — `(1, 'book', 12)` and `(2, 'pen', 2)` — raises the price of the book to 20 with an UPDATE, and then prints the price of the book.",
+      "expected": [
+        "20"
+      ],
+      "starter": {
+        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\ndb.execute(\"UPDATE orders SET price = 20 WHERE item = 'book'\")\nprint(db.query(\"SELECT price FROM orders WHERE item = 'book'\")[0][\"price\"])\n"
+      }
+    },
+    {
+      "id": "ai-db-delete",
+      "kind": "python",
+      "chapter": "Working with data",
+      "title": "Remove what is finished",
+      "xp": 35,
+      "brief": "Write code that creates a table `orders` with three rows — `(1, 'book', 12)`, `(2, 'pen', 2)` and `(3, 'lamp', 30)` — deletes the rows that cost less than 10, and then prints how many rows are left. The answer is 2.",
+      "expected": [
+        "2"
+      ],
+      "starter": {
+        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (3, 'lamp', 30)\")\ndb.execute(\"DELETE FROM orders WHERE price < 10\")\nprint(len(db.query(\"SELECT id FROM orders\")))\n"
+      }
+    },
+    {
+      "id": "ai-db-aggregate",
+      "kind": "python",
+      "chapter": "Working with data",
+      "title": "Add it up in the database",
+      "xp": 40,
+      "brief": "Not every question needs the rows back. Write code that creates a table `orders` with three rows — `(1, 'book', 12)`, `(2, 'pen', 2)` and `(3, 'lamp', 30)` — then asks the database for the total price with a `SUM` and prints it. The answer is 44.",
+      "expected": [
+        "44"
+      ],
+      "starter": {
+        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (3, 'lamp', 30)\")\nrows = db.query(\"SELECT SUM(price) AS total FROM orders\")\nprint(rows[0][\"total\"])\n"
       }
     }
   ]

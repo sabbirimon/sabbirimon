@@ -131,6 +131,12 @@ test('a course entry becomes an exercise, and a broken one is dropped', () => {
   assert.equal(toAiExercises({ exercises: [{ id: 'a', title: 'A' }, { id: 'b' }] }).length, 1);
 });
 
+test('the expected output is kept on the exercise so the brief can show it', () => {
+  const exercise = toAiExercise({ id: 'x', title: 'X', kind: 'python', expected: ['one', 'two'] });
+  assert.deepEqual(exercise.expected, ['one', 'two']);
+  assert.deepEqual(toAiExercise({ id: 'y', title: 'Y' }).expected, []);
+});
+
 test('the course loader returns an empty course rather than throwing', async () => {
   const result = await loadAiCourse(async () => { throw new Error('offline'); });
   assert.deepEqual(result.exercises, []);
