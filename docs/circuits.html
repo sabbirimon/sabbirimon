@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#020617">
+<title>Circuits &amp; Signals · IMON.world</title>
+<meta name="description" content="Learn electronics and signals in your browser. Build a circuit, watch the scope, and check your working against real numbers.">
+<meta name="author" content="Sabbir Hassan Imon">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:site_name" content="IMON">
+<meta property="og:title" content="Circuits &amp; Signals · IMON.world">
+<meta property="og:description" content="Learn electronics and signals in your browser. Build a circuit, watch the scope, and check your working against real numbers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://imon.com.bd/circuits.html">
+<meta property="og:image" content="https://imon.com.bd/social-card.png">
+<meta property="og:image:alt" content="IMON — Let’s Code Together. A colorful pixel world of open-source projects and browser games.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@sabbirimon">
+<meta name="twitter:title" content="Circuits &amp; Signals · IMON.world">
+<meta name="twitter:description" content="Learn electronics and signals in your browser. Build a circuit, watch the scope, and check your working against real numbers.">
+<meta name="twitter:image" content="https://imon.com.bd/social-card.png">
+<meta name="twitter:image:alt" content="IMON — Let’s Code Together. A colorful pixel world of open-source projects and browser games.">
+<link rel="canonical" href="https://imon.com.bd/circuits.html">
+<link rel="alternate" type="text/plain" href="https://imon.com.bd/llms.txt" title="IMON.world in plain text for language models">
+<link rel="alternate" type="application/json" href="https://imon.com.bd/.well-known/agents.json" title="IMON.world machine-readable description for AI agents">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Circuits & Signals",
+  "description": "Learn electronics and signals in your browser. Build a circuit, watch the scope, and check your working against real numbers.",
+  "url": "https://imon.com.bd/circuits.html",
+  "inLanguage": "en",
+  "learningResourceType": "Practice exercises",
+  "educationalLevel": "Beginner",
+  "isAccessibleForFree": true,
+  "interactivityType": "active",
+  "typicalAgeRange": "12-",
+  "teaches": "Electronics, circuit analysis, signals and digital logic",
+  "provider": {
+    "@type": "Person",
+    "name": "Sabbir Hassan Imon",
+    "url": "https://imon.com.bd/#about"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "IMON",
+    "url": "https://imon.com.bd/"
+  }
+}
+</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="nes.css"><link rel="stylesheet" href="wordmark.css">
+<link rel="stylesheet" href="lab.css"><link rel="stylesheet" href="lab-layout.css">
+<link rel="stylesheet" href="circuits.css">
+<script>document.documentElement.classList.remove('no-js');</script>
+</head>
+<body class="lab-page circuits-page">
+<a class="lab-skip" href="#circuits-work">Skip to the workbench</a>
+
+<header class="lab-topbar">
+  <a class="lab-brand" href="./">
+    <span class="lab-brand-mark" aria-hidden="true">I</span>
+    <span class="lab-brand-text" data-wordmark>IMON.WORLD</span>
+  </a>
+  <nav class="lab-topnav" aria-label="Lab">
+    <a href="./">Home</a>
+    <a href="./lab.html">Code Lab</a>
+    <a href="./ai-lab.html">AI Lab</a>
+    <a href="./circuits.html" aria-current="page">Circuits</a>
+    <a href="./login.html">Sign in</a>
+  </nav>
+  <p class="lab-xp nes-pixel-badge"><span aria-hidden="true">★</span> <span data-circuits-xp>0 XP</span></p>
+</header>
+
+<main class="lab-layout">
+  <!-- The lesson ------------------------------------------------------ -->
+  <section class="lab-lesson" aria-labelledby="circuits-title">
+    <nav class="lab-rail" aria-label="Exercises">
+      <div class="lab-rail-head">
+        <h2 class="lab-rail-title" data-pixel-text>Course</h2>
+        <button type="button" class="lab-rail-filter" data-circuits-preferred-only aria-pressed="false">
+          <span aria-hidden="true">★</span> Preferred
+        </button>
+      </div>
+      <p class="lab-rail-count" data-circuits-preferred-count hidden></p>
+      <ol class="lab-rail-list" data-circuits-rail></ol>
+    </nav>
+
+    <article class="lab-brief">
+      <p class="lab-kicker" data-circuits-kind data-pixel-text>Circuit</p>
+      <h1 class="lab-title" id="circuits-title" data-circuits-title data-pixel-text>Loading the course</h1>
+      <p class="lab-lead" data-circuits-brief>The course is being loaded. If it does not appear, the JSON file could not be read.</p>
+
+      <div class="lab-instructions">
+        <h2 class="lab-instructions-title" data-pixel-text>Instructions</h2>
+        <ol class="lab-steps" data-circuits-steps>
+          <li>Read the brief and the study material below it.</li>
+          <li>Work the circuit on the board, or the numbers in the answer box.</li>
+          <li>Press <strong>Check answer</strong> when you think it is right.</li>
+        </ol>
+      </div>
+
+      <p class="lab-status" data-circuits-status role="status" aria-live="polite"></p>
+
+      <div class="lab-help">
+        <h2 class="lab-help-title" data-pixel-text>Help</h2>
+        <p>If you get stuck, press <strong>Reset</strong> to bring the board back to the starting circuit, then work through it one step at a time.</p>
+        <p class="lab-help-note">The simulator runs in your browser. Nothing you build is sent anywhere.</p>
+        <p class="circuits-credit" data-circuits-credit></p>
+      </div>
+
+      <p class="circuits-empty" data-circuits-empty hidden>The course file could not be read. Check that <code>docs/data/circuits-course.json</code> was published with the site.</p>
+    </article>
+
+    <!-- The study material --------------------------------------------- -->
+    <div class="lab-learn" data-circuits-learn></div>
+  </section>
+
+  <!-- The workbench --------------------------------------------------- -->
+  <section class="lab-work" id="circuits-work" aria-label="Workbench">
+    <div class="lab-work-top">
+      <div class="lab-tabs" role="tablist" aria-label="Panel" data-circuits-tabs>
+        <button type="button" role="tab" class="lab-tab" data-circuits-tab="board" aria-selected="true" tabindex="0" data-pixel-text>Bench</button>
+        <button type="button" role="tab" class="lab-tab" data-circuits-tab="scope" aria-selected="false" tabindex="-1" data-pixel-text>Scope</button>
+        <button type="button" role="tab" class="lab-tab" data-circuits-tab="answer" aria-selected="false" tabindex="-1" data-pixel-text>Answer</button>
+        <button type="button" role="tab" class="lab-tab" data-circuits-tab="tools" aria-selected="false" tabindex="-1" data-pixel-text>Tools</button>
+      </div>
+      <div class="lab-actions">
+        <button type="button" class="nes-button nes-button-blue lab-run" data-circuits-run><span data-pixel-text>Run</span></button>
+        <button type="button" class="nes-button nes-button-lime lab-check" data-circuits-check><span data-pixel-text>Check answer</span></button>
+        <button type="button" class="nes-button lab-reset" data-circuits-reset><span data-pixel-text>Reset</span></button>
+      </div>
+    </div>
+
+    <div class="lab-work-scroll">
+      <!-- The bench -------------------------------------------------- -->
+      <div class="circuits-bench" data-circuits-bench>
+        <div class="circuits-bench-grid">
+          <section class="circuits-board" aria-labelledby="circuits-board-title">
+            <div class="circuits-pane-head">
+              <h2 class="lab-pane-title" id="circuits-board-title" data-pixel-text>Bench</h2>
+              <p class="circuits-pane-note">Click a part in the bin, then click a node dot on the board to place it.</p>
+            </div>
+            <canvas class="circuits-canvas" data-circuits-canvas width="720" height="420" role="img" aria-label="The circuit board"></canvas>
+            <p class="circuits-readout" data-circuits-readout role="status" aria-live="polite"></p>
+          </section>
+
+          <aside class="circuits-bin" aria-labelledby="circuits-bin-title">
+            <h2 class="lab-pane-title" id="circuits-bin-title" data-pixel-text>Parts bin</h2>
+            <ul class="circuits-parts" data-circuits-parts></ul>
+            <div class="circuits-probe">
+              <h3 class="circuits-probe-title" data-pixel-text>Probe</h3>
+              <p class="circuits-pane-note">The scope watches this node.</p>
+              <label class="sr-only" for="circuits-probe-node">Probe node</label>
+              <select class="circuits-select" id="circuits-probe-node" data-circuits-probe></select>
+            </div>
+            <div class="circuits-part-edit" data-circuits-edit hidden>
+              <h3 class="circuits-probe-title" data-pixel-text>Selected part</h3>
+              <p class="circuits-selected" data-circuits-selected></p>
+              <label class="circuits-label" for="circuits-value">Value</label>
+              <input class="circuits-input" id="circuits-value" type="number" min="0" step="any" data-circuits-value>
+              <div class="circuits-edit-actions">
+                <button type="button" class="nes-button nes-button-blue" data-circuits-apply><span data-pixel-text>Set</span></button>
+                <button type="button" class="nes-button" data-circuits-remove><span data-pixel-text>Remove</span></button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- The scope -------------------------------------------------- -->
+      <div class="circuits-scope" data-circuits-scope hidden>
+        <div class="circuits-pane-head">
+          <h2 class="lab-pane-title" data-pixel-text>Scope</h2>
+          <p class="circuits-pane-note">The voltage at the probed node over time.</p>
+        </div>
+        <canvas class="circuits-canvas circuits-scope-canvas" data-circuits-scope-canvas width="720" height="300" role="img" aria-label="The oscilloscope trace"></canvas>
+        <dl class="circuits-metrics" data-circuits-metrics></dl>
+      </div>
+
+      <!-- The answer ------------------------------------------------- -->
+      <div class="circuits-answer" data-circuits-answer hidden>
+        <label class="sr-only" for="circuits-answer-box">Your answer</label>
+        <textarea id="circuits-answer-box" class="lab-code circuits-answer-box" data-circuits-answer-box spellcheck="false" autocomplete="off" rows="8"></textarea>
+        <p class="circuits-answer-hint" data-circuits-answer-hint></p>
+      </div>
+
+      <!-- The open source tools -------------------------------------- -->
+      <div class="circuits-tools" data-circuits-tools hidden>
+        <div class="circuits-pane-head">
+          <h2 class="lab-pane-title" data-pixel-text>Further tools</h2>
+          <p class="circuits-pane-note">Free, open-source EDA that runs in your browser. Use them to check a real design, not to replace understanding it.</p>
+        </div>
+        <ul class="circuits-tool-list" data-circuits-tool-list></ul>
+      </div>
+
+      <!-- The reward ------------------------------------------------- -->
+      <div class="lab-reward" data-circuits-reward hidden aria-live="polite">
+        <div class="lab-reward-coins" data-circuits-reward-coins aria-hidden="true"></div>
+        <p class="lab-reward-text" data-circuits-reward-text></p>
+      </div>
+
+      <!-- The feedback ----------------------------------------------- -->
+      <div class="lab-feedback" data-circuits-feedback hidden>
+        <div class="lab-feedback-head">
+          <h2 class="lab-feedback-title" data-pixel-text>What went wrong</h2>
+          <span class="lab-feedback-where" data-circuits-feedback-where></span>
+        </div>
+        <ul class="lab-feedback-list" data-circuits-feedback-list></ul>
+        <div class="lab-feedback-fix">
+          <h3 class="lab-feedback-fix-title" data-pixel-text>How to fix it</h3>
+          <pre class="lab-feedback-code" data-circuits-feedback-code><code></code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- The course bar ------------------------------------------- -->
+    <div class="lab-coursebar">
+      <p class="lab-coursebar-chapter" data-circuits-chapter data-pixel-text>Voltage, current and resistance</p>
+      <p class="lab-coursebar-counter" data-circuits-counter data-pixel-text>Exercise 1 / 40</p>
+      <progress class="lab-progress" data-circuits-progress max="40" value="0" aria-label="Course progress"></progress>
+      <div class="lab-coursebar-actions">
+        <button type="button" class="nes-button nes-button-dark lab-back" data-circuits-prev><span data-pixel-text>Back</span></button>
+        <button type="button" class="nes-button nes-button-gold lab-next-action" data-circuits-done hidden><span data-pixel-text>Done</span></button>
+        <button type="button" class="nes-button nes-button-blue lab-next-action" data-circuits-next><span data-pixel-text>Next</span></button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="lab-foot">
+  <p>Built for practice. Every circuit is solved in your browser — no account, no upload, no tracking.</p>
+</footer>
+
+<script type="module">
+import { initCircuits } from './circuits-ui.js';
+import { initWordmark } from './logo.js';
+import { initPixelText } from './pixel-type.js';
+
+const root = document.querySelector('.circuits-page');
+initWordmark(document);
+initPixelText(document);
+
+// The exercise comes from the query string so a chapter rail can link
+// straight to a lesson. An unknown id falls back to the first exercise.
+const requested = new URLSearchParams(location.search).get('exercise');
+const lab = initCircuits(root);
+
+lab.importCourse().then(() => {
+  const id = requested && lab.find(requested);
+  if (id) lab.loadExercise(id);
+});
+</script>
+</body>
+</html>

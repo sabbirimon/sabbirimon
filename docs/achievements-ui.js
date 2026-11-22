@@ -58,7 +58,16 @@ export function collectStats(store = globalThis.localStorage) {
     snakeBest: Math.max(
       readNumber(store, 'sabbir-arcade-v1-snake-easy', 0),
       readNumber(store, 'sabbir-arcade-v1-snake-normal', 0),
-      readNumber(store, 'sabbir-arcade-v1-snake-hard', 0)
+      readNumber(store, 'sabbir-arcade-v1-snake-hard', 0),
+      readNumber(store, 'sabbir-arcade-v1-snake-walls-easy', 0),
+      readNumber(store, 'sabbir-arcade-v1-snake-walls-normal', 0),
+      readNumber(store, 'sabbir-arcade-v1-snake-walls-hard', 0),
+      readNumber(store, 'sabbir-arcade-v1-snake-night-easy', 0),
+      readNumber(store, 'sabbir-arcade-v1-snake-night-normal', 0),
+      readNumber(store, 'sabbir-arcade-v1-snake-night-hard', 0),
+      readNumber(store, 'sabbir-arcade-v1-snake-timed-easy', 0),
+      readNumber(store, 'sabbir-arcade-v1-snake-timed-normal', 0),
+      readNumber(store, 'sabbir-arcade-v1-snake-timed-hard', 0)
     ),
     surfBest: Math.max(
       readNumber(store, 'sabbir-arcade-v1-surf-easy', 0),

@@ -61,6 +61,15 @@ export const LOCAL_PROGRESS_KEYS = [
   'sabbir-arcade-v1-snake-easy',
   'sabbir-arcade-v1-snake-normal',
   'sabbir-arcade-v1-snake-hard',
+  'sabbir-arcade-v1-snake-walls-easy',
+  'sabbir-arcade-v1-snake-walls-normal',
+  'sabbir-arcade-v1-snake-walls-hard',
+  'sabbir-arcade-v1-snake-night-easy',
+  'sabbir-arcade-v1-snake-night-normal',
+  'sabbir-arcade-v1-snake-night-hard',
+  'sabbir-arcade-v1-snake-timed-easy',
+  'sabbir-arcade-v1-snake-timed-normal',
+  'sabbir-arcade-v1-snake-timed-hard',
   'sabbir-arcade-v1-surf-easy',
   'sabbir-arcade-v1-surf-normal',
   'sabbir-arcade-v1-surf-hard',
@@ -70,7 +79,13 @@ export const LOCAL_PROGRESS_KEYS = [
   'imon-quiz-best-20',
   'imon-quiz-best-30',
   'imon-dev-slots-v1',
-  'imon-gridworks-progress-v1'
+  'imon-gridworks-progress-v1',
+  'imon-lab-progress-v1',
+  'imon-ai-lab-v1',
+  'imon-circuits-v1',
+  'imon-lab-preferred-v1',
+  'imon-ai-lab-preferred-v1',
+  'imon-circuits-preferred-v1'
 ];
 
 const DEBOUNCE_MS = 2000;

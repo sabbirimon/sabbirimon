@@ -160,7 +160,7 @@
   gap: 2px;
 }
 
-.lab-rail-list a {
+.lab-rail-list a.lab-rail-link {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -898,6 +898,88 @@
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+/* The preferred filter sits beside the rail title. */
+.lab-rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.lab-rail-head .lab-rail-title {
+  margin-bottom: 0;
+}
+
+.lab-rail-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  font-family: var(--pixel);
+  font-size: 8px;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  color: var(--lab-muted, #94a3b8);
+  background: #0a0f24;
+  border: 2px solid var(--lab-rim-strong);
+  cursor: pointer;
+}
+
+.lab-rail-filter:hover {
+  color: var(--lab-gold);
+  border-color: var(--lab-gold);
+}
+
+.lab-rail-filter[aria-pressed="true"] {
+  color: #14240a;
+  background: var(--lab-lime);
+  border-color: var(--lab-lime);
+}
+
+.lab-rail-count {
+  margin: 0 0 10px;
+  font-family: var(--pixel);
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  color: var(--lab-gold);
+}
+
+/* The star sits beside the link, so a row is a flex line. */
+.lab-rail-item {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.lab-rail-item .lab-rail-link {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.lab-rail-star {
+  flex: 0 0 auto;
+  width: 30px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1;
+  color: #3f4a63;
+  background: transparent;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.lab-rail-star:hover {
+  color: var(--lab-gold);
+  border-color: var(--lab-rim-strong);
+}
+
+.lab-rail-star[aria-pressed="true"] {
+  color: var(--lab-gold);
 }
 
 /* Narrow screens ----------------------------------------------------- */

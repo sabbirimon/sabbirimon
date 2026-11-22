@@ -17,6 +17,16 @@
 
 import { loadAiCourse, runPython, formatValue } from './ai-lab.js';
 import { renderPixelText } from './pixel-type.js';
+import { initAiLearn } from './ai-lab-chapters.js';
+import {
+  AI_LAB_PREFERRED_KEY,
+  loadPreferred,
+  savePreferred,
+  togglePreferred,
+  filterPreferred,
+  preferredChapters,
+  preferredLabel
+} from './lab-preferred.js';
 
 /** The localStorage key that holds the learner's progress. */
 export const AI_PROGRESS_KEY = 'imon-ai-lab-v1';
@@ -281,7 +291,17 @@ export function initAiLab(root = document) {
   const expected = root?.querySelector?.('[data-ai-expected]');
   const kindBadge = root?.querySelector?.('[data-ai-kind]');
   const credit = root?.querySelector?.('[data-ai-credit]');
+  // The preferred filter above the rail, and the count beside it.
+  const preferredOnly = root?.querySelector?.('[data-ai-preferred-only]');
+  const preferredCount = root?.querySelector?.('[data-ai-preferred-count]');
+  // The exercises the learner has starred. Whether the rail shows only
+  // those is held on the filter button's `aria-pressed`, so the button and
+  // the rail can never disagree.
+  let preferred = loadPreferred(globalThis.localStorage, AI_LAB_PREFERRED_KEY);
+  const showingPreferred = () => preferredOnly?.getAttribute('aria-pressed') === 'true';
   const empty = root?.querySelector?.('[data-ai-empty]');
+  // The study material for the chapter the open exercise belongs to.
+  const learn = initAiLearn(root);
 
   /* -- console ---------------------------------------------------- */
 
@@ -363,7 +383,15 @@ export function initAiLab(root = document) {
   function renderRail() {
     if (!rail) return;
     rail.textContent = '';
-    for (const group of aiChapters(state.exercises)) {
+    // With the filter on, only the starred exercises are shown, and the
+    // chapters that hold nothing starred are dropped so the rail does not
+    // show empty headings.
+    const groups = aiChapters(state.exercises);
+    for (const group of groups) {
+      const shown = showingPreferred()
+        ? filterPreferred(group.exercises, preferred)
+        : group.exercises;
+      if (!shown.length) continue;
       const item = document.createElement('li');
       item.className = 'lab-rail-group';
       const heading = document.createElement('p');
@@ -372,8 +400,9 @@ export function initAiLab(root = document) {
       item.append(heading);
       const list = document.createElement('ol');
       list.className = 'lab-rail-items';
-      for (const exercise of group.exercises) {
+      for (const exercise of shown) {
         const row = document.createElement('li');
+        row.className = 'lab-rail-item';
         const link = document.createElement('a');
         link.href = './ai-lab.html?exercise=' + encodeURIComponent(exercise.id);
         link.dataset.aiRailItem = exercise.id;
@@ -386,11 +415,40 @@ export function initAiLab(root = document) {
         label.className = 'lab-rail-label';
         label.textContent = exercise.title;
         link.append(mark, label);
-        row.append(link);
+        // The star sits beside the link, not inside it, so clicking it
+        // stars the exercise instead of opening it.
+        const star = document.createElement('button');
+        star.type = 'button';
+        star.className = 'lab-rail-star';
+        star.dataset.aiStar = exercise.id;
+        const starred = preferred.has(exercise.id);
+        star.setAttribute('aria-pressed', starred ? 'true' : 'false');
+        star.setAttribute('aria-label', preferredLabel(starred, exercise.title));
+        star.title = starred ? 'Preferred' : 'Add to preferred';
+        star.textContent = starred ? '★' : '☆';
+        row.append(link, star);
         list.append(row);
       }
       item.append(list);
       rail.append(item);
+    }
+    if (preferredCount) {
+      const count = preferred.size;
+      preferredCount.textContent = count === 1 ? '1 starred' : `${count} starred`;
+      preferredCount.hidden = count === 0 && !showingPreferred();
+    }
+  }
+
+  /**
+   * Star or unstar an exercise and redraw the rail.
+   */
+  function toggleStar(id) {
+    preferred = togglePreferred(preferred, id);
+    savePreferred(preferred, globalThis.localStorage, AI_LAB_PREFERRED_KEY);
+    renderRail();
+    updateRail();
+    if (status) {
+      status.textContent = preferred.has(id) ? 'Added to preferred.' : 'Removed from preferred.';
     }
   }
 
@@ -437,6 +495,7 @@ export function initAiLab(root = document) {
     if (editor) editor.value = aiStarterText(next);
     if (title) { title.textContent = next.title; drawAiPixelText(title); }
     if (brief) brief.textContent = next.brief;
+    learn?.render(next.chapter);
     if (hint) hint.textContent = aiEditorHint(next);
     if (kindBadge) { kindBadge.textContent = aiKindLabel(next); drawAiPixelText(kindBadge); }
     if (expected) {
@@ -480,6 +539,24 @@ export function initAiLab(root = document) {
   prevButton?.addEventListener('click', () => goTo(neighbourAiExercise(state.exercises, state.exercise?.id, 'prev')?.id));
   nextButton?.addEventListener('click', () => goTo(neighbourAiExercise(state.exercises, state.exercise?.id, 'next')?.id));
   doneButton?.addEventListener('click', () => goTo(neighbourAiExercise(state.exercises, state.exercise?.id, 'next')?.id));
+
+  /* -- preferred exercises ---------------------------------------- */
+
+  // The star sits beside the link, so clicking it must not open the
+  // exercise. The handler is delegated, because the rail is redrawn
+  // whenever the filter changes.
+  rail?.addEventListener('click', event => {
+    const star = event.target?.closest?.('[data-ai-star]');
+    if (!star) return;
+    event.preventDefault();
+    toggleStar(star.dataset.aiStar);
+  });
+  preferredOnly?.addEventListener('click', () => {
+    const on = preferredOnly.getAttribute('aria-pressed') === 'true';
+    preferredOnly.setAttribute('aria-pressed', on ? 'false' : 'true');
+    renderRail();
+    updateRail();
+  });
 
   /* -- boot ------------------------------------------------------- */
 

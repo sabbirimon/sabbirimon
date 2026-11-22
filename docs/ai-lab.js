@@ -112,7 +112,7 @@ export function tokenizePython(source) {
     }
     // Punctuation and operators.
     const two = text.slice(index, index + 2);
-    if (['==', '!=', '<=', '>=', '+=', '-=', '*=', '/='].includes(two)) {
+    if (['==', '!=', '<=', '>=', '+=', '-=', '*=', '/=', '%=', '//', '**'].includes(two)) {
       tokens.push({ type: 'op', value: two });
       index += 2;
       continue;
@@ -165,6 +165,71 @@ function headerColon(tokens, from = 0) {
 }
 
 /**
+ * The parameters of a `def`, with their default values.
+ *
+ * Each parameter comes back as `{ name, default }`, where `default` is
+ * null when the parameter has no default. A default is only used when the
+ * caller leaves the argument out, and a keyword argument overrides it.
+ *
+ * The name is read off the front of the parameter and the default is
+ * everything after the `=`, so a default can be any expression: a number,
+ * a string, a list or even a call.
+ *
+ * The tokens are the ones between the brackets. The brackets themselves
+ * are dropped first, because a default may itself contain brackets and
+ * the depth has to start at zero for the commas to be found.
+ */
+function parseParameters(tokens) {
+  let inner = tokens;
+  // Drop the brackets around the parameter list, if they are there.
+  if (inner.length && inner[0].value === '(' && inner[inner.length - 1].value === ')') {
+    inner = inner.slice(1, -1);
+  }
+
+  const parameters = [];
+  let depth = 0;
+  let current = null;
+  let afterEquals = false;
+
+  for (const token of inner) {
+    const value = token.value;
+    if (value === '(' || value === '[' || value === '{') depth++;
+    else if (value === ')' || value === ']' || value === '}') depth--;
+
+    if (depth === 0 && value === ',') {
+      if (current) parameters.push(current);
+      current = null;
+      afterEquals = false;
+      continue;
+    }
+    // A `*` marks the parameters that take extra arguments. The teaching
+    // code does not use them, so they are skipped.
+    if (depth === 0 && value === '*') continue;
+
+    if (!current) {
+      if (token.type !== 'name') continue;
+      current = { name: token.value, default: null };
+      afterEquals = false;
+      continue;
+    }
+
+    if (depth === 0 && value === '=' && !afterEquals) {
+      // The default starts after the `=`. The tokens are kept so the
+      // default is evaluated in the caller's scope at call time.
+      afterEquals = true;
+      current.default = [];
+      continue;
+    }
+
+    // Everything after the `=` is the default expression.
+    if (afterEquals) current.default.push(token);
+  }
+
+  if (current) parameters.push(current);
+  return parameters;
+}
+
+/**
  * The indent of the first line of each top-level statement.
  *
  * The interpreter uses this to find the body of a `def` or an `if`.
@@ -201,6 +266,36 @@ export function splitArguments(tokens) {
   }
   parts.push(tokens.slice(start));
   return parts.filter(part => part.length);
+}
+
+/**
+ * Is this argument a keyword argument — `name=value`?
+ *
+ * A `=` only counts as a keyword when it is the second token of the
+ * argument and the first one is a name, because `==` is a different token
+ * and `x == 1` is a comparison, not a keyword.
+ */
+function isKeywordArgument(part) {
+  return part.length >= 2 && part[0].type === 'name' && part[1].value === '=';
+}
+
+/**
+ * Split a call's arguments into positional parts and keyword parts.
+ *
+ * A keyword argument is written `name=value`. The value is left as tokens
+ * so it can be evaluated where the call happens, with the caller's scope.
+ */
+function splitCallArguments(parts) {
+  const positional = [];
+  const keywords = [];
+  for (const part of parts) {
+    if (isKeywordArgument(part)) {
+      keywords.push({ name: part[0].value, tokens: part.slice(2) });
+      continue;
+    }
+    positional.push(part);
+  }
+  return { positional, keywords };
 }
 
 /**
@@ -292,12 +387,36 @@ function createBuiltins(output, math, modules) {
     abs: value => Math.abs(value),
     min: (...args) => (args.length === 1 ? Math.min(...args[0]) : Math.min(...args)),
     max: (...args) => (args.length === 1 ? Math.max(...args[0]) : Math.max(...args)),
-    sum: value => (Array.isArray(value) ? value.reduce((a, b) => a + b, 0) : 0),
+    sum: value => {
+      // A string is iterable, but Python refuses to add up its
+      // characters, so the check has to happen before the loop.
+      if (typeof value === 'string') {
+        throw new Error("sum() does not take a string. Use len() to count it.");
+      }
+      if (Array.isArray(value)) return value.reduce((a, b) => a + b, 0);
+      // `sum` also takes any iterable, and a generator is the usual way
+      // to write one in Python.
+      if (value && typeof value[Symbol.iterator] === 'function') {
+        let total = 0;
+        for (const item of value) total += item;
+        return total;
+      }
+      return 0;
+    },
     round: (value, digits = 0) => {
       const factor = Math.pow(10, digits);
       return Math.round(value * factor) / factor;
     },
-    sorted: value => [...value].sort((a, b) => (a > b ? 1 : a < b ? -1 : 0)),
+    sorted: (value, ...rest) => {
+      // `sorted(x, reverse=True)` is the usual way to get the biggest
+      // values first, so the keyword is honoured.
+      const named = rest[rest.length - 1];
+      const reverse = named && typeof named === 'object' && 'reverse' in named
+        ? Boolean(named.reverse)
+        : false;
+      const sorted = [...value].sort((a, b) => (a > b ? 1 : a < b ? -1 : 0));
+      return reverse ? sorted.reverse() : sorted;
+    },
     int: value => Math.trunc(Number(value)),
     float: value => Number(value),
     str: value => (value == null ? 'None' : String(value)),
@@ -456,8 +575,7 @@ function executeStatement(statements, index, scope, builtins, runtime) {
   if (head.value === 'def') {
     const name = tokens[1].value;
     const colon = headerColon(tokens, 2);
-    const parameters = tokens.slice(2, colon < 0 ? tokens.length : colon)
-      .filter(t => t.type === 'name').map(t => t.value);
+    const parameters = parseParameters(tokens.slice(2, colon < 0 ? tokens.length : colon));
     scope.globals[name] = { __function: true, parameters, body: blockBody(statements, index) };
     return afterBody(statements, index);
   }
@@ -547,12 +665,21 @@ function executeStatement(statements, index, scope, builtins, runtime) {
   }
 
   // An assignment into a list or a dictionary, such as `counts["a"] = 1`.
+  // A compound form such as `counts["a"] += 1` is handled here too, so an
+  // indexed target is not left out of the augmented operators.
   if (tokens.length >= 5 && tokens[1].value === '[') {
     const close = matchingBracket(tokens, 1);
-    if (close > 0 && tokens[close + 1]?.value === '=') {
+    const operator = close > 0 ? tokens[close + 1]?.value : '';
+    if (close > 0 && (operator === '=' || ['+=', '-=', '*=', '/='].includes(operator))) {
       const target = tokens.slice(0, close + 1);
+      if (operator === '=') {
+        const value = evaluateExpression(tokens.slice(close + 2), scope, builtins);
+        assignTo(scope, target, value);
+        return index + 1;
+      }
+      const current = readTarget(scope, target);
       const value = evaluateExpression(tokens.slice(close + 2), scope, builtins);
-      assignTo(scope, target, value);
+      assignTo(scope, target, applyCompound(operator[0], current, value));
       return index + 1;
     }
   }
@@ -562,15 +689,7 @@ function executeStatement(statements, index, scope, builtins, runtime) {
     const target = [tokens[0]];
     const current = readTarget(scope, target);
     const value = evaluateExpression(tokens.slice(2), scope, builtins);
-    const operator = tokens[1].value[0];
-    let next;
-    if (operator === '/') {
-      if (value === 0) throw new Error('Division by zero.');
-      next = current / value;
-    } else if (operator === '+') next = add(current, value);
-    else if (operator === '-') next = current - value;
-    else next = current * value;
-    assignTo(scope, target, next);
+    assignTo(scope, target, applyCompound(tokens[1].value[0], current, value));
     return index + 1;
   }
 
@@ -742,12 +861,21 @@ function parseAdditive(parser, scope, builtins) {
 
 function parseMultiplicative(parser, scope, builtins) {
   let left = parseUnary(parser, scope, builtins);
-  while (peek(parser) && ['*', '/'].includes(peek(parser).value)) {
+  while (peek(parser) && ['*', '/', '%', '//'].includes(peek(parser).value)) {
     const operator = peek(parser).value;
     parser.position++;
     const right = parseUnary(parser, scope, builtins);
     if (operator === '*') left = numberOf(left) * numberOf(right);
-    else {
+    else if (operator === '%') {
+      // The remainder. Python's sign follows the divisor, and a zero
+      // divisor is an error rather than a silent NaN.
+      if (right === 0) throw new Error('Modulo by zero.');
+      left = numberOf(left) % numberOf(right);
+    } else if (operator === '//') {
+      // Floor division: it rounds down, so -7 // 2 is -4, not -3.
+      if (right === 0) throw new Error('Division by zero.');
+      left = Math.floor(numberOf(left) / numberOf(right));
+    } else {
       if (right === 0) throw new Error('Division by zero.');
       // Python's division always gives a float, even when the numbers
       // divide evenly, so `sum / len` prints `5.0` and not `5`.
@@ -766,7 +894,23 @@ function parseUnary(parser, scope, builtins) {
     parser.position++;
     return -parseUnary(parser, scope, builtins);
   }
-  return parsePrimary(parser, scope, builtins);
+  return parsePower(parser, scope, builtins);
+}
+
+/**
+ * The power operator, `**`.
+ *
+ * It sits below the unary minus, the way Python has it: `-2 ** 2` is
+ * `-4`, because the minus applies to the whole power.
+ */
+function parsePower(parser, scope, builtins) {
+  const left = parsePrimary(parser, scope, builtins);
+  if (peek(parser) && peek(parser).value === '**') {
+    parser.position++;
+    const right = parseUnary(parser, scope, builtins);
+    return numberOf(left) ** numberOf(right);
+  }
+  return left;
 }
 
 function parsePrimary(parser, scope, builtins) {
@@ -789,13 +933,25 @@ function parsePrimary(parser, scope, builtins) {
   }
   if (token.value === '[') {
     parser.position++;
-    const items = [];
+    // A list can either be a plain list of values, or a comprehension:
+    // `[value for item in items]`. The `for` after the first value is what
+    // tells them apart, so the value is parsed and, if a `for` turns up
+    // next, the tokens it was written from are handed to the
+    // comprehension reader and the value is parsed again for each item.
+    const valueStart = parser.position;
+    const first = [];
+    let sawFor = false;
     while (peek(parser) && peek(parser).value !== ']') {
       if (peek(parser).value === ',') { parser.position++; continue; }
-      items.push(parseOr(parser, scope, builtins));
+      if (peek(parser).value === 'for' || peek(parser).value === 'if') { sawFor = true; break; }
+      first.push(parseOr(parser, scope, builtins));
+    }
+    if (sawFor) {
+      const valueTokens = parser.tokens.slice(valueStart, parser.position);
+      return parseComprehension(valueTokens, parser, scope, builtins);
     }
     if (peek(parser) && peek(parser).value === ']') parser.position++;
-    return items;
+    return first;
   }
   if (token.value === '{') {
     parser.position++;
@@ -818,13 +974,119 @@ function parsePrimary(parser, scope, builtins) {
   if (token.type === 'name') {
     // A call is a name followed by an argument list.
     if (peek(parser) && peek(parser).value === '(') {
-      const args = readArguments(parser, parser.position).map(part => evaluateExpression(part, scope, builtins));
-      return callFunction(token.value, args, scope, builtins, runtimeFor(scope, builtins));
+      const parts = readArguments(parser, parser.position);
+      // A lone argument that starts with a `for` is a generator expression:
+      // `sum(x * x for x in xs)`. It is the only argument, so it can be
+      // recognised by looking for the `for` in it.
+      if (parts.length === 1 && parts[0].some(part => part.value === 'for')) {
+        const inner = { tokens: parts[0], position: 0 };
+        const valueStart = 0;
+        const valueTokens = [];
+        while (inner.position < inner.tokens.length && inner.tokens[inner.position].value !== 'for') {
+          valueTokens.push(inner.tokens[inner.position]);
+          inner.position++;
+        }
+        const generated = parseGeneratorExpression(valueTokens, inner, scope, builtins);
+        return callFunction(token.value, [generated], scope, builtins, runtimeFor(scope, builtins));
+      }
+      const { positional, keywords } = splitCallArguments(parts);
+      const args = positional.map(part => evaluateExpression(part, scope, builtins));
+      const named = {};
+      for (const keyword of keywords) named[keyword.name] = evaluateExpression(keyword.tokens, scope, builtins);
+      // The result of the call can still be indexed or sliced, the way
+      // `sorted(values, reverse=True)[:2]` is.
+      const result = callFunction(token.value, args, scope, builtins, runtimeFor(scope, builtins), named);
+      return applyAccess(result, parser, scope, builtins);
     }
     const value = scope.globals[token.value];
     return applyAccess(value, parser, scope, builtins);
   }
   return null;
+}
+
+/**
+ * Read a comprehension: the value, then one or more loops, then an
+ * optional filter.
+ *
+ * `[value for item in items if condition]`
+ * `[a + b for a in first for b in second]`
+ *
+ * The loop variables are bound in a child scope, so they do not leak out.
+ * The value and the condition are re-evaluated for each item, which is
+ * what makes the expression see the current value of the loop variable.
+ */
+function parseComprehension(valueTokens, parser, scope, builtins, closer = ']') {
+  // The `for` is already the next token.
+  const loops = [];
+  let conditionTokens = null;
+  while (peek(parser) && peek(parser).value === 'for') {
+    parser.position++;
+    const name = peek(parser)?.value;
+    parser.position++;
+    // Skip the `in`.
+    if (peek(parser) && peek(parser).value === 'in') parser.position++;
+    const sourceTokens = [];
+    // The source can be a list of its own, so the brackets are counted:
+    // the closer only ends the source when it closes the same level.
+    let depth = 0;
+    while (peek(parser)) {
+      const value = peek(parser).value;
+      if (value === '(' || value === '[' || value === '{') depth++;
+      else if (value === ')' || value === ']' || value === '}') {
+        if (depth === 0 && (value === closer || value === 'for' || value === 'if')) break;
+        depth--;
+      } else if (depth === 0 && (value === 'for' || value === 'if')) break;
+      sourceTokens.push(peek(parser));
+      parser.position++;
+    }
+    loops.push({ name, sourceTokens });
+    // A filter can only follow the last loop.
+    if (peek(parser) && peek(parser).value === 'if') {
+      parser.position++;
+      conditionTokens = [];
+      while (peek(parser) && peek(parser).value !== closer) {
+        conditionTokens.push(peek(parser));
+        parser.position++;
+      }
+      break;
+    }
+  }
+  if (peek(parser) && peek(parser).value === closer) parser.position++;
+
+  const out = [];
+  // Each loop is a nested walk, so the innermost one is the last.
+  const walk = (index, bindings) => {
+    if (index >= loops.length) {
+      if (conditionTokens && !truthy(evaluateExpression(conditionTokens, bindings, builtins))) return;
+      out.push(evaluateExpression(valueTokens, bindings, builtins));
+      return;
+    }
+    const loop = loops[index];
+    const iterable = evaluateExpression(loop.sourceTokens, bindings, builtins);
+    for (const item of iterable || []) {
+      const inner = {
+        globals: { ...bindings.globals },
+        parent: bindings.parent,
+        runtime: bindings.runtime
+      };
+      inner.globals[loop.name] = item;
+      walk(index + 1, inner);
+    }
+  };
+  walk(0, { globals: scope.globals, parent: scope.parent, runtime: scope.runtime });
+  return out;
+}
+
+/**
+ * Read a generator expression: `value for item in items`.
+ *
+ * A generator expression is a comprehension without the brackets. The
+ * course only needs it where a list would do — `sum(x * x for x in xs)` —
+ * so it is evaluated eagerly and handed back as a list.
+ */
+function parseGeneratorExpression(valueTokens, parser, scope, builtins) {
+  const list = parseComprehension(valueTokens, parser, scope, builtins, ')');
+  return list;
 }
 
 /**
@@ -835,11 +1097,14 @@ function parsePrimary(parser, scope, builtins) {
  */
 function parseLambda(parser, scope, builtins) {
   parser.position++;
-  const parameters = [];
+  const parameterTokens = [];
   while (peek(parser) && peek(parser).value !== ':') {
-    if (peek(parser).type === 'name') parameters.push(peek(parser).value);
+    parameterTokens.push(peek(parser));
     parser.position++;
   }
+  // A lambda takes the same parameter shape as a `def`, so a default
+  // works in one and not the other.
+  const parameters = parseParameters(parameterTokens);
   if (peek(parser) && peek(parser).value === ':') parser.position++;
   const start = parser.position;
   // The body runs to the end of the expression, which is where the
@@ -1062,14 +1327,35 @@ function callModuleMethod(value, name, args) {
 /**
  * Call a name, either a builtin or a function the learner defined.
  */
-function callFunction(name, args, scope, builtins, runtime) {
+function callFunction(name, args, scope, builtins, runtime, named = {}) {
   const target = scope.globals[name];
   if (target && target.__function) {
     // The call gets its own scope, with the outer names copied in, so a
     // function can read the variables around it without writing to them.
     const inner = { globals: Object.create(null), runtime: runtimeFor(scope, builtins) };
     for (const [key, value] of Object.entries(scope.globals)) inner.globals[key] = value;
-    target.parameters.forEach((parameter, index) => { inner.globals[parameter] = args[index] ?? null; });
+    const parameterNames = target.parameters.map(parameter => parameter.name);
+    target.parameters.forEach((parameter, index) => {
+      // A default is only used when the caller left the argument out. A
+      // positional argument wins, then a keyword argument, then the
+      // default, and finally null when there is no default at all.
+      if (index < args.length) {
+        inner.globals[parameter.name] = args[index];
+        return;
+      }
+      if (Object.prototype.hasOwnProperty.call(named, parameter.name)) {
+        inner.globals[parameter.name] = named[parameter.name];
+        return;
+      }
+      inner.globals[parameter.name] = parameter.default
+        ? evaluateExpression(parameter.default, inner, builtins)
+        : null;
+    });
+    // A keyword argument that names a parameter overrides the positional
+    // value, the way Python does.
+    for (const [key, value] of Object.entries(named)) {
+      if (parameterNames.includes(key)) inner.globals[key] = value;
+    }
     try {
       // A lambda holds one expression rather than a block of statements,
       // so it is evaluated instead of run.
@@ -1084,7 +1370,13 @@ function callFunction(name, args, scope, builtins, runtime) {
     }
     return null;
   }
-  if (typeof builtins[name] === 'function') return builtins[name](...args);
+  if (typeof builtins[name] === 'function') {
+    // The keyword arguments are only handed over when there are any, so
+    // a builtin that reads its own argument count is not confused by an
+    // extra empty object.
+    if (Object.keys(named).length) return builtins[name](...args, named);
+    return builtins[name](...args);
+  }
   throw new Error(`'${name}' is not defined yet.`);
 }
 
@@ -1097,6 +1389,22 @@ function add(left, right) {
   const sum = numberOf(left) + numberOf(right);
   // Adding to a float keeps it a float, the way Python does.
   return isFloat(left) || isFloat(right) ? asFloat(sum) : sum;
+}
+
+/**
+ * Apply one of the compound operators to a value.
+ *
+ * `+=` adds, `-=` subtracts, `*=` multiplies and `/=` divides. Division by
+ * zero is refused, the way Python refuses it.
+ */
+function applyCompound(operator, current, value) {
+  if (operator === '/') {
+    if (value === 0) throw new Error('Division by zero.');
+    return asFloat(current / value);
+  }
+  if (operator === '+') return add(current, value);
+  if (operator === '-') return numberOf(current) - numberOf(value);
+  return numberOf(current) * numberOf(value);
 }
 
 /* ------------------------------------------------------------------ *

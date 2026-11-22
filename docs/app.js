@@ -59,7 +59,10 @@ setInterval(() => {
 }, 7000);
 const reveal = new IntersectionObserver(entries => entries.forEach(entry => { if (!entry.isIntersecting) return; if (document.body.dataset.motion !== 'off') entry.target.classList.add('reveal'); reveal.unobserve(entry.target); }), { threshold: .08 });
 document.querySelectorAll('.project-card,.game-card,.about-card,.gridworks-feature').forEach(el => reveal.observe(el));
-function syncScores() { const best = Math.max(...['easy','normal','hard'].map(d => Number(read(`sabbir-arcade-v1-snake-${d}`, '0')) || 0)); $('[data-best-preview="snake"]').textContent = String(best).padStart(3,'0'); }
+// The Snake best is the highest score across every mode and speed, so a
+// great Night run shows on the card just like a Classic one.
+const SNAKE_BEST_KEYS = ['easy','normal','hard'].flatMap(level => [level, `walls-${level}`, `night-${level}`, `timed-${level}`]);
+function syncScores() { const best = Math.max(...SNAKE_BEST_KEYS.map(d => Number(read(`sabbir-arcade-v1-snake-${d}`, '0')) || 0)); $('[data-best-preview="snake"]').textContent = String(best).padStart(3,'0'); }
 syncScores(); document.addEventListener('arcade:score', syncScores);
 if ('serviceWorker' in navigator) {
   let refreshing = false;

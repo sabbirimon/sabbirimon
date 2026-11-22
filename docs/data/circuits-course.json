@@ -1,0 +1,462 @@
+{
+  "source": "IMON Circuits & Signals",
+  "license": "MIT",
+  "version": 1,
+  "exercises": [
+    {
+      "id": "circuit-ohms-current",
+      "kind": "calc",
+      "chapter": "Voltage, current and resistance",
+      "title": "Current through a resistor",
+      "xp": 15,
+      "brief": "A 12 V supply drives a 470 Ω resistor. Work out the current that flows through it, in milliamps.",
+      "unit": "mA",
+      "expected": [25.53],
+      "tolerance": 0.2,
+      "decimals": 2
+    },
+    {
+      "id": "circuit-ohms-power",
+      "kind": "calc",
+      "chapter": "Voltage, current and resistance",
+      "title": "Power in a resistor",
+      "xp": 15,
+      "brief": "A 5 V supply is connected to a 1 kΩ resistor. How much power does the resistor turn into heat, in milliwatts?",
+      "unit": "mW",
+      "expected": [25],
+      "tolerance": 0.2,
+      "decimals": 2
+    },
+    {
+      "id": "circuit-led-resistor",
+      "kind": "calc",
+      "chapter": "Voltage, current and resistance",
+      "title": "Resistor for an LED",
+      "xp": 20,
+      "brief": "A red LED drops 2.0 V and should run at 15 mA from a 9 V supply. What value of series resistor do you need, in ohms?",
+      "unit": "Ω",
+      "expected": [466.67],
+      "tolerance": 1,
+      "decimals": 0
+    },
+    {
+      "id": "circuit-kcl-node",
+      "kind": "calc",
+      "chapter": "Kirchhoff’s laws",
+      "title": "Current at a junction",
+      "xp": 15,
+      "brief": "1.2 A arrives at a junction and splits into two branches. One branch takes 450 mA. How much goes down the other branch, in milliamps?",
+      "unit": "mA",
+      "expected": [750],
+      "tolerance": 0.5,
+      "decimals": 1
+    },
+    {
+      "id": "circuit-series-parallel",
+      "kind": "calc",
+      "chapter": "Kirchhoff’s laws",
+      "title": "Two resistors in parallel",
+      "xp": 15,
+      "brief": "Two resistors of 3 kΩ and 6 kΩ sit in parallel. What is the equivalent resistance, in ohms?",
+      "unit": "Ω",
+      "expected": [2000],
+      "tolerance": 1,
+      "decimals": 0
+    },
+    {
+      "id": "circuit-kvl-loop",
+      "kind": "calc",
+      "chapter": "Kirchhoff’s laws",
+      "title": "Voltage around a loop",
+      "xp": 20,
+      "brief": "A 15 V source drives a loop with a 220 Ω and a 330 Ω resistor in series. What is the voltage across the 330 Ω resistor?",
+      "unit": "V",
+      "expected": [9],
+      "tolerance": 0.05,
+      "decimals": 3
+    },
+    {
+      "id": "circuit-divider-output",
+      "kind": "calc",
+      "chapter": "The voltage divider",
+      "title": "Divider output",
+      "xp": 15,
+      "brief": "A 10 kΩ and a 15 kΩ resistor form a divider across a 12 V supply. Take the output across the 15 kΩ resistor. What is the output voltage?",
+      "unit": "V",
+      "expected": [7.2],
+      "tolerance": 0.02,
+      "decimals": 3
+    },
+    {
+      "id": "circuit-divider-design",
+      "kind": "calc",
+      "chapter": "The voltage divider",
+      "title": "Design a divider",
+      "xp": 25,
+      "brief": "You need 2.5 V from a 10 V supply. Put a 20 kΩ resistor on top. What should the bottom resistor be, in ohms?",
+      "unit": "Ω",
+      "expected": [6666.67],
+      "tolerance": 5,
+      "decimals": 0
+    },
+    {
+      "id": "circuit-divider-loading",
+      "kind": "design",
+      "chapter": "The voltage divider",
+      "title": "Why the output sags",
+      "xp": 25,
+      "brief": "Your divider gives the right voltage with nothing attached, but the voltage drops as soon as you connect the circuit. Explain why, and say what you would add to fix it.",
+      "ideas": ["loading", "impedance", "buffer"],
+      "minimumWords": 30
+    },
+    {
+      "id": "circuit-rc-tau",
+      "kind": "calc",
+      "chapter": "Capacitors and the RC circuit",
+      "title": "The RC time constant",
+      "xp": 15,
+      "brief": "A 10 kΩ resistor and a 22 µF capacitor form an RC circuit. What is the time constant, in milliseconds?",
+      "unit": "ms",
+      "expected": [220],
+      "tolerance": 0.5,
+      "decimals": 2
+    },
+    {
+      "id": "circuit-rc-one-tau",
+      "kind": "calc",
+      "chapter": "Capacitors and the RC circuit",
+      "title": "Charging after one time constant",
+      "xp": 20,
+      "brief": "A capacitor charges through a resistor from a 10 V source. After exactly one time constant, what is the voltage across it, in volts? (Hint: 1 − e⁻¹.)",
+      "unit": "V",
+      "expected": [6.32],
+      "tolerance": 0.02,
+      "decimals": 3
+    },
+    {
+      "id": "circuit-rc-settling",
+      "kind": "calc",
+      "chapter": "Capacitors and the RC circuit",
+      "title": "How long to settle",
+      "xp": 20,
+      "brief": "A 4.7 kΩ resistor and a 10 µF capacitor make a filter. How many milliseconds does it take to settle to within 1% of the final value? (Use five time constants.)",
+      "unit": "ms",
+      "expected": [235],
+      "tolerance": 1,
+      "decimals": 2
+    },
+    {
+      "id": "circuit-rl-tau",
+      "kind": "calc",
+      "chapter": "Inductors and the RL circuit",
+      "title": "The RL time constant",
+      "xp": 15,
+      "brief": "A 100 mH inductor and a 220 Ω resistor form an RL circuit. What is the time constant, in milliseconds?",
+      "unit": "ms",
+      "expected": [0.4545],
+      "tolerance": 0.005,
+      "decimals": 4
+    },
+    {
+      "id": "circuit-inductor-energy",
+      "kind": "calc",
+      "chapter": "Inductors and the RL circuit",
+      "title": "Energy in the field",
+      "xp": 20,
+      "brief": "A 50 mH inductor carries 2 A. How much energy is stored in its magnetic field, in millijoules? (E = ½LI².)",
+      "unit": "mJ",
+      "expected": [100],
+      "tolerance": 0.5,
+      "decimals": 2
+    },
+    {
+      "id": "circuit-rl-flyback",
+      "kind": "design",
+      "chapter": "Inductors and the RL circuit",
+      "title": "The spike when you switch off",
+      "xp": 25,
+      "brief": "You switch off a coil and the voltage across it spikes to hundreds of volts. Explain what is happening, and say what you would put across the coil to protect the switch.",
+      "ideas": ["energy", "snubber", "reverse-bias"],
+      "minimumWords": 30
+    },
+    {
+      "id": "circuit-filter-cutoff",
+      "kind": "calc",
+      "chapter": "RLC, resonance and filters",
+      "title": "Cutoff frequency",
+      "xp": 20,
+      "brief": "An RC low-pass uses a 4.7 kΩ resistor and a 100 nF capacitor. What is its cutoff frequency, in hertz?",
+      "unit": "Hz",
+      "expected": [3386],
+      "tolerance": 10,
+      "decimals": 0
+    },
+    {
+      "id": "circuit-resonance",
+      "kind": "calc",
+      "chapter": "RLC, resonance and filters",
+      "title": "Resonant frequency",
+      "xp": 25,
+      "brief": "A 10 mH inductor and a 100 nF capacitor form a tank circuit. What is the resonant frequency, in kilohertz?",
+      "unit": "kHz",
+      "expected": [159.15],
+      "tolerance": 0.5,
+      "decimals": 3
+    },
+    {
+      "id": "circuit-filter-choice",
+      "kind": "design",
+      "chapter": "RLC, resonance and filters",
+      "title": "Choosing the filter",
+      "xp": 25,
+      "brief": "You want to keep a slow sensor signal and strip off fast switching noise on the same wire. Say which kind of filter to use, and what to watch out for when you choose its component values.",
+      "ideas": ["low-pass", "cutoff-frequency", "bandwidth"],
+      "minimumWords": 30
+    },
+    {
+      "id": "circuit-rectifier-average",
+      "kind": "calc",
+      "chapter": "Diodes and rectification",
+      "title": "Average of a half-wave signal",
+      "xp": 20,
+      "brief": "A 12 V peak sine wave goes through a single diode. What is the average (DC) voltage after the diode, in volts? (Vpeak ÷ π.)",
+      "unit": "V",
+      "expected": [3.82],
+      "tolerance": 0.02,
+      "decimals": 3
+    },
+    {
+      "id": "circuit-ripple",
+      "kind": "calc",
+      "chapter": "Diodes and rectification",
+      "title": "Ripple on a smoothed supply",
+      "xp": 25,
+      "brief": "A supply delivers 50 mA at 100 Hz into a smoothing capacitor. What ripple voltage do you get, in millivolts, with a 2200 µF capacitor? (Ripple = I ÷ (f·C).)",
+      "unit": "mV",
+      "expected": [227.27],
+      "tolerance": 2,
+      "decimals": 2
+    },
+    {
+      "id": "circuit-diode-equation",
+      "kind": "design",
+      "chapter": "Diodes and rectification",
+      "title": "Why the forward voltage moves",
+      "xp": 25,
+      "brief": "The same diode does not have the same forward voltage at every current. Explain why, and say what happens to a diode that is driven in reverse beyond its breakdown voltage.",
+      "ideas": ["forward-voltage", "exponential", "reverse-bias"],
+      "minimumWords": 30
+    },
+    {
+      "id": "circuit-led-current",
+      "kind": "calc",
+      "chapter": "LEDs and light",
+      "title": "Current through a lit LED",
+      "xp": 15,
+      "brief": "A blue LED drops 3.2 V and has a 470 Ω resistor from a 5 V supply. How much current flows, in milliamps?",
+      "unit": "mA",
+      "expected": [3.83],
+      "tolerance": 0.05,
+      "decimals": 3
+    },
+    {
+      "id": "circuit-led-efficiency",
+      "kind": "design",
+      "chapter": "LEDs and light",
+      "title": "Why white is brighter than green",
+      "xp": 25,
+      "brief": "Two LEDs use the same power, but the white one looks brighter. Explain what is happening inside the white LED, and say what controls how bright an LED looks.",
+      "ideas": ["phosphor", "current", "efficiency"],
+      "minimumWords": 30
+    },
+    {
+      "id": "circuit-gate-truth",
+      "kind": "calc",
+      "chapter": "Digital logic and gates",
+      "title": "XOR truth table",
+      "xp": 15,
+      "brief": "How many rows of a 2-input XOR truth table have the output high?",
+      "unit": "rows",
+      "expected": [2],
+      "tolerance": 0,
+      "decimals": 0
+    },
+    {
+      "id": "circuit-de-morgan",
+      "kind": "design",
+      "chapter": "Digital logic and gates",
+      "title": "Push the bubble through",
+      "xp": 25,
+      "brief": "A NAND gate has an inversion bubble on its output. Describe how you would rewrite it using De Morgan’s theorem, and say which other gate it becomes.",
+      "ideas": ["de-morgan", "bubble", "or"],
+      "minimumWords": 25
+    },
+    {
+      "id": "circuit-logic-levels",
+      "kind": "design",
+      "chapter": "Digital logic and gates",
+      "title": "Mixing logic families",
+      "xp": 25,
+      "brief": "You connect an old TTL chip to a modern CMOS chip. Explain what goes wrong at the voltage levels, and say what the gap between the low and high thresholds is called.",
+      "ideas": ["logic-level", "noise", "margin"],
+      "minimumWords": 30
+    },
+    {
+      "id": "circuit-half-adder",
+      "kind": "calc",
+      "chapter": "Combinational design",
+      "title": "Half adder output",
+      "xp": 20,
+      "brief": "A half adder adds A = 1 and B = 1. What is the carry out, as 0 or 1?",
+      "unit": "",
+      "expected": [1],
+      "tolerance": 0,
+      "decimals": 0
+    },
+    {
+      "id": "circuit-full-adder",
+      "kind": "calc",
+      "chapter": "Combinational design",
+      "title": "Full adder with a carry in",
+      "xp": 25,
+      "brief": "A full adder adds A = 1, B = 1 and a carry in of 1. What is the sum bit, as 0 or 1?",
+      "unit": "",
+      "expected": [1],
+      "tolerance": 0,
+      "decimals": 0
+    },
+    {
+      "id": "circuit-multiplexer",
+      "kind": "design",
+      "chapter": "Combinational design",
+      "title": "How many select lines",
+      "xp": 25,
+      "brief": "You want a multiplexer that can pick one of eight inputs. Explain how many select lines it needs and why, and mention one practical limit that comes with the design.",
+      "ideas": ["select", "fan-out", "delay"],
+      "minimumWords": 30
+    },
+    {
+      "id": "circuit-sr-latch",
+      "kind": "calc",
+      "chapter": "Sequential logic",
+      "title": "Setting a latch",
+      "xp": 20,
+      "brief": "An SR latch is set (S = 1, R = 0). What is Q, as 0 or 1?",
+      "unit": "",
+      "expected": [1],
+      "tolerance": 0,
+      "decimals": 0
+    },
+    {
+      "id": "circuit-flip-flop",
+      "kind": "design",
+      "chapter": "Sequential logic",
+      "title": "Why the clock edge",
+      "xp": 25,
+      "brief": "Explain why a D flip-flop only takes its new value on the clock edge and not continuously, and say what would go wrong in a design where it changed continuously.",
+      "ideas": ["edge", "race", "clock"],
+      "minimumWords": 30
+    },
+    {
+      "id": "circuit-counter",
+      "kind": "calc",
+      "chapter": "Sequential logic",
+      "title": "Counting up",
+      "xp": 25,
+      "brief": "A 4-bit counter starts at 0 and is clocked once per second. What is its value after 9 seconds, as a decimal number?",
+      "unit": "",
+      "expected": [9],
+      "tolerance": 0,
+      "decimals": 0
+    },
+    {
+      "id": "circuit-sampling-rate",
+      "kind": "calc",
+      "chapter": "Signals in the real world",
+      "title": "Sampling rate",
+      "xp": 20,
+      "brief": "You need to capture a signal with components up to 8 kHz. What is the minimum sampling rate, in kilohertz, according to the sampling theorem?",
+      "unit": "kHz",
+      "expected": [16],
+      "tolerance": 0,
+      "decimals": 0
+    },
+    {
+      "id": "circuit-aliasing",
+      "kind": "design",
+      "chapter": "Signals in the real world",
+      "title": "Why the filter has to come first",
+      "xp": 25,
+      "brief": "Explain what aliasing is, why an anti-aliasing filter has to be placed before the converter rather than after it, and say what filter type is used.",
+      "ideas": ["sampling", "aliasing", "low-pass"],
+      "minimumWords": 30
+    },
+    {
+      "id": "circuit-ground-loop",
+      "kind": "design",
+      "chapter": "Signals in the real world",
+      "title": "The noise you cannot see",
+      "xp": 25,
+      "brief": "Your analogue reading is noisy and drifts. Name two different sources of that noise, and say what you would change about the layout or the ground return to reduce it.",
+      "ideas": ["noise", "ground-loop", "decoupling"],
+      "minimumWords": 30
+    },
+    {
+      "id": "circuit-impedance",
+      "kind": "calc",
+      "chapter": "Signals in the real world",
+      "title": "Loading on a line",
+      "xp": 20,
+      "brief": "A logic output drives a 50 Ω input. What percentage of the output voltage actually appears at the input, if the output impedance is 5 Ω?",
+      "unit": "%",
+      "expected": [90.91],
+      "tolerance": 0.2,
+      "decimals": 3
+    },
+    {
+      "id": "circuit-build-divider",
+      "kind": "build",
+      "chapter": "The voltage divider",
+      "title": "Build a divider",
+      "xp": 30,
+      "brief": "Build a voltage divider: a battery across node 1, a resistor from node 1 to node 2, and a resistor from node 2 to ground. Set the two resistors to 1 kΩ each, then check that the output node sits at half the supply.",
+      "netlist": {
+        "parts": [
+          { "id": "battery", "nodeA": 1, "nodeB": 0 },
+          { "id": "resistor", "nodeA": 1, "nodeB": 2 },
+          { "id": "resistor", "nodeA": 2, "nodeB": 0 }
+        ]
+      }
+    },
+    {
+      "id": "circuit-build-rc",
+      "kind": "build",
+      "chapter": "Capacitors and the RC circuit",
+      "title": "Build an RC circuit",
+      "xp": 30,
+      "brief": "Build an RC charging circuit: a battery across node 1, a resistor from node 1 to node 2, and a capacitor from node 2 to ground. Run the simulation and watch the voltage at node 2 rise towards the supply.",
+      "netlist": {
+        "parts": [
+          { "id": "battery", "nodeA": 1, "nodeB": 0 },
+          { "id": "resistor", "nodeA": 1, "nodeB": 2 },
+          { "id": "capacitor", "nodeA": 2, "nodeB": 0 }
+        ]
+      }
+    },
+    {
+      "id": "circuit-build-led",
+      "kind": "build",
+      "chapter": "LEDs and light",
+      "title": "Build an LED circuit",
+      "xp": 30,
+      "brief": "Build an LED circuit: a battery across node 1, a resistor from node 1 to node 2, and an LED from node 2 to ground. Run the simulation and read the current through the LED.",
+      "netlist": {
+        "parts": [
+          { "id": "battery", "nodeA": 1, "nodeB": 0 },
+          { "id": "resistor", "nodeA": 1, "nodeB": 2 },
+          { "id": "led", "nodeA": 2, "nodeB": 0 }
+        ]
+      }
+    }
+  ]
+}

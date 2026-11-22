@@ -85,7 +85,13 @@
   <!-- The lesson ------------------------------------------------------ -->
   <section class="lab-lesson" aria-labelledby="ai-lab-title">
     <nav class="lab-rail" aria-label="Exercises" id="ai-course-drawer">
-      <h2 class="lab-rail-title" data-pixel-text>Course</h2>
+      <div class="lab-rail-head">
+        <h2 class="lab-rail-title" data-pixel-text>Course</h2>
+        <button type="button" class="lab-rail-filter" data-ai-preferred-only aria-pressed="false">
+          <span aria-hidden="true">★</span> Preferred
+        </button>
+      </div>
+      <p class="lab-rail-count" data-ai-preferred-count hidden></p>
       <ol class="lab-rail-list" data-ai-rail></ol>
     </nav>
 
@@ -103,6 +109,8 @@
         </ol>
         <pre class="ai-expected" data-ai-expected hidden></pre>
       </div>
+
+      <div class="lab-learn" data-ai-learn></div>
 
       <p class="lab-status" data-ai-status role="status" aria-live="polite"></p>
 

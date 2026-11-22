@@ -1,0 +1,300 @@
+/* The Circuits & Signals lab — a bench for the electronics course.
+   The lesson sits on the left and the bench on the right, the same split
+   the other two labs use. What is different is the workbench: a parts
+   bin, a board you can drop parts onto, and a scope that draws the
+   voltage over time.
+
+   Every rule is namespaced with `.circuits-`. */
+
+/* Tokens ------------------------------------------------------------ */
+.circuits-page {
+  --circuits-board: #0b1220;
+  --circuits-wire: #7dd3fc;
+  --circuits-trace: #22d3ee;
+  --circuits-part: #1e293b;
+  --circuits-part-line: #94a3b8;
+  --circuits-panel: #0b1026;
+  --circuits-panel-2: #111834;
+  --circuits-rim: #1e293b;
+}
+
+/* The bench ------------------------------------------------------- */
+.circuits-bench {
+  padding: 16px;
+}
+
+.circuits-bench-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 16px;
+  align-items: start;
+}
+
+.circuits-board,
+.circuits-bin,
+.circuits-scope,
+.circuits-tools {
+  background: var(--circuits-panel);
+  border: 2px solid var(--circuits-rim);
+  padding: 14px;
+}
+
+.circuits-bin {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.circuits-pane-head {
+  margin-bottom: 10px;
+}
+
+.circuits-pane-note {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted, #94a3b8);
+}
+
+/* The canvas ------------------------------------------------------ */
+.circuits-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--circuits-board);
+  border: 2px solid var(--circuits-rim);
+  image-rendering: pixelated;
+  touch-action: manipulation;
+}
+
+.circuits-scope-canvas {
+  background: #041018;
+}
+
+/* The readout ----------------------------------------------------- */
+.circuits-readout {
+  margin: 10px 0 0;
+  padding: 9px 11px;
+  background: var(--circuits-panel-2);
+  border-left: 3px solid var(--circuits-wire);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  line-height: 1.7;
+  color: #cbd5e1;
+  overflow-wrap: anywhere;
+}
+
+/* The parts bin --------------------------------------------------- */
+.circuits-parts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.circuits-part {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--circuits-panel-2);
+  border: 2px solid var(--circuits-rim);
+  color: var(--text);
+  cursor: pointer;
+  font-family: var(--body);
+  text-align: left;
+}
+
+.circuits-part:hover,
+.circuits-part:focus-visible {
+  border-color: var(--circuits-wire);
+  background: #16203f;
+}
+
+.circuits-part-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.circuits-part-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: var(--circuits-wire);
+  white-space: nowrap;
+}
+
+/* The probe and the part editor ----------------------------------- */
+.circuits-probe,
+.circuits-part-edit {
+  border-top: 2px solid var(--circuits-rim);
+  padding-top: 12px;
+}
+
+.circuits-probe-title {
+  margin: 0 0 6px;
+  font-family: var(--pixel);
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--lab-gold, #facc15);
+}
+
+.circuits-select,
+.circuits-input {
+  width: 100%;
+  padding: 8px 9px;
+  background: #020617;
+  border: 2px solid var(--circuits-rim);
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+
+.circuits-label {
+  display: block;
+  margin: 10px 0 5px;
+  font-size: 12px;
+  color: var(--muted, #94a3b8);
+}
+
+.circuits-selected {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.circuits-edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* The scope ------------------------------------------------------- */
+.circuits-scope,
+.circuits-answer,
+.circuits-tools {
+  padding: 16px;
+}
+
+.circuits-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px 14px;
+  margin: 14px 0 0;
+  padding: 0;
+}
+
+.circuits-metrics dt {
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--muted, #94a3b8);
+}
+
+.circuits-metrics dd {
+  margin: 2px 0 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 14px;
+  color: var(--circuits-trace);
+}
+
+/* The answer ------------------------------------------------------ */
+.circuits-answer-box {
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+}
+
+.circuits-answer-hint {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted, #94a3b8);
+}
+
+/* The further tools ----------------------------------------------- */
+.circuits-tool-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.circuits-tool {
+  background: var(--circuits-panel-2);
+  border: 2px solid var(--circuits-rim);
+  padding: 12px;
+}
+
+.circuits-tool-name {
+  margin: 0;
+  font-family: var(--pixel);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--circuits-wire);
+}
+
+.circuits-tool-focus {
+  margin: 8px 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.circuits-tool-tech {
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted, #94a3b8);
+}
+
+.circuits-tool-link {
+  font-size: 12px;
+  color: var(--lab-blue, #14adff);
+}
+
+/* The credit and the empty note ---------------------------------- */
+.circuits-credit,
+.circuits-empty {
+  font-size: 12px;
+  color: var(--muted, #94a3b8);
+}
+
+.circuits-empty {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border: 2px solid var(--lab-red, #f43f5e);
+  color: var(--lab-red, #f43f5e);
+}
+
+/* Small screens --------------------------------------------------- */
+@media (max-width: 900px) {
+  .circuits-bench-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .circuits-bench,
+  .circuits-scope,
+  .circuits-answer,
+  .circuits-tools {
+    padding: 12px;
+  }
+  .circuits-canvas {
+    /* The board has fine detail, so it keeps its own size and scrolls
+       sideways rather than shrinking into illegibility. */
+    min-width: 520px;
+  }
+  .circuits-board {
+    overflow-x: auto;
+  }
+  .circuits-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

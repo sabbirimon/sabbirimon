@@ -248,7 +248,7 @@
       "chapter": "Python for models",
       "title": "How deep is the queue",
       "xp": 35,
-      "brief": "Write `queue_depth` that takes a list of jobs, each with a `size`, and returns the total size still waiting. Print `queue_depth([1, 2, 3])`.",
+      "brief": "Write `queue_depth` that takes a list of job sizes and returns the total size still waiting. Print `queue_depth([1, 2, 3])`.",
       "expected": [
         "6"
       ],
@@ -614,7 +614,7 @@
         "200"
       ],
       "starter": {
-        "python": "import requests\n\nresponse = requests.get(\"https://api.example.com/users\")\nprint(response.status_code)\n"
+        "python": "import requests\n\nresponse = requests.get(\"https://api.example.com/users\")\n# Print the status code of the response.\n"
       }
     },
     {
@@ -660,7 +660,7 @@
         "1"
       ],
       "starter": {
-        "python": "import requests\n\nresponse = requests.get(\"https://api.example.com/search?q=attention\")\nprint(len(response.json()))\n"
+        "python": "import requests\n\n# Call the search endpoint with the query \"attention\".\nresponse = requests.get(\"https://api.example.com/search?q=attention\")\n# Print how many results came back.\n"
       }
     },
     {
@@ -688,7 +688,7 @@
         "200"
       ],
       "starter": {
-        "python": "import requests\n\nresponse = requests.get(\"https://api.example.com/users\")\nif response.status_code == 500:\n    pass\nprint(response.status_code)\n"
+        "python": "import requests\n\nresponse = requests.get(\"https://api.example.com/users\")\n# If the server answered 500, make the call again.\nif response.status_code == 500:\n    pass\n\n# Print the status code of the response you ended up with.\n"
       }
     },
     {
@@ -702,7 +702,7 @@
         "5"
       ],
       "starter": {
-        "python": "import requests\n\nrequests.timeout = 5\nresponse = requests.get(\"https://api.example.com/users\")\nprint(len(response.json()))\n"
+        "python": "import requests\n\n# Give the request a deadline of five seconds.\nrequests.timeout = 5\nresponse = requests.get(\"https://api.example.com/users\")\n# Print how many users came back.\n"
       }
     },
     {
@@ -716,7 +716,7 @@
         "['orders']"
       ],
       "starter": {
-        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\nprint(db.tables())\n"
+        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\n# Create the orders table with the id, item and price columns.\n\n# Print the names of the tables.\n"
       }
     },
     {
@@ -774,7 +774,7 @@
         "20"
       ],
       "starter": {
-        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\ndb.execute(\"UPDATE orders SET price = 20 WHERE item = 'book'\")\nprint(db.query(\"SELECT price FROM orders WHERE item = 'book'\")[0][\"price\"])\n"
+        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\n# Change the price of the book to 20.\n\n# Print the price of the book.\n"
       }
     },
     {
@@ -788,7 +788,7 @@
         "2"
       ],
       "starter": {
-        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (3, 'lamp', 30)\")\ndb.execute(\"DELETE FROM orders WHERE price < 10\")\nprint(len(db.query(\"SELECT id FROM orders\")))\n"
+        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (3, 'lamp', 30)\")\n# Remove the orders that cost less than 10.\n\n# Print how many orders are left.\n"
       }
     },
     {
@@ -802,7 +802,7 @@
         "44"
       ],
       "starter": {
-        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (3, 'lamp', 30)\")\nrows = db.query(\"SELECT SUM(price) AS total FROM orders\")\nprint(rows[0][\"total\"])\n"
+        "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (3, 'lamp', 30)\")\n# Ask the database for the total price of every order.\nrows = db.query(\"SELECT SUM(price) AS total FROM orders\")\n\n# Print the total.\n"
       }
     }
   ]

@@ -104,7 +104,13 @@
 
     <!-- The rail scrolls on its own, below the pinned brief. -->
     <nav class="lab-rail" aria-label="Exercises">
-      <h2 class="lab-rail-title" data-pixel-text>Course</h2>
+      <div class="lab-rail-head">
+        <h2 class="lab-rail-title" data-pixel-text>Course</h2>
+        <button type="button" class="lab-rail-filter" data-lab-preferred-only aria-pressed="false">
+          <span aria-hidden="true">★</span> Preferred
+        </button>
+      </div>
+      <p class="lab-rail-count" data-lab-preferred-count hidden></p>
       <ol class="lab-rail-list" data-lab-rail></ol>
     </nav>
 

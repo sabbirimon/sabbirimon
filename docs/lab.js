@@ -27,6 +27,15 @@ import { initLabLookup } from './lab-lookup.js';
 import { formatLine, initTerminalPanel } from './lab-output.js';
 import { quizExercises, QUIZ_CHAPTER } from './lab-quiz.js';
 import { initLabQuiz } from './lab-quiz-ui.js';
+import {
+  CODE_LAB_PREFERRED_KEY,
+  loadPreferred,
+  savePreferred,
+  togglePreferred,
+  filterPreferred,
+  preferredChapters,
+  preferredLabel
+} from './lab-preferred.js';
 
 /** The localStorage key that holds the learner's progress. */
 export const LAB_PROGRESS_KEY = 'imon-lab-progress-v1';
@@ -533,6 +542,14 @@ export function initLab(root = document) {
   const credit = root?.querySelector?.('[data-lab-credit]');
   const clearButton = root?.querySelector?.('[data-lab-clear]');
   const kicker = root?.querySelector?.('[data-lab-brief-kicker]');
+  // The preferred filter above the rail, and the count beside it.
+  const preferredOnly = root?.querySelector?.('[data-lab-preferred-only]');
+  const preferredCount = root?.querySelector?.('[data-lab-preferred-count]');
+  // The exercises the learner has starred. Whether the rail is showing
+  // only those is held on the filter button's `aria-pressed`, so the
+  // button and the rail can never disagree.
+  let preferred = loadPreferred(globalThis.localStorage, CODE_LAB_PREFERRED_KEY);
+  const showingPreferred = () => preferredOnly?.getAttribute('aria-pressed') === 'true';
   // The help text is different for a quiz, because there is no code to
   // reset and no file to open.
   const helpCode = root?.querySelector?.('[data-lab-help-code]');
@@ -736,7 +753,13 @@ export function initLab(root = document) {
   function renderRail() {
     if (!rail) return;
     rail.textContent = '';
-    const chapters = labChapters();
+    const list = allExercises();
+    // With the filter on, only the starred exercises are shown, and the
+    // chapters that hold nothing starred are dropped so the rail does not
+    // show empty headings.
+    const chapters = showingPreferred()
+      ? preferredChapters(list, preferred)
+      : labChapters();
     for (const chapterName of chapters) {
       const group = document.createElement('li');
       group.className = 'lab-rail-group';
@@ -744,10 +767,15 @@ export function initLab(root = document) {
       heading.className = 'lab-rail-chapter';
       heading.textContent = chapterName;
       group.append(heading);
-      const list = document.createElement('ol');
-      list.className = 'lab-rail-items';
-      for (const exercise of exercisesInChapter(chapterName)) {
+      const items = document.createElement('ol');
+      items.className = 'lab-rail-items';
+      const inChapter = exercisesInChapter(chapterName);
+      const shown = showingPreferred()
+        ? filterPreferred(inChapter, preferred)
+        : inChapter;
+      for (const exercise of shown) {
         const item = document.createElement('li');
+        item.className = 'lab-rail-item';
         const link = document.createElement('a');
         link.href = './lab.html?exercise=' + encodeURIComponent(exercise.id);
         link.dataset.labRailItem = exercise.id;
@@ -760,11 +788,41 @@ export function initLab(root = document) {
         label.className = 'lab-rail-label';
         label.textContent = exercise.title;
         link.append(mark, label);
-        item.append(link);
-        list.append(item);
+        // The star sits beside the link, not inside it, so clicking it
+        // stars the exercise instead of opening it.
+        const star = document.createElement('button');
+        star.type = 'button';
+        star.className = 'lab-rail-star';
+        star.dataset.labStar = exercise.id;
+        const starred = preferred.has(exercise.id);
+        star.setAttribute('aria-pressed', starred ? 'true' : 'false');
+        star.setAttribute('aria-label', preferredLabel(starred, exercise.title));
+        star.title = starred ? 'Preferred' : 'Add to preferred';
+        star.textContent = starred ? '★' : '☆';
+        item.append(link, star);
+        items.append(item);
       }
-      group.append(list);
+      group.append(items);
       rail.append(group);
+    }
+    if (preferredCount) {
+      const count = preferred.size;
+      preferredCount.textContent = count === 1 ? '1 starred' : `${count} starred`;
+      preferredCount.hidden = count === 0 && !showingPreferred();
+    }
+  }
+
+  /**
+   * Star or unstar an exercise and redraw the rail.
+   */
+  function toggleStar(id) {
+    preferred = togglePreferred(preferred, id);
+    savePreferred(preferred, globalThis.localStorage, CODE_LAB_PREFERRED_KEY);
+    renderRail();
+    updateRail();
+    if (status) {
+      status.textContent = preferred.has(id) ? 'Added to preferred.' : 'Removed from preferred.';
+      status.dataset.state = 'ok';
     }
   }
 
@@ -974,6 +1032,24 @@ export function initLab(root = document) {
   doneButton?.addEventListener('click', () => {
     const next = neighbourExercise(state.exercise.id, 'next');
     if (next) goTo(next.id);
+  });
+
+  /* -- preferred exercises ---------------------------------------- */
+
+  // The star button and the filter both live inside the rail, so one
+  // delegated listener on the rail handles the stars. The filter button
+  // sits outside the rail, so it gets its own.
+  rail?.addEventListener('click', event => {
+    const star = event.target?.closest?.('[data-lab-star]');
+    if (!star) return;
+    event.preventDefault();
+    toggleStar(star.dataset.labStar);
+  });
+  preferredOnly?.addEventListener('click', () => {
+    const on = preferredOnly.getAttribute('aria-pressed') === 'true';
+    preferredOnly.setAttribute('aria-pressed', on ? 'false' : 'true');
+    renderRail();
+    updateRail();
   });
 
   /* -- the imported course ---------------------------------------- */
