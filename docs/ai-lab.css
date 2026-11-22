@@ -1,0 +1,54 @@
+/* The AI lab — the AI, machine-learning and system-design exercise page.
+
+   It reuses the code lab's workbench (`.lab-` rules in lab.css) and adds
+   the pieces the AI course needs: a wider single editor, a reference
+   panel that explains how to answer, a box for the expected output and a
+   note about which Python the interpreter understands.
+
+   Every rule here is namespaced with `.ai-` or scoped under
+   `.ai-lab-page`. */
+
+/* The kind badge above the lesson title. */
+.ai-lab-page .lab-kicker[data-ai-kind] { color: var(--lab-lime); }
+
+/* The single editor sits next to the reference panel, so the workbench
+   grid is two columns instead of the code lab's editor-and-preview. */
+.ai-editor-pane { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+.ai-editor-pane .lab-editor { min-height: 320px; }
+.ai-editor-pane .lab-code { white-space: pre; overflow: auto; }
+
+/* The reference panel. */
+.ai-hint-pane { background: var(--lab-panel-2); border: 1px solid var(--lab-rim); border-left: 0; padding: 16px 18px; overflow: auto; }
+.ai-hint-pane .lab-pane-title { margin: 0 0 10px; }
+.ai-hint { margin: 0 0 18px; color: var(--text); line-height: 1.6; font-size: 15px; }
+
+/* The Python subset list. */
+.ai-python-note { border-top: 1px solid var(--lab-rim); padding-top: 14px; }
+.ai-python-note-title { margin: 0 0 8px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--lab-blue); }
+.ai-python-list { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.9; }
+.ai-python-list code { background: #06122e; border: 1px solid var(--lab-rim); border-radius: 4px; padding: 1px 5px; color: var(--lab-gold); font-size: 12px; }
+
+/* The expected output box, hidden for design exercises. */
+.ai-expected { margin: 12px 0 0; padding: 12px 14px; background: var(--lab-code-bg); border: 1px solid var(--lab-rim-strong); border-left: 3px solid var(--lab-lime); border-radius: 4px; color: #d7e7ff; font-family: var(--mono); font-size: 13px; line-height: 1.6; overflow-x: auto; white-space: pre; }
+
+/* The credit line under the help text. */
+.ai-credit { margin: 10px 0 0; color: var(--muted); font-size: 13px; }
+
+/* The message shown when the course file cannot be read. */
+.ai-empty { margin: 14px 0 0; padding: 12px 14px; background: #2a0d18; border: 1px solid #5b1b2e; border-left: 3px solid var(--lab-red); border-radius: 4px; color: #ffd9e2; font-size: 14px; line-height: 1.6; }
+.ai-empty code { background: #14060c; border-radius: 4px; padding: 1px 5px; font-size: 13px; }
+
+/* The output console is the only pane under the editor here, so it can be
+   shorter than the code lab's terminal. */
+.ai-lab-page .lab-terminal { min-height: 150px; }
+.ai-lab-page .lab-console { min-height: 110px; }
+.ai-lab-page .lab-console-out .lab-console-text { color: #d7e7ff; }
+.ai-lab-page .lab-console-ok .lab-console-text { color: var(--lab-lime); }
+.ai-lab-page .lab-console-warn .lab-console-text { color: var(--lab-gold); }
+.ai-lab-page .lab-console-error .lab-console-text { color: #ffb3c1; }
+
+/* Narrow screens: the reference panel drops under the editor. */
+@media (max-width: 900px) {
+  .ai-editor-pane { grid-template-columns: minmax(0, 1fr); }
+  .ai-hint-pane { border-left: 1px solid var(--lab-rim); border-top: 0; }
+}
