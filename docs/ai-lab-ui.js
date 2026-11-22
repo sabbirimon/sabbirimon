@@ -163,9 +163,39 @@ export function neighbourAiExercise(exercises, id, direction) {
 }
 
 /* ------------------------------------------------------------------ *
- * Running Python
+ * The course drawer
  * ------------------------------------------------------------------ */
 
+/**
+ * Whether the course drawer should be open after a toggle.
+ *
+ * On a phone the course rail is a drawer that slides in over the lesson,
+ * so the learner lands on the current exercise instead of a list of
+ * fifty-four. The button only appears at that width, so on a desktop the
+ * rail simply stays where it is and this state is never used.
+ */
+export function courseDrawerOpen(isOpen) {
+  return isOpen === true;
+}
+
+/**
+ * The attributes the drawer and its button need for a given open state.
+ *
+ * The button carries `aria-expanded` so a screen reader says whether the
+ * drawer is open, and the drawer carries the class the CSS watches.
+ */
+export function courseDrawerAttributes(isOpen) {
+  const open = courseDrawerOpen(isOpen);
+  return {
+    expanded: open ? 'true' : 'false',
+    drawerClass: open ? 'is-open' : '',
+    bodyClass: open ? 'ai-course-open' : ''
+  };
+}
+
+/* ------------------------------------------------------------------ *
+ * Running Python
+ * ------------------------------------------------------------------ */
 /**
  * Run a Python program and turn the result into console lines.
  *

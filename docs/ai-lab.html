@@ -7,6 +7,12 @@
 <title>AI Lab · IMON.world</title>
 <meta name="description" content="Learn AI, machine learning and system design by writing real Python and real designs in your browser. Free, offline-friendly and no account needed.">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="manifest" href="ai-lab.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AI Lab">
+<link rel="apple-touch-icon" href="icon.svg">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="nes.css"><link rel="stylesheet" href="wordmark.css">
 <link rel="stylesheet" href="lab.css">
@@ -27,13 +33,14 @@
     <a href="./tools/">Tools</a>
     <a href="./login.html">Sign in</a>
   </nav>
+  <button type="button" class="lab-course-toggle" data-ai-course-toggle aria-expanded="false" aria-controls="ai-course-drawer" data-pixel-text>Course</button>
   <p class="lab-xp nes-pixel-badge"><span aria-hidden="true">★</span> <span data-ai-xp>0 XP</span></p>
 </header>
 
 <main class="lab-layout">
   <!-- The lesson ------------------------------------------------------ -->
   <section class="lab-lesson" aria-labelledby="ai-lab-title">
-    <nav class="lab-rail" aria-label="Exercises">
+    <nav class="lab-rail" aria-label="Exercises" id="ai-course-drawer">
       <h2 class="lab-rail-title" data-pixel-text>Course</h2>
       <ol class="lab-rail-list" data-ai-rail></ol>
     </nav>
@@ -132,7 +139,7 @@
 </footer>
 
 <script type="module">
-import { initAiLab } from './ai-lab-ui.js';
+import { initAiLab, courseDrawerAttributes } from './ai-lab-ui.js';
 import { initWordmark } from './logo.js';
 import { initPixelText } from './pixel-type.js';
 
@@ -161,7 +168,33 @@ document.querySelector('[data-ai-rail]')?.addEventListener('click', event => {
   if (lab.loadExercise(id)) {
     history.replaceState(null, '', '?exercise=' + encodeURIComponent(id));
     document.querySelector('.lab-brief')?.scrollIntoView({ block: 'start' });
+    closeCourse();
   }
+});
+
+/* On a phone the course rail is a drawer. The button is only shown at that
+   width, so on a desktop the rail simply stays where it is. */
+const courseToggle = document.querySelector('[data-ai-course-toggle]');
+const courseDrawer = document.querySelector('#ai-course-drawer');
+
+function setCourse(isOpen) {
+  if (!courseToggle || !courseDrawer) return;
+  const state = courseDrawerAttributes(isOpen);
+  courseToggle.setAttribute('aria-expanded', state.expanded);
+  courseDrawer.classList.toggle('is-open', Boolean(state.drawerClass));
+  document.body.classList.toggle('ai-course-open', Boolean(state.bodyClass));
+}
+
+function closeCourse() {
+  setCourse(false);
+}
+
+courseToggle?.addEventListener('click', () => {
+  setCourse(courseToggle.getAttribute('aria-expanded') !== 'true');
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeCourse();
 });
 </script>
 </body>

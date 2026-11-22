@@ -77,6 +77,28 @@ test('a program that never ends is stopped', () => {
   assert.match(result.error, /runs for too long/);
 });
 
+test('a slow phone is stopped by the clock, not by a step count', () => {
+  // A fake clock that jumps forward on every read stands in for a phone that
+  // is far slower than the test machine.
+  let clock = 0;
+  const result = runPython('while True:\n    pass', {
+    maxSteps: 10000000,
+    maxMillis: 1000,
+    now: () => (clock += 100)
+  });
+  assert.match(result.error, /runs for too long/);
+});
+
+test('a program that stays inside the time budget still finishes', () => {
+  let clock = 0;
+  const result = runPython('total = 0\nfor n in range(100):\n    total = total + n\nprint(total)', {
+    maxMillis: 1000,
+    now: () => (clock += 1)
+  });
+  assert.equal(result.error, null);
+  assert.deepEqual(result.output, ['4950']);
+});
+
 test('an undefined name is reported by name', () => {
   const result = runPython('print(mystery)');
   assert.equal(result.error, null);

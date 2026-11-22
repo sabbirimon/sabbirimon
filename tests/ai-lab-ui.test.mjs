@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readAiProgress, writeAiProgress, mergeAiProgress, earnedAiXp, aiExerciseXp, aiChapters, findAiExercise, neighbourAiExercise, runAiProgram, aiStarterText, aiKindLabel, aiEditorHint, aiExpectedText, drawAiPixelText, AI_PROGRESS_KEY } from '../docs/ai-lab-ui.js';
+import { readAiProgress, writeAiProgress, mergeAiProgress, earnedAiXp, aiExerciseXp, aiChapters, findAiExercise, neighbourAiExercise, runAiProgram, aiStarterText, aiKindLabel, aiEditorHint, aiExpectedText, drawAiPixelText, courseDrawerOpen, courseDrawerAttributes, AI_PROGRESS_KEY } from '../docs/ai-lab-ui.js';
 
 function withStorage(store, run) {
   const original = globalThis.localStorage;
@@ -112,4 +112,21 @@ test('a heading that already holds a drawing is redrawn from its label', () => {
   };
   assert.equal(drawAiPixelText(element), true);
   assert.equal(element.dataset.pixelText, '15 XP');
+});
+
+test('the course drawer opens and closes', () => {
+  assert.equal(courseDrawerOpen(true), true);
+  assert.equal(courseDrawerOpen(false), false);
+  assert.equal(courseDrawerOpen(undefined), false);
+});
+
+test('the course drawer tells the button and the page what to do', () => {
+  const open = courseDrawerAttributes(true);
+  assert.equal(open.expanded, 'true');
+  assert.equal(open.drawerClass, 'is-open');
+  assert.equal(open.bodyClass, 'ai-course-open');
+  const closed = courseDrawerAttributes(false);
+  assert.equal(closed.expanded, 'false');
+  assert.equal(closed.drawerClass, '');
+  assert.equal(closed.bodyClass, '');
 });

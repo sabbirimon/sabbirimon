@@ -1,0 +1,39 @@
+{
+  "name": "AI Lab · IMON",
+  "short_name": "AI Lab",
+  "description": "Practise Python, machine learning and system design in your browser. Runs offline, no account needed.",
+  "id": "./ai-lab.html",
+  "start_url": "./ai-lab.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#030719",
+  "theme_color": "#030719",
+  "categories": ["education", "developer", "productivity"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Code Lab",
+      "short_name": "Code Lab",
+      "url": "./lab.html"
+    },
+    {
+      "name": "Tools",
+      "short_name": "Tools",
+      "url": "./tools/"
+    }
+  ]
+}

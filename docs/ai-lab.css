@@ -52,3 +52,75 @@
   .ai-editor-pane { grid-template-columns: minmax(0, 1fr); }
   .ai-hint-pane { border-left: 1px solid var(--lab-rim); border-top: 0; }
 }
+
+/* Phones and tablets.
+   The page is meant to be installable as an app, so it has to respect the
+   notch and the home indicator. The insets are zero on a desktop browser,
+   where `env()` resolves to nothing. */
+.ai-lab-page .lab-topbar { padding-top: calc(14px + env(safe-area-inset-top)); padding-left: calc(max(4%, calc((100vw - 1560px) / 2)) + env(safe-area-inset-left)); padding-right: calc(max(4%, calc((100vw - 1560px) / 2)) + env(safe-area-inset-right)); }
+.ai-lab-page .lab-lesson { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+.ai-lab-page .lab-foot { padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+
+/* On a phone the editor is the whole point, so it gets more room and the
+   on-screen keyboard is not fought by a fixed height. */
+@media (max-width: 640px) {
+  .ai-editor-pane .lab-editor { min-height: 44vh; }
+  .ai-lab-page .lab-layout { grid-template-columns: minmax(0, 1fr); }
+  .ai-lab-page .lab-lesson { border-right: 0; border-bottom: 1px solid var(--lab-rim); }
+  .ai-editor-pane .lab-code { font-size: 13px; }
+}
+
+/* The keyboard may cover the workbench, so the code area keeps a sensible
+   height and the page is allowed to scroll behind it. */
+@media (max-width: 640px) and (pointer: coarse) {
+  .ai-editor-pane .lab-editor { min-height: 38vh; max-height: 60vh; }
+}
+
+/* The course drawer.
+   On a phone the rail is a drawer that slides in over the lesson, so the
+   learner lands on the current exercise instead of a list of fifty-four.
+   The button that opens it is hidden on a desktop, where the rail is
+   already in the page. */
+.lab-course-toggle { display: none; }
+
+@media (max-width: 900px) {
+  .lab-course-toggle {
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+    padding: 9px 13px;
+    background: var(--lab-panel);
+    border: 2px solid var(--lab-rim-strong);
+    border-radius: 4px;
+    color: var(--lab-gold);
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .lab-course-toggle[aria-expanded="true"] { background: var(--lab-gold); color: #16121f; }
+  .ai-lab-page .lab-rail {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 60;
+    width: min(84vw, 340px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translateX(-100%);
+    transition: transform 200ms ease;
+    box-shadow: 0 0 0 100vmax rgba(3, 7, 25, 0);
+  }
+  .ai-lab-page .lab-rail.is-open {
+    transform: translateX(0);
+    box-shadow: 0 0 0 100vmax rgba(3, 7, 25, 0.72);
+  }
+  .ai-course-open { overflow: hidden; }
+  /* The brief comes before the drawer in the reading order, so the learner
+     lands on the exercise rather than on the rail. */
+  .ai-lab-page .lab-lesson { display: flex; flex-direction: column; }
+  .ai-lab-page .lab-brief { order: 1; }
+  .ai-lab-page .lab-rail { order: 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-lab-page .lab-rail { transition: none; }
+}

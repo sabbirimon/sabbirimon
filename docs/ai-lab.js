@@ -233,8 +233,23 @@ function matchingBracket(tokens, from) {
 export function runPython(source, options = {}) {
   const output = [];
   const maxSteps = options.maxSteps || 20000;
+  // A phone is far slower than a laptop, so a step count alone would stop a
+  // legitimate program on a small device. The clock is the real limit; the
+  // step count is a second guard that catches a runaway loop on a fast
+  // machine before the user waits for the clock to run out.
+  const maxMillis = options.maxMillis || 2000;
+  const now = options.now || (() => (typeof performance !== 'undefined' ? performance.now() : Date.now()));
+  const started = now();
   let steps = 0;
-  const runtime = { output, maxSteps, steps: () => steps++ };
+  const runtime = {
+    output,
+    maxSteps,
+    steps: () => {
+      steps++;
+      if (steps % 256 === 0 && now() - started > maxMillis) throw new Error('This program runs for too long. Check the loop.');
+      return steps;
+    }
+  };
   const scope = { globals: Object.create(null), runtime };
   const builtins = createBuiltins(output, options.math, createModuleScope());
 
@@ -651,7 +666,7 @@ export function evaluateExpression(tokens, scope, builtins) {
  * deep and a fourth would only make it harder to read.
  */
 function runtimeFor(scope, builtins) {
-  return scope.runtime || builtins.__runtime || { maxSteps: 20000, steps: () => 0 };
+  return scope.runtime || builtins.__runtime || { maxSteps: 20000, maxMillis: Infinity, steps: () => 0 };
 }
 
 function peek(parser) { return parser.tokens[parser.position]; }
