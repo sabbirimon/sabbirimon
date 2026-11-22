@@ -1,90 +1,90 @@
 {
-  "updated": "2026-11-17T13:21:43.438960+00:00",
+  "updated": "2026-11-22T13:03:17.538601+00:00",
   "source": "Spaceflight News API",
   "sourceUrl": "https://www.spaceflightnewsapi.net/",
   "stories": [
     {
-      "id": 40870,
-      "title": "ICEYE Launches €2.05B Takeover Bid for Italian Rocket Builder Avio",
-      "url": "https://europeanspaceflight.com/iceye-launches-e2-05b-takeover-bid-for-italian-rocket-builder-avio/",
-      "time": 1794902920.0,
+      "id": 40931,
+      "title": "APOD: 2026 November 22 – Swirls and Colors on Jupiter from Juno",
+      "url": "https://science.nasa.gov/image-article/apod-2026-november-22-swirls-and-colors-on-jupiter-from-juno/",
+      "time": 1795323900.0,
+      "publisher": "NASA"
+    },
+    {
+      "id": 40930,
+      "title": "Live coverage: SpaceX to launch intelligence-gathering satellites for the National Reconnaissance Office",
+      "url": "https://spaceflightnow.com/2026/11/21/live-coverage-spacex-to-launch-intelligence-gathering-satellites-for-the-national-reconnaissance-office-3/",
+      "time": 1795279851.0,
+      "publisher": "Spaceflight Now"
+    },
+    {
+      "id": 40929,
+      "title": "Denmark’s GomSpace Secures €8M Contract for Blue Origin Moon Mission",
+      "url": "https://europeanspaceflight.com/denmarks-gomspace-secures-e8m-contract-for-blue-origin-moon-mission/",
+      "time": 1795240835.0,
       "publisher": "European Spaceflight"
     },
     {
-      "id": 40869,
-      "title": "Cosmo Bee to flight-test Honeybee Hall thruster with D-Orbit in 2027",
-      "url": "https://spacenews.com/cosmo-bee-to-flight-test-honeybee-hall-thruster-with-d-orbit-in-2027/",
-      "time": 1794902400.0,
-      "publisher": "SpaceNews"
-    },
-    {
-      "id": 40867,
-      "title": "APOD: 2026 November 17 – Milky Way versus Aurora",
-      "url": "https://science.nasa.gov/image-article/apod-2026-november-17-milky-way-versus-aurora/",
-      "time": 1794891900.0,
+      "id": 40928,
+      "title": "APOD: 2026 November 21 – Voyager’s Neptune",
+      "url": "https://science.nasa.gov/image-article/apod-2026-november-21-voyagers-neptune/",
+      "time": 1795237500.0,
       "publisher": "NASA"
     },
     {
-      "id": 40868,
-      "title": "Tossing Fireworks from Cloud to Cloud",
-      "url": "https://science.nasa.gov/earth/earth-observatory/tossing-fireworks-from-cloud-to-cloud/",
-      "time": 1794891660.0,
+      "id": 40927,
+      "title": "Curiosity Spots Drifting Twilight Clouds",
+      "url": "https://science.nasa.gov/photojournal/curiosity-spots-drifting-twilight-clouds/",
+      "time": 1795213625.0,
       "publisher": "NASA"
     },
     {
-      "id": 40866,
-      "title": "Perseverance Update: The Ghostly Rocks of ‘Idubi’ — Bright Remnants of Aqueous Systems from Long Ago",
-      "url": "https://science.nasa.gov/blog/perseverance-update-the-ghostly-rocks-of-idubi-bright-remnants-of-aqueous-systems-from-long-ago/",
-      "time": 1794870765.0,
-      "publisher": "NASA"
-    },
-    {
-      "id": 40865,
-      "title": "A Collage Showing 49 Drill Holes Made by NASA’s Curiosity Mars Rover",
-      "url": "https://science.nasa.gov/photojournal/a-collage-showing-49-drill-holes-made-by-nasas-curiosity-mars-rover/",
-      "time": 1794866723.0,
-      "publisher": "NASA"
-    },
-    {
-      "id": 40864,
-      "title": "Launch Preview: Ariane 6 to launch Amazon satellites, Falcon 9 to launch government missions",
-      "url": "https://www.nasaspaceflight.com/2026/11/launch-preview-111626/",
-      "time": 1794866222.0,
-      "publisher": "NASASpaceflight"
-    },
-    {
-      "id": 40863,
-      "title": "NASA Receives 16th Consecutive ‘Clean’ Financial Audit Opinion",
-      "url": "https://www.nasa.gov/news-release/nasa-receives-16th-consecutive-clean-financial-audit-opinion/",
-      "time": 1794861040.0,
-      "publisher": "NASA"
-    },
-    {
-      "id": 40862,
-      "title": "SpaceNukes Opens Los Alamos Manufacture and Materials Facility to Build Its Next-Generation Space Reactor",
-      "url": "https://spacenews.com/spacenukes-opens-los-alamos-manufacture-and-materials-facility-to-build-its-next-generation-space-reactor/",
-      "time": 1794859200.0,
-      "publisher": "SpaceNews"
-    },
-    {
-      "id": 40860,
-      "title": "When will humans actually fly on Starship?",
-      "url": "https://arstechnica.com/space/2026/11/when-will-humans-actually-fly-on-starship/",
-      "time": 1794858368.0,
+      "id": 40926,
+      "title": "Incoming House chair threatens SpaceX funding over Ukraine controversy",
+      "url": "https://arstechnica.com/space/2026/11/incoming-house-chair-threatens-spacex-funding-over-ukraine-controversy/",
+      "time": 1795213011.0,
       "publisher": "Arstechnica"
     },
     {
-      "id": 40861,
-      "title": "Sentinel-6B in Orbit Around Earth",
-      "url": "https://science.nasa.gov/photojournal/sentinel-6b-in-orbit-around-earth/",
-      "time": 1794855152.0,
+      "id": 40925,
+      "title": "New NASA Seed Funding Primes Small Businesses for Innovation",
+      "url": "https://www.nasa.gov/directorates/rtmd/new-nasa-seed-funding-primes-small-businesses-for-innovation/",
+      "time": 1795207574.0,
       "publisher": "NASA"
     },
     {
-      "id": 40859,
-      "title": "Thunderbirds in Formation",
-      "url": "https://www.nasa.gov/image-article/thunderbirds-in-formation/",
-      "time": 1794854087.0,
+      "id": 40924,
+      "title": "Following Ship 42’s catch, SpaceX looks to the future",
+      "url": "https://www.nasaspaceflight.com/2026/11/ship-42-catch-future/",
+      "time": 1795204146.0,
+      "publisher": "NASASpaceflight"
+    },
+    {
+      "id": 40923,
+      "title": "NASA Honor Awards Ceremony Recognizes Employees at Stennis Space Center",
+      "url": "https://www.nasa.gov/centers-and-facilities/stennis/honor-awards-ceremony-at-stennis/",
+      "time": 1795192066.0,
+      "publisher": "NASA"
+    },
+    {
+      "id": 40922,
+      "title": "NASA’s Curiosity Mars Rover Collects Samples",
+      "url": "https://www.nasa.gov/image-article/nasas-curiosity-mars-rover-collects-samples/",
+      "time": 1795190004.0,
+      "publisher": "NASA"
+    },
+    {
+      "id": 40921,
+      "title": "Danish Soldiers Are Sneaking Starlink Terminals into Greenland",
+      "url": "https://europeanspaceflight.com/danish-soldiers-are-sneaking-starlink-terminals-into-greenland/",
+      "time": 1795158589.0,
+      "publisher": "European Spaceflight"
+    },
+    {
+      "id": 40920,
+      "title": "APOD: 2026 November 20 – V-G-R",
+      "url": "https://science.nasa.gov/image-article/apod-2026-november-20-v-g-r/",
+      "time": 1795151100.0,
       "publisher": "NASA"
     }
   ]

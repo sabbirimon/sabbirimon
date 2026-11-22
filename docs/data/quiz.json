@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-17",
-  "updated": "2026-11-17T13:21:43.438960+00:00",
+  "date": "2026-11-22",
+  "updated": "2026-11-22T13:03:17.538601+00:00",
   "source": {
     "name": "Open Trivia DB",
     "url": "https://opentdb.com/",
@@ -9,28 +9,106 @@
   },
   "questions": [
     {
-      "question": "The C programming language was created by this American computer scientist. ",
+      "question": "What did the name of the Tor Anonymity Network orignially stand for?",
       "options": [
-        "Willis Ware",
-        "Tim Berners Lee",
-        "al-Khwārizmī",
-        "Dennis Ritchie"
+        "The Ominous Router",
+        "The Orange Router",
+        "The Onion Router",
+        "The Only Router"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is The Onion Router.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What was the first commerically available computer processor?",
+      "options": [
+        "TMS 1000",
+        "Intel 4004",
+        "Intel 486SX",
+        "AMD AM386"
+      ],
+      "answer": 1,
+      "explanation": "The correct answer is Intel 4004.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "How fast is USB 3.1 Gen 2 theoretically?",
+      "options": [
+        "8 Gb/s",
+        "5 Gb/s",
+        "1 Gb/s",
+        "10 Gb/s"
       ],
       "answer": 3,
-      "explanation": "The correct answer is Dennis Ritchie.",
+      "explanation": "The correct answer is 10 Gb/s.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "The name of technology company HP stands for what?",
+      "options": [
+        "Hellman-Pohl",
+        "Howard Packmann",
+        "Hewlett-Packard",
+        "Husker-Pollosk"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is Hewlett-Packard.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "How many values can a single byte represent?",
+      "options": [
+        "256",
+        "1024",
+        "8",
+        "1"
+      ],
+      "answer": 0,
+      "explanation": "The correct answer is 256.",
       "category": "Computers",
       "difficulty": "easy"
     },
     {
-      "question": "Moore's law originally stated that the number of transistors on a microprocessor chip would double every...",
+      "question": "Which RAID array type is associated with data mirroring?",
       "options": [
-        "Two Years",
-        "Four Years",
-        "Year",
-        "Eight Years"
+        "RAID 5",
+        "RAID 1",
+        "RAID 0",
+        "RAID 10"
       ],
-      "answer": 2,
-      "explanation": "The correct answer is Year.",
+      "answer": 1,
+      "explanation": "The correct answer is RAID 1.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "The numbering system with a radix of 16 is more commonly referred to as ",
+      "options": [
+        "Duodecimal",
+        "Binary",
+        "Octal",
+        "Hexidecimal"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Hexidecimal.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "How many cores does the Intel i7-6950X have?",
+      "options": [
+        "12",
+        "8",
+        "4",
+        "10"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is 10.",
       "category": "Computers",
       "difficulty": "medium"
     },
@@ -38,363 +116,285 @@
       "question": "What kind of memory is used on memory cache?",
       "options": [
         "DRAM",
-        "ROM",
         "SRAM",
-        "Flash"
+        "Flash",
+        "ROM"
       ],
-      "answer": 2,
+      "answer": 1,
       "explanation": "The correct answer is SRAM.",
       "category": "Computers",
       "difficulty": "easy"
     },
     {
-      "question": "The series of the Intel HD graphics generation succeeding that of the 5000 and 6000 series (Broadwell) is called:",
-      "options": [
-        "HD Graphics 700 ",
-        "HD Graphics 600",
-        "HD Graphics 500",
-        "HD Graphics 7000"
-      ],
-      "answer": 2,
-      "explanation": "The correct answer is HD Graphics 500.",
-      "category": "Computers",
-      "difficulty": "easy"
-    },
-    {
-      "question": "How many bits make up the significand portion of a single precision floating point number?",
-      "options": [
-        "15",
-        "53",
-        "8",
-        "23"
-      ],
-      "answer": 3,
-      "explanation": "The correct answer is 23.",
-      "category": "Computers",
-      "difficulty": "medium"
-    },
-    {
-      "question": "What was the name of the security vulnerability found in Bash in 2014?",
-      "options": [
-        "Heartbleed",
-        "Bashbug",
-        "Shellshock",
-        "Stagefright"
-      ],
-      "answer": 2,
-      "explanation": "The correct answer is Shellshock.",
-      "category": "Computers",
-      "difficulty": "hard"
-    },
-    {
-      "question": "Dutch computer scientist Mark Overmars is known for creating which game development engine?",
-      "options": [
-        "Game Maker",
-        "Construct",
-        "Torque 2D",
-        "Stencyl"
-      ],
-      "answer": 0,
-      "explanation": "The correct answer is Game Maker.",
-      "category": "Computers",
-      "difficulty": "hard"
-    },
-    {
-      "question": "Which of these Cherry MX mechanical keyboard switches is both tactile and clicky?",
-      "options": [
-        "Cherry MX Red",
-        "Cherry MX Black",
-        "Cherry MX Blue",
-        "Cherry MX Brown"
-      ],
-      "answer": 2,
-      "explanation": "The correct answer is Cherry MX Blue.",
-      "category": "Computers",
-      "difficulty": "hard"
-    },
-    {
-      "question": "Which programming language shares its name with an island in Indonesia?",
-      "options": [
-        "C",
-        "Jakarta",
-        "Java",
-        "Python"
-      ],
-      "answer": 2,
-      "explanation": "The correct answer is Java.",
-      "category": "Computers",
-      "difficulty": "easy"
-    },
-    {
-      "question": "What is the main CPU is the Sega Mega Drive / Sega Genesis?",
-      "options": [
-        "Yamaha YM2612",
-        "Zilog Z80",
-        "Motorola 68000",
-        "Intel 8088"
-      ],
-      "answer": 2,
-      "explanation": "The correct answer is Motorola 68000.",
-      "category": "Computers",
-      "difficulty": "medium"
-    },
-    {
-      "question": "What amount of bits commonly equals one byte?",
-      "options": [
-        "64",
-        "2",
-        "1",
-        "8"
-      ],
-      "answer": 3,
-      "explanation": "The correct answer is 8.",
-      "category": "Computers",
-      "difficulty": "easy"
-    },
-    {
-      "question": "Nvidia's headquarters are based in which Silicon Valley city?",
-      "options": [
-        "Cupertino",
-        "Palo Alto",
-        "Mountain View",
-        "Santa Clara"
-      ],
-      "answer": 3,
-      "explanation": "The correct answer is Santa Clara.",
-      "category": "Computers",
-      "difficulty": "medium"
-    },
-    {
-      "question": "How many Hz does the video standard PAL support?",
-      "options": [
-        "25",
-        "59",
-        "60",
-        "50"
-      ],
-      "answer": 3,
-      "explanation": "The correct answer is 50.",
-      "category": "Computers",
-      "difficulty": "hard"
-    },
-    {
-      "question": "In the server hosting industry IaaS stands for...",
-      "options": [
-        "Internet and a Server",
-        "Infrastructure as a Service",
-        "Internet as a Service",
-        "Infrastructure as a Server"
-      ],
-      "answer": 1,
-      "explanation": "The correct answer is Infrastructure as a Service.",
-      "category": "Computers",
-      "difficulty": "medium"
-    },
-    {
-      "question": "What is the name of the process that sends one qubit of information using two bits of classical information?",
-      "options": [
-        "Quantum Teleportation",
-        "Quantum Entanglement",
-        "Super Dense Coding",
-        "Quantum Programming"
-      ],
-      "answer": 0,
-      "explanation": "The correct answer is Quantum Teleportation.",
-      "category": "Computers",
-      "difficulty": "hard"
-    },
-    {
-      "question": "In computing terms, typically what does CLI stand for?",
-      "options": [
-        "Common Language Interface",
-        "Command Line Interface",
-        "Common Language Input",
-        "Control Line Interface"
-      ],
-      "answer": 1,
-      "explanation": "The correct answer is Command Line Interface.",
-      "category": "Computers",
-      "difficulty": "medium"
-    },
-    {
-      "question": "The programming language 'Swift' was created to replace what other programming language?",
-      "options": [
-        "C++",
-        "C#",
-        "Ruby",
-        "Objective-C"
-      ],
-      "answer": 3,
-      "explanation": "The correct answer is Objective-C.",
-      "category": "Computers",
-      "difficulty": "easy"
-    },
-    {
-      "question": "While Apple was formed in California, in which western state was Microsoft founded?",
-      "options": [
-        "Colorado",
-        "Washington",
-        "Arizona",
-        "New Mexico"
-      ],
-      "answer": 3,
-      "explanation": "The correct answer is New Mexico.",
-      "category": "Computers",
-      "difficulty": "medium"
-    },
-    {
-      "question": "What is the number of keys on a standard Windows Keyboard?",
-      "options": [
-        "104",
-        "64",
-        "76",
-        "94"
-      ],
-      "answer": 0,
-      "explanation": "The correct answer is 104.",
-      "category": "Computers",
-      "difficulty": "medium"
-    },
-    {
-      "question": "What does CPU stand for?",
-      "options": [
-        "Computer Personal Unit",
-        "Central Process Unit",
-        "Central Processing Unit",
-        "Central Processor Unit"
-      ],
-      "answer": 2,
-      "explanation": "The correct answer is Central Processing Unit.",
-      "category": "Computers",
-      "difficulty": "easy"
-    },
-    {
-      "question": "The teapot often seen in many 3D modeling applications is called what?",
-      "options": [
-        "Utah Teapot",
-        "Tennessee Teapot",
-        "Pixar Teapot",
-        "3D Teapot"
-      ],
-      "answer": 0,
-      "explanation": "The correct answer is Utah Teapot.",
-      "category": "Computers",
-      "difficulty": "medium"
-    },
-    {
-      "question": "According to the International System of Units, how many bytes are in a kilobyte of RAM?",
-      "options": [
-        "500",
-        "1024",
-        "512",
-        "1000"
-      ],
-      "answer": 3,
-      "explanation": "The correct answer is 1000.",
-      "category": "Computers",
-      "difficulty": "easy"
-    },
-    {
-      "question": "This mobile OS held the largest market share in 2012.",
-      "options": [
-        "BlackBerry",
-        "Android",
-        "Symbian",
-        "iOS"
-      ],
-      "answer": 3,
-      "explanation": "The correct answer is iOS.",
-      "category": "Computers",
-      "difficulty": "easy"
-    },
-    {
-      "question": "What did the name of the Tor Anonymity Network orignially stand for?",
-      "options": [
-        "The Orange Router",
-        "The Onion Router",
-        "The Only Router",
-        "The Ominous Router"
-      ],
-      "answer": 1,
-      "explanation": "The correct answer is The Onion Router.",
-      "category": "Computers",
-      "difficulty": "medium"
-    },
-    {
-      "question": "What major programming language does Unreal Engine 4 use?",
-      "options": [
-        "C#",
-        "C++",
-        "Assembly",
-        "ECMAScript"
-      ],
-      "answer": 1,
-      "explanation": "The correct answer is C++.",
-      "category": "Computers",
-      "difficulty": "hard"
-    },
-    {
-      "question": "Which computer hardware device provides an interface for all other connected devices to communicate?",
-      "options": [
-        "Motherboard",
-        "Hard Disk Drive",
-        "Random Access Memory",
-        "Central Processing Unit"
-      ],
-      "answer": 0,
-      "explanation": "The correct answer is Motherboard.",
-      "category": "Computers",
-      "difficulty": "easy"
-    },
-    {
-      "question": "In CSS, which of these values CANNOT be used with the \"position\" property?",
-      "options": [
-        "absolute",
-        "static",
-        "relative",
-        "center"
-      ],
-      "answer": 3,
-      "explanation": "The correct answer is center.",
-      "category": "Computers",
-      "difficulty": "medium"
-    },
-    {
       "question": "CMOS is tech used for constructing integrated circuits. What does CMOS stand for?",
       "options": [
-        "Complementary magnetic-ohms-semiconductor",
         "Computer-made operating system",
-        "Computer-made oscillating static",
-        "Complementary metal–oxide–semiconductor"
+        "Complementary magnetic-ohms-semiconductor",
+        "Complementary metal–oxide–semiconductor",
+        "Computer-made oscillating static"
       ],
-      "answer": 3,
+      "answer": 2,
       "explanation": "The correct answer is Complementary metal–oxide–semiconductor.",
       "category": "Computers",
       "difficulty": "hard"
     },
     {
-      "question": "Which kind of algorithm is Ron Rivest not famous for creating?",
+      "question": "All of the following programs are classified as raster graphics editors EXCEPT:",
       "options": [
-        "Hashing algorithm",
-        "Stream cipher",
-        "Asymmetric encryption",
-        "Secret sharing scheme"
+        "GIMP",
+        "Paint.NET",
+        "Adobe Photoshop",
+        "Inkscape"
       ],
       "answer": 3,
-      "explanation": "The correct answer is Secret sharing scheme.",
+      "explanation": "The correct answer is Inkscape.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "The computer OEM manufacturer Clevo, known for its Sager notebook line, is based in which country?",
+      "options": [
+        "China (People's Republic of)",
+        "Taiwan",
+        "Germany",
+        "United States"
+      ],
+      "answer": 1,
+      "explanation": "The correct answer is Taiwan.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Laserjet and inkjet printers are both examples of what type of printer?",
+      "options": [
+        "Dot matrix printer",
+        "Impact printer",
+        "Non-impact printer",
+        "Daisywheel printer"
+      ],
+      "answer": 2,
+      "explanation": "The correct answer is Non-impact printer.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Which coding language was the #1 programming language in terms of usage on GitHub in 2015?",
+      "options": [
+        "C#",
+        "Python",
+        "PHP",
+        "JavaScript"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is JavaScript.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What vulnerability ranked #1 on the OWASP Top 10 in 2013?",
+      "options": [
+        "Insecure Direct Object References",
+        "Broken Authentication",
+        "Cross-Site Scripting",
+        "Injection "
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Injection .",
       "category": "Computers",
       "difficulty": "hard"
     },
     {
-      "question": "How many bytes are in a single Kibibyte?",
+      "question": "Who invented the \"Spanning Tree Protocol\"?",
       "options": [
-        "2400",
-        "1000",
-        "1024",
-        "1240"
+        "Vint Cerf",
+        "Michael Roberts",
+        "Paul Vixie",
+        "Radia Perlman"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Radia Perlman.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "What was the name given to Android 4.3?",
+      "options": [
+        "Froyo",
+        "Jelly Bean",
+        "Nutella",
+        "Lollipop"
+      ],
+      "answer": 1,
+      "explanation": "The correct answer is Jelly Bean.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the main CPU is the Sega Mega Drive / Sega Genesis?",
+      "options": [
+        "Intel 8088",
+        "Yamaha YM2612",
+        "Zilog Z80",
+        "Motorola 68000"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Motorola 68000.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "In computing terms, typically what does CLI stand for?",
+      "options": [
+        "Common Language Interface",
+        "Control Line Interface",
+        "Common Language Input",
+        "Command Line Interface"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Command Line Interface.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Which of these was the name of a bug found in April 2014 in the publicly available OpenSSL cryptography library?",
+      "options": [
+        "Heartbleed",
+        "Shellshock",
+        "Shellscript",
+        "Corrupted Blood"
+      ],
+      "answer": 0,
+      "explanation": "The correct answer is Heartbleed.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "What language does Node.js use?",
+      "options": [
+        "Java Source",
+        "Java",
+        "Joomla Source Code",
+        "JavaScript"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is JavaScript.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Australia, Japan, and Southeast Asia are in which ITU Region?",
+      "options": [
+        "Region 3",
+        "Region 4",
+        "Region 2",
+        "Region 1"
+      ],
+      "answer": 0,
+      "explanation": "The correct answer is Region 3.",
+      "category": "Computers",
+      "difficulty": "hard"
+    },
+    {
+      "question": "Unix Time is defined as the number of seconds that have elapsed since when?",
+      "options": [
+        "Midnight, July 4, 1976",
+        "Midnight, July 4, 1980",
+        "Midnight on the creator of Unix's birthday",
+        "Midnight, January 1, 1970"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Midnight, January 1, 1970.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What does the computer software acronym JVM stand for?",
+      "options": [
+        "Java Virtual Machine",
+        "Java Visual Machine",
+        "Just Virtual Machine",
+        "Java Vendor Machine"
+      ],
+      "answer": 0,
+      "explanation": "The correct answer is Java Virtual Machine.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "What does the Prt Sc button do?",
+      "options": [
+        "Saves a .png file of what's on the screen in your screenshots folder in photos",
+        "Nothing",
+        "Closes all windows",
+        "Captures what's on the screen and copies it to your clipboard"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is Captures what's on the screen and copies it to your clipboard.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Which company was established on April 1st, 1976 by Steve Jobs, Steve Wozniak and Ronald Wayne?",
+      "options": [
+        "Microsoft",
+        "Apple",
+        "Commodore",
+        "Atari"
+      ],
+      "answer": 1,
+      "explanation": "The correct answer is Apple.",
+      "category": "Computers",
+      "difficulty": "easy"
+    },
+    {
+      "question": "What was the name of the image that features as the default background wallpaper for Windows XP?",
+      "options": [
+        "Tulips",
+        "Red moon desert",
+        "Bliss",
+        "Azul"
       ],
       "answer": 2,
-      "explanation": "The correct answer is 1024.",
+      "explanation": "The correct answer is Bliss.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Approximately how many Apple I personal computers were created?",
+      "options": [
+        "1000",
+        "500",
+        "100",
+        "200"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is 200.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "On which day did the World Wide Web go online?",
+      "options": [
+        "December 20, 1990",
+        "November 12, 1990",
+        "December 17, 1996",
+        "November 24, 1995"
+      ],
+      "answer": 0,
+      "explanation": "The correct answer is December 20, 1990.",
+      "category": "Computers",
+      "difficulty": "medium"
+    },
+    {
+      "question": "In HTML, which non-standard tag used to be be used to make elements scroll across the viewport?",
+      "options": [
+        "<move></move>",
+        "<slide></slide>",
+        "<scroll></scroll>",
+        "<marquee></marquee>"
+      ],
+      "answer": 3,
+      "explanation": "The correct answer is <marquee></marquee>.",
       "category": "Computers",
       "difficulty": "medium"
     }

@@ -1,0 +1,90 @@
+{
+  "updated": "2026-11-22T13:03:17.538601+00:00",
+  "source": "GitHub REST API",
+  "profile": {
+    "login": "sabbirimon",
+    "name": "Sabbir Hassan Imon",
+    "url": "https://github.com/sabbirimon",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/30753145?v=4"
+  },
+  "stats": {
+    "followers": 6,
+    "repositories": 55,
+    "stars": 57,
+    "forks": 8,
+    "watchers": 57,
+    "membersSince": "2017-08-05"
+  },
+  "topLanguages": [
+    {
+      "name": "Kotlin",
+      "share": 72
+    },
+    {
+      "name": "Web",
+      "share": 19
+    },
+    {
+      "name": "Python",
+      "share": 5
+    },
+    {
+      "name": "Rust",
+      "share": 3
+    },
+    {
+      "name": "C++",
+      "share": 1
+    },
+    {
+      "name": "Shell",
+      "share": 0
+    },
+    {
+      "name": "C",
+      "share": 0
+    },
+    {
+      "name": "Go",
+      "share": 0
+    },
+    {
+      "name": "Other",
+      "share": 0
+    }
+  ],
+  "featured": [
+    {
+      "name": "meshlit",
+      "url": "https://github.com/sabbirimon/meshlit",
+      "description": "Local-first AI chat, coding workspaces and bots for Android and desktop, with model management and experimental device-cluster execution.",
+      "language": "Kotlin",
+      "stars": 6,
+      "forks": 0
+    },
+    {
+      "name": "OmniCast",
+      "url": "https://github.com/sabbirimon/OmniCast",
+      "description": "Mirror, control, and record Android over USB or Wi-Fi. ADB terminal, device recovery, and hardware decoding for Windows, macOS, and Linux.",
+      "language": "Kotlin",
+      "stars": 0,
+      "forks": 0
+    },
+    {
+      "name": "OmniRecovery",
+      "url": "https://github.com/sabbirimon/OmniRecovery",
+      "description": "Cross-platform data recovery, verified USB acquisition and forensic inspection with a Rust CLI, desktop GUI and Android companion",
+      "language": "Rust",
+      "stars": 1,
+      "forks": 0
+    },
+    {
+      "name": "HyperL",
+      "url": "https://github.com/sabbirimon/HyperL",
+      "description": "Experimental model execution and heterogeneous compute: sharding, memory-tier planning, SafeTensors tooling and authenticated worker cells.",
+      "language": "Kotlin",
+      "stars": 1,
+      "forks": 0
+    }
+  ]
+}

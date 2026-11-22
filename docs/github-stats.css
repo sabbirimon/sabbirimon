@@ -1,0 +1,29 @@
+/* The GitHub stats strip — a row of counters and a language bar. */
+.github-stats{position:relative;margin:0 0 22px;padding:18px 20px 16px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02))}
+.github-stats-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.github-stats-title{font-family:var(--pixel);font-size:.7rem;letter-spacing:.12em;color:var(--accent);margin:0}
+.github-stats-meta{font-size:.78rem;color:var(--muted);margin:0}
+.stats-counters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stats-pill{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 8px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.04)}
+.stats-value{font-family:var(--pixel);font-size:1.15rem;line-height:1;color:#fff}
+.stats-label{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stats-pill-cyan{border-color:rgba(34,211,238,.35)}
+.stats-pill-cyan .stats-value{color:#22d3ee}
+.stats-pill-violet{border-color:rgba(168,85,247,.35)}
+.stats-pill-violet .stats-value{color:#a855f7}
+.stats-pill-pink{border-color:rgba(236,72,153,.35)}
+.stats-pill-pink .stats-value{color:#ec4899}
+.stats-pill-lime{border-color:rgba(132,204,22,.35)}
+.stats-pill-lime .stats-value{color:#84cc16}
+.stats-languages{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:6px}
+.stats-language{display:grid;grid-template-columns:88px minmax(0,1fr) 42px;align-items:center;gap:10px;font-size:.76rem}
+.stats-language-name{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats-language-track{height:7px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.stats-language-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#22d3ee,#a855f7);transition:width .6s ease}
+.stats-language-share{text-align:right;color:var(--text);font-variant-numeric:tabular-nums}
+.stats-note{margin:12px 0 0;font-size:.74rem;color:var(--muted)}
+.github-stats[data-stats-state="loading"] .stats-languages,
+.github-stats[data-stats-state="unavailable"] .stats-languages{display:none}
+@media(max-width:700px){.stats-counters{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-language{grid-template-columns:76px minmax(0,1fr) 38px;font-size:.72rem}}
+@media(max-width:400px){.github-stats{padding:14px 14px 13px}.stats-value{font-size:1rem}}
+@media(prefers-reduced-motion:reduce){.stats-language-track i{transition:none}}

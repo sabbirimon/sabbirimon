@@ -15,6 +15,7 @@ import { initWorldMap } from './world-map-ui.js';
 import { initCommandPalette } from './command-palette-ui.js';
 import { initAchievements } from './achievements-ui.js';
 import { initSiteNav } from './site-nav.js';
+import { initGitHubStats } from './github-stats.js';
 const $ = s => document.querySelector(s);
 const read = (key, fallback) => { try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; } };
 let toastTimer;
@@ -31,6 +32,9 @@ initAuth();
 initCommandPalette();
 initAchievements();
 initSiteNav();
+// The GitHub numbers come from a daily snapshot, so the strip is drawn
+// from a local file and works offline.
+initGitHubStats()?.load();
 document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
   const filter = button.dataset.filter; let count = 0;
   document.querySelectorAll('[data-filter]').forEach(b => { b.classList.toggle('active', b === button); b.setAttribute('aria-pressed', String(b === button)); });

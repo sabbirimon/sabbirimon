@@ -17,6 +17,18 @@ OUT = ROOT / 'docs' / 'data'
 # questions on the same day.
 TODAY = dt.datetime.now(dt.timezone.utc).date().isoformat()
 NOW = dt.datetime.now(dt.timezone.utc).isoformat()
+GITHUB_LOGIN = 'sabbirimon'
+# The four repositories the site features on its build-log section.
+FEATURED = ('meshlit', 'OmniCast', 'OmniRecovery', 'HyperL')
+# Languages folded into an "Other" row so the bar stays readable.
+LANGUAGE_GROUPS = {
+    'HTML': 'Web', 'CSS': 'Web', 'JavaScript': 'Web', 'TypeScript': 'Web',
+    'PHP': 'Web', 'Python': 'Python', 'Go': 'Go', 'Shell': 'Shell',
+    'Objective-C++': 'Other', 'C': 'C', 'C++': 'C++', 'CMake': 'Other',
+    'Dockerfile': 'Other', 'PowerShell': 'Other', 'Vim script': 'Other',
+    'Makefile': 'Other', 'Lua': 'Other', 'Ruby': 'Ruby', 'Java': 'Java',
+    'Kotlin': 'Kotlin', 'Rust': 'Rust', 'Swift': 'Swift',
+}
 
 def fetch(url):
     req = urllib.request.Request(url, headers={'User-Agent': 'IMON-World/1.0 (public daily portfolio feed)', 'Accept': 'application/json'})
@@ -144,7 +156,93 @@ def quiz():
     write('quiz.json', {'date': TODAY, 'updated': NOW, 'source': source, 'questions': questions})
     print(f'Quiz: {len(questions)} MCQs for {TODAY} from {source["name"]}')
 
+def github_stats():
+    """Refresh the public GitHub numbers shown on the homepage.
+
+    The GitHub API allows sixty unauthenticated requests an hour per
+    address, so the browser must not call it on every page view: a
+    visitor's network would spend the allowance for everyone behind the
+    same address. The numbers are therefore collected here, once a day,
+    and published as a static snapshot the page reads instead.
+
+    A repository's language breakdown is a separate request per
+    repository, so only the repositories that actually declare a
+    language are asked. A repository that fails is skipped rather than
+    failing the whole refresh: a partial breakdown is better than none.
+    """
+    def github(url):
+        req = urllib.request.Request(url, headers={'User-Agent': 'IMON-World/1.0 (public daily portfolio feed)', 'Accept': 'application/vnd.github+json'})
+        with urllib.request.urlopen(req, timeout=20) as response:
+            return json.load(response)
+
+    try:
+        profile = github(f'https://api.github.com/users/{GITHUB_LOGIN}')
+        repos = [r for r in github(f'https://api.github.com/users/{GITHUB_LOGIN}/repos?per_page=100&type=owner') if not r.get('fork')]
+    except Exception as exc:
+        print(f'GitHub API unavailable; retaining the last successful stats snapshot: {exc}', file=sys.stderr)
+        if not (OUT / 'github-stats.json').exists():
+            write('github-stats.json', {'updated': None, 'source': 'GitHub REST API', 'profile': {'login': GITHUB_LOGIN, 'name': 'Sabbir Hassan Imon', 'url': f'https://github.com/{GITHUB_LOGIN}'}, 'stats': {}, 'topLanguages': [], 'featured': []})
+        return
+
+    # The language of a repository by size of its files, which says far
+    # more than the number of repositories in each language.
+    sizes = {}
+    for repo in repos:
+        if not repo.get('language'):
+            continue
+        try:
+            sizes[repo['name']] = github(f'https://api.github.com/repos/{GITHUB_LOGIN}/{repo["name"]}/languages')
+        except Exception:
+            continue
+
+    grouped = {}
+    for breakdown in sizes.values():
+        for language, size in breakdown.items():
+            name = LANGUAGE_GROUPS.get(language, language)
+            grouped[name] = grouped.get(name, 0) + size
+    total = sum(grouped.values())
+    languages = [{'name': name, 'share': round(size / total * 100) if total else 0} for name, size in sorted(grouped.items(), key=lambda item: -item[1])]
+
+    featured = []
+    for name in FEATURED:
+        match = next((r for r in repos if r['name'].lower() == name.lower()), None)
+        if not match:
+            continue
+        featured.append({
+            'name': match['name'],
+            'url': match['html_url'],
+            'description': (match.get('description') or '').strip(),
+            'language': match.get('language') or 'Other',
+            'stars': match.get('stargazers_count', 0),
+            'forks': match.get('forks_count', 0),
+        })
+
+    stats = {
+        'followers': profile.get('followers', 0),
+        'repositories': profile.get('public_repos', 0),
+        'stars': sum(r.get('stargazers_count', 0) for r in repos),
+        'forks': sum(r.get('forks_count', 0) for r in repos),
+        'watchers': sum(r.get('watchers_count', 0) for r in repos),
+        'membersSince': (profile.get('created_at') or '')[:10],
+    }
+    payload = {
+        'updated': NOW,
+        'source': 'GitHub REST API',
+        'profile': {
+            'login': profile.get('login', GITHUB_LOGIN),
+            'name': profile.get('name') or 'Sabbir Hassan Imon',
+            'url': profile.get('html_url', f'https://github.com/{GITHUB_LOGIN}'),
+            'avatarUrl': profile.get('avatar_url', ''),
+        },
+        'stats': stats,
+        'topLanguages': languages,
+        'featured': featured,
+    }
+    write('github-stats.json', payload)
+    print(f"GitHub: {stats['repositories']} repositories, {stats['stars']} stars, {stats['followers']} followers for {profile.get('login', GITHUB_LOGIN)}")
+
 if __name__ == '__main__':
     news()
     science()
     quiz()
+    github_stats()

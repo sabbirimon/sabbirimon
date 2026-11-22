@@ -1,103 +1,103 @@
 {
-  "updated": "2026-11-17T13:21:43.438960+00:00",
+  "updated": "2026-11-22T13:03:17.538601+00:00",
   "source": "Hacker News",
   "sourceUrl": "https://news.ycombinator.com/",
   "stories": [
     {
-      "id": 50522980,
-      "title": "Carnegie Mellon is putting computer science courses on YouTube for free",
-      "url": "https://www.cs.cmu.edu/learn/",
-      "score": 1765,
-      "time": 1794861816,
-      "comments": 235
+      "id": 50596133,
+      "title": "Toyota, Nissan, and Honda to standardize parts to lower costs",
+      "url": "https://www.caranddriver.com/news/a74490092/toyota-nissan-honda-standardize-parts-lower-costs/",
+      "score": 658,
+      "time": 1795320296,
+      "comments": 398
     },
     {
-      "id": 50530163,
-      "title": "New Evidence Shows School Phone Bans Are Gradually Improving Test Scores",
-      "url": "https://www.nytimes.com/2026/11/17/upshot/school-phone-bans-study-scores.html",
-      "score": 125,
-      "time": 1794915951,
-      "comments": 56
+      "id": 50582069,
+      "title": "Pill to treat pancreatic cancer hailed as 'biggest breakthrough in decades'",
+      "url": "https://www.theguardian.com/society/2026/nov/20/pill-pancreatic-cancer-breakthrough-daraxonrasib",
+      "score": 1100,
+      "time": 1795208592,
+      "comments": 238
     },
     {
-      "id": 50511874,
-      "title": "VisualBasic.World: A gallery of Planet Source Code programs from 1997 to 2012",
-      "url": "https://visualbasic.world/",
-      "score": 100,
-      "time": 1794784110,
-      "comments": 37
+      "id": 50533945,
+      "title": "A real Linux kernel, compiled to WebAssembly",
+      "url": "https://github.com/pithings/unkernel",
+      "score": 89,
+      "time": 1794933346,
+      "comments": 27
     },
     {
-      "id": 50523601,
-      "title": "BugMeNot has closed",
-      "url": "https://www.bugmenot.com/",
-      "score": 608,
-      "time": 1794864737,
-      "comments": 272
+      "id": 50589618,
+      "title": "Lean verification of the Riemann Hypothesis",
+      "url": "https://leanprover-community.github.io/blog/posts/riemann-hypothesis/",
+      "score": 1082,
+      "time": 1795271805,
+      "comments": 901
     },
     {
-      "id": 50470523,
-      "title": "Rows vs. Columns: How different are they, really?",
-      "url": "https://spiraldb.com/blog/rows-vs-columns",
-      "score": 33,
-      "time": 1794503081,
-      "comments": 15
+      "id": 50594911,
+      "title": "Sandwich Simulator",
+      "url": "https://stulle.app/",
+      "score": 329,
+      "time": 1795306079,
+      "comments": 113
     },
     {
-      "id": 50524767,
-      "title": "Optimizely compromised, served malware on Zoom, GitLab",
-      "url": "https://blog.report-uri.com/worlds-largest-brands-infected-with-malware-via-optimizely/",
-      "score": 442,
-      "time": 1794870034,
-      "comments": 188
-    },
-    {
-      "id": 50509456,
-      "title": "Turbo Pascal Compiler Written in Turbo Pascal",
-      "url": "https://turbo51.com/compiler-design/tpc16-turbo-pascal-compiler-written-in-turbo-pascal",
-      "score": 25,
-      "time": 1794768057,
+      "id": 50566495,
+      "title": "Self-hosted library branch over public web OPDS",
+      "url": "https://joinmayberry.com/",
+      "score": 26,
+      "time": 1795122947,
       "comments": 3
     },
     {
-      "id": 50512779,
-      "title": "Nimony: A New Compiler for Nim",
-      "url": "https://nimony.org/",
-      "score": 100,
-      "time": 1794791122,
+      "id": 50591853,
+      "title": "Inkling-2-Mini in 5.4 GB Memory",
+      "url": "https://github.com/ShinMegamiBoson/lookatmyquant",
+      "score": 486,
+      "time": 1795284139,
+      "comments": 122
+    },
+    {
+      "id": 50596664,
+      "title": "Show HN: The Riemann Proof Handbook",
+      "url": "https://github.com/tamnd/riemann-handbook",
+      "score": 67,
+      "time": 1795326390,
       "comments": 36
     },
     {
-      "id": 50526560,
-      "title": "If an App Asks for Full Disk Access or System and App Protection Override",
-      "url": "https://support.apple.com/en-us/149699",
-      "score": 160,
-      "time": 1794881824,
-      "comments": 87
+      "id": 50588982,
+      "title": "Detonating a pile of lead azide",
+      "url": "https://www.science.org/content/blog-post/detonating-huge-pile-lead-azide-really",
+      "score": 633,
+      "time": 1795267394,
+      "comments": 399
     },
     {
-      "id": 50530114,
-      "title": "My Empire of Dirt",
-      "url": "https://geohot.github.io//blog/jekyll/update/2026/11/17/my-empire-of-dirt.html",
-      "score": 19,
-      "time": 1794915560,
-      "comments": 8
+      "id": 50595554,
+      "title": "Data Processing Incidents on Inference Providers",
+      "url": "https://openrouter.ai/blog/announcements/data-processing-incidents-on-inference-providers/",
+      "score": 180,
+      "time": 1795313654,
+      "comments": 68
     },
     {
-      "id": 50525575,
-      "title": "Why 3dfx 1 cards had such a washed out color output?",
-      "url": "https://twitter.com/id_aa_carmack/status/2122478083319992513",
-      "score": 188,
-      "time": 1794874584,
-      "comments": 57
+      "id": 50596960,
+      "title": "Notes on the discrete Fourier transform (DFT)",
+      "url": "https://eli.thegreenplace.net/2026/notes-on-the-discrete-fourier-transform-dft/",
+      "score": 40,
+      "time": 1795330345,
+      "comments": 5
     },
     {
-      "id": 50522643,
-      "title": "Chemistry is Actually Geometry",
-      "url": "https://chillphysicsenjoyer.substack.com/p/chemistry-is-actually-geometry",
-      "score": 258,
-      "time": 1794860538,
-      "comments": 119
+      "id": 50583028,
+      "title": "Getting the mind to steer the body to steer you",
+      "url": "https://notnottalmud.substack.com/p/getting-the-mind-to-steer-the-body",
+      "score": 315,
+      "time": 1795212665,
+      "comments": 106
     }
   ]
 }
