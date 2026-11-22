@@ -8,7 +8,7 @@
 .arcade-close{width:38px;height:38px;flex:0 0 auto;background:#1e2941;border:1px solid #566184;color:#dce4ff;border-radius:3px;font:28px/1 monospace;cursor:pointer;box-shadow:2px 2px 0 #060b16}
 .arcade-hud{display:flex;gap:30px;align-items:center;padding:13px 17px;background:#0b1120;border:1px solid #35415e;border-bottom:0;border-radius:4px 4px 0 0}
 .arcade-hud>div{display:flex;flex-direction:column;gap:5px}
-.arcade-hud>div>span{color:var(--arcade-muted);font-size:9px;letter-spacing:1.3px;font-weight:700}
+.arcade-hud>div>span{color:var(--arcade-muted);font-size:12px;letter-spacing:1.3px;font-weight:700}
 .arcade-hud strong{font:16px/1.4 var(--pixel,monospace);font-variant-numeric:tabular-nums;color:var(--arcade-gold)}
 .arcade-life strong{color:#b8e9c7;white-space:nowrap}
 .arcade-modal[data-game=surf] .arcade-life strong{color:#ffa9b5;letter-spacing:4px;font-family:monospace;font-size:21px;line-height:1.1}
@@ -29,11 +29,11 @@
 .arcade-secondary:hover,.arcade-close:hover{background:#2b3853}
 .arcade-toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:17px 0;border-bottom:1px solid #2a3652}
 .arcade-actions,.arcade-settings{display:flex;align-items:center;gap:9px}
-.arcade-settings label{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--arcade-muted)}
+.arcade-settings label{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--arcade-muted)}
 .arcade-settings select{border:1px solid #465472;border-radius:3px;background:#18243b;color:#e2e9fd;padding:9px 25px 9px 10px;min-height:38px;font:12px var(--body,Inter,system-ui,sans-serif)}
 .arcade-settings select:disabled{opacity:.55}
 .arcade-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:16px}
-#arcade-help{font-size:11px;line-height:2.2;color:var(--arcade-muted);margin:0}
+#arcade-help{font-size:14px;line-height:2.2;color:var(--arcade-muted);margin:0}
 .arcade-modal kbd{display:inline-block;padding:0 4px;margin-right:3px;border:1px solid #42506e;border-bottom-width:2px;border-radius:3px;line-height:1.7;font:11px/1.7 monospace;color:#d6dff2;background:#18243a}
 .arcade-dpad{display:grid;grid-template-columns:repeat(3,35px);grid-template-rows:repeat(2,30px);gap:4px;touch-action:none;flex:0 0 auto}
 .arcade-dpad button{padding:0;border:1px solid #546184;border-bottom:3px solid #394663;border-radius:3px;background:#23314b;color:#dce5ff;font:18px/1 monospace;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none}
@@ -46,6 +46,6 @@
 .arcade-save-note span{color:var(--arcade-gold)}
 .arcade-announcement{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .arcade-modal button:focus-visible,.arcade-modal select:focus-visible,.arcade-modal canvas:focus-visible{outline:3px solid #b8b3ff;outline-offset:3px}
-@media(max-width:600px){.arcade-modal{width:calc(100% - 16px);max-height:calc(100dvh - 16px)}.arcade-shell{padding:13px}.arcade-header{padding-bottom:12px}.arcade-header h2{font-size:17px}.arcade-eyebrow{font-size:7px;letter-spacing:.5px}.arcade-close{width:32px;height:32px}.arcade-hud{gap:18px;padding:11px}.arcade-hud>div>span{font-size:7px;letter-spacing:.5px}.arcade-hud strong{font-size:12px}.arcade-state{font-size:7px;max-width:50px}.arcade-overlay{padding:15px;gap:10px}.arcade-overlay-icon{font-size:24px}.arcade-overlay h3{font-size:13px}.arcade-overlay p{font-size:11px;line-height:1.45;max-width:270px}.arcade-start{font-size:9px;padding:9px 14px;min-height:34px;gap:14px;margin-top:2px}.arcade-toolbar{align-items:stretch;flex-direction:column;padding:13px 0;gap:12px}.arcade-actions,.arcade-settings{justify-content:space-between}.arcade-actions>.arcade-btn{flex:1}.arcade-actions>.arcade-secondary{flex:1}.arcade-settings label{flex:1;justify-content:space-between;margin-right:8px}.arcade-settings select{flex:1;margin-left:9px}.arcade-bottom{gap:10px;align-items:center}.arcade-save-note{display:none}.arcade-dpad{grid-template-columns:repeat(3,40px);grid-template-rows:repeat(2,36px)}#arcade-help{font-size:10px;line-height:2}.arcade-modal kbd{font-size:9px;margin-right:2px;padding:0 3px}}
-@media(max-width:360px){.arcade-hud{gap:11px}.arcade-hud strong{font-size:10px}.arcade-overlay h3{font-size:11px}.arcade-overlay p{font-size:10px}.arcade-overlay-icon{display:none}.arcade-dpad{grid-template-columns:repeat(3,34px);grid-template-rows:repeat(2,32px)}}
+@media(max-width:600px){.arcade-modal{width:calc(100% - 16px);max-height:calc(100dvh - 16px)}.arcade-shell{padding:13px}.arcade-header{padding-bottom:12px}.arcade-header h2{font-size:17px}.arcade-eyebrow{font-size:10px;letter-spacing:.5px}.arcade-close{width:32px;height:32px}.arcade-hud{gap:18px;padding:11px}.arcade-hud>div>span{font-size:10px;letter-spacing:.5px}.arcade-hud strong{font-size:12px}.arcade-state{font-size:10px;max-width:50px}.arcade-overlay{padding:15px;gap:10px}.arcade-overlay-icon{font-size:24px}.arcade-overlay h3{font-size:13px}.arcade-overlay p{font-size:14px;line-height:1.45;max-width:270px}.arcade-start{font-size:12px;padding:9px 14px;min-height:34px;gap:14px;margin-top:2px}.arcade-toolbar{align-items:stretch;flex-direction:column;padding:13px 0;gap:12px}.arcade-actions,.arcade-settings{justify-content:space-between}.arcade-actions>.arcade-btn{flex:1}.arcade-actions>.arcade-secondary{flex:1}.arcade-settings label{flex:1;justify-content:space-between;margin-right:8px}.arcade-settings select{flex:1;margin-left:9px}.arcade-bottom{gap:10px;align-items:center}.arcade-save-note{display:none}.arcade-dpad{grid-template-columns:repeat(3,40px);grid-template-rows:repeat(2,36px)}#arcade-help{font-size:13px;line-height:2}.arcade-modal kbd{font-size:12px;margin-right:2px;padding:0 3px}}
+@media(max-width:360px){.arcade-hud{gap:11px}.arcade-hud strong{font-size:13px}.arcade-overlay h3{font-size:14px}.arcade-overlay p{font-size:13px}.arcade-overlay-icon{display:none}.arcade-dpad{grid-template-columns:repeat(3,34px);grid-template-rows:repeat(2,32px)}}
 @media(prefers-reduced-motion:reduce){.arcade-modal *{animation:none!important;transition:none!important}.arcade-btn:hover,.arcade-btn:active{transform:none}}

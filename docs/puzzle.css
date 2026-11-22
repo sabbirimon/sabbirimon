@@ -11,7 +11,7 @@
 .puzzle-intro{margin:4px 0 21px;color:#b6c0d8;font-size:14px}
 .puzzle-hud{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:15px}
 .puzzle-hud>div{background:#121c32;border:1px solid #343d57;padding:11px 12px;min-width:0}
-.puzzle-hud span{display:block;font-size:8px;letter-spacing:1px;color:#a9b5cd;font-weight:800;margin-bottom:5px}
+.puzzle-hud span{display:block;font-size:11px;letter-spacing:1px;color:#a9b5cd;font-weight:800;margin-bottom:5px}
 .puzzle-hud strong{font:14px/1.5 var(--pixel,monospace);color:#f8d96a;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .puzzle-hud .puzzle-goal{background:#302316;border-color:#79501d}
 .puzzle-goal strong{color:#facc15}
@@ -48,7 +48,7 @@
 .puzzle-secondary:disabled{opacity:.4;cursor:not-allowed}
 .puzzle-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:17px}
 .puzzle-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:24px}
-#puzzle-controls-help{margin:0;font-size:11px;line-height:1.9;color:#aebad2}
+#puzzle-controls-help{margin:0;font-size:14px;line-height:1.9;color:#aebad2}
 #puzzle-controls-help strong{font-size:12px;color:#e0e7f5}
 .puzzle-modal kbd{font:10px/1.6 monospace;color:#dfe7f8;background:#1a243d;border:1px solid #465371;border-bottom-width:2px;padding:1px 4px}
 .puzzle-dpad{display:grid;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(2,38px);gap:5px;flex:0 0 auto}
@@ -65,6 +65,6 @@
 .puzzle-local-note{text-align:center;margin:20px 0 0;font:6px/1.9 var(--pixel,monospace);color:#8795b2}
 .puzzle-live{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .puzzle-modal button:focus-visible,.puzzle-modal summary:focus-visible,.puzzle-board:focus-visible{outline:3px solid #facc15;outline-offset:4px}
-@media(max-width:600px){.puzzle-modal{width:min(480px,calc(100% - 16px));max-height:calc(100dvh - 16px)}.puzzle-shell{padding:17px}.puzzle-eyebrow{font-size:6px;letter-spacing:0}.puzzle-header h2{font-size:31px}.puzzle-intro{font-size:12px;margin-bottom:16px}.puzzle-hud{gap:7px;margin-bottom:12px}.puzzle-hud>div{padding:9px}.puzzle-hud span{font-size:7px;letter-spacing:.5px}.puzzle-hud strong{font-size:12px}.puzzle-board,.puzzle-row{gap:7px}.puzzle-board{padding:7px}.puzzle-tile{font-size:20px}.puzzle-tile[data-value="128"],.puzzle-tile[data-value="256"],.puzzle-tile[data-value="512"]{font-size:16px}.puzzle-tile.puzzle-tile-large{font-size:12px}.puzzle-overlay{gap:12px;padding:18px}.puzzle-overlay h3{font-size:15px}.puzzle-overlay p{font-size:12px}.puzzle-overlay-star{font-size:29px}.puzzle-overlay .puzzle-primary,.puzzle-overlay .puzzle-secondary{min-height:36px;padding:7px 12px;font-size:12px}.puzzle-bottom{margin-top:20px}.puzzle-rules{margin-top:18px}}
-@media(max-width:360px){.puzzle-shell{padding:12px}.puzzle-eyebrow{font-size:5px}.puzzle-hud strong{font-size:10px}.puzzle-tile{font-size:18px}.puzzle-tile[data-value="128"],.puzzle-tile[data-value="256"],.puzzle-tile[data-value="512"]{font-size:14px}.puzzle-tile.puzzle-tile-large{font-size:10px}.puzzle-dpad{grid-template-columns:repeat(3,36px);grid-template-rows:repeat(2,34px)}#puzzle-controls-help{font-size:10px}.puzzle-overlay{gap:9px}.puzzle-overlay h3{font-size:13px}.puzzle-overlay-star{font-size:22px}.puzzle-local-note{font-size:5px}}
+@media(max-width:600px){.puzzle-modal{width:min(480px,calc(100% - 16px));max-height:calc(100dvh - 16px)}.puzzle-shell{padding:17px}.puzzle-eyebrow{font-size:9px;letter-spacing:0}.puzzle-header h2{font-size:31px}.puzzle-intro{font-size:12px;margin-bottom:16px}.puzzle-hud{gap:7px;margin-bottom:12px}.puzzle-hud>div{padding:9px}.puzzle-hud span{font-size:10px;letter-spacing:.5px}.puzzle-hud strong{font-size:12px}.puzzle-board,.puzzle-row{gap:7px}.puzzle-board{padding:7px}.puzzle-tile{font-size:20px}.puzzle-tile[data-value="128"],.puzzle-tile[data-value="256"],.puzzle-tile[data-value="512"]{font-size:16px}.puzzle-tile.puzzle-tile-large{font-size:12px}.puzzle-overlay{gap:12px;padding:18px}.puzzle-overlay h3{font-size:15px}.puzzle-overlay p{font-size:12px}.puzzle-overlay-star{font-size:29px}.puzzle-overlay .puzzle-primary,.puzzle-overlay .puzzle-secondary{min-height:36px;padding:7px 12px;font-size:12px}.puzzle-bottom{margin-top:20px}.puzzle-rules{margin-top:18px}}
+@media(max-width:360px){.puzzle-shell{padding:12px}.puzzle-eyebrow{font-size:8px}.puzzle-hud strong{font-size:13px}.puzzle-tile{font-size:18px}.puzzle-tile[data-value="128"],.puzzle-tile[data-value="256"],.puzzle-tile[data-value="512"]{font-size:14px}.puzzle-tile.puzzle-tile-large{font-size:13px}.puzzle-dpad{grid-template-columns:repeat(3,36px);grid-template-rows:repeat(2,34px)}#puzzle-controls-help{font-size:13px}.puzzle-overlay{gap:9px}.puzzle-overlay h3{font-size:13px}.puzzle-overlay-star{font-size:22px}.puzzle-local-note{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.puzzle-modal *{animation:none!important;transition:none!important}.puzzle-primary:active{transform:none}}
