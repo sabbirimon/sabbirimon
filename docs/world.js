@@ -29,7 +29,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
   if (!ctx) {
     let count = 0;
     return {
-      setTheme() {}, setScene() {}, setMotion() {}, resetObjects() {}, nudgeExplorer() {},
+      setTheme() {}, setScene() {}, setMotion() {}, setRotorSpeed() {}, resetObjects() {}, nudgeExplorer() {},
       collectNext() { if(count >= 5) return false; onCollect(++count); return true; },
       resetCoins() { count = 0; onCollect(count); }
     };
@@ -37,6 +37,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let theme = 'daylight', scene = 'islands', transition = null, sceneTransition = null, motion = !reduced.matches, visible = true;
   let width = 480, height = 240, renderScale = 1, portrait = false, clock = 0, last = 0, frame = 0, collected = 0;
+  let rotorSpeed=1, rotorTime=0;
   let pointer = { x: 0, y: 0 }, particles = [], coins = [];
   let explorerOffset={x:0,y:0},explorerBounds=null,explorerDrag=null,suppressClick=false;
   const stars = Array.from({ length: 61 }, (_, i) => ({
@@ -101,14 +102,90 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     return force*power*(.55+Math.sin(clock*1.7+x*.03)*.35+Math.sin(clock*.8)*.1);
   }
   function turbine(x,y,scale=1){
-    const windy=['wind','storm','cyclone','heavy-rain','blizzard'].includes(document.body.dataset.weather);
-    const power=Number(document.body.dataset.weatherPower)||1;
-    const angle=motion?clock*(windy?2.7:0.6)*power:0;
+    const angle=rotorTime/(.75+scale*.35)+scale;
+    bladeWind(x,y-45*scale,17*scale,scale);
     ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);
     polygon([[-3,0],[3,0],[1,-44],[-1,-44]],'#b9cad6');rect(-2,-43,1,40,'#f1f3ec');
     ctx.translate(0,-45);
     for(let i=0;i<3;i++){ctx.save();ctx.rotate(angle+i*Math.PI*2/3);polygon([[-1,0],[2,-4],[1,-23],[-2,-19]],'#e3f5f2');ctx.restore();}
     rect(-3,-3,6,6,'#789cb2');rect(-1,-1,2,2,'#b2f5df');ctx.restore();
+  }
+  // Three wisps leave the turning rotor. Their phase and length follow its speed.
+  function bladeWind(x,y,size,offset) {
+    if(!motion || rotorSpeed<=0) return;
+    ctx.save();
+    for(let i=0;i<3;i++){
+      const phase=(rotorTime*.37+offset+i/3)%1;
+      const tail=x+size*(.65+phase*2.4);
+      const lineY=y+size*(i-1)*.39;
+      ctx.globalAlpha=Math.sin(phase*Math.PI)*Math.min(.54,.23+rotorSpeed*.1);
+      ctx.strokeStyle='#e2fff6';ctx.lineWidth=Math.max(.6,size*.035);
+      ctx.beginPath();ctx.moveTo(tail,lineY);
+      ctx.quadraticCurveTo(tail+size*.5,lineY-size*.19,tail+size*(.7+rotorSpeed*.18),lineY);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  function riverbend(p) {
+    const t=motion?clock:0, bank=height*.53;
+    const soil='#886d52',beam='#553c37',wood='#bf8757',stone='#bac0a3';
+    mountainLayer(bank-28,32,p.mountain[0],4);
+    mountainLayer(bank-9,19,p.mountain[1],2);
+    // Platforms in the same polygon as the turbine footings anchor each tower.
+    const ridge=[[0,bank+8],[width*.53,bank-8],[width*.60,bank-20],[width*.65,bank-20],
+      [width*.72,bank-12],[width*.78,bank-12],[width*.85,bank-28],[width*.91,bank-28],[width,bank-7],
+      [width,height],[0,height]];
+    polygon(ridge,p.grassShade);
+    turbine(width*.624,bank-20,.48);
+    turbine(width*.755,bank-12,.83);
+    turbine(width*.88,bank-28,portrait?1.02:1.32);
+    const caveX=width*.47, mouthY=bank+11;
+    polygon([[caveX-39,mouthY+2],[caveX-34,mouthY-16],[caveX-20,mouthY-30],[caveX+8,mouthY-35],
+      [caveX+32,mouthY-23],[caveX+44,mouthY+4]],'#738477');
+    polygon([[caveX-27,mouthY+3],[caveX-21,mouthY-13],[caveX-9,mouthY-22],[caveX+9,mouthY-22],
+      [caveX+21,mouthY-13],[caveX+28,mouthY+3]],'#233f43');
+    rect(caveX-15,mouthY-25,20,3,stone);
+    const riverX=u=>caveX+width*(.16*Math.sin(u*5.4)-u*.08);
+    const riverWidth=u=>7+u*width*.21;
+    const depth=height-mouthY;
+    for(let i=0;i<36;i++){
+      const a=i/36,b=(i+1)/36;
+      const xa=riverX(a),xb=riverX(b),ya=mouthY+a*depth,yb=mouthY+b*depth;
+      const wa=riverWidth(a),wb=riverWidth(b);
+      polygon([[xa-wa-2,ya],[xa+wa+2,ya],[xb+wb+2,yb+1],[xb-wb-2,yb+1]],soil);
+      polygon([[xa-wa,ya],[xa+wa,ya],[xb+wb,yb+1],[xb-wb,yb+1]],i<5?'#348c9c':'#47aabd');
+    }
+    for(let i=0;i<30;i++){
+      const u=(i*.137+t*.07)%1;
+      const x=riverX(u)+Math.sin(i*9)*riverWidth(u)*.73;
+      rect(x,mouthY+u*depth,2+u*6,1,i%3?'#80d9d9':'#c1f6e0');
+    }
+    // The wheel dips into the water beside the masonry mill.
+    const u=.34, wx=riverX(u)+riverWidth(u)-3,wy=mouthY+u*depth-7;
+    rect(wx+5,wy-25,36,28,stone);
+    polygon([[wx+1,wy-24],[wx+21,wy-41],[wx+46,wy-24]],beam);
+    rect(wx+14,wy-17,7,9,'#314c56');rect(wx+29,wy-12,7,15,wood);
+    ctx.save();ctx.translate(wx,wy);ctx.rotate(-t*.68);
+    ctx.strokeStyle=beam;ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,13,0,Math.PI*2);ctx.stroke();
+    for(let i=0;i<8;i++){
+      ctx.rotate(Math.PI/4);rect(-1,-14,2,14,wood);rect(-4,-15,8,3,'#e4b278');
+    }
+    ctx.restore();rect(wx-2,wy-2,4,4,beam);
+    // A separate timber windmill overlooks the outer bank.
+    const hx=width*.84,hy=mouthY+depth*.53;
+    polygon([[hx-17,hy],[hx-10,hy-38],[hx+9,hy-38],[hx+17,hy]],'#ead2a1');
+    polygon([[hx-14,hy-37],[hx,hy-52],[hx+15,hy-37]],'#a35343');
+    rect(hx-5,hy-13,10,13,beam);rect(hx-10,hy-23,5,6,'#39586b');
+    ctx.save();ctx.translate(hx,hy-34);ctx.rotate(rotorTime*.72+.35);
+    for(let i=0;i<4;i++){
+      ctx.rotate(Math.PI/2);
+      rect(-1,-28,2,28,beam);rect(1,-27,7,18,'#f4dfac');
+      for(let rib=0;rib<3;rib++)rect(1,-25+rib*6,7,1,wood);
+    }
+    ctx.restore();rect(hx-2,hy-36,4,4,beam);
+    bladeWind(hx,hy-34,20,.4);
+    for(let i=0;i<4;i++)conifer(width*(.03+i*.058),bank+4+(i%2)*8,.65+i*.11,p,false);
+    robot(wx+42,wy+3);
   }
   function tree(x, y, size, p) {
     ctx.save();ctx.translate(x,y);ctx.transform(1,0,-windLean(x),1,0,0);ctx.translate(-x,-y);
@@ -438,6 +515,8 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       rect(roverX+2,cy+27,7,6,'#303953');rect(roverX+20,cy+27,7,6,'#303953');
       rect(roverX+11,cy+1,2,12,'#b8bbd0');rect(roverX+8,cy-1,8,3,'#d6d3ea');
       robot(width*.46,cy+27);
+    } else if(name==='riverbend-mills') {
+      riverbend(p);
     } else if(name==='energy-ridge') {
       mountainLayer(cy-13, 32, p.mountain[0], 4);
       mountainLayer(cy+5, 23, p.mountain[1], 6);
@@ -686,7 +765,12 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
   function tick(now) {
     frame=0;
     if(!visible||document.hidden) { last=0; return; }
-    if(last) clock+=Math.min((now-last)/1000,.05);
+    if(last){
+      const dt=Math.min((now-last)/1000,.05);
+      const windy=['wind','storm','cyclone','heavy-rain','blizzard'].includes(document.body.dataset.weather);
+      clock+=dt;
+      rotorTime+=dt*rotorSpeed*(windy?2.2:1.05)*(Number(document.body.dataset.weatherPower)||1);
+    }
     last=now;
     particles=particles.filter(pt=>clock-pt.born<.7);
     draw();
@@ -798,7 +882,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       draw();schedule();
     },
     setScene(name) {
-      if(!['islands','forest','beach','desert','mountains','city','sakura','cave','space','cyberpunk','energy-ridge',...Object.keys(WORLD_ART)].includes(name)||name===scene)return;
+      if(!['islands','forest','beach','desert','mountains','city','sakura','cave','space','cyberpunk','energy-ridge','riverbend-mills',...Object.keys(WORLD_ART)].includes(name)||name===scene)return;
       // One low-resolution snapshot provides a cheap scene dissolve; no second live renderer.
       if(motion) {
         try {
@@ -815,6 +899,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       draw();schedule();
     },
     setMotion,
+    setRotorSpeed(value){ if(Number.isFinite(value)) rotorSpeed=Math.max(0,Math.min(3,value)); },
     resetObjects() { explorerOffset={x:0,y:0};explorerDrag=null;sceneTransition=null;draw(); },
     nudgeExplorer(dx=0,dy=0) {
       if(!Number.isFinite(dx)||!Number.isFinite(dy))return;

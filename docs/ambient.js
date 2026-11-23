@@ -6,11 +6,11 @@
  */
 export function initAmbient() {
   let enabled = false, unlocked = false, destroyed = false, volume = .35;
-  const layerKeys = ['rain', 'wind', 'water', 'birds', 'crickets', 'music'];
-  let layers = { rain: false, wind: false, water: false, birds: false, crickets: true, music: false };
+  const layerKeys = ['weather','rain', 'wind', 'water', 'birds', 'crickets', 'music'];
+  let layers = { weather:true,rain: false, wind: false, water: false, birds: false, crickets: true, music: false };
   let scene = 'islands', weather = 'clear', context = null, master = null;
   let wind = null, surf = null, rain = null, rainBody = null, water = null, hum = null;
-  let timer = null, musicTimer = null, suspendTimer = null, nextChirp = 0, nextBird = 0, nextCricket = 0, lastThunder = -Infinity, musicStep = 0;
+  let timer = null, musicTimer = null, suspendTimer = null, nextGlassTap = 0, nextChirp = 0, nextBird = 0, nextCricket = 0, lastThunder = -Infinity, musicStep = 0;
   const sources = new Set();
   const notify = () => document.dispatchEvent(new CustomEvent('imon:ambient', { detail: { enabled, unlocked, volume, layers: getLayers(), scene, weather } }));
   const outputLevel = () => volume * .34;
@@ -143,10 +143,13 @@ export function initAmbient() {
     else if (family === 'city') { windLevel = .07 + Math.sin(t * .09) * .025; windFrequency = 220; humLevel = .012; }
     else windLevel = .04 + Math.sin(t * .1) * .015;
     if (weather === 'drizzle') { rainLevel = .045; windLevel += .01; }
+    else if (weather === 'glass-rain') { rainLevel = .075; if ((!layers || layers.weather || layers.rain) && t >= nextGlassTap) { chirp('drip'); nextGlassTap=t+1.2+Math.random()*2; } }
     else if (weather === 'rain') { rainLevel = .11; windLevel += .025; }
     else if (weather === 'heavy-rain') { rainLevel = .14; windLevel += .055; }
     else if (weather === 'storm') { rainLevel = .15; windLevel += .075; }
     else if (weather === 'cloudy') { windLevel += .018; humLevel += .002; }
+    else if (weather === 'light-snow') { windLevel=.022; windFrequency=1250; }
+    else if (weather === 'heavy-snow') { windLevel=.13+Math.sin(t*.4)*.04; windFrequency=560; }
     else if (weather === 'snow') { windLevel += .025; windFrequency = 900; }
     else if (weather === 'blizzard') { windLevel += .16; windFrequency = 800; rainLevel = .018; }
     else if (weather === 'fog') { windLevel *= .65; humLevel += .004; }
@@ -160,8 +163,8 @@ export function initAmbient() {
     let waterLevel = /waterfall|river|cascade/.test(scene) ? .16 : /lake|lagoon|oasis/.test(scene) ? .065 : 0;
     if (weather === 'flood') waterLevel = .2;
     if (layers) {
-      windLevel = layers.wind ? Math.max(windLevel, .075) : 0;
-      rainLevel = layers.rain ? Math.max(rainLevel, .085) : 0;
+      windLevel = layers.wind ? Math.max(windLevel,.075) : layers.weather && weather!=='clear' ? windLevel : 0;
+      rainLevel = layers.rain ? Math.max(rainLevel,.065) : layers.weather ? rainLevel : 0;
       surfLevel = layers.water ? Math.max(surfLevel, .045) : 0;
       waterLevel = layers.water ? Math.max(waterLevel, .1) : 0;
       humLevel = layers.music ? humLevel : 0;
@@ -171,6 +174,9 @@ export function initAmbient() {
     target(surf.gain.gain, surfLevel, 2);
     target(water.gain.gain, waterLevel * (.9 + Math.sin(t * .31) * .1), 2);
     target(water.filter.frequency, 850 + Math.sin(t * .17) * 120, 2);
+    const gentle=weather==='drizzle',heavy=['heavy-rain','storm','cyclone'].includes(weather);
+    target(rain.filter.frequency,gentle?2600:heavy?870:1550);
+    target(rainBody.filter.frequency,gentle?2100:heavy?990:1600);
     target(rain.gain.gain, rainLevel * showerSwell);
     target(rainBody.gain.gain, rainLevel * .65 * showerSwell);
     target(hum.gain.gain, humLevel); target(hum.source.frequency, humFrequency, 2);
@@ -245,9 +251,9 @@ export function initAmbient() {
     update(); notify(); return getLayers();
   }
 
-  function thunder() {
-    if (!active() || (layers && !layers.rain) || context.currentTime - lastThunder < 5) return;
-    const t = context.currentTime; lastThunder = t;
+  function thunder(delay=0) {
+    if (!active() || (layers && !layers.rain && !layers.weather) || context.currentTime - lastThunder < 5) return;
+    lastThunder=context.currentTime; const t=lastThunder+Math.min(3,Math.max(0,delay));
     // A gradual, rolling synthetic rumble with a longer distant tail.
     const source = context.createBufferSource(), filter = context.createBiquadFilter(), gain = context.createGain();
     source.buffer = wind.source.buffer; filter.type = 'lowpass'; filter.frequency.setValueAtTime(280, t); filter.frequency.exponentialRampToValueAtTime(95, t + 5); filter.Q.value = .5;
@@ -269,7 +275,7 @@ export function initAmbient() {
     isEnabled: () => enabled,
     getVolume: () => volume,
     setScene(name) { const next=String(name || 'islands').toLowerCase(); if(scene!==next){scene=next;musicStep=0;update();} },
-    setWeather(name) { if(name==='glass-rain')name='rain';if(name==='glass-fog')name='fog';if(name==='lightning')name='storm';weather = ['drizzle', 'rain', 'heavy-rain', 'storm', 'cloudy', 'snow', 'blizzard', 'fog', 'sandstorm', 'wind', 'hail', 'cyclone', 'flood', 'earthquake', 'aurora', 'meteors', 'fireflies', 'leaves'].includes(name) ? name : 'clear'; update(); },
+    setWeather(name) { if(name==='glass-fog')name='fog';if(name==='lightning')name='storm';weather = ['glass-rain','drizzle', 'rain', 'heavy-rain', 'storm', 'cloudy','light-snow','snow','heavy-snow','blizzard', 'fog', 'sandstorm', 'wind', 'hail', 'cyclone', 'flood', 'earthquake', 'aurora', 'meteors', 'fireflies', 'leaves'].includes(name) ? name : 'clear'; update(); },
     destroy() {
       if (destroyed) return;
       destroyed = true; clearInterval(timer); clearInterval(musicTimer); clearTimeout(suspendTimer);

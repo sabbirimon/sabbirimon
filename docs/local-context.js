@@ -19,7 +19,7 @@
 const CACHE_KEY = 'imon-local-weather-v1';
 const CACHE_TTL = 30 * 60 * 1000;
 const REQUEST_TIMEOUT = 8000;
-const WEATHER_TYPES = new Set(['clear', 'rain', 'snow', 'storm']);
+const WEATHER_TYPES = new Set(['clear','cloudy','fog','drizzle','rain','heavy-rain','light-snow','snow','heavy-snow','storm']);
 const WMO_LABELS = {
   0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
   45: 'Fog', 48: 'Freezing fog', 51: 'Light drizzle', 53: 'Drizzle', 55: 'Dense drizzle',
@@ -52,9 +52,14 @@ export function phaseForHour(hour) {
 
 export function weatherForCode(code) {
   if ([95, 96, 97, 99].includes(code)) return 'storm';
-  if ([71, 73, 75, 77, 85, 86].includes(code)) return 'snow';
-  if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return 'rain';
-  // "clear" is the visual no-precipitation mode, not a claim of a cloudless sky.
+  if ([71,77].includes(code)) return 'light-snow';
+  if ([73,85].includes(code)) return 'snow';
+  if ([75,86].includes(code)) return 'heavy-snow';
+  if ([51,53,56,61,80].includes(code)) return 'drizzle';
+  if ([55,57,63,66,81].includes(code)) return 'rain';
+  if ([65,67,82].includes(code)) return 'heavy-rain';
+  if ([2,3].includes(code)) return 'cloudy';
+  if ([45,48].includes(code)) return 'fog';
   return 'clear';
 }
 
@@ -65,7 +70,7 @@ function readCache() {
     const cached = JSON.parse(localStorage.getItem(CACHE_KEY));
     const age = Date.now() - cached?.savedAt;
     if (!cached || !Number.isFinite(age) || age < 0 || age >= CACHE_TTL || typeof cached.city !== 'string' || !WEATHER_TYPES.has(cached.weather) || !Number.isInteger(cached.code) || !WMO_LABELS[cached.code]) return null;
-    return cached;
+    return { ...cached, weather:weatherForCode(cached.code) };
   } catch { return null; }
 }
 function writeCache(value) { try { localStorage.setItem(CACHE_KEY, JSON.stringify(value)); } catch { /* Storage is optional. */ } }

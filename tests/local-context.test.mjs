@@ -9,10 +9,10 @@ test('scene phase changes at local-time boundaries, including midnight',()=>{
  assert.equal(phaseForHour(24),'twilight');assert.equal(phaseForHour(NaN),'twilight');
 });
 test('all precipitation codes map to the correct animation, including hail and heavy thunder',()=>{
- for(const code of [51,53,55,56,57,61,63,65,66,67,80,81,82])assert.equal(weatherForCode(code),'rain');
- for(const code of [71,73,75,77,85,86])assert.equal(weatherForCode(code),'snow');
- for(const code of [95,96,97,99])assert.equal(weatherForCode(code),'storm');
- for(const code of [0,1,2,3,45,48,null,999])assert.equal(weatherForCode(code),'clear');
+ const codes={drizzle:[51,53,56,61,80],rain:[55,57,63,66,81],'heavy-rain':[65,67,82],
+   'light-snow':[71,77],snow:[73,85],'heavy-snow':[75,86],storm:[95,96,97,99],
+   cloudy:[2,3],fog:[45,48],clear:[0,1,null,999]};
+ for(const [kind,values] of Object.entries(codes))for(const code of values)assert.equal(weatherForCode(code),kind);
 });
 test('no-precipitation mode does not mislabel clouds or fog as clear weather',()=>{
  assert.equal(weatherDescription(3),'Overcast');assert.equal(weatherDescription(45),'Fog');assert.equal(weatherDescription(999),'Weather unavailable');assert.equal(weatherDescription(null),'Weather unavailable');

@@ -19,7 +19,7 @@ import { playSound } from './audio.js';
 
 import { loadCurriculum } from './lab-curriculum.js';
 import { renderPixelText } from './pixel-type.js';
-import { initLabNotes } from './lab-notes.js';
+import { initLabNotes, notesFor } from './lab-notes.js';
 import { initLabLearn } from './lab-chapters.js';
 import { initLabFeedback, buildFeedback } from './lab-feedback.js';
 import { initLabReward } from './lab-reward.js';
@@ -895,6 +895,17 @@ export function initLab(root = document) {
     reward?.hide();
     lookup?.hide();
     notes?.render(next);
+    const example = root.querySelector('.lab-example');
+    if (example) {
+      const note = notesFor(next).find(item => item.example);
+      example.hidden = next.kind === 'quiz' || !note;
+      example.open = false;
+      if (note) {
+        example.querySelector('summary').textContent = 'Worked example · ' + note.title;
+        example.querySelector('code').textContent = note.example;
+        example.querySelector('p:last-child').textContent = note.body;
+      }
+    }
     learn?.render(next.chapter);
     // A quiz takes the place of the code pane, and the tab bar goes with
     // it — there is no file to choose.

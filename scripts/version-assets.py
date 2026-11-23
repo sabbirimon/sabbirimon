@@ -25,7 +25,7 @@ for file in sorted(docs.rglob('*')):
         text = attribute.sub(version, text)
     if file.name == 'sw.js':
         precache = re.compile(r'(const FILES = \[)(.*?)(\];)', re.DOTALL)
-        entry = re.compile(r'(?P<prefix>["\'])' + path + r'(?=["\'])')
+        entry = re.compile(r'(?P<prefix>["\'])' + r'(?P<url>[.\w/-]+\.(?:js|css|json))(?=["\'])')
         text, count = precache.subn(lambda m: m[1] + entry.sub(version, m[2]) + m[3], text)
         if count != 1:
             raise SystemExit('Could not version the offline asset list')

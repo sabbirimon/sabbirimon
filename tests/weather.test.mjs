@@ -90,3 +90,14 @@ test('glass rain and condensation animate without blocking motion controls',()=>
  for(const type of ['glass-rain','glass-fog']){weather.setWeather(type);assert(h.draws.length>0);assert.equal(h.canvas.style.imageRendering,'auto');const a=h.step(1000),b=h.step(1040);assert.notDeepEqual(a,b);weather.setMotion(false);assert.equal(h.frames.size,0);weather.setMotion(true);assert.equal(h.frames.size,1);}
  weather.destroy();
 }));
+
+test('the three snow levels produce progressively denser snowfall', () => harness(h => {
+  const weather = initWeather();
+  const counts = ['light-snow', 'snow', 'heavy-snow'].map(type => {
+    weather.setWeather(type);
+    assert.equal(h.document.body.dataset.weather, type);
+    return h.draws.length;
+  });
+  assert.ok(counts[0] > 0 && counts[0] < counts[1] && counts[1] < counts[2]);
+  weather.destroy();
+}));

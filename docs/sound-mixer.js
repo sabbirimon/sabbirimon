@@ -1,6 +1,7 @@
 /** Visitor-selected synthesized sound layers. Selecting a layer never enables audio. */
 const STORAGE_KEY='imon-sound-layers-v1';
 const SOURCES=[
+ ['weather','☁','Follow weather','Match precipitation, wind and thunder to the current sky.'],
  ['rain','☂','Rain','A soft, steady rainfall.'],
  ['wind','≋','Wind','Air moving through the trees.'],
  ['water','≈','Flowing water','A gentle stream and water texture.'],
@@ -8,7 +9,7 @@ const SOURCES=[
  ['crickets','✦','Crickets','A quiet evening chorus.'],
  ['music','♫','Ambient music','Slow, synthesized musical notes.']
 ];
-const DEFAULT_LAYERS={rain:false,wind:false,water:false,birds:false,crickets:true,music:false};
+const DEFAULT_LAYERS={weather:true,rain:false,wind:false,water:false,birds:false,crickets:true,music:false};
 const read=()=>{try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!value||typeof value!=='object'||Array.isArray(value))return {...DEFAULT_LAYERS};return Object.fromEntries(SOURCES.map(([key])=>[key,value[key]===true]));}catch{return {...DEFAULT_LAYERS};}};
 const write=(key,value)=>{try{localStorage.setItem(key,value);}catch{}};
 export function initSoundMixer(ambient){

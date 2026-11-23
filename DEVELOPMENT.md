@@ -97,13 +97,13 @@ The world atlas shows 18 cities across four fictional continents and five countr
 
 Regenerate the large README entrance button with `uv run --python 3.13 --with pillow python scripts/generate-entry-button.py`. Its static PNG is the reduced-motion alternative.
 
-The expanded art collection has 13 landscapes and 33 presets. `?scene=waterfall-valley`, `?scene=twilight-lake`, and `?scene=neon-forest` link into individual worlds. The illustrated assets total about 1.61 MB and are cached for offline use. The globe renders an Earth-inspired sphere using an original hand-drawn texture; campaign countries and city positions remain fictional.
+World Studio has 41 presets, including Neon Coast, Energy Ridge and Riverbend Mills. `?scene=waterfall-valley`, `?scene=twilight-lake`, and `?scene=neon-forest` link into individual worlds. The illustrated assets total about 1.61 MB and are cached for offline use. The globe renders an Earth-inspired sphere using an original hand-drawn texture; campaign countries and city positions remain fictional.
 
 The profile now includes an animated entry button and a controller-themed arcade link. The About card has wave, code, and play poses with manual controls and reduced-motion support. Gridworks opens its quick-start guide after the first story briefing; GUIDE reopens the button reference, first connections, ISP pricing, and save instructions.
 
 ## World controls and weather
 
-The visible weather control deck offers Light rain, Heavy rain, Snow, Thunderstorm, Lightning, Wind, Clouds, Fog, Fireflies, and Clear. Visitors can pause/play animation, select Gentle/Normal/Vivid intensity, and independently adjust Density and Strength from 25% to 200%. World Studio includes a live animation preview and the same controls, plus scenery, time, colors, and optional sound volume. Custom effects are decorative artwork, not weather alerts.
+The weather deck offers three rain and three snow levels, rain or condensation on glass, earthquake, thunderstorm, lightning, wind, clouds, fog, fireflies and clear skies. Each button pairs a pixel sprite with a text label. Visitors can pause/play animation, select Gentle/Normal/Vivid intensity, and independently adjust Density and Strength from 25% to 200%. World Studio includes a live animation preview and the same controls, plus scenery, time, colors, and optional sound volume. Custom effects are decorative artwork, not weather alerts.
 
 Live mode follows the visitor’s browser time and automatically rotates phase-appropriate illustrated scenes at 1, 5, 15 or 60-minute intervals. Manual scenery selection disables rotation. Rotation pauses in hidden tabs and with Motion Off or the operating system’s reduced-motion preference; the site respects that preference. Unavailable real weather uses a clearly labeled decorative firefly/wind fallback. Scenery, colors, motion, weather intensity, density, strength, and sound-volume preferences are stored locally when browser storage is available.
 
@@ -134,6 +134,6 @@ Both files are static and carry nothing about a visitor. Asking for one is an or
 
 ### Final weather polish
 
-Rain uses layered smooth strokes with weather-dependent drop sizes, flow and gust angles; wind, fog, clouds and lightning use soft drawing with subtle reflection ripples. Snow, stars and firefly lights are intentionally small. Foreground trees sway, and wind turbines rotate faster as wind strength increases. Cyberpunk uses gentle, sparse drizzle and retains the sound preference. The main weather deck and World Studio share density, strength and intensity settings.
+Rain uses layered smooth strokes with weather-dependent drop sizes, flow and gust angles; wind, fog, clouds and lightning use soft drawing with subtle reflection ripples. Snow, stars and firefly lights are intentionally small. Foreground trees sway, and wind turbines rotate faster as wind strength increases. World Studio’s Rotor speed control adjusts turbine blades and windmill sails from stopped to triple speed. The Riverbend waterwheel turns with the current. Cyberpunk uses gentle, sparse drizzle and retains the sound preference. The main weather deck and World Studio share density, strength and intensity settings.
 
 Rain on glass and fogged glass are decorative window effects with the same intensity, density and strength controls. Lightning uses strength-controlled glows/reflections with deliberately spaced flashes. The Earthquake control opens a pixel city with a repeating building-collapse/rebuild vignette; it is visual decoration and never modifies Gridworks saves.
