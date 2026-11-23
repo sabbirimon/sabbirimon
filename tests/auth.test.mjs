@@ -24,9 +24,9 @@ test('generateCodeVerifier returns a URL-safe string of the right length and cha
  assert.notEqual(generateCodeVerifier(),generateCodeVerifier());
 });
 
-test('isConfigured reports false for the placeholder values and never throws',()=>{
- assert.equal(isConfigured(),false);
- assert.equal(configurationMessage(),'Sign-in is not configured yet.');
+test('isConfigured recognizes the public project settings',()=>{
+ assert.equal(isConfigured(),true);
+ assert.equal(configurationMessage(),null);
  assert.equal(typeof isConfigured(),'boolean');
 });
 

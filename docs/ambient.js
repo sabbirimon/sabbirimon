@@ -251,6 +251,12 @@ export function initAmbient() {
     update(); notify(); return getLayers();
   }
 
+  function hailImpact(size) {
+    if (!active() || (layers && !layers.weather && !layers.rain)) return;
+    tone(720+size*29,.065,.045,'triangle',2400);
+    tone(1410+size*37,.12,.022,'sine',3300);
+  }
+
   function thunder(delay=0) {
     if (!active() || (layers && !layers.rain && !layers.weather) || context.currentTime - lastThunder < 5) return;
     lastThunder=context.currentTime; const t=lastThunder+Math.min(3,Math.max(0,delay));
@@ -271,7 +277,7 @@ export function initAmbient() {
   }
   document.addEventListener('visibilitychange', visibilityChanged);
   return {
-    unlock, setEnabled, setVolume, setLayers, getLayers, thunder,
+    unlock, setEnabled, setVolume, setLayers, getLayers, thunder, hailImpact,
     isEnabled: () => enabled,
     getVolume: () => volume,
     setScene(name) { const next=String(name || 'islands').toLowerCase(); if(scene!==next){scene=next;musicStep=0;update();} },

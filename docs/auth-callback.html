@@ -26,7 +26,7 @@
   </div>
 </main>
 <script type="module">
-import { exchangeCodeForSession, isConfigured, getSession } from './auth.js';
+import { exchangeCodeForSession, isConfigured, getSession, consumeEmailFlow } from './auth.js';
 import { initWordmark } from './logo.js';
 
 initWordmark(document);
@@ -45,7 +45,7 @@ function setTitle(text) { if (titleNode) titleNode.textContent = text; }
 function returnTarget() {
   try {
     const stored = sessionStorage.getItem('imon-auth-return-page');
-    if (stored) { sessionStorage.removeItem('imon-auth-return-page'); return stored; }
+    if (stored) { sessionStorage.removeItem('imon-auth-return-page'); const target=new URL(stored,location.href); if(target.origin===location.origin)return target.href; }
   } catch { /* Storage is optional. */ }
   return './';
 }
@@ -81,7 +81,8 @@ async function run() {
   }
   setTitle('Signed in');
   setStatus('Signed in. Taking you back to IMON.world…', 'ok');
-  location.replace(returnTarget());
+  history.replaceState(null,'',location.pathname);
+  location.replace(consumeEmailFlow()==='recover'?'./login.html?mode=update':returnTarget());
 }
 
 run();

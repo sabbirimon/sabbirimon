@@ -5,47 +5,11 @@
  *   - Supabase Auth handles Google and GitHub OAuth through the PKCE flow.
  *   - A Postgres table `progress` holds one JSONB blob per user.
  *
- * ─────────────────────────────────────────────────────────────────────────
- *  PASTE YOUR SUPABASE VALUES HERE
- * ─────────────────────────────────────────────────────────────────────────
- *  1. Open https://supabase.com/dashboard and create a free project (no
- *     card is required on the free tier).
- *  2. Copy the two values below from
- *     Settings → API → "Project URL" and "Publishable key".
- *        - Project URL   → https://YOUR-PROJECT-REF.supabase.co
- *        - Publishable key → sb_publishable_... (the "anon"/publishable key,
- *          never the secret `service_role` key)
- *  3. Paste them over the two placeholders below, keeping the quotes.
- *
- *  Until both values are filled in, `isConfigured()` returns false, the
- *  sign-in buttons are disabled with a clear message, and every other part
- *  of the site keeps working exactly as before for anonymous visitors.
- *
- *  In the Supabase dashboard, also add these Redirect URLs
- *  (Authentication → URL Configuration → Redirect URLs):
- *        https://imon.com.bd/auth-callback.html
- *        http://localhost:8000/auth-callback.html
- *
- *  Finally, run this SQL once in the Supabase SQL editor
- *  (Database → SQL Editor → New query):
- *
- *      create table if not exists public.progress (
- *        id uuid primary key references auth.users (id) on delete cascade,
- *        data jsonb not null default '{}'::jsonb,
- *        updated_at timestamptz not null default now()
- *      );
- *      alter table public.progress enable row level security;
- *      create policy "players own their progress"
- *        on public.progress for all
- *        using (auth.uid() = id)
- *        with check (auth.uid() = id);
- *
- *  The row-level-security policy is what keeps one player's scores out of
- *  another player's row. The publishable key can only ever read and write
- *  the signed-in player's own row, so no secret key is ever needed here.
+ * The project URL and publishable key are public browser configuration.
+ * Postgres row-level security limits each authenticated user to their own save.
  */
-const SUPABASE_URL = 'https://REPLACE_WITH_PROJECT_REF.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY = 'REPLACE_WITH_PUBLISHABLE_KEY';
+const SUPABASE_URL = 'https://zscjhwxeshnbslvqmpui.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_dLIZWZOH-3J949i_eVW1Ag_h7FOFTTc';
 
 /* ── Supabase REST endpoints ───────────────────────────────────────────── */
 const AUTH_BASE = () => `${SUPABASE_URL}/auth/v1`;
@@ -204,8 +168,31 @@ export function getSession() {
   }
 }
 
+// Keep each account's offline progress separate on a shared device.
+function switchLocalPlayer(nextId) {
+  const ownerKey='imon-local-player';
+  const previous=read(ownerKey);
+  if (previous===nextId) return;
+  const slot=id=>'imon-player-save:'+id;
+  if (previous) {
+    const saved=write(slot(previous),JSON.stringify(readLocalProgress()));
+    if (!saved) return;
+  }
+  if (previous || (nextId && read(slot(nextId)))) {
+    let incoming={};
+    try { incoming=JSON.parse(read(slot(nextId),'{}'))||{}; } catch {}
+    for (const key of LOCAL_PROGRESS_KEYS) {
+      if (Object.hasOwn(incoming,key)) write(key,JSON.stringify(incoming[key]));
+      else remove(key);
+    }
+  }
+  if (nextId) write(ownerKey,nextId); else remove(ownerKey);
+}
+
 function storeSession(session) {
+  switchLocalPlayer(session?.user?.id||null);
   if (!session) { remove(STORAGE_KEY); return null; }
+  if (!session.expires_at && session.expires_in) session.expires_at = Math.floor(Date.now()/1000) + session.expires_in;
   write(STORAGE_KEY, JSON.stringify(session));
   return session;
 }
@@ -241,23 +228,79 @@ function authHeaders(session = getSession()) {
  */
 export function onAuthChange(callback) {
   if (typeof callback !== 'function') return () => {};
-  const listeners = new Set([callback]);
-  const unsubscribe = () => listeners.delete(callback);
-  listeners.add(callback);
-  // Keep the listener set reachable so a future real-time event can reach it.
-  authListeners.add(() => listeners);
-  return unsubscribe;
+  authListeners.add(callback);
+  return () => authListeners.delete(callback);
 }
 
-// A shared registry so an auth event can reach every subscriber.
 const authListeners = new Set();
-
 function emitAuthChange(session) {
-  for (const group of authListeners) {
-    for (const listener of group) {
-      try { listener(session); } catch { /* A bad listener never breaks auth. */ }
-    }
+  for (const listener of authListeners) {
+    try { listener(session); } catch { /* One subscriber cannot block the others. */ }
   }
+}
+
+// Re-read inside the lock because another tab can rotate the refresh token.
+async function currentSession() {
+  const fresh = session => session && session.expires_at > Date.now()/1000 + 45;
+  const previous = getSession();
+  if (!previous || fresh(previous)) return previous;
+  const renew = async () => {
+    const session = getSession();
+    if (!session || fresh(session)) return session;
+    try {
+      const response = await fetchWithTimeout(AUTH_BASE()+'/token?grant_type=refresh_token', {
+        method:'POST', headers:{apikey:SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'},
+        body:JSON.stringify({refresh_token:session.refresh_token})
+      });
+      if (getSession()?.refresh_token !== session.refresh_token) return getSession();
+      if (!response.ok) {
+        if ([400,401].includes(response.status)) { storeSession(null); emitAuthChange(null); }
+        return null;
+      }
+      return storeSession(await response.json());
+    } catch { return null; }
+  };
+  return globalThis.navigator?.locks ? navigator.locks.request('imon-session-refresh',renew) : renew();
+}
+
+export async function authOptions() {
+  const response = await fetchWithTimeout(AUTH_BASE()+'/settings',{headers:{apikey:SUPABASE_PUBLISHABLE_KEY}});
+  if (!response.ok) throw new Error('Account settings could not be loaded. Try again shortly.');
+  return response.json();
+}
+
+export async function emailAuth(mode, email, password) {
+  const endpoints={login:'/token?grant_type=password',signup:'/signup',recover:'/recover',update:'/user'};
+  if (!Object.hasOwn(endpoints,mode)) throw new Error('Unknown account action.');
+  const url=new URL(AUTH_BASE()+endpoints[mode]);
+  const headers={apikey:SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'};
+  let body={email,password};
+  if (mode==='signup' || mode==='recover') {
+    const verifier=generateCodeVerifier();
+    if (!write(VERIFIER_KEY,verifier)) throw new Error('Allow browser storage to confirm your email on this device.');
+    body.code_challenge=await createCodeChallenge(verifier);
+    body.code_challenge_method='s256';
+    if (mode==='recover') delete body.password;
+    write('imon-email-flow',mode);
+    url.searchParams.set('redirect_to',new URL('auth-callback.html',location.href).href);
+  }
+  if (mode==='update') {
+    const session=await currentSession();
+    if (!session) throw new Error('Open your recovery link in this browser and try again.');
+    headers.Authorization='Bearer '+session.access_token;
+    body={password};
+  }
+  const response=await fetchWithTimeout(url,{method:mode==='update'?'PUT':'POST',headers,body:JSON.stringify(body)});
+  const result=await response.json();
+  if (!response.ok) throw new Error(result.msg || result.message || result.error_description || 'The request failed. Try again.');
+  if (result.access_token && result.user) {
+    storeSession(result); emitAuthChange(result);
+  }
+  return result;
+}
+
+export function consumeEmailFlow() {
+  const mode=read('imon-email-flow'); remove('imon-email-flow'); return mode;
 }
 
 /* ── Sign in / sign out ────────────────────────────────────────────────── */
@@ -273,6 +316,7 @@ export async function signIn(provider) {
   if (!isConfigured()) return false;
   if (provider !== 'google' && provider !== 'github') return false;
   try {
+    remove('imon-email-flow');
     const verifier = generateCodeVerifier();
     const challenge = await createCodeChallenge(verifier);
     if (!write(VERIFIER_KEY, verifier)) return false;
@@ -281,7 +325,7 @@ export async function signIn(provider) {
     const redirectTo = new URL('auth-callback.html', base.href).href;
     // Remember the page the player came from, so the callback can send
     // them back there instead of always to the home page.
-    try { sessionStorage.setItem('imon-auth-return-page', location.href); } catch { /* Storage is optional. */ }
+    try { sessionStorage.setItem('imon-auth-return-page', new URL('./',location.href).href); } catch { /* Storage is optional. */ }
     const url = new URL(`${AUTH_BASE()}/authorize`);
     url.searchParams.set('provider', provider);
     url.searchParams.set('redirect_to', redirectTo);
@@ -331,10 +375,9 @@ export async function signOut() {
   const session = getSession();
   if (session?.refresh_token && isConfigured()) {
     try {
-      await fetchWithTimeout(`${AUTH_BASE()}/logout`, {
+      await fetchWithTimeout(`${AUTH_BASE()}/logout?scope=local`, {
         method: 'POST',
-        headers: authHeaders(session),
-        body: JSON.stringify({ scope: 'local' })
+        headers: authHeaders(session)
       });
     } catch { /* The local session is cleared either way. */ }
   }
@@ -425,7 +468,7 @@ export function readLocalProgress() {
  * @returns {Promise<object|null>}
  */
 export async function loadProgress() {
-  const session = getSession();
+  const session = await currentSession();
   if (!session || !isConfigured()) return null;
   try {
     const response = await fetchWithTimeout(
@@ -434,7 +477,8 @@ export async function loadProgress() {
     );
     if (!response.ok) return null;
     const rows = await response.json();
-    if (!Array.isArray(rows) || !rows.length) return null;
+    if (!Array.isArray(rows)) return null;
+    if (!rows.length) return {};
     const data = rows[0]?.data;
     return data && typeof data === 'object' ? data : null;
   } catch {
@@ -449,7 +493,7 @@ export async function loadProgress() {
  * @returns {Promise<boolean>}
  */
 export async function saveProgress(data) {
-  const session = getSession();
+  const session = await currentSession();
   if (!session || !isConfigured()) return false;
   if (!data || typeof data !== 'object') return false;
   try {
@@ -478,11 +522,14 @@ export async function syncLocalProgress() {
   if (!session || !isConfigured()) return null;
   const local = readLocalProgress();
   const cloud = await loadProgress();
+  if (!cloud || getSession()?.user.id!==session.user.id) return null;
   const merged = mergeProgress(local, cloud);
   if (!Object.keys(merged).length) return merged;
   await saveProgress(merged);
+  if (getSession()?.user.id!==session.user.id) return null;
   try {
     for (const [key, value] of Object.entries(merged)) {
+      if (!LOCAL_PROGRESS_KEYS.includes(key)) continue;
       if (typeof value === 'number') write(key, String(value));
       else if (value && typeof value === 'object') write(key, JSON.stringify(value));
     }
@@ -504,15 +551,17 @@ let syncPending = false;
  */
 export function scheduleProgressSync() {
   if (!isConfigured() || !getSession()) return;
+  const owner=getSession().user.id;
   syncPending = true;
   if (syncTimer) clearTimeout(syncTimer);
   syncTimer = setTimeout(() => {
     syncTimer = null;
-    if (!syncPending) return;
+    if (!syncPending || getSession()?.user.id!==owner) return;
     syncPending = false;
     const local = readLocalProgress();
     if (!Object.keys(local).length) return;
     loadProgress().then(cloud => {
+      if (!cloud || getSession()?.user.id!==owner) return;
       const merged = mergeProgress(local, cloud);
       return saveProgress(merged);
     }).catch(() => { /* The cloud is optional; the local score is already saved. */ });
@@ -601,11 +650,7 @@ export function initAuth(root = document) {
   render(session);
   if (session) {
     // Pull the cloud copy down, then push any newer local score up.
-    loadProgress().then(cloud => {
-      const local = readLocalProgress();
-      const merged = mergeProgress(local, cloud);
-      if (Object.keys(merged).length) saveProgress(merged);
-    }).catch(() => { /* The cloud copy is optional. */ });
+    syncLocalProgress().catch(() => { /* Keep playing offline with local progress. */ });
   }
 
   onAuthChange(render);

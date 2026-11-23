@@ -522,3 +522,5 @@
     transform: none;
   }
 }
+
+.auth-page [hidden] { display:none !important; }

@@ -12,7 +12,7 @@ const at = (d,x,y,scale=1) => path(d,'transform="translate('+x+' '+y+') scale('+
 export const WEATHER_CARDS = [
   ['glass-rain','Rain on glass'], ['glass-fog','Fogged glass'], ['earthquake','Earthquake'], ['drizzle','Light rain'],
   ['rain','Medium rain'], ['heavy-rain','Heavy rain'], ['light-snow','Light snow'], ['snow','Medium snow'],
-  ['heavy-snow','Heavy snow'], ['storm','Thunderstorm'], ['lightning','Lightning'], ['wind','Wind'],
+  ['heavy-snow','Heavy snow'], ['hail','Hailstorm'], ['stars','Starlight'], ['storm','Thunderstorm'], ['lightning','Lightning'], ['wind','Wind'],
   ['cloudy','Clouds'], ['fog','Fog'], ['fireflies','Fireflies'], ['clear','Clear']
 ];
 
@@ -31,6 +31,8 @@ export function weatherIcon(id) {
       case 'glass-rain': base=path(pane); detail=at(bead,6,6)+at(bead,13,11); break;
       case 'glass-fog': base=path(pane); detail=at(ribbons,5,3,.63); motion='drift'; color='#a6dfcd'; break;
       case 'earthquake': base=path('M2 20V9h4V4h5v16Zm12 0V6h5v4h3v10Z'); detail=path('M0 21h8l2-4 3 4 2-2 2 2h7v2h-8l-1-1-3 2-2-3-1 2H0Z'); color='#ffa583'; motion='shift'; break;
+      case 'hail': base=path(cloud); detail=path('M4 16h3v3H4Zm6 3h4v3h-4Zm7-3h4v4h-4Z'); break;
+      case 'stars': detail=at(flake,1,10)+at(flake,10,2,1.35)+at(flake,16,16,.7); color='#ffe5ba'; motion='glow'; break;
       case 'storm': base=path(cloud); detail=at(bolt,5,9,.65); color='#ffd984'; motion='glow'; break;
       case 'lightning': base=at(cloud,0,1,.65); detail=path(bolt); color='#ffe589'; motion='glow'; break;
       case 'wind': base=path('M3 19h6v2H3Z'); detail=path(ribbons); motion='drift'; break;

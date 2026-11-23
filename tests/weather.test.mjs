@@ -76,12 +76,12 @@ test('independent density and power controls change count and speed within bound
 }));
 
 
-test('smooth weather uses curves, tapered gradients and reflected lightning without altering pixel snow',()=>harness(h=>{
+test('smooth weather uses curves, tapered gradients and reflected lightning alongside soft depth-layered snow',()=>harness(h=>{
  const weather=initWeather();weather.setWeather('rain');assert.equal(h.canvas.style.imageRendering,'auto');assert(h.draws.some(d=>d[6]==='stroke'&&d[4].includes('linear')));
  weather.setWeather('wind');assert(h.draws.some(d=>d[7]?.some(segment=>segment[0]==='bezier')));
  weather.setWeather('fog');assert(h.draws.some(d=>d[6]==='fill'&&d[4].includes('radial')));
  weather.setWeather('lightning');h.step(1200);h.step(1280);assert(h.draws.some(d=>d[7]?.some(segment=>segment[0]==='quadratic')),'Reflection ripples accompany the bolt');
- weather.setWeather('snow');assert.equal(h.canvas.style.imageRendering,'pixelated');assert(h.draws.every(d=>d[2]<=2&&d[3]<=2),'Small snowflake sizes remain unchanged');weather.destroy();
+ weather.setWeather('snow');assert.equal(h.canvas.style.imageRendering,'auto');assert(h.draws.some(d=>d[6]==='fill' && d[4].includes('radial')),'Snowflakes have feathered edges');weather.destroy();
 }));
 
 
@@ -100,4 +100,21 @@ test('the three snow levels produce progressively denser snowfall', () => harnes
   });
   assert.ok(counts[0] > 0 && counts[0] < counts[1] && counts[1] < counts[2]);
   weather.destroy();
+}));
+
+test('hail hits the pane once per contact and freezes with the motion switch', () => harness(h => {
+  const hits = [];
+  const weather = initWeather({onHailImpact: size => hits.push(size)});
+  weather.setWeather('hail');
+  assert.equal(h.canvas.width, 1200);
+  let fractures = false;
+  for (let time=0; time<=1600; time+=40) {
+    const draws = h.step(time);
+    fractures ||= draws.some(d => d[6]==='stroke' && d[7].filter(p => p[0]==='move').length>=5);
+  }
+  assert.ok(fractures && hits.length>0 && hits.length<5);
+  weather.setMotion(false);
+  const count=hits.length;h.step(20000);assert.equal(hits.length,count);
+  weather.setWeather('stars');assert(h.draws.some(d=>d[7]?.some(p=>p[0]==='arc')));
+  assert.equal(h.frames.size,0);weather.destroy();
 }));

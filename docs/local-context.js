@@ -51,7 +51,8 @@ export function phaseForHour(hour) {
 }
 
 export function weatherForCode(code) {
-  if ([95, 96, 97, 99].includes(code)) return 'storm';
+  if ([96,99].includes(code)) return 'hail';
+  if ([95, 97].includes(code)) return 'storm';
   if ([71,77].includes(code)) return 'light-snow';
   if ([73,85].includes(code)) return 'snow';
   if ([75,86].includes(code)) return 'heavy-snow';

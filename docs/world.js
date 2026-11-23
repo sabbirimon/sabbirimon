@@ -50,6 +50,15 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     ctx.fillStyle = color;
     ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h));
   };
+  function drawStar(x,y,size,color) {
+    const radius=size===2?1.4:.65;
+    ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,radius,0,Math.PI*2);ctx.fill();
+    if(size===2) {
+      const halo=ctx.createRadialGradient(x,y,0,x,y,3.2);
+      halo.addColorStop(0,color);halo.addColorStop(1,'rgba(209,229,255,0)');
+      ctx.fillStyle=halo;ctx.beginPath();ctx.arc(x,y,3.2,0,Math.PI*2);ctx.fill();
+    }
+  }
   const phaseLight = name => ({ morning: .9, daylight: 1, sunset: .45, twilight: 0 })[name];
   const mixColor = (a, b, ratio) => {
     const aa=parseInt(a.slice(1),16),bb=parseInt(b.slice(1),16);
@@ -488,7 +497,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       rect(-3,-3,width+6,height+6,vacuum);
       stars.forEach((s,i)=> {
         const sparkle=motion?.55+.3*Math.sin(clock*.8+s.phase):.7;
-        ctx.globalAlpha=sparkle;rect(s.x*width,s.y*height,1+(i%13===0),1+(i%13===0),p.star);
+        ctx.globalAlpha=sparkle;drawStar(s.x*width,s.y*height,i%13===0?2:1,p.star);
       });ctx.globalAlpha=1;
       const planetX=width*.83,planetY=Math.max(50,cy-94),planetColor=mixColor(p.water,'#a5b7e0',.55);
       for(let row=-8;row<=8;row++) {
@@ -677,8 +686,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       const a=(1-light)*(.48+(motion?.27*Math.sin(clock*.8+s.phase):.18));
       ctx.globalAlpha=a;
       const x=s.x*width,y=s.y*Math.min(height,400);
-      rect(x,y,s.size,s.size,p.star);
-      if(s.size===2) {rect(x-1,y,3,1,p.star);rect(x,y-1,1,3,p.star);}
+      drawStar(x,y,s.size,p.star);
     }); ctx.globalAlpha=1;
     const drift=motion?Math.sin(clock*.12)*8:0;
     const cloudOpacity=.3+.52*light;

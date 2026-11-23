@@ -53,7 +53,7 @@
         <p class="auth-notice">Signing in needs JavaScript. Enable it to carry your scores between devices.</p>
       </noscript>
 
-      <p class="auth-notice" data-auth-status hidden></p>
+      <p class="auth-notice" role="status" aria-live="polite" data-auth-status hidden></p>
 
       <div class="auth-social">
         <button type="button" class="nes-button auth-provider" data-auth-provider="google">
@@ -75,28 +75,29 @@
       <form data-auth-email-form>
         <div class="auth-field">
           <label for="auth-email">Email</label>
-          <input class="nes-border-sm" id="auth-email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+          <input class="nes-border-sm" id="auth-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
         </div>
         <div class="auth-field">
           <label for="auth-password">Password</label>
-          <input class="nes-border-sm" id="auth-password" name="password" type="password" autocomplete="current-password" placeholder="••••••••">
+          <input class="nes-border-sm" id="auth-password" name="password" type="password" required autocomplete="current-password" placeholder="••••••••">
         </div>
         <button type="submit" class="nes-button nes-button-blue auth-submit"><span data-pixel-text>Log in</span></button>
       </form>
 
       <p class="auth-links">
-        Need an account? <a href="#" data-auth-signup>Sign up</a>
+        <a href="?mode=signup" data-auth-signup>Create an account</a> · <a href="?mode=login">Sign in</a>
       </p>
       <p class="auth-links auth-links-single">
-        <a href="#" data-auth-reset>Reset password</a>
+        <a href="?mode=recover" data-auth-reset>Reset password</a>
       </p>
 
-      <p class="auth-foot">Signing in keeps your high scores and quiz results safe between devices. Your account is only used for that.</p>
+      <p class="auth-links" data-account-actions hidden><a href="?mode=update">Set account password</a> · <button type="button" data-auth-signout>Sign out</button></p>
+      <a class="auth-links" href="./">Back to IMON World</a><p class="auth-foot">Signing in keeps your high scores and quiz results safe between devices. Your account is only used for that.</p>
     </div>
   </div>
 </main>
 <script type="module">
-import { initAuth, isConfigured, configurationMessage } from './auth.js';
+import { initAuth, isConfigured, configurationMessage, emailAuth, authOptions, getSession } from './auth.js';
 import { initPixelArt } from './pixel-art.js';
 import { initWordmark } from './logo.js';
 // The site name is drawn as pixel art, not typed in a font.
@@ -104,30 +105,46 @@ initWordmark(document);
 // The CRT bot is the house mascot, so it always greets you. The bubble
 // message changes on every load so the page never looks the same twice.
 initPixelArt(document, 'crt');
-const greetings = [
-  'Log in to resume your journey',
-  'Log in to resume your journey~',
-  'Beep beep boop. Ready to play?',
-  'Welcome back, player. Log in!',
-  'Your scores are waiting for you'
-];
-const bubble = document.querySelector('.auth-bubble');
-if (bubble) bubble.textContent = greetings[Math.floor(Math.random() * greetings.length)];
 initAuth(document);
-// Email + password is a Supabase extra that can be switched on later. The
-// controls are present and styled now, so nothing has to move when it is.
-const form = document.querySelector('[data-auth-email-form]');
-const status = document.querySelector('[data-auth-status]');
-function say(message, state) {
-  if (!status) return;
-  status.textContent = message;
-  status.hidden = !message;
-  if (state) status.dataset.state = state;
-}
-if (form) form.addEventListener('submit', event => { event.preventDefault(); say('Email sign-in is not enabled yet. Use Google or GitHub above.', 'error'); });
-document.querySelector('[data-auth-signup]')?.addEventListener('click', event => { event.preventDefault(); say('Email sign-up is not enabled yet. Use Google or GitHub above.', 'error'); });
-document.querySelector('[data-auth-reset]')?.addEventListener('click', event => { event.preventDefault(); say('Password reset is not enabled yet. Use Google or GitHub above.', 'error'); });
-if (!isConfigured() && status) say(configurationMessage() || 'Sign-in is not configured yet.', 'info');
+const form=document.querySelector('[data-auth-email-form]');
+const status=document.querySelector('[data-auth-status]');
+const mode=new URLSearchParams(location.search).get('mode') || 'login';
+const labels={login:'Sign in',signup:'Create an account',recover:'Send recovery link',update:'Save new password'};
+const action=Object.hasOwn(labels,mode)?mode:'login';
+document.querySelector('.auth-bubble').textContent=labels[action];
+const submit=form.querySelector('[type=submit]');
+submit.textContent=labels[action];
+const email=form.elements.email,password=form.elements.password;
+const newPassword=action==='signup'||action==='update';
+password.autocomplete=newPassword?'new-password':'current-password';
+if(newPassword) password.minLength=8;
+email.disabled=action==='update'; password.disabled=action==='recover';
+email.parentElement.hidden=email.disabled;password.parentElement.hidden=password.disabled;
+function say(message,state) {status.textContent=message;status.hidden=false;status.dataset.state=state;}
+document.querySelector('[data-account-actions]').hidden=!getSession();
+  document.querySelector('[data-auth-signout]').addEventListener('click',()=>{document.querySelector('[data-account-actions]').hidden=true;});
+const providers=[...document.querySelectorAll('[data-auth-provider]')];
+providers.forEach(button=>button.hidden=true);
+const divider=document.querySelector('.auth-divider');
+divider.hidden=true;
+if(isConfigured()){
+  authOptions().then(options=>{
+    for(const button of providers) button.hidden=!options.external?.[button.dataset.authProvider] || action==='update';
+    divider.hidden=providers.every(button=>button.hidden);
+    if(action==='signup' && options.disable_signup){submit.disabled=true;say('Registration is closed. Existing players can sign in.','info');}
+  }).catch(()=>{});
+}else {submit.disabled=true;say(configurationMessage(),'info');}
+form.addEventListener('submit',async event=>{
+  event.preventDefault();submit.disabled=true;status.hidden=true;
+  try {
+    const result=await emailAuth(action,email.value.trim(),password.value);
+    password.value='';
+    if(result.access_token || action==='update'){location.replace('./');return;}
+    say(action==='signup'?'Check your inbox to confirm your account in this browser.':'If your account is eligible, a recovery link will arrive by email. Open it in this browser.','ok');
+  } catch(error) {say(error.message||'The service is unavailable. Try again shortly.','error');}
+  finally {submit.disabled=false;}
+});
+if(action==='update'&&!getSession()){submit.disabled=true;say('Open the recovery link from your email first.','info');}
 </script>
 </body>
 </html>

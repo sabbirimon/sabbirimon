@@ -10,7 +10,7 @@ test('scene phase changes at local-time boundaries, including midnight',()=>{
 });
 test('all precipitation codes map to the correct animation, including hail and heavy thunder',()=>{
  const codes={drizzle:[51,53,56,61,80],rain:[55,57,63,66,81],'heavy-rain':[65,67,82],
-   'light-snow':[71,77],snow:[73,85],'heavy-snow':[75,86],storm:[95,96,97,99],
+   'light-snow':[71,77],snow:[73,85],'heavy-snow':[75,86],storm:[95,97],hail:[96,99],
    cloudy:[2,3],fog:[45,48],clear:[0,1,null,999]};
  for(const [kind,values] of Object.entries(codes))for(const code of values)assert.equal(weatherForCode(code),kind);
 });
