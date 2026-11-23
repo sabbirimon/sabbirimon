@@ -1,0 +1,11 @@
+:root { color-scheme: dark; font: 17px/1.65 system-ui,sans-serif; background: #0c1524; color: #e3eafa; }
+body { margin: 0; }
+main { max-width: 46rem; margin: auto; padding: 3rem clamp(1.2rem,5vw,4rem) 5rem; }
+h1 { font-size: clamp(3rem,10vw,5rem); letter-spacing: -.05em; line-height: 1; margin: 3rem 0 1rem; }
+h2 { margin-top: 3rem; font-size: 1.45rem; }
+.summary { font-size: 1.35rem; line-height: 1.5; }
+a { color: #94e5d5; text-underline-offset: .2em; }
+a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.links { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.6rem 0; }
+.links a { padding: .4rem .9rem; border: 1px solid #58727d; border-radius: .35rem; }
+pre { background: #182738; padding: 1rem; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .85rem; }

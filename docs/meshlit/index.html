@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meshlit · Source and downloads · IMON</title>
+<meta name="description" content="Local-first AI chat, coding workspaces and model management for Android and desktop.">
+<link rel="canonical" href="https://imon.com.bd/meshlit/"><meta property="og:title" content="Meshlit by IMON">
+<meta property="og:description" content="Local-first AI chat, coding workspaces and model management for Android and desktop."><meta property="og:url" content="https://imon.com.bd/meshlit/">
+<link rel="stylesheet" href="../project-downloads.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareSourceCode", "name": "Meshlit", "url": "https://imon.com.bd/meshlit/", "description": "Local-first AI chat, coding workspaces and model management for Android and desktop.", "codeRepository": "https://github.com/sabbirimon/meshlit", "author": {"@type": "Person", "name": "IMON", "url": "https://imon.com.bd/"}}</script>
+</head><body><main>
+<nav aria-label="Breadcrumb"><a href="../#projects">IMON / Projects</a></nav>
+<h1>Meshlit</h1><p class="summary">Local-first AI chat, coding workspaces and model management for Android and desktop.</p><p>Use a bundled or owner-configured model, connect a compatible inference server, or open a project in Studio’s coding window. Desktop preview installers are built separately for Windows, Linux and macOS.</p>
+<div class="links"><a href="https://github.com/sabbirimon/meshlit">Public source</a><a href="https://github.com/sabbirimon/meshlit/releases">Release history</a><a href="https://github.com/sabbirimon/meshlit/actions/workflows/multiplatform-preview.yml?query=branch%3Afeature/desktop-inference-profiles">Preview builds</a></div>
+<h2>Verify a desktop preview</h2>
+<p>Open a successful preview build and check the source commit. Sign in to GitHub to download the artifact for your system. Extract the outer Actions archive. With GitHub CLI, run this command on the enclosed installer or HyperL ZIP, using its actual filename.</p>
+<pre><code>gh attestation verify &quot;Meshlit.msi&quot; --repo sabbirimon/meshlit --signer-workflow sabbirimon/meshlit/.github/workflows/multiplatform-preview.yml --source-ref refs/heads/feature/desktop-inference-profiles</code></pre>
+<p>A successful result matches the file digest, repository, workflow and branch. Compare the reported commit with the one you selected. Earlier downloads may predate attestations. Windows publisher checks and macOS notarization use separate credentials.</p>
+<p><a href="https://cli.github.com/manual/gh_attestation_verify">GitHub CLI verification reference</a></p>
+</main></body></html>

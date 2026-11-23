@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HyperL · Source and downloads · IMON</title>
+<meta name="description" content="A heterogeneous compute runtime for tensor sharding, model storage and execution planning.">
+<link rel="canonical" href="https://imon.com.bd/hyperl/"><meta property="og:title" content="HyperL by IMON">
+<meta property="og:description" content="A heterogeneous compute runtime for tensor sharding, model storage and execution planning."><meta property="og:url" content="https://imon.com.bd/hyperl/">
+<link rel="stylesheet" href="../project-downloads.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareSourceCode", "name": "HyperL", "url": "https://imon.com.bd/hyperl/", "description": "A heterogeneous compute runtime for tensor sharding, model storage and execution planning.", "codeRepository": "https://github.com/sabbirimon/HyperL", "author": {"@type": "Person", "name": "IMON", "url": "https://imon.com.bd/"}}</script>
+</head><body><main>
+<nav aria-label="Breadcrumb"><a href="../#projects">IMON / Projects</a></nav>
+<h1>HyperL</h1><p class="summary">A heterogeneous compute runtime for tensor sharding, model storage and execution planning.</p><p>Explore the native engine, SafeTensors tooling, memory-tier placement and worker coordination. The desktop bundle includes the engine binary and a Python interface. Hardware and scale qualification are documented in the source tree.</p>
+<div class="links"><a href="https://github.com/sabbirimon/HyperL">Public source</a><a href="https://github.com/sabbirimon/HyperL/releases">Release history</a><a href="https://github.com/sabbirimon/HyperL/actions/workflows/ci.yml?query=branch%3Afeature/native-mlir-engine">Preview builds</a></div>
+<h2>Verify a desktop preview</h2>
+<p>Open a successful preview build and check the source commit. Sign in to GitHub to download the artifact for your system. Extract the outer Actions archive. With GitHub CLI, run this command on the enclosed installer or HyperL ZIP, using its actual filename.</p>
+<pre><code>gh attestation verify &quot;hyperl-desktop.zip&quot; --repo sabbirimon/HyperL --signer-workflow sabbirimon/HyperL/.github/workflows/ci.yml --source-ref refs/heads/feature/native-mlir-engine</code></pre>
+<p>A successful result matches the file digest, repository, workflow and branch. Compare the reported commit with the one you selected. Earlier downloads may predate attestations. Windows publisher checks and macOS notarization use separate credentials.</p>
+<p><a href="https://cli.github.com/manual/gh_attestation_verify">GitHub CLI verification reference</a></p>
+</main></body></html>
