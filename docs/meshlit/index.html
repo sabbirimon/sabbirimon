@@ -10,10 +10,13 @@
 </head><body><main>
 <nav aria-label="Breadcrumb"><a href="../#projects">IMON / Projects</a></nav>
 <h1>Meshlit</h1><p class="summary">Local-first AI chat, coding workspaces and model management for Android and desktop.</p><p>Use a bundled or owner-configured model, connect a compatible inference server, or open a project in Studio’s coding window. Desktop preview installers are built separately for Windows, Linux and macOS.</p>
-<div class="links"><a href="https://github.com/sabbirimon/meshlit">Public source</a><a href="https://github.com/sabbirimon/meshlit/releases">Release history</a><a href="https://github.com/sabbirimon/meshlit/actions/workflows/multiplatform-preview.yml?query=branch%3Afeature/desktop-inference-profiles">Preview builds</a></div>
-<h2>Verify a desktop preview</h2>
-<p>Open a successful preview build and check the source commit. Sign in to GitHub to download the artifact for your system. Extract the outer Actions archive. With GitHub CLI, run this command on the enclosed installer or HyperL ZIP, using its actual filename.</p>
-<pre><code>gh attestation verify &quot;Meshlit.msi&quot; --repo sabbirimon/meshlit --signer-workflow sabbirimon/meshlit/.github/workflows/multiplatform-preview.yml --source-ref refs/heads/feature/desktop-inference-profiles</code></pre>
-<p>A successful result matches the file digest, repository, workflow and branch. Compare the reported commit with the one you selected. Earlier downloads may predate attestations. Windows publisher checks and macOS notarization use separate credentials.</p>
+<h2>Download Meshlit Studio</h2>
+<p>Preview v2.0.48-studio.1. Extract the entire archive before opening the application.</p>
+<div class="links"><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Studio-Windows-X64.zip">Windows x64</a><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Studio-Linux-X64.tar.gz">Linux x64</a><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Studio-macOS-ARM64.tar.gz">macOS Apple Silicon</a></div>
+<p>On Windows, open <strong>Meshlit.exe</strong> inside the extracted Meshlit-Studio folder. General Chat opens first.</p>
+<p><a href="https://github.com/sabbirimon/meshlit/releases/tag/v2.0.48-studio.1">Release notes</a> · <a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/SHA256SUMS.txt">SHA-256 checksums</a> · <a href="https://github.com/sabbirimon/meshlit/tree/v2.0.48-studio.1">Source for this build</a> · <a href="https://github.com/sabbirimon/meshlit/tree/main">Main branch</a></p>
+<h2>Verify your download</h2>
+<p>To verify the Windows archive, run this command with GitHub CLI. On Linux or macOS, substitute the filename you downloaded.</p>
+<pre><code>gh attestation verify "Meshlit-Studio-Windows-X64.zip" --repo sabbirimon/meshlit --signer-workflow sabbirimon/meshlit/.github/workflows/full-studio.yml --source-digest 25ff596f9067b728b07471c929abc5f0d8518cf5</code></pre>
 <p><a href="https://cli.github.com/manual/gh_attestation_verify">GitHub CLI verification reference</a></p>
 </main></body></html>

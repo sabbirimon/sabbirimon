@@ -10,10 +10,12 @@
 </head><body><main>
 <nav aria-label="Breadcrumb"><a href="../#projects">IMON / Projects</a></nav>
 <h1>HyperL</h1><p class="summary">A heterogeneous compute runtime for tensor sharding, model storage and execution planning.</p><p>Explore the native engine, SafeTensors tooling, memory-tier placement and worker coordination. The desktop bundle includes the engine binary and a Python interface. Hardware and scale qualification are documented in the source tree.</p>
-<div class="links"><a href="https://github.com/sabbirimon/HyperL">Public source</a><a href="https://github.com/sabbirimon/HyperL/releases">Release history</a><a href="https://github.com/sabbirimon/HyperL/actions/workflows/ci.yml?query=branch%3Afeature/native-mlir-engine">Preview builds</a></div>
-<h2>Verify a desktop preview</h2>
-<p>Open a successful preview build and check the source commit. Sign in to GitHub to download the artifact for your system. Extract the outer Actions archive. With GitHub CLI, run this command on the enclosed installer or HyperL ZIP, using its actual filename.</p>
-<pre><code>gh attestation verify &quot;hyperl-desktop.zip&quot; --repo sabbirimon/HyperL --signer-workflow sabbirimon/HyperL/.github/workflows/ci.yml --source-ref refs/heads/feature/native-mlir-engine</code></pre>
-<p>A successful result matches the file digest, repository, workflow and branch. Compare the reported commit with the one you selected. Earlier downloads may predate attestations. Windows publisher checks and macOS notarization use separate credentials.</p>
+<h2>Download HyperL Studio</h2>
+<p>Preview v0.1.0-alpha.6. Extract the entire archive before opening the application.</p>
+<div class="links"><a href="https://github.com/sabbirimon/HyperL/releases/download/v0.1.0-alpha.6/HyperL-Studio-Windows-X64.zip">Windows x64</a><a href="https://github.com/sabbirimon/HyperL/releases/download/v0.1.0-alpha.6/HyperL-Studio-Linux-X64.zip">Linux x64</a><a href="https://github.com/sabbirimon/HyperL/releases/download/v0.1.0-alpha.6/HyperL-Studio-macOS-ARM64.zip">macOS Apple Silicon</a></div>
+<p><a href="https://github.com/sabbirimon/HyperL/releases/tag/v0.1.0-alpha.6">Release notes</a> · <a href="https://github.com/sabbirimon/HyperL/releases/download/v0.1.0-alpha.6/SHA256SUMS.txt">SHA-256 checksums</a> · <a href="https://github.com/sabbirimon/HyperL/tree/v0.1.0-alpha.6">Source for this build</a> · <a href="https://github.com/sabbirimon/HyperL/tree/main">Main branch</a></p>
+<h2>Verify your download</h2>
+<p>To verify the Windows archive, run this command with GitHub CLI. On Linux or macOS, substitute the filename you downloaded.</p>
+<pre><code>gh attestation verify "HyperL-Studio-Windows-X64.zip" --repo sabbirimon/HyperL --signer-workflow sabbirimon/HyperL/.github/workflows/ci.yml --source-digest 1942f287b805c939be85de4a8765ac8f354ce2e1</code></pre>
 <p><a href="https://cli.github.com/manual/gh_attestation_verify">GitHub CLI verification reference</a></p>
 </main></body></html>
