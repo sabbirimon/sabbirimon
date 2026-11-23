@@ -55,6 +55,8 @@ jobs:
           PY
       - name: Test game and interaction models
         run: node --test tests/*.test.mjs
+      - name: Version local scripts and styles for browsers and the CDN
+        run: python3 scripts/version-assets.py docs "$GITHUB_SHA"
       - name: Check published files and daily data
         run: python3 scripts/check-site.py
       - name: Upload static site
