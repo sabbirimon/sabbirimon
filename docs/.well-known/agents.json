@@ -39,9 +39,10 @@
   "entryPoints": [
     {
       "path": "/",
-      "title": "IMON | Sabbir Hassan Imon — Open Source & Pixel Games",
+      "title": "IMON | Sabbir Hassan Imon — Learning Labs, Open Source & Pixel Games",
       "description": "The main site: open-source projects, a live pixel world with weather, free browser games, daily headlines and a quiz, an interactive world map, and achievements.",
       "sections": [
+        { "id": "learn", "title": "Learning labs", "summary": "Browse the coding, electronics and AI courses." },
         { "id": "projects", "title": "Projects", "summary": "Open-source repositories and what each one does." },
         { "id": "pixel-world", "title": "Pixel world", "summary": "An illustrated scene with a live weather layer, World Studio controls, a day/night cycle and optional synthesised ambience." },
         { "id": "arcade", "title": "Arcade", "summary": "Free browser games: Snake, Surf, 2048, Ludo, Puzzle, Dev Slots and a racer." },
@@ -61,6 +62,8 @@
       "title": "AI Lab",
       "summary": "Learn Python, machine learning and system design through 54 exercises in five chapters. Python runs in the browser through a small teaching interpreter, with a fake HTTP client and an in-memory SQL engine."
     },
+    { "path": "/circuits.html", "title": "Circuits & Signals", "summary": "Build virtual circuits, change their connections, and inspect signals on a scope." },
+    { "path": "/arcade/", "title": "Pixel Arcade", "summary": "Signal Runner, Prism Breaker and Star Patrol." },
     {
       "path": "/gridworks/",
       "title": "IMON Gridworks",

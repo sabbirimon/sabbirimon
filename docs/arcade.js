@@ -17,7 +17,7 @@ const SNAKE_H = BOARD.margin * 2 + BOARD.height;
 export const SNAKE_MODES = ['classic', 'walls', 'night', 'timed'];
 export const SNAKE_MODE_CONFIG = {
   classic: { label: 'Classic', note: 'Walls kill. Eat the fruit, grow long, stay clear of yourself.', wraps: false, dim: false, seconds: 0, points: 10 },
-  walls: { label: 'Walls', note: 'The walls are open — you wrap around to the other side.', wraps: true, dim: false, seconds: 0, points: 10 },
+  walls: { label: 'Wraparound', note: 'The walls are open — you wrap around to the other side.', wraps: true, dim: false, seconds: 0, points: 10 },
   night: { label: 'Night', note: 'The board is dark. Only a small circle around the head is lit.', wraps: false, dim: true, seconds: 0, points: 20 },
   timed: { label: 'Timed', note: 'Sixty seconds on the clock. Every fruit is worth ten, and the clock bonus is fifty.', wraps: false, dim: false, seconds: 60, points: 10 }
 };
@@ -190,7 +190,7 @@ export function initArcade() {
     <header class="arcade-header"><div><span class="arcade-eyebrow">SABBIR'S POCKET ARCADE</span><h2 id="arcade-dialog-title">Pixel Snake</h2></div><button type="button" class="arcade-close" aria-label="Close game">×</button></header>
     <div class="arcade-hud"><div><span>SCORE</span><strong id="arcade-score">0000</strong></div><div><span>PERSONAL BEST</span><strong id="arcade-best">0000</strong></div><div class="arcade-life"><span id="arcade-detail-label">LENGTH</span><strong id="arcade-detail">03</strong></div><span class="arcade-state" id="arcade-state">READY</span></div>
     <div class="arcade-board"><canvas id="arcade-canvas" width="864" height="576" tabindex="0" aria-label="Game board. Use arrow keys or W A S D to move. Space pauses the game.">This game needs a browser with Canvas support. Use the direction buttons below to move.</canvas><div class="arcade-overlay"><span class="arcade-overlay-icon" aria-hidden="true">✦</span><h3 id="arcade-message">Small snake. Big ambition.</h3><p id="arcade-description">Collect the fruit. Grow your score. Mind the walls.</p><button type="button" class="arcade-start arcade-btn">LET'S PLAY <span aria-hidden="true">▶</span></button></div></div>
-    <div class="arcade-toolbar"><div class="arcade-actions"><button type="button" class="arcade-toggle arcade-btn">Start game</button><button type="button" class="arcade-restart arcade-secondary">Restart</button></div><div class="arcade-settings"><label for="arcade-mode">Mode <select id="arcade-mode"><option value="classic" selected>Classic</option><option value="walls">Walls</option><option value="night">Night</option><option value="timed">Timed</option></select></label><label for="arcade-difficulty">Speed <select id="arcade-difficulty"><option value="easy">Chill</option><option value="normal" selected>Classic</option><option value="hard">Turbo</option></select></label><button type="button" class="arcade-sound arcade-secondary" aria-pressed="false" aria-label="Turn game sound on">Sound off</button></div></div>
+    <div class="arcade-toolbar"><div class="arcade-actions"><button type="button" class="arcade-toggle arcade-btn">Start game</button><button type="button" class="arcade-restart arcade-secondary">Restart</button></div><div class="arcade-settings"><label for="arcade-mode">Mode <select id="arcade-mode"><option value="walls" selected>Wraparound</option><option value="classic">Classic</option><option value="night">Night</option><option value="timed">Timed</option></select></label><label for="snake-skin">Skin <select id="snake-skin"><option value="fern">Fern</option><option value="lagoon">Lagoon</option><option value="ember">Ember</option></select></label><label for="arcade-difficulty">Speed <select id="arcade-difficulty"><option value="easy">Chill</option><option value="normal" selected>Classic</option><option value="hard">Turbo</option></select></label><button type="button" class="arcade-sound arcade-secondary" aria-pressed="false" aria-label="Turn game sound on">Sound off</button></div></div>
     <p class="arcade-mode-note" data-arcade-mode-note role="status" aria-live="polite"></p>
     <div class="arcade-bottom"><p id="arcade-help"><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> or <kbd>W A S D</kbd> to move<br><kbd>Space</kbd> pause · <kbd>Esc</kbd> close</p><div class="arcade-dpad" aria-label="Touch direction controls"><button type="button" data-direction="up" aria-label="Move up">↑</button><button type="button" data-direction="left" aria-label="Move left">←</button><button type="button" data-direction="down" aria-label="Move down">↓</button><button type="button" data-direction="right" aria-label="Move right">→</button></div><p class="arcade-save-note">YOUR BEST STAYS<br>ON THIS DEVICE <span aria-hidden="true">★</span></p></div>
     <p class="arcade-announcement" aria-live="polite" aria-atomic="true"></p>
@@ -200,11 +200,18 @@ export function initArcade() {
   const canvas = $('#arcade-canvas'), ctx = canvas.getContext('2d');
   const overlay = $('.arcade-overlay');
   const difficultySelect = $('#arcade-difficulty');
+  const skinSelect = $('#snake-skin');
+  const skinColors = {
+    fern: {},
+    lagoon: {'#5fd068':'#49cadc','#3aa04a':'#19698a','#8bef92':'#a4fbf3','#4bb35c':'#123a57','#4fc463':'#5fe6e2','#2f8f4e':'#297ba3','#1f6b39':'#124664'},
+    ember: {'#5fd068':'#f47946','#3aa04a':'#984048','#8bef92':'#ffd586','#4bb35c':'#44213a','#4fc463':'#ffa162','#2f8f4e':'#b44b54','#1f6b39':'#652445'}
+  };
+  skinSelect.addEventListener('change',()=>{if(game==='snake') draw();});
   const modeSelect = $('#arcade-mode');
   const modeNote = $('[data-arcade-mode-note]');
   const input = { up: false, right: false, down: false, left: false };
   const padPulseTimers = new Map();
-  let game = 'snake', state, frame = 0, previousTime = 0, accumulator = 0, best = 0, difficulty = 'normal', mode = 'classic', trigger, swipe;
+  let game = 'snake', state, frame = 0, previousTime = 0, accumulator = 0, best = 0, difficulty = 'normal', mode = 'walls', trigger, swipe;
   let snakeBackdrop = null;
   let oldOverflow = '', oldOverscroll = '';
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -247,7 +254,7 @@ export function initArcade() {
   function reset() {
     cancelAnimationFrame(frame); frame = 0; previousTime = 0; accumulator = 0; release();
     difficulty = difficultySelect.value;
-    if (game === 'snake') mode = modeSelect?.value || 'classic';
+    if (game === 'snake') mode = modeSelect?.value || 'walls';
     state = game === 'snake' ? createSnakeState(Math.random, mode) : createSurfState();
     best = safeRead(key());
     const isSnake = game === 'snake';
@@ -259,12 +266,13 @@ export function initArcade() {
     canvas.height = isSnake ? SNAKE_H : H;
     snakeBackdrop = null;
     dialog.dataset.game = game;
-    if (modeSelect) modeSelect.hidden = !isSnake;
+    skinSelect.closest('label').hidden=!isSnake;
+    if (modeSelect) modeSelect.closest('label').hidden = !isSnake;
     if (modeNote) {
       modeNote.hidden = !isSnake;
       modeNote.textContent = isSnake ? snakeMode(mode).note : '';
     }
-    showOverlay(isSnake ? 'Small snake. Big ambition.' : 'Catch a little pixel paradise.', isSnake ? 'Eat fruit, grow longer, and stay clear of yourself and the walls.' : 'Dodge the reefs. Collect golden coins. You have three lives.', "LET'S PLAY");
+    showOverlay(isSnake ? 'Small snake. Big ambition.' : 'Catch a little pixel paradise.', isSnake ? snakeMode(mode).note : 'Dodge the reefs. Collect golden coins. You have three lives.', "LET'S PLAY");
     updateHud(); draw();
   }
 
@@ -298,17 +306,25 @@ export function initArcade() {
 
   function loop(time) {
     if (!dialog.open || state.status !== 'running') return;
-    const dt = previousTime ? Math.min((time - previousTime) / 1000, 0.05) : 0;
+    const elapsed = previousTime ? (time - previousTime) / 1000 : 0;
+    const dt = Math.min(elapsed, 0.05);
     previousTime = time;
     if (game === 'snake') {
       accumulator += dt;
       const interval = snakeLevelInterval(difficulty, state.score);
       while (accumulator >= interval && state.status === 'running') {
-        const event = stepSnake(state); if (event !== 'move') beep(event); accumulator -= interval;
+        const previousHead = state.body[0];
+        const event = stepSnake(state);
+        const head = state.body[0];
+        if (event !== 'move') beep(event);
+        else if (Math.abs(head.x - previousHead.x) > 1 || Math.abs(head.y - previousHead.y) > 1) beep('portal');
+        accumulator -= interval;
       }
       // The clock runs on real time, so a slow device does not get extra
       // seconds and a backgrounded tab does not lose the whole minute.
-      if (state.status === 'running' && tickSnakeClock(state, dt) === 'timeout') beep('crash');
+      const seconds = Math.ceil(state.timeLeft);
+      if (state.status === 'running' && tickSnakeClock(state, elapsed) === 'timeout') beep('win');
+      else if (seconds <= 6 && Math.ceil(state.timeLeft) < seconds) beep('clock');
     } else stepSurf(state, input, dt, difficulty).forEach(beep);
     draw(); updateHud();
     if (state.status !== 'running') { finish(); return; }
@@ -324,10 +340,10 @@ export function initArcade() {
    * The tables are authored on a 30 × 30 grid, so they are scaled down to
    * the cell size before they are drawn.
    */
-  function sprite(table, x, y) {
+  function sprite(table, x, y, colors) {
     const factor = BOARD.cell / 30;
     for (const [rx, ry, rw, rh, colour] of table) {
-      rect(x + rx * factor, y + ry * factor, Math.max(1, rw * factor), Math.max(1, rh * factor), colour);
+      rect(x + rx * factor, y + ry * factor, Math.max(1, rw * factor), Math.max(1, rh * factor), colors?.[colour] || colour);
     }
   }
 
@@ -467,7 +483,7 @@ export function initArcade() {
       else if (index === body.length - 1) table = SNAKE_TIP;
       else if (index === body.length - 2) table = SNAKE_TAIL_TIP;
       else if (index === body.length - 3) table = SNAKE_TAIL;
-      sprite(table, x, y);
+      sprite(table, x, y, skinColors[skinSelect.value]);
       // The tongue flicks when the fruit is within reach.
       if (index === 0 && state.food) {
         const gap = Math.abs(state.food.x - part.x) + Math.abs(state.food.y - part.y);

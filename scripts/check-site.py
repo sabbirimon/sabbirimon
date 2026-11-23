@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import re
 import sys
+from xml.etree import ElementTree
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -145,7 +146,12 @@ def check_canonical_and_sitemap():
     if not sitemap_path.is_file():
         fail('docs/sitemap.xml: the sitemap is missing')
         return
-    listed = re.findall(r'<loc>\s*([^<]+?)\s*</loc>', sitemap_path.read_text())
+    try:
+        sitemap = ElementTree.parse(sitemap_path)
+    except ElementTree.ParseError as exc:
+        fail(f'docs/sitemap.xml: invalid XML: {exc}')
+        return
+    listed = [loc.text.strip() for loc in sitemap.findall('.//{*}loc') if loc.text]
     if not listed:
         fail('docs/sitemap.xml: the sitemap lists no URLs')
         return

@@ -1,3 +1,4 @@
+import { playSound } from './audio.js';
 /**
  * The Circuits & Signals page controller — the bench for the electronics
  * course.
@@ -309,6 +310,12 @@ export function initCircuits(root) {
   const resetButton = root.querySelector?.('[data-circuits-reset]');
   const answerBox = root.querySelector?.('[data-circuits-answer-box]');
   const answerHint = root.querySelector?.('[data-circuits-answer-hint]');
+  const picker = root.querySelector('[data-component-picker]');
+  const nodeABox = root.querySelector('[data-node-a]');
+  const nodeBBox = root.querySelector('[data-node-b]');
+  for (const box of [nodeABox,nodeBBox]) {
+    if (box) for (const node of BOARD_NODES) box.add(new Option(node.label, String(node.id)));
+  }
   const partsBox = root.querySelector?.('[data-circuits-parts]');
   const probeBox = root.querySelector?.('[data-circuits-probe]');
   const canvas = root.querySelector?.('[data-circuits-canvas]');
@@ -684,6 +691,13 @@ export function initCircuits(root) {
   /* -- the probe ---------------------------------------------------- */
 
   function renderProbe() {
+    const placed=circuitParts(state.circuit);
+    if (picker) {
+      picker.replaceChildren(new Option('Choose a component',''));
+      for(const part of placed) picker.add(new Option(part.label,part.label));
+      picker.value=state.selected || '';
+    }
+    if(editBox && !state.selected) editBox.hidden=true;
     if (!probeBox) return;
     probeBox.textContent = '';
     const used = new Set([0]);
@@ -691,6 +705,7 @@ export function initCircuits(root) {
       used.add(part.nodeA);
       used.add(part.nodeB);
     }
+    if(!used.has(state.probe)) state.probe=[...used].find(id=>id!==0) ?? 0;
     for (const id of [...used].sort((a, b) => a - b)) {
       const option = document.createElement('option');
       option.value = String(id);
@@ -746,6 +761,7 @@ export function initCircuits(root) {
       answer,
       circuit: state.circuit
     });
+    playSound(result.ok ? 'correct' : 'retry');
     if (result.ok) {
       const first = !state.solved.has(exercise.id);
       if (first) {
@@ -755,8 +771,6 @@ export function initCircuits(root) {
         updateXp(state.xp);
         updateRail();
         updateCounter();
-        reward?.show?.(exercise, exercise.xp, state.xp);
-      } else {
         reward?.show?.(exercise, exercise.xp, state.xp);
       }
       if (status) {
@@ -879,7 +893,7 @@ export function initCircuits(root) {
     const position = index < 0 ? 0 : index + 1;
     if (counter) {
       counter.textContent = `Exercise ${position} / ${list.length}`;
-      drawCircuitsPixelText(counter);
+
     }
     if (progressBar) {
       progressBar.max = list.length;
@@ -888,7 +902,7 @@ export function initCircuits(root) {
     }
     if (chapter && state.exercise) {
       chapter.textContent = state.exercise.chapter;
-      drawCircuitsPixelText(chapter);
+
     }
     if (prevButton) prevButton.hidden = !neighbour(list, state.exercise?.id, 'prev');
     if (nextButton) nextButton.hidden = !neighbour(list, state.exercise?.id, 'next');
@@ -919,11 +933,11 @@ export function initCircuits(root) {
 
     if (title) {
       title.textContent = exercise.title;
-      drawCircuitsPixelText(title);
+
     }
     if (kind) {
       kind.textContent = exercise.kind === 'build' ? 'Build it' : exercise.kind === 'design' ? 'Explain it' : 'Work it out';
-      drawCircuitsPixelText(kind);
+
     }
     if (brief) brief.textContent = exercise.brief;
     if (answerHint) {
@@ -1005,6 +1019,7 @@ export function initCircuits(root) {
     };
     state.circuit.parts.push(part);
     state.selected = part.label;
+    showEdit(part);
     renderProbe();
     drawBoard();
     if (status) status.textContent = `${part.label} placed between node ${nodeA} and node ${nodeB}.`;
@@ -1039,18 +1054,36 @@ export function initCircuits(root) {
   function showEdit(part) {
     if (!editBox || !selectedText) return;
     editBox.hidden = false;
+    if(picker) picker.value=part.label;
+    if(nodeABox) nodeABox.value=String(part.nodeA);
+    if(nodeBBox) nodeBBox.value=String(part.nodeB);
     const spec = CIRCUIT_PARTS[part.id];
     selectedText.textContent = `${part.label} — ${spec ? spec.name : part.id}`;
     if (valueInput) valueInput.value = String(part.value ?? '');
   }
 
+  picker?.addEventListener('change', () => {
+    const part=circuitParts(state.circuit).find(item=>item.label===picker.value);
+    state.selected=part?.label || null;
+    if(part) showEdit(part);
+    else editBox.hidden=true;
+    drawBoard();
+  });
+
   applyButton?.addEventListener('click', () => {
     const part = circuitParts(state.circuit).find(item => item.label === state.selected);
     if (!part) return;
     const value = Number(valueInput?.value);
-    if (Number.isFinite(value) && value >= 0) {
+    if(!valueInput?.value || !Number.isFinite(value) || value<0 || nodeABox?.value===nodeBBox?.value) {
+      if(status) status.textContent='Choose two different nodes and enter a nonnegative value.';
+      return;
+    }
+    if (nodeABox && nodeBBox) {
+      part.nodeA=Number(nodeABox.value);
+      part.nodeB=Number(nodeBBox.value);
       part.value = value;
-      if (status) status.textContent = `${part.label} is now ${formatValue(part.id, value)}.`;
+      if (status) status.textContent = `${part.label} connects nodes ${part.nodeA} and ${part.nodeB} at ${formatValue(part.id,value)}.`;
+      renderProbe();
     }
     drawBoard();
   });

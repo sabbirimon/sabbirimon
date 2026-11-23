@@ -33,6 +33,7 @@ export function initSiteNav(root = document) {
 
   function setOpen(open) {
     header.classList.toggle('is-nav-open', open);
+    toggle.setAttribute('aria-label',open?'Close menu':'Open menu');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   }
 
@@ -51,7 +52,7 @@ export function initSiteNav(root = document) {
 
   // Escape closes it, and so does a click outside the header.
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') close();
+    if (event.key === 'Escape' && header.classList.contains('is-nav-open')) { close(); toggle.focus(); }
   });
 
   document.addEventListener('click', event => {

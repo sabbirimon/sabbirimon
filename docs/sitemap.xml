@@ -2,9 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://imon.com.bd/</loc></url>
   <url><loc>https://imon.com.bd/gridworks/</loc></url>
-  <url><loc>https://imon.com.bd/tools/</loc></loc>
+  <url><loc>https://imon.com.bd/tools/</loc></url>
   <url><loc>https://imon.com.bd/lab.html</loc></url>
-  <url><loc>https://imon.com.bd/ai-lab.html</loc></loc>
+  <url><loc>https://imon.com.bd/ai-lab.html</loc></url>
+  <url><loc>https://imon.com.bd/circuits.html</loc></url>
   <url><loc>https://imon.com.bd/login.html</loc></url>
   <url><loc>https://imon.com.bd/privacy.html</loc></url>
+  <url><loc>https://imon.com.bd/meshlit/</loc></url>
+  <url><loc>https://imon.com.bd/hyperl/</loc></url>
+  <url><loc>https://imon.com.bd/arcade/</loc></url>
 </urlset>

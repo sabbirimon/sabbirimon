@@ -1,0 +1,48 @@
+name: Public website availability
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+permissions: {}
+jobs:
+  public-https:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Check public HTTPS, content and canonical redirects
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=https://imon.com.bd
+          check_page() {
+            local route=$1 marker=$2 report
+            report=$(curl --silent --show-error --fail --location --max-redirs 3 \
+              --connect-timeout 5 --max-time 12 --output "$RUNNER_TEMP/page" \
+              --write-out '%{http_code} %{url_effective} %{num_redirects}' "$root$route") || return 1
+            [[ "$report" = "200 $root$route 0" ]] || { echo "$route received $report"; return 1; }
+            grep -Fq "$marker" "$RUNNER_TEMP/page" || { echo "Missing content at $route"; return 1; }
+            echo "Verified $root$route"
+          }
+          check_redirect() {
+            local url=$1 report
+            report=$(curl --silent --show-error --fail --location --max-redirs 3 \
+              --connect-timeout 5 --max-time 12 --output /dev/null --write-out '%{http_code} %{url_effective}' "$url") || return 1
+            [[ "$report" = "200 $root/" ]] || { echo "$url received $report"; return 1; }
+          }
+          check_all() {
+            check_page / 'href="https://imon.com.bd/"' &&
+              check_page /lab.html 'data-lab-editor' &&
+              check_page /ai-lab.html 'data-ai-editor' &&
+              check_page /circuits.html 'data-circuits-canvas' &&
+              check_page /arcade/ 'id="cartridge"' &&
+              check_page /meshlit/ 'https://github.com/sabbirimon/meshlit' &&
+              check_page /hyperl/ 'https://github.com/sabbirimon/HyperL' &&
+              check_page /robots.txt 'Sitemap: https://imon.com.bd/sitemap.xml' &&
+              check_page /sitemap.xml '<loc>https://imon.com.bd/hyperl/</loc>' &&
+              check_redirect http://imon.com.bd/ &&
+              check_redirect https://www.imon.com.bd/
+          }
+          if ! check_all; then
+            sleep 10
+            check_all || { echo "::error::Public website failed twice. Review DNS, TLS, redirects and Pages deployment."; exit 1; }
+          fi

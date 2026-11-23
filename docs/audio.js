@@ -4,19 +4,19 @@ export const isSoundEnabled = () => enabled;
 export function setSound(value) {
   enabled = Boolean(value);
   if (enabled) {
-    try { context ||= new (window.AudioContext || window.webkitAudioContext)(); context.resume().catch(() => {}); } catch { enabled = false; }
+    try { context ||= new (window.AudioContext || window.webkitAudioContext)(); context.resume().then(() => { if (enabled) playSound('enabled'); }).catch(() => {}); } catch { enabled = false; }
   } else if (context) context.suspend().catch(() => {});
   document.dispatchEvent(new CustomEvent('imon:sound', { detail: { enabled } }));
   return enabled;
 }
 export function playSound(kind = 'click') {
   if (!enabled || !context || context.state !== 'running') return;
-  const notes = { click: [440], move: [310], roll: [270, 380, 490], start: [330, 440, 660], coin: [660, 990], eat: [570, 760], merge: [440, 660], hit: [150, 90], crash: [190, 100, 45], win: [440, 550, 660, 880] }[kind] || [440];
+  const notes = { pulse: [208, 132], enabled: [392, 523], lesson: [392, 494], run: [294, 440], correct: [523, 659, 784], retry: [330, 294], bookmark: [740, 880], portal: [392, 587, 784], clock: [660], click: [440], move: [310], roll: [270, 380, 490], start: [330, 440, 660], coin: [660, 990], eat: [570, 760], merge: [440, 660], hit: [150, 90], crash: [190, 100, 45], win: [440, 550, 660, 880] }[kind] || [440];
   try {
     for (let i = 0; i < notes.length; i++) {
       const oscillator = context.createOscillator(), gain = context.createGain();
       const at = context.currentTime + i * .065;
-      oscillator.type = 'square'; oscillator.frequency.setValueAtTime(notes[i], at);
+      oscillator.type = ['correct','retry','run','lesson','bookmark','enabled','portal','clock'].includes(kind) ? 'sine' : 'square'; oscillator.frequency.setValueAtTime(notes[i], at);
       gain.gain.setValueAtTime(.022, at); gain.gain.exponentialRampToValueAtTime(.001, at + .075);
       oscillator.connect(gain); gain.connect(context.destination); oscillator.start(at); oscillator.stop(at + .08);
     }

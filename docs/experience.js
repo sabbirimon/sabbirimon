@@ -5,11 +5,13 @@ import { initAmbient } from './ambient.js';
 import { initLocalContext, phaseForHour } from './local-context.js';
 import { playSound, setSound, isSoundEnabled } from './audio.js';
 
-const SCENES=['waterfall-valley','twilight-lake','neon-forest','islands','forest','beach','desert','mountains','city','sakura','cave','space','cyberpunk'];
+const SCENES=['neon-coast','energy-ridge','waterfall-valley','twilight-lake','neon-forest','islands','forest','beach','desert','mountains','city','sakura','cave','space','cyberpunk'];
 const LIVE_SCENES={morning:['waterfall-valley','twilight-lake'],daylight:['waterfall-valley','neon-forest'],sunset:['twilight-lake','neon-forest','waterfall-valley'],twilight:['neon-forest','twilight-lake']};
 const PHASES={morning:'Morning',daylight:'Daylight',sunset:'Sunset',twilight:'Night'};
 const NAMES={clear:'Clear / calm','glass-rain':'Rain on glass','glass-fog':'Fogged glass',cloudy:'Cloudy',drizzle:'Light rain',rain:'Rain','heavy-rain':'Heavy rain',lightning:'Lightning',storm:'Thunderstorm',snow:'Snow',blizzard:'Blizzard',fog:'Fog',wind:'Wind',hail:'Hail',sandstorm:'Sandstorm',cyclone:'Cyclone',flood:'Rising water',earthquake:'Pixel earthquake',aurora:'Aurora',meteors:'Meteor shower',fireflies:'Fireflies',leaves:'Falling leaves'};
 export const WORLD_PRESETS=[
+ ['Neon Coast Drive','neon-coast','sunset','clear'],['Coastal Midnight Rain','neon-coast','twilight','drizzle'],
+ ['Solar Valley','energy-ridge','daylight','wind'],['Fusion After Dark','energy-ridge','twilight','aurora'],['Metro Aftershock','city','twilight','earthquake'],['Neon Express','cyberpunk','twilight','glass-rain'],
  ['Valley Awakens','waterfall-valley','morning','clear'],['Waterfall Wanderer','waterfall-valley','daylight','wind'],['Misty Cascades','waterfall-valley','morning','fog'],
  ['Lake at Dusk','twilight-lake','sunset','clear'],['Firefly Reflections','twilight-lake','twilight','fireflies'],['Quiet Rainfall','twilight-lake','twilight','drizzle'],
  ['Neon Sanctuary','neon-forest','twilight','clear'],['Electric Rain','neon-forest','twilight','rain'],['Aurora Grove','neon-forest','twilight','aurora'],
@@ -32,7 +34,8 @@ function presetArt(p){
  const sky={morning:'#82bad2',daylight:'#237cbd',sunset:'#75445f',twilight:'#15152e'}[p.phase],ground=p.phase==='twilight'?'#28665b':'#557f68';
  let s=`<rect width="240" height="95" fill="${sky}"/><rect x="174" y="15" width="16" height="16" fill="${p.phase==='twilight'?'#d5d2f3':'#ffe5a0'}"/>`;
  if(p.phase==='twilight')for(let i=0;i<12;i++)s+=`<rect x="${(i*43+13)%240}" y="${(i*17+5)%60}" width="2" height="2" fill="#dfd6ee"/>`;
- if(p.scene==='city'||p.scene==='cyberpunk'){for(let i=0;i<8;i++){const h=25+(i*17)%43,x=i*33;s+=`<rect x="${x}" y="${95-h}" width="26" height="${h}" fill="${p.scene==='cyberpunk'?'#182442':'#29374e'}"/>`;for(let j=0;j<3;j++)s+=`<rect x="${x+5+j*6}" y="${102-h}" width="3" height="10" fill="${p.scene==='cyberpunk'?(i%2?'#fa72df':'#68ecf3'):'#ffd694'}"/>`;}}
+ if(p.scene==='energy-ridge'){s+='<path d="M0 77L54 40L108 69L164 44L240 76V95H0Z" fill="#467c70"/><path d="M20 68h55l-7 14H13Z" fill="#4b9fc8"/><ellipse cx="161" cy="66" rx="27" ry="10" fill="#222d50" stroke="#8dfbea" stroke-width="4"/>';}
+ else if(p.scene==='city'||p.scene==='cyberpunk'){for(let i=0;i<8;i++){const h=25+(i*17)%43,x=i*33;s+=`<rect x="${x}" y="${95-h}" width="26" height="${h}" fill="${p.scene==='cyberpunk'?'#182442':'#29374e'}"/>`;for(let j=0;j<3;j++)s+=`<rect x="${x+5+j*6}" y="${102-h}" width="3" height="10" fill="${p.scene==='cyberpunk'?(i%2?'#fa72df':'#68ecf3'):'#ffd694'}"/>`;}}
  else if(p.scene==='space'){s+='<rect x="59" y="32" width="30" height="30" fill="#b09ce7"/><rect x="45" y="44" width="63" height="5" fill="#e5b4dc"/><rect x="165" y="64" width="35" height="8" fill="#b7d2dc"/><rect x="174" y="58" width="12" height="7" fill="#f6dc99"/>';}
  else if(p.scene==='cave'){s+='<path d="M0 0H240V35L217 21L202 54L186 19L165 36L145 15L121 50L102 20L76 33L50 15L30 50L0 24Z" fill="#363251"/><path d="M0 95V77L48 64L89 80L137 63L186 77L240 61V95Z" fill="#353751"/><rect x="74" y="61" width="8" height="21" fill="#7fdfd7"/><rect x="155" y="56" width="9" height="24" fill="#b49bea"/>';}
  else if(p.scene==='desert'){s+='<path d="M0 70L43 48L90 73L140 44L190 66L240 48V95H0Z" fill="#c69677"/><path d="M0 86L58 65L130 89L205 65L240 77V95H0Z" fill="#9f715f"/><rect x="179" y="45" width="6" height="31" fill="#69745d"/><rect x="170" y="56" width="20" height="5" fill="#69745d"/>';}
@@ -181,7 +184,7 @@ export function initExperience(){
  const unlock=event=>{if(!ambient.isEnabled()||!event.isTrusted||event.type==='keydown'&&['Shift','Control','Alt','Meta','Escape'].includes(event.key))return;void ambient.unlock().then(ok=>{if(ok){document.removeEventListener('pointerdown',unlock,true);document.removeEventListener('keydown',unlock,true);}});};
  document.addEventListener('pointerdown',unlock,true);document.addEventListener('keydown',unlock,true);
  const initialQuery=new URLSearchParams(window.location.search);
- if(SCENES.includes(initialQuery.get('scene'))){state.scene=initialQuery.get('scene');state.autoScene=false;}
+ if(SCENES.includes(initialQuery.get('scene'))){state.scene=initialQuery.get('scene');state.autoScene=false;state.mode='custom';}
  if(Object.hasOwn(PHASES,initialQuery.get('phase'))){state.phase=initialQuery.get('phase');state.mode='custom';}
  world.setMotion(false);apply();setMotion(wantsMotion);
  if(initialQuery.get('world')==='cyberpunk')cyber();

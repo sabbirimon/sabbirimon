@@ -62,6 +62,7 @@
 <link rel="stylesheet" href="lab.css">
 <link rel="stylesheet" href="ai-lab.css">
 <script>document.documentElement.classList.remove('no-js');</script>
+<link rel="stylesheet" href="studio.css">
 </head>
 <body class="lab-page ai-lab-page">
 <a class="lab-skip" href="#ai-lab-work">Skip to the workbench</a>
@@ -71,39 +72,40 @@
     <span class="lab-brand-mark" aria-hidden="true">I</span>
     <span class="lab-brand-text" data-wordmark>IMON.WORLD</span>
   </a>
-  <nav class="lab-topnav" aria-label="Lab">
-    <a href="./">Home</a>
-    <a href="./lab.html">Code Lab</a>
-    <a href="./tools/">Tools</a>
-    <a href="./login.html">Sign in</a>
-  </nav>
-  <button type="button" class="lab-course-toggle" data-ai-course-toggle aria-expanded="false" aria-controls="ai-course-drawer" data-pixel-text>Course</button>
+  <nav class="lab-topnav" aria-label="Learning"><a href="./#learn">All labs</a></nav>
+  <button class="studio-control" type="button" data-lessons aria-haspopup="dialog">Lessons</button>
+  <button class="studio-control" type="button" data-lab-sound aria-pressed="false">Sound off</button>
   <p class="lab-xp nes-pixel-badge"><span aria-hidden="true">★</span> <span data-ai-xp>0 XP</span></p>
 </header>
-
-<main class="lab-layout">
-  <!-- The lesson ------------------------------------------------------ -->
-  <section class="lab-lesson" aria-labelledby="ai-lab-title">
-    <nav class="lab-rail" aria-label="Exercises" id="ai-course-drawer">
+<dialog class="lesson-dialog" aria-labelledby="lesson-library"><form method="dialog"><button class="studio-control">Close</button></form><nav class="lab-rail" aria-label="Exercises">
       <div class="lab-rail-head">
-        <h2 class="lab-rail-title" data-pixel-text>Course</h2>
+        <h2 class="lab-rail-title" id="lesson-library">AI Lab lessons</h2>
         <button type="button" class="lab-rail-filter" data-ai-preferred-only aria-pressed="false">
           <span aria-hidden="true">★</span> Preferred
         </button>
       </div>
       <p class="lab-rail-count" data-ai-preferred-count hidden></p>
+      <label class="lesson-search">Find a lesson<input type="search" data-course-search placeholder="Search by title or chapter"></label>
+      <p data-search-summary role="status"></p>
       <ol class="lab-rail-list" data-ai-rail></ol>
-    </nav>
+    </nav></dialog>
+
+<main class="lab-layout">
+  <!-- The lesson ------------------------------------------------------ -->
+  <section class="lab-lesson" aria-labelledby="ai-lab-title">
+
 
     <article class="lab-brief">
-      <p class="lab-kicker" data-ai-kind data-pixel-text>Python</p>
-      <h1 class="lab-title" id="ai-lab-title" data-ai-title data-pixel-text>Loading the course</h1>
+      <p class="lab-kicker" data-ai-kind>Python</p>
+      <h1 class="lab-title" id="ai-lab-title" data-ai-title>Loading the course</h1>
       <p class="lab-lead" data-ai-brief>The course is being loaded. If it does not appear, the JSON file could not be read.</p>
 
+      <a class="workbench-link" href="#ai-lab-work">Go to workbench</a>
+      <details class="lab-example"><summary>Worked example</summary><p><code>print(2 * 3)</code></p><p>Try this in a Python exercise. Predict the output, press Run, then change one number and run it again.</p></details>
       <div class="lab-instructions">
-        <h2 class="lab-instructions-title" data-pixel-text>Instructions</h2>
+        <h2 class="lab-instructions-title">Instructions</h2>
         <ol class="lab-steps">
-          <li>Write your code in the editor on the right.</li>
+          <li>Write your code in the editor.</li>
           <li>Press <strong>Run</strong> to see the output.</li>
           <li>Press <strong>Check answer</strong> when you think it is right.</li>
         </ol>
@@ -115,7 +117,7 @@
       <p class="lab-status" data-ai-status role="status" aria-live="polite"></p>
 
       <div class="lab-help">
-        <h2 class="lab-help-title" data-pixel-text>Help</h2>
+        <h2 class="lab-help-title">Help</h2>
         <p>If you get stuck, press <strong>Reset</strong> to bring the starting code back, then work through it one step at a time.</p>
         <p class="lab-help-note">The Python here is a teaching subset. Everything runs in your browser — nothing you type is sent anywhere.</p>
         <p class="ai-credit" data-ai-credit></p>
@@ -129,12 +131,12 @@
   <section class="lab-work" id="ai-lab-work" aria-label="Workbench">
     <div class="lab-work-top">
       <div class="lab-tabs" role="tablist" aria-label="Editor">
-        <button type="button" role="tab" class="lab-tab" aria-selected="true" tabindex="0" data-pixel-text>Answer</button>
+        <button type="button" role="tab" class="lab-tab" aria-selected="true" tabindex="0">Answer</button>
       </div>
       <div class="lab-actions">
-        <button type="button" class="nes-button nes-button-blue lab-run" data-ai-run><span data-pixel-text>Run</span></button>
-        <button type="button" class="nes-button nes-button-lime lab-check" data-ai-check><span data-pixel-text>Check answer</span></button>
-        <button type="button" class="nes-button lab-reset" data-ai-reset><span data-pixel-text>Reset</span></button>
+        <button type="button" class="nes-button nes-button-blue lab-run" data-ai-run><span>Run</span></button>
+        <button type="button" class="nes-button nes-button-lime lab-check" data-ai-check><span>Check answer</span></button>
+        <button type="button" class="nes-button lab-reset" data-ai-reset><span>Reset</span></button>
       </div>
     </div>
 
@@ -144,10 +146,10 @@
         <textarea id="ai-lab-editor" class="lab-code" data-ai-editor spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off"></textarea>
       </div>
       <div class="ai-hint-pane">
-        <h2 class="lab-pane-title" data-pixel-text>How to answer</h2>
-        <p class="ai-hint" data-ai-hint>Write your code in the editor on the right.</p>
+        <h2 class="lab-pane-title">How to answer</h2>
+        <p class="ai-hint" data-ai-hint>Write your code in the editor.</p>
         <div class="ai-python-note">
-          <h3 class="ai-python-note-title" data-pixel-text>Python subset</h3>
+          <h3 class="ai-python-note-title">Python subset</h3>
           <ul class="ai-python-list">
             <li><code>def</code>, <code>return</code>, <code>if</code> / <code>elif</code> / <code>else</code></li>
             <li><code>for</code> over lists, <code>while</code>, <code>range()</code></li>
@@ -158,7 +160,7 @@
           </ul>
         </div>
         <div class="ai-python-note">
-          <h3 class="ai-python-note-title" data-pixel-text>Learning modules</h3>
+          <h3 class="ai-python-note-title">Learning modules</h3>
           <ul class="ai-python-list">
             <li><code>import requests</code> — a fake API at <code>api.example.com</code> with users, documents, search and a health check. It returns a status code and a body, and it never touches the network.</li>
             <li><code>import sqlite3</code> — an in-memory database. <code>CREATE</code>, <code>INSERT</code>, <code>SELECT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>WHERE</code>, <code>ORDER BY</code>, <code>LIMIT</code> and <code>SUM</code>.</li>
@@ -168,19 +170,19 @@
     </div>
 
     <div class="lab-terminal">
-      <h2 class="lab-pane-title" data-pixel-text>Output</h2>
+      <h2 class="lab-pane-title">Output</h2>
       <ol class="lab-console" data-ai-console role="log" aria-live="polite" aria-label="Program output"></ol>
     </div>
 
     <!-- The course bar ------------------------------------------- -->
     <div class="lab-coursebar">
-      <p class="lab-coursebar-chapter" data-ai-chapter data-pixel-text>Python for models</p>
-      <p class="lab-coursebar-counter" data-ai-counter data-pixel-text>Exercise 1 / 40</p>
+      <p class="lab-coursebar-chapter" data-ai-chapter>Python for models</p>
+      <p class="lab-coursebar-counter" data-ai-counter>Exercise 1 / 40</p>
       <progress class="lab-progress" data-ai-progress max="40" value="0" aria-label="Course progress"></progress>
       <div class="lab-coursebar-actions">
-        <button type="button" class="nes-button nes-button-dark lab-back" data-ai-prev><span data-pixel-text>Back</span></button>
-        <button type="button" class="nes-button nes-button-gold lab-next-action" data-ai-done hidden><span data-pixel-text>Done</span></button>
-        <button type="button" class="nes-button nes-button-blue lab-next-action" data-ai-next><span data-pixel-text>Next</span></button>
+        <button type="button" class="nes-button nes-button-dark lab-back" data-ai-prev><span>Back</span></button>
+        <button type="button" class="nes-button nes-button-gold lab-next-action" data-ai-done hidden><span>Done</span></button>
+        <button type="button" class="nes-button nes-button-blue lab-next-action" data-ai-next><span>Next</span></button>
       </div>
     </div>
   </section>
@@ -191,13 +193,13 @@
 </footer>
 
 <script type="module">
-import { initAiLab, courseDrawerAttributes } from './ai-lab-ui.js';
+import { initAiLab } from './ai-lab-ui.js';
 import { initWordmark } from './logo.js';
-import { initPixelText } from './pixel-type.js';
+import { initLessonControls } from './lesson-controls.js';
 
 const root = document.querySelector('.ai-lab-page');
 initWordmark(document);
-initPixelText(document);
+initLessonControls(document);
 
 const lab = initAiLab(root);
 const requested = new URLSearchParams(location.search).get('exercise');
@@ -220,34 +222,10 @@ document.querySelector('[data-ai-rail]')?.addEventListener('click', event => {
   if (lab.loadExercise(id)) {
     history.replaceState(null, '', '?exercise=' + encodeURIComponent(id));
     document.querySelector('.lab-brief')?.scrollIntoView({ block: 'start' });
-    closeCourse();
+
   }
 });
 
-/* On a phone the course rail is a drawer. The button is only shown at that
-   width, so on a desktop the rail simply stays where it is. */
-const courseToggle = document.querySelector('[data-ai-course-toggle]');
-const courseDrawer = document.querySelector('#ai-course-drawer');
-
-function setCourse(isOpen) {
-  if (!courseToggle || !courseDrawer) return;
-  const state = courseDrawerAttributes(isOpen);
-  courseToggle.setAttribute('aria-expanded', state.expanded);
-  courseDrawer.classList.toggle('is-open', Boolean(state.drawerClass));
-  document.body.classList.toggle('ai-course-open', Boolean(state.bodyClass));
-}
-
-function closeCourse() {
-  setCourse(false);
-}
-
-courseToggle?.addEventListener('click', () => {
-  setCourse(courseToggle.getAttribute('aria-expanded') !== 'true');
-});
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') closeCourse();
-});
 </script>
 </body>
 </html>

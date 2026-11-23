@@ -1,0 +1,171 @@
+/* Shared interface colors. Games keep their own illustrated playfields. */
+:root {
+  --bg: #0c1221;
+  --surface: #151e32;
+  --line: #374660;
+  --text: #f5f7fb;
+  --muted: #bccee2;
+  --gold: #ffda85;
+  --studio-mint: #85eed1;
+  --studio-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --studio-font: Mulish, system-ui, sans-serif;
+}
+:focus-visible { outline: 3px solid #8ef3d4; outline-offset: 3px; }
+.world-home .site-header, .lab-page .lab-topbar { background: #101727; border-bottom: 1px solid var(--line); }
+.world-home .site-header nav a { font: 800 1rem/1.2 var(--studio-font); }
+.world-home .hero-content { max-width: min(48rem, 93%); }
+.world-home #hero-title { display: block; margin: .22em 0; font: 800 clamp(3rem, 6.4vw, 6rem)/.98 var(--studio-font); letter-spacing: -.058em; text-transform: none; text-shadow: 0 3px 16px #070d1d; }
+.world-home #hero-title span { color: var(--studio-mint); }
+.world-home .hero-description { max-width: 37rem; font: 600 clamp(1rem, 1.6vw, 1.25rem)/1.55 var(--studio-font); color: #edf4ff; }
+.world-home .hero-shade { background: linear-gradient(90deg, #091222ee 0%, #091222bc 38%, #09122215 83%), linear-gradient(0deg, #0b1322ad, transparent 30%); }
+.world-home .pixel-button, .world-home .text-link, .world-home .project-filters button, .world-home .auth-button, .world-home .github-link {
+  font: 800 .94rem/1.35 var(--studio-font); letter-spacing: normal;
+}
+.world-home .pixel-button { border-radius: .45rem; }
+.world-home .hero-actions .gold { background: var(--studio-mint); color: #102826; box-shadow: 0 3px #386f67; border-color: #a3ffe7; }
+.world-home .project-body, .world-home .game-info { background: #141e31; }
+.world-home .project-card, .world-home .game-card { border-radius: .8rem; overflow: hidden; }
+.world-home .project-title h3, .world-home .game-info h3, .world-home .arcade-header h2, .world-home .arcade-overlay h3 { font-family: var(--studio-font); letter-spacing: -.03em; }
+.world-home .section-kicker, .world-home .eyebrow, .world-home .game-tag, .world-home .arcade-eyebrow { font: 700 .81rem/1.45 var(--studio-mono); letter-spacing: .075em; }
+.world-home .section-kicker > span:first-child { display: none; }
+.learning-section { scroll-margin-top: 1rem; padding-block: clamp(3rem, 6vw, 6rem); }
+.learning-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 1.5rem; }
+.learning-heading h2 { font: 800 clamp(2.15rem, 4.5vw, 4rem)/1 var(--studio-font); letter-spacing: -.055em; }
+.learning-heading p { max-width: 27rem; color: var(--muted); font-size: 1rem; }
+.learning-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.learning-card { --ink: #8af0cf; display: flex; flex-direction: column; border: 1px solid #385448; border-radius: .9rem; overflow: hidden; background: #141e31; }
+.ai-card { --ink: #c1adff; border-color: #4a425f; }
+.signal-card { --ink: #ffc790; border-color: #5c4938; }
+.course-art { height: 8rem; display: grid; place-items: center; overflow: hidden; color: var(--ink); background-color: #162f2d; background-image: linear-gradient(#ffffff0a 1px, transparent 1px), linear-gradient(90deg,#ffffff0a 1px,transparent 1px); background-size: 16px 16px; border-bottom: 1px solid #ffffff1c; }
+.code-art pre { font: 600 clamp(.8rem,1.2vw,1rem)/1.7 var(--studio-mono); color: #f0fcf9; padding: .65rem 1.1rem; background: #0f2224; border-left: 3px solid var(--ink); }
+.code-art i { font-style: normal; color: var(--ink); }
+.ai-art { background-color: #29243b; }
+.ai-art > div { display: flex; height: 4rem; align-items: end; gap: .35rem; }
+.ai-art i { width: .72rem; height: 25%; background: var(--ink); border-radius: 3px 3px 0 0; }
+.ai-art i:nth-child(2n) { height: 48%; }
+.ai-art i:nth-child(3n) { height: 68%; }
+.ai-art i:nth-child(5), .ai-art i:nth-child(8) { height: 90%; }
+.signal-art { background-color: #36291e; }
+.signal-art > div { display: flex; }
+.signal-art i { width: 2.3rem; height: 2rem; border: 3px solid var(--ink); border-width: 3px 3px 0 0; }
+.signal-art i:nth-child(even) { border-width: 0 3px 3px 0; }
+.course-copy { padding: clamp(1rem, 2.5vw, 1.75rem); display: flex; flex-direction: column; flex: 1; align-items: start; }
+.course-copy small { font: 600 .8rem/1.5 var(--studio-mono); color: var(--ink); }
+.course-copy h3 { font: 800 clamp(1.55rem, 2.5vw, 2rem)/1.16 var(--studio-font); letter-spacing: -.04em; margin: .55rem 0; }
+.course-copy p { font-size: 1rem; color: var(--muted); margin-bottom: 1.25rem; }
+.course-copy strong { margin-top: auto; color: var(--ink); border-bottom: 1px solid currentColor; }
+
+/* The workbench and its list of lessons use selectable, resizable type. */
+.lab-page { --lab-panel: #172136; --lab-panel-2: #1b2840; --lab-rim: #34455d; --lab-rim-strong: #50647c; --lab-code-bg: #101c2d; --lab-console-bg: #0b1423; --lab-lime: var(--studio-mint); --lab-gold: #ffda85; --pixel: var(--studio-font); }
+.lab-page .lab-topbar { gap: .75rem; padding: .6rem clamp(.65rem, 3vw, 2.5rem); height: auto; min-height: 3.6rem; align-items: center; }
+.lab-page .lab-topnav { display: flex; margin: 0 auto 0 0; font: 800 .94rem/1.25 var(--studio-font); letter-spacing: normal; }
+.studio-control, .lab-page .lab-rail-filter { font: 800 .9rem/1.25 var(--studio-font); border: 1px solid #51627a; border-radius: .45rem; color: var(--text); background: #202e45; padding: .55rem .85rem; cursor: pointer; }
+.studio-control[aria-pressed=true] { background: #153e38; color: #a1f8df; }
+.lab-page .lab-xp { color: var(--gold); font: 700 .8rem/1.3 var(--studio-mono); border-radius: .4rem; }
+.lab-page .lab-brief { position: static; background: transparent; }
+.lab-page .lab-kicker, .lab-page .lab-coursebar-chapter { font: 700 .85rem/1.4 var(--studio-mono); letter-spacing: .02em; color: var(--studio-mint); }
+.lab-page .lab-title { font: 800 clamp(1.8rem, 3.2vw, 3.1rem)/1.08 var(--studio-font); letter-spacing: -.045em; color: var(--text); overflow-wrap: anywhere; }
+.lab-page .lab-lead { font: 500 1.05rem/1.6 var(--studio-font); color: #d6e3f2; }
+.lab-page .lab-pane-title, .lab-page .lab-instructions-title, .lab-page .lab-help-title, .lab-page .lab-rail-title { font: 800 1.1rem/1.3 var(--studio-font); letter-spacing: -.02em; }
+.lab-page .lab-tab, .lab-page .nes-button { font: 800 .94rem/1.25 var(--studio-font); letter-spacing: 0; border-radius: .45rem; min-height: 2.5rem; }
+.lab-page .lab-code { font: 400 1rem/1.65 var(--studio-mono); tab-size: 2; }
+.lab-page .lab-actions, .lab-page .lab-work-top, .lab-page .lab-tabs { flex-wrap: wrap; }
+.lab-page .lab-status { position: static; color: var(--text); font: 700 1rem/1.45 var(--studio-font); }
+.lab-status:empty { display: none; }
+.lab-page .lab-status[data-state=ok] { color: #91f5cc; }
+.lab-page .lab-status:is([data-state=error],[data-state=bad]) { color: #ffb4bf; }
+.workbench-link { display: inline-block; margin: .7rem 0; color: var(--studio-mint); text-decoration: underline; font-weight: 800; }
+.lab-example { background: var(--lab-panel); border-left: 3px solid var(--studio-mint); padding: .7rem 1rem; margin: .7rem 0 1.25rem; }
+.lab-example summary { font-weight: 800; cursor: pointer; }
+.lab-example p { margin: .6rem 0; overflow-wrap: anywhere; }
+.lesson-dialog { border: 1px solid #52627d; border-radius: .8rem; background: #111c2e; color: var(--text); padding: 1.15rem; width: min(38rem,94vw); max-height: 85dvh; }
+.lesson-dialog::backdrop { background: #040813cf; }
+.lesson-dialog form { text-align: right; }
+.lab-page .lesson-dialog .lab-rail { position: static; inset: auto; width: 100%; max-height: none; margin: .4rem 0 0; padding: 0; transform: none; border: 0; box-shadow: none; background: transparent; overflow: visible; }
+.lesson-search { display: grid; gap: .3rem; font-weight: 800; margin: .9rem 0 .4rem; }
+.lesson-search input { width: 100%; background: #0c1524; color: #fff; border: 1px solid #64758b; border-radius: .4rem; padding: .7rem .85rem; font: inherit; }
+.lesson-dialog [data-search-summary] { margin: .4rem 0 1rem; font-size: .92rem; color: var(--muted); }
+.lab-page .lab-rail-label { font-size: 1rem; line-height: 1.45; }
+.lab-page .lab-rail-chapter { color: var(--studio-mint); font: 800 1rem/1.35 var(--studio-font); }
+.lab-page .lab-rail-star { min-width: 2.65rem; min-height: 2.65rem; }
+.lab-page .lab-rail-link { min-width: 0; flex: 1; }
+.lab-page .lab-rail-item { display: flex; align-items: center; }
+.download-page { font-family: var(--studio-font); color: var(--text); background: linear-gradient(145deg,#192f36,#101827 38%); min-height: 100vh; }
+.download-page h1 { color: var(--studio-mint); }
+.download-page .links a, .tools-page .tool-panel, .auth-page .auth-card, .game-layout .panel { border-radius: .65rem; }
+.tools-page, .privacy-page, .auth-page { --pixel: var(--studio-font); }
+.world-home .arcade-modal { --pixel: var(--studio-font); }
+.world-home .arcade-settings label, .world-home .arcade-btn, .world-home .arcade-secondary { font: 800 .9rem/1.3 var(--studio-font); }
+@media (prefers-reduced-motion: no-preference) {
+  .learning-card { transition: transform .18s ease, border-color .18s ease; }
+  .learning-card:is(:hover,:focus-visible) { transform: translateY(-4px); border-color: var(--ink); }
+  .lesson-dialog[open] { animation: lesson-open .17s ease-out; }
+  @keyframes lesson-open { from { opacity: .3; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+}
+@media (max-width: 780px) {
+  .learning-heading { display: block; }
+  .learning-heading p { margin-top: .8rem; }
+  .learning-grid { grid-template-columns: 1fr; }
+  .course-art { height: 6.5rem; }
+  .lab-page { height: auto; overflow: visible; }
+  .lab-page .lab-layout { display: flex; flex-direction: column; height: auto; overflow: visible; }
+  .lab-page .lab-lesson, .lab-page .lab-work, .lab-page .lab-work-scroll { height: auto; overflow: visible; min-width: 0; }
+  .lab-page .lab-work { scroll-margin-top: .5rem; padding: 1rem; }
+  .lab-page .lab-coursebar { position: static; margin: 0; }
+  .lab-page .lab-topbar { position: static; flex-wrap: wrap; gap: .45rem; }
+  .lab-page .lab-topbar [data-wordmark] { display: none; }
+  .lab-page .lab-topnav a { font-size: .9rem; }
+  .world-home .site-header.is-nav-open nav a { height: 44px; }
+  .world-home .hero-shade { background: linear-gradient(90deg,#071323e6,#0b172859),linear-gradient(0deg,#0a1424ae,transparent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms!important; animation-iteration-count: 1!important; transition-duration: .01ms!important; scroll-behavior: auto!important; }
+}
+/* Pixel edges are drawn in CSS so menu labels stay selectable at every scale. */
+.world-home .site-header { isolation: isolate; border-bottom: 3px solid #3b5775; box-shadow: inset 0 -2px #142237; }
+.world-home .site-header::after { content: ''; position: absolute; bottom: -3px; right: 6%; width: 5rem; height: 3px; background: repeating-linear-gradient(90deg,#78ecd3 0 8px, transparent 8px 12px); pointer-events: none; }
+.world-home .brand-mark { background: #fbd16e; border-color: #ffdf8c; }
+.world-home .nav-toggle { width: auto; min-height: 40px; gap: .55rem; padding-inline: .75rem; color: #9bf4d8; background: #172a35; border: 2px solid #537a7e; box-shadow: 3px 3px #080e1b; }
+.nav-toggle-label { font: .7rem/1.3 Pixel, monospace; }
+.world-home .nav-toggle-bars i { background: #a8f0d9; }
+.world-home .learning-card, .world-home .project-card, .world-home .game-card { border-radius: 0; border-width: 2px; box-shadow: 4px 4px #060b15; }
+.world-home .learning-heading h2 { font: 400 clamp(1.4rem,2.9vw,2.6rem)/1.5 Pixel,monospace; letter-spacing: -.065em; }
+.world-home .course-copy h3 { font: 400 clamp(.9rem,1.2vw,1.1rem)/1.65 Pixel,monospace; letter-spacing: -.045em; }
+.world-home .course-copy strong { border: 0; padding: .35rem .6rem; background: var(--ink); color: #142134; box-shadow: 3px 3px #060b15; }
+.world-home .course-art { background-size: 12px 12px; }
+.world-home .ai-art i, .world-home .pixel-button, .lab-page .nes-button, .studio-control { border-radius: 0; }
+.lab-page .lab-work-top .nes-button { background: #273951; color: white; border: 1px solid #647995; padding: .5rem .85rem; box-shadow: 2px 2px #070e1b; }
+.lab-page .lab-work-top .lab-check { background: #9eeecf; color: #102a23; }
+.lab-page .lab-work-top .lab-run { background: #92d8ff; color: #0f2741; }
+.lab-page .lab-work-top .nes-button::before,.lab-page .lab-work-top .nes-button::after { display:none; }
+.lab-page .lab-title { text-shadow: none; }
+.lab-page .lab-help a { color: var(--studio-mint); text-decoration: underline; }
+html[data-scene="neon-coast"] .world-home { --studio-mint:#ffb9df; --gold:#ffd798; }
+html[data-scene="cyberpunk"] .world-home { --studio-mint:#80f6ef; --line:#534568; }
+@media(max-width:900px) {
+  .world-home .site-header .nav-toggle { margin-left:auto; }
+  .world-home .site-header .command-palette-launcher { margin-left:0; }
+}
+.cartridge-shelf { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem;margin:0 0 1.25rem; }
+.cartridge-shelf a { display:flex;align-items:center;gap:.85rem;padding:1.1rem;background:#18253a;border:2px solid #3d556a;box-shadow:3px 3px #080e1b; }
+.cartridge-shelf a:is(:focus-visible,:hover) { border-color:var(--studio-mint); }
+.cartridge-shelf strong,.cartridge-shelf small { display:block; }
+.cartridge-shelf strong { font:400 .82rem/1.6 Pixel,monospace;color:#eaf6ff; }
+.cartridge-shelf small { margin-top:.35rem;font:500 .92rem/1.45 var(--studio-font);color:var(--muted); }
+.cart-icon { color:#9aefcf;font-size:2rem; }
+.cartridge-shelf a:nth-child(2) .cart-icon { color:#ffc781; }
+.cartridge-shelf a:nth-child(3) .cart-icon { color:#c3adff; }
+@media(max-width:780px){.cartridge-shelf{grid-template-columns:1fr;}}
+.coastal-radio { display:none; }
+html[data-scene="neon-coast"] .coastal-radio { display:inline-block;color:#ffe0f1;border-color:#c074a9; }
+.world-home #hero-title { font:400 clamp(1.65rem,3.5vw,3.4rem)/1.45 Pixel,monospace;letter-spacing:-.065em;text-shadow:3px 4px #162639; }
+.world-home .hero-content { max-width:min(50rem,94%); }
+.world-home .sky-controls { flex-wrap:wrap;justify-content:flex-end; }
+.world-home .sky-controls .cyber-mode-button { position:static;box-shadow:none;font:800 .8rem/1.3 var(--studio-font); }
+.world-home .sky-controls > button { font:800 .8rem/1.3 var(--studio-font);min-height:2.3rem; }
+@media(min-width:1001px) { .world-home .site-header .brand [data-wordmark] { display:inline-flex; } }
+@media(max-width:700px) {
+  .world-home .sky-controls { justify-content:center; }
+  .world-home .world-toolbar { gap:.4rem; }
+}

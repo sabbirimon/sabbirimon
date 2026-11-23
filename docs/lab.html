@@ -55,6 +55,7 @@
 <link rel="stylesheet" href="nes.css"><link rel="stylesheet" href="wordmark.css">
 <link rel="stylesheet" href="lab.css"><link rel="stylesheet" href="lab-layout.css">
 <script>document.documentElement.classList.remove('no-js');</script>
+<link rel="stylesheet" href="studio.css">
 </head>
 <body class="lab-page">
 <a class="lab-skip" href="#lab-work">Skip to the workbench</a>
@@ -64,13 +65,23 @@
     <span class="lab-brand-mark" aria-hidden="true">I</span>
     <span class="lab-brand-text" data-wordmark>IMON.WORLD</span>
   </a>
-  <nav class="lab-topnav" aria-label="Lab">
-    <a href="./">Home</a>
-    <a href="./tools/">Tools</a>
-    <a href="./login.html">Sign in</a>
-  </nav>
+  <nav class="lab-topnav" aria-label="Learning"><a href="./#learn">All labs</a></nav>
+  <button class="studio-control" type="button" data-lessons aria-haspopup="dialog">Lessons</button>
+  <button class="studio-control" type="button" data-lab-sound aria-pressed="false">Sound off</button>
   <p class="lab-xp nes-pixel-badge"><span aria-hidden="true">★</span> <span data-lab-xp>0 XP</span></p>
 </header>
+<dialog class="lesson-dialog" aria-labelledby="lesson-library"><form method="dialog"><button class="studio-control">Close</button></form><nav class="lab-rail" aria-label="Exercises">
+      <div class="lab-rail-head">
+        <h2 class="lab-rail-title" id="lesson-library">Code Lab lessons</h2>
+        <button type="button" class="lab-rail-filter" data-lab-preferred-only aria-pressed="false">
+          <span aria-hidden="true">★</span> Preferred
+        </button>
+      </div>
+      <p class="lab-rail-count" data-lab-preferred-count hidden></p>
+      <label class="lesson-search">Find a lesson<input type="search" data-course-search placeholder="Search by title or chapter"></label>
+      <p data-search-summary role="status"></p>
+      <ol class="lab-rail-list" data-lab-rail></ol>
+    </nav></dialog>
 
 <main class="lab-layout">
   <!-- The lesson ------------------------------------------------------ -->
@@ -78,19 +89,21 @@
     <!-- The brief is pinned to the top of the column, so the exercise is
          always in view no matter how long the course rail is. -->
     <article class="lab-brief">
-      <p class="lab-kicker" data-lab-brief-kicker data-pixel-text>Markup basics</p>
-      <h1 class="lab-title" id="lab-title" data-lab-title data-pixel-text>Your first tag</h1>
+      <p class="lab-kicker" data-lab-brief-kicker>Markup basics</p>
+      <h1 class="lab-title" id="lab-title" data-lab-title>Your first tag</h1>
       <p class="lab-lead" data-lab-brief></p>
 
+      <a class="workbench-link" href="#lab-work">Go to workbench</a>
+      <details class="lab-example"><summary>Worked example</summary><p><code>&lt;h1&gt;Hello, world!&lt;/h1&gt;</code></p><p>Try it in the HTML tab, then change the words between the tags and compare the preview.</p></details>
       <div class="lab-instructions">
-        <h2 class="lab-instructions-title" data-pixel-text>Instructions</h2>
+        <h2 class="lab-instructions-title">Instructions</h2>
         <ol class="lab-steps" data-lab-steps-code>
-          <li>Write your code in the editor on the right.</li>
+          <li>Write your code in the editor.</li>
           <li>Press <strong>Run</strong> to see the result and read the console.</li>
           <li>Press <strong>Check answer</strong> when you think it is right.</li>
         </ol>
         <ol class="lab-steps" data-lab-steps-quiz hidden>
-          <li>Read the question in the panel on the right.</li>
+          <li>Read the question in the answer panel.</li>
           <li>Pick one of the four answers.</li>
           <li>You are told straight away whether it was right, and a wrong answer explains itself.</li>
         </ol>
@@ -102,20 +115,11 @@
          the task is read first and the teaching follows. -->
     <div class="lab-learn" data-lab-learn></div>
 
-    <!-- The rail scrolls on its own, below the pinned brief. -->
-    <nav class="lab-rail" aria-label="Exercises">
-      <div class="lab-rail-head">
-        <h2 class="lab-rail-title" data-pixel-text>Course</h2>
-        <button type="button" class="lab-rail-filter" data-lab-preferred-only aria-pressed="false">
-          <span aria-hidden="true">★</span> Preferred
-        </button>
-      </div>
-      <p class="lab-rail-count" data-lab-preferred-count hidden></p>
-      <ol class="lab-rail-list" data-lab-rail></ol>
-    </nav>
+
 
     <div class="lab-help">
-      <h2 class="lab-help-title" data-pixel-text>Help</h2>
+      <p>Explore more examples in <a href="https://www.codedex.io/">Codédex</a> and <a href="https://www.w3schools.com/">W3Schools</a>.</p>
+      <h2 class="lab-help-title">Help</h2>
       <p data-lab-help-code>If you get stuck, press <strong>Reset</strong> to bring the starting code back, then work through it one step at a time.</p>
       <p data-lab-help-quiz hidden>A wrong answer shows you the right one and the reason, and you can try again. Press <strong>Try again</strong> to have another go.</p>
       <p class="lab-help-note">Everything runs in your browser. Nothing you type is sent anywhere.</p>
@@ -126,18 +130,19 @@
   <section class="lab-work" id="lab-work" aria-label="Workbench">
     <div class="lab-work-top">
       <div class="lab-tabs" role="tablist" aria-label="File" data-lab-tabs>
-        <button type="button" role="tab" class="lab-tab" data-lab-tab="html" aria-selected="false" tabindex="-1" data-pixel-text>index.html</button>
-        <button type="button" role="tab" class="lab-tab" data-lab-tab="css" aria-selected="false" tabindex="-1" data-pixel-text>style.css</button>
-        <button type="button" role="tab" class="lab-tab" data-lab-tab="js" aria-selected="false" tabindex="-1" data-pixel-text>script.js</button>
+        <button type="button" role="tab" class="lab-tab" data-lab-tab="html" aria-selected="false" tabindex="-1">index.html</button>
+        <button type="button" role="tab" class="lab-tab" data-lab-tab="css" aria-selected="false" tabindex="-1">style.css</button>
+        <button type="button" role="tab" class="lab-tab" data-lab-tab="js" aria-selected="false" tabindex="-1">script.js</button>
       </div>
       <div class="lab-actions">
-        <button type="button" class="nes-button nes-button-blue lab-run" data-lab-run><span data-pixel-text>Run</span></button>
-        <button type="button" class="nes-button nes-button-lime lab-check" data-lab-check><span data-pixel-text>Check answer</span></button>
-        <button type="button" class="nes-button lab-reset" data-lab-reset><span data-pixel-text>Reset</span></button>
+        <button type="button" class="nes-button nes-button-blue lab-run" data-lab-run><span>Run</span></button>
+        <button type="button" class="nes-button nes-button-lime lab-check" data-lab-check><span>Check answer</span></button>
+        <button type="button" class="nes-button lab-reset" data-lab-reset><span>Reset</span></button>
       </div>
     </div>
 
     <!-- The scrolling middle of the workbench. -->
+    <p class="lab-status" data-lab-status role="status"></p>
     <div class="lab-work-scroll">
       <!-- The quiz panel ------------------------------------------- -->
       <!-- A quiz exercise has no editor. The panel takes the place of the
@@ -147,7 +152,7 @@
         <h2 class="lab-quiz-question" id="lab-quiz-question" data-lab-quiz-question tabindex="-1"></h2>
         <div class="lab-quiz-options" data-lab-quiz-options role="radiogroup" aria-labelledby="lab-quiz-question"></div>
         <p class="lab-quiz-verdict" data-lab-quiz-verdict role="status" aria-live="polite" tabindex="-1"></p>
-        <button type="button" class="nes-button nes-button-gold lab-quiz-retry" data-lab-quiz-retry hidden><span data-pixel-text>Try again</span></button>
+        <button type="button" class="nes-button nes-button-gold lab-quiz-retry" data-lab-quiz-retry hidden><span>Try again</span></button>
       </div>
 
       <div class="lab-editor-pane">
@@ -160,7 +165,7 @@
           <textarea id="lab-editor-js" class="lab-code" data-lab-editor="js" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" hidden></textarea>
         </div>
         <div class="lab-preview">
-          <h2 class="lab-pane-title" data-pixel-text>Preview</h2>
+          <h2 class="lab-pane-title">Preview</h2>
           <iframe class="lab-preview-frame" data-lab-preview title="Live preview" sandbox="allow-scripts allow-same-origin"></iframe>
         </div>
       </div>
@@ -168,7 +173,7 @@
       <!-- What the exercise is about --------------------------------- -->
       <div class="lab-notes">
         <div class="lab-notes-head">
-          <h2 class="lab-notes-title" data-pixel-text>What this teaches</h2>
+          <h2 class="lab-notes-title">What this teaches</h2>
           <p class="lab-notes-sub" data-lab-notes-sub></p>
         </div>
         <div class="lab-notes-body" data-lab-notes></div>
@@ -180,7 +185,7 @@
            panel is hidden until a learner asks for something. -->
       <div class="lab-lookup" data-lab-lookup hidden>
         <div class="lab-lookup-head">
-          <h2 class="lab-lookup-title" data-pixel-text>How others use it</h2>
+          <h2 class="lab-lookup-title">How others use it</h2>
           <p class="lab-lookup-status" data-lab-lookup-status role="status" aria-live="polite"></p>
         </div>
         <ul class="lab-lookup-list" data-lab-lookup-list></ul>
@@ -212,12 +217,12 @@
       <!-- The feedback ---------------------------------------------- -->
       <div class="lab-feedback" data-lab-feedback hidden>
         <div class="lab-feedback-head">
-          <h2 class="lab-feedback-title" data-pixel-text>What went wrong</h2>
+          <h2 class="lab-feedback-title">What went wrong</h2>
           <span class="lab-feedback-where" data-lab-feedback-where></span>
         </div>
         <ul class="lab-feedback-list" data-lab-feedback-list></ul>
         <div class="lab-feedback-fix">
-          <h3 class="lab-feedback-fix-title" data-pixel-text>How to fix it</h3>
+          <h3 class="lab-feedback-fix-title">How to fix it</h3>
           <pre class="lab-feedback-code" data-lab-feedback-code><code></code></pre>
         </div>
       </div>
@@ -225,14 +230,14 @@
 
     <!-- The course bar ------------------------------------------- -->
     <div class="lab-coursebar">
-      <p class="lab-coursebar-chapter" data-lab-chapter data-pixel-text>Markup basics</p>
-      <p class="lab-coursebar-counter" data-lab-counter data-pixel-text>Exercise 1 / 10</p>
+      <p class="lab-coursebar-chapter" data-lab-chapter>Markup basics</p>
+      <p class="lab-coursebar-counter" data-lab-counter>Exercise 1 / 10</p>
       <progress class="lab-progress" data-lab-progress max="10" value="0" aria-label="Course progress"></progress>
       <p class="lab-coursebar-track" data-lab-track></p>
       <div class="lab-coursebar-actions">
-        <button type="button" class="nes-button nes-button-dark lab-back" data-lab-prev><span data-pixel-text>Back</span></button>
-        <button type="button" class="nes-button nes-button-gold lab-next-action" data-lab-done hidden><span data-pixel-text>Done</span></button>
-        <button type="button" class="nes-button nes-button-blue lab-next-action" data-lab-next><span data-pixel-text>Next</span></button>
+        <button type="button" class="nes-button nes-button-dark lab-back" data-lab-prev><span>Back</span></button>
+        <button type="button" class="nes-button nes-button-gold lab-next-action" data-lab-done hidden><span>Done</span></button>
+        <button type="button" class="nes-button nes-button-blue lab-next-action" data-lab-next><span>Next</span></button>
       </div>
     </div>
   </section>
@@ -245,13 +250,13 @@
 <script type="module">
 import { initLab, EXERCISES, findExercise } from './lab.js';
 import { initWordmark } from './logo.js';
-import { initPixelText } from './pixel-type.js';
+import { initLessonControls } from './lesson-controls.js';
 
 const root = document.querySelector('.lab-page');
 // The site name is drawn as pixel art, and the chrome headings use the
 // narrow display face rather than the very wide Press Start 2P.
 initWordmark(document);
-initPixelText(document);
+initLessonControls(document);
 // The exercise comes from the query string so the chapter rail can link
 // straight to a lesson. The imported course is fetched first, because a
 // linked lesson may be one of the imported ones. An unknown id falls back

@@ -28,11 +28,26 @@ export function initSoundMixer(ambient){
    q('.sound-mixer-mute').disabled=!enabled;
    for(const input of dialog.querySelectorAll('[name="sound-layer"]')){input.checked=layers[input.value];input.closest('.sound-mixer-source').classList.toggle('selected',input.checked);}
    const volume=Math.min(1,Math.max(0,Number(ambient.getVolume())||0));q('#sound-mixer-volume').value=String(volume);q('#sound-mixer-volume-value').textContent=`${Math.round(volume*100)}%`;
+   radio.textContent=enabled&&layers.music&&layers.wind&&layers.water?'Mute coastal radio':'Play coastal radio';
    triggers.forEach(button=>{button.dataset.playing=enabled?'true':'false';button.title=enabled?'Manage your playing sound layers':'Choose ambience layers; master is muted';});
  }
  function open(){if(dialog.open)return;opener=document.activeElement;oldOverflow=document.body.style.overflow;document.body.style.overflow='hidden';sync();dialog.showModal();q('.sound-mixer-close').focus({preventScroll:true});}
  function addTrigger(target,placement){if(!target)return;const button=document.createElement('button');button.type='button';button.className='sound-mixer-trigger';button.innerHTML='<span aria-hidden="true">♫</span> Sound mixer';button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls','sound-mixer-dialog');button.addEventListener('click',open);if(placement==='after')target.after(button);else target.append(button);triggers.push(button);}
  addTrigger(document.getElementById('ambient-toggle'),'after');addTrigger(document.querySelector('.weather-deck-tools'),'append');
+ const radio=document.createElement('button');
+ radio.type='button';radio.className='coastal-radio';radio.textContent='Play coastal radio';
+ document.getElementById('ambient-toggle')?.after(radio);
+ radio.addEventListener('click',async()=>{
+   if(ambient.isEnabled() && layers.music && layers.wind && layers.water){
+     ambient.setEnabled(false);write('imon-ambient-v2','off');
+   }else{
+     layers={...layers,music:true,wind:true,water:true,crickets:false};
+     write(STORAGE_KEY,JSON.stringify(layers));ambient.setLayers(layers);
+     ambient.setEnabled(true);write('imon-ambient-v2','on');
+     unlocked=await ambient.unlock();
+   }
+   sync();
+ });
  q('.sound-mixer-close').addEventListener('click',()=>dialog.close());
  dialog.addEventListener('close',()=>{document.body.style.overflow=oldOverflow;opener?.focus({preventScroll:true});});
  dialog.addEventListener('click',event=>{if(event.target!==dialog)return;const box=dialog.getBoundingClientRect();if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)dialog.close();});

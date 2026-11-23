@@ -540,6 +540,8 @@ export function initAuth(root = document) {
   const ready = isConfigured();
 
   if (!ready) {
+    const accountBar=signInButton?.closest?.('.auth-bar');
+    if(accountBar) accountBar.hidden=true;
     const message = configurationMessage() || 'Sign-in is not configured yet.';
     if (status) { status.textContent = message; status.hidden = false; }
     providerButtons.forEach(button => {

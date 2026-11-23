@@ -73,7 +73,7 @@ export function initWeather({ onThunder = () => {}, mount = document.body, id = 
   }
   function draw(time,still=false){
     if(!ctx||destroyed)return;
-    ctx.clearRect(0,0,width,height);if(hero)hero.style.translate='0px 0px';
+    ctx.clearRect(0,0,width,height);const ground=hero?.querySelector?.('#pixel-world'); if(ground)ground.style.translate='';
     if(type==='clear'||document.hidden||!visible)return;
     const dt=still||last===null?0:Math.min(.05,Math.max(0,(time-last)/1000));if(!still){last=time;animationTime+=dt;}
     const seconds=animationTime,strength=INTENSITIES[intensity],snow=['snow','blizzard'].includes(type),wet=['drizzle','rain','heavy-rain','storm','hail','cyclone'].includes(type);
@@ -121,7 +121,18 @@ export function initWeather({ onThunder = () => {}, mount = document.body, id = 
     if(type==='flood')for(let i=0;i<7;i++){const y=height*(.82+i*.027)+Math.sin(seconds*.7+i)*4;rect(0,y,width,height-y,i%2?'#3586b925':'#6ebddf25');for(let j=0;j<10;j++)rect((j*79+seconds*(i%2?9:-7)+width)%width,y,23,2,'#b3f1ec9c');}
     if(type==='aurora')for(let i=0;i<45;i++){const x=i*width/44,y=height*.1+Math.sin(i*.14+seconds*.17)*height*.09;rect(x,y,width/42,25+Math.sin(i*.2)*20,i%3?'#78ebcb50':'#b79cff40');rect(x,y+27,width/42,14,'#88dce93d');}
     if(type==='meteors')for(let i=0;i<4;i++){const phase=(seconds*.13+i*.27)%1;if(phase>.24)continue;const x=width*(.15+i*.23)+phase*width,y=height*(.03+i*.08)+phase*height*.75;for(let j=0;j<8;j++)rect(x-j*4,y-j*2,3,1,`rgba(194,219,255,${(8-j)/10})`);rect(x,y,2,2,'#f0faff');}
-    if(type==='earthquake'&&hero&&!still&&motion&&!reduced.matches){const burst=seconds%9<.55;hero.style.translate=burst?`${Math.sin(seconds*45)*1.2}px ${Math.cos(seconds*33)*.6}px`:'0px 0px';}
+    if(type==='earthquake') {
+      const phase=seconds%9, pulse=phase<1.4?1-phase/1.4:phase>2&&phase<2.65?(2.65-phase)*.8:0;
+      const amplitude=still||!motion||reduced.matches?0:pulse*Math.min(3,power*2.4);
+      const ground=hero?.querySelector?.('#pixel-world');
+      if(ground) ground.style.translate=Math.sin(seconds*34)*amplitude+'px '+Math.cos(seconds*23)*amplitude*.5+'px';
+      ctx.strokeStyle='#b899797f';ctx.lineWidth=1;
+      for(let i=0;i<3;i++) {
+        const x=width*(.16+i*.31), y=height*.88;
+        ctx.beginPath();ctx.moveTo(x-18,y);ctx.lineTo(x-8,y-3);ctx.lineTo(x-3,y+2);ctx.lineTo(x+7,y-5);ctx.lineTo(x+17,y-4);ctx.stroke();
+        if(amplitude) softEllipse(x,y-4,12+pulse*8,3+pulse*4,'#dcbb9b29');
+      }
+    }
     if((type==='storm'||type==='lightning')&&!still&&motion&&!reduced.matches)lightning(time,seconds,still);
   }
   function applyOpacity(){canvas.style.opacity=String(Math.min(1,({gentle:.65,normal:.85,vivid:1}[intensity])*(.7+power*.3)));}
@@ -132,7 +143,7 @@ export function initWeather({ onThunder = () => {}, mount = document.body, id = 
   function run({resetLightning=false}={}){
     if(frame)cancelAnimationFrame(frame);frame=0;last=null;
     if(resetLightning){strikeAt=-Infinity;nextLightning=performance.now()+1100;}
-    if(hero)hero.style.translate='0px 0px';if(!ctx||destroyed)return;
+    const ground=hero?.querySelector?.('#pixel-world'); if(ground)ground.style.translate='';if(!ctx||destroyed)return;
     draw(performance.now(),true);schedule();
   }
   const onReduced=()=>run({resetLightning:true}),onVisibility=()=>run({resetLightning:true});
@@ -147,6 +158,6 @@ export function initWeather({ onThunder = () => {}, mount = document.body, id = 
     setDensity(value){const next=clampSetting(value);if(next===density)return;density=next;run();},
     setPower(value){const next=clampSetting(value);if(next===power)return;power=next;applyOpacity();run();},
     setMotion(value){const next=Boolean(value);if(next===motion)return;motion=next;run({resetLightning:true});},
-    destroy(){destroyed=true;if(frame)cancelAnimationFrame(frame);removeEventListener('resize',resize);document.removeEventListener('visibilitychange',onVisibility);reduced.removeEventListener('change',onReduced);resizeObserver?.disconnect();intersectionObserver?.disconnect();if(hero)hero.style.translate='0px 0px';canvas.remove();}
+    destroy(){destroyed=true;if(frame)cancelAnimationFrame(frame);removeEventListener('resize',resize);document.removeEventListener('visibilitychange',onVisibility);reduced.removeEventListener('change',onReduced);resizeObserver?.disconnect();intersectionObserver?.disconnect();const ground=hero?.querySelector?.('#pixel-world'); if(ground)ground.style.translate='';canvas.remove();}
   };
 }

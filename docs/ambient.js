@@ -16,6 +16,7 @@ export function initAmbient() {
   const outputLevel = () => volume * .34;
 
   function sceneFamily() {
+    if (scene === 'neon-coast') return 'coastal-drive';
     if (/cyberpunk|dystopia/.test(scene)) return 'cyberpunk';
     if (/cave|cavern|underground/.test(scene)) return 'cave';
     if (/space|cosmos|galaxy|orbital/.test(scene)) return 'space';
@@ -80,6 +81,14 @@ export function initAmbient() {
   }
   function musicTick() {
     if (!active() || (layers ? !layers.music : sceneFamily() !== 'cyberpunk')) return;
+    if (sceneFamily() === 'coastal-drive') {
+      const beat=musicStep++%32;
+      const bass=[55,65.406,48.999,58.27][Math.floor(beat/8)];
+      if(beat%4===0 || beat%8===7) tone(bass,.42,.11,'triangle',440);
+      if(beat%4===2) tone(bass*6,.12,.037,'sawtooth',1150);
+      if(beat===1 || beat===3) tone(bass*(beat===1?8:10),.19,.035,'sine',1800);
+      return;
+    }
     // Original procedural minor-key sequence, composed in code for this site.
     const roots = [65.406, 51.913, 43.654, 48.999];
     const root = roots[Math.floor(musicStep / 16) % roots.length];
@@ -120,7 +129,12 @@ export function initAmbient() {
     if (!active()) return;
     const t = context.currentTime, family = sceneFamily();
     let windLevel = .045, windFrequency = 650, surfLevel = 0, rainLevel = 0, humLevel = 0, humFrequency = 90;
-    if (family === 'beach') { windLevel = .035; surfLevel = .19 + Math.sin(t * .24) * .09; }
+    if (family === 'coastal-drive') {
+      const passing = Math.pow((1+Math.sin(t*.55))*.5,4);
+      windLevel=.045+passing*.11;windFrequency=240+passing*500;
+      surfLevel=.085;humLevel=.012+passing*.018;humFrequency=58+passing*40;
+    }
+    else if (family === 'beach') { windLevel = .035; surfLevel = .19 + Math.sin(t * .24) * .09; }
     else if (family === 'desert') { windLevel = .12 + Math.sin(t * .12) * .045; windFrequency = 550; }
     else if (family === 'mountains') { windLevel = .065 + Math.sin(t * .15) * .02; windFrequency = 1100; }
     else if (family === 'cyberpunk') { windLevel = .035; windFrequency = 250; humLevel = .008; humFrequency = 65.406; }
@@ -254,7 +268,7 @@ export function initAmbient() {
     unlock, setEnabled, setVolume, setLayers, getLayers, thunder,
     isEnabled: () => enabled,
     getVolume: () => volume,
-    setScene(name) { scene = String(name || 'islands').toLowerCase(); musicStep = 0; update(); },
+    setScene(name) { const next=String(name || 'islands').toLowerCase(); if(scene!==next){scene=next;musicStep=0;update();} },
     setWeather(name) { if(name==='glass-rain')name='rain';if(name==='glass-fog')name='fog';if(name==='lightning')name='storm';weather = ['drizzle', 'rain', 'heavy-rain', 'storm', 'cloudy', 'snow', 'blizzard', 'fog', 'sandstorm', 'wind', 'hail', 'cyclone', 'flood', 'earthquake', 'aurora', 'meteors', 'fireflies', 'leaves'].includes(name) ? name : 'clear'; update(); },
     destroy() {
       if (destroyed) return;

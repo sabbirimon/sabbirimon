@@ -1,3 +1,4 @@
+import { playSound } from './audio.js';
 /**
  * The code practice lab — a browser-based playground for HTML, CSS and
  * JavaScript, laid out like a Codédex exercise.
@@ -684,6 +685,7 @@ export function initLab(root = document) {
     // reference terminal does, so the learner sees the verdict without
     // having to read the line.
     panel?.setState?.(result.ok ? 'ok' : 'failed');
+    playSound(result.ok ? 'correct' : 'retry');
     if (result.ok) {
       const firstTime = !state.solved.has(state.exercise.id);
       state.solved.add(state.exercise.id);
@@ -728,7 +730,7 @@ export function initLab(root = document) {
     if (!xpLabel) return;
     xpLabel.textContent = `${value} XP`;
     // The XP badge is drawn as pixel art, so it has to be redrawn.
-    drawPixelText(xpLabel);
+
   }
 
   function updateRail() {
@@ -836,7 +838,7 @@ export function initLab(root = document) {
     const position = index < 0 ? 0 : index + 1;
     if (counter) {
       counter.textContent = `Exercise ${position} / ${list.length}`;
-      drawPixelText(counter);
+
     }
     if (progressBar) {
       const solved = list.filter(exercise => state.solved.has(exercise.id)).length;
@@ -848,7 +850,7 @@ export function initLab(root = document) {
     }
     if (chapter) {
       chapter.textContent = state.exercise.chapter;
-      drawPixelText(chapter);
+
     }
     if (prevButton) prevButton.hidden = !neighbourExercise(state.exercise.id, 'prev');
     if (nextButton) nextButton.hidden = !neighbourExercise(state.exercise.id, 'next');
@@ -881,11 +883,11 @@ export function initLab(root = document) {
     // are drawn separately, so the title is set after the kicker.
     if (kicker) {
       kicker.textContent = next.chapter || 'Exercise';
-      drawPixelText(kicker);
+
     }
     if (title) {
       title.textContent = next.title;
-      drawPixelText(title);
+
     }
     if (brief) brief.textContent = next.brief;
     if (status) { status.textContent = ''; status.removeAttribute('data-state'); }
@@ -968,7 +970,7 @@ export function initLab(root = document) {
 
   const onMessage = event => {
     const data = event.data;
-    if (!data || data.source !== 'imon-lab') return;
+    if (!scriptFrame || event.source !== scriptFrame.contentWindow || !data || data.source !== 'imon-lab') return;
     if (data.kind === 'console') {
       // The sandbox sends `{ source, kind, payload: { level, args, kinds } }`.
       const payload = data.payload || {};

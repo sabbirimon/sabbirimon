@@ -1,3 +1,4 @@
+import { playSound } from './audio.js';
 /**
  * The AI lab page controller — the workbench for the AI and system-design
  * course.
@@ -357,6 +358,7 @@ export function initAiLab(root = document) {
       status.textContent = result.message;
       status.dataset.state = result.ok ? 'ok' : 'error';
     }
+    playSound(result.ok ? 'correct' : 'retry');
     if (result.ok) {
       state.solved.add(state.exercise.id);
       const progress = mergeAiProgress(readAiProgress(), [state.exercise.id], state.exercises);
@@ -377,7 +379,7 @@ export function initAiLab(root = document) {
   function updateXp(value) {
     if (!xpLabel) return;
     xpLabel.textContent = `${value} XP`;
-    drawAiPixelText(xpLabel);
+
   }
 
   function renderRail() {
@@ -470,7 +472,7 @@ export function initAiLab(root = document) {
     const position = index < 0 ? 0 : index + 1;
     if (counter) {
       counter.textContent = `Exercise ${position} / ${list.length}`;
-      drawAiPixelText(counter);
+
     }
     if (progressBar) {
       const solved = list.filter(exercise => state.solved.has(exercise.id)).length;
@@ -480,7 +482,7 @@ export function initAiLab(root = document) {
     }
     if (chapter && state.exercise) {
       chapter.textContent = state.exercise.chapter;
-      drawAiPixelText(chapter);
+
     }
     if (prevButton) prevButton.hidden = !neighbourAiExercise(list, state.exercise?.id, 'prev');
     if (nextButton) nextButton.hidden = !neighbourAiExercise(list, state.exercise?.id, 'next');
@@ -493,11 +495,11 @@ export function initAiLab(root = document) {
     state.exercise = next;
     state.buffers = { python: next.starter?.python || '', design: next.starter?.design || '' };
     if (editor) editor.value = aiStarterText(next);
-    if (title) { title.textContent = next.title; drawAiPixelText(title); }
+    if (title) { title.textContent = next.title; }
     if (brief) brief.textContent = next.brief;
     learn?.render(next.chapter);
     if (hint) hint.textContent = aiEditorHint(next);
-    if (kindBadge) { kindBadge.textContent = aiKindLabel(next); drawAiPixelText(kindBadge); }
+    if (kindBadge) { kindBadge.textContent = aiKindLabel(next); }
     if (expected) {
       const text = next.kind === 'python' ? aiExpectedText(next) : '';
       expected.textContent = text;

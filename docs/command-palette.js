@@ -31,6 +31,8 @@ export const SEARCH_INDEX = [
   // Home page sections -------------------------------------------------
   { id: 'home', title: 'Home', subtitle: 'Page · IMON.world', target: '#top', kind: TARGET_KIND.SECTION },
   { id: 'hero', title: 'Hero', subtitle: 'Section · Introduction', target: '#hero-title', kind: TARGET_KIND.SECTION },
+  { id: 'learn', title: 'Learning labs', subtitle: 'Section · Courses and exercises', target: '#learn', kind: TARGET_KIND.SECTION },
+  { id: 'circuits', title: 'Circuits & Signals', subtitle: 'Page · Electronics course and workbench', target: 'circuits.html', kind: TARGET_KIND.PAGE },
   { id: 'projects', title: 'Projects', subtitle: 'Section · Build log', target: '#projects', kind: TARGET_KIND.SECTION },
   { id: 'arcade', title: 'Arcade', subtitle: 'Section · Play games', target: '#arcade', kind: TARGET_KIND.SECTION },
   { id: 'news', title: 'Daily', subtitle: 'Section · News & headlines', target: '#news', kind: TARGET_KIND.SECTION },
@@ -40,6 +42,9 @@ export const SEARCH_INDEX = [
   // Standalone pages ----------------------------------------------------
   { id: 'lab', title: 'Code Lab', subtitle: 'Page · Lessons & curriculum', target: 'lab.html', kind: TARGET_KIND.PAGE },
   { id: 'ai-lab', title: 'AI Lab', subtitle: 'Page · Local AI courses', target: 'ai-lab.html', kind: TARGET_KIND.PAGE },
+  { id: 'signal-runner', title: 'Signal Runner', subtitle: 'Game · Side-scrolling action', target: 'arcade/?game=runner', kind: TARGET_KIND.PAGE },
+  { id: 'prism-breaker', title: 'Prism Breaker', subtitle: 'Game · Brick breaker', target: 'arcade/?game=breaker', kind: TARGET_KIND.PAGE },
+  { id: 'star-patrol', title: 'Star Patrol', subtitle: 'Game · Space shooter', target: 'arcade/?game=space', kind: TARGET_KIND.PAGE },
   { id: 'gridworks', title: 'Gridworks', subtitle: 'Page · Infrastructure simulator', target: 'gridworks/', kind: TARGET_KIND.PAGE },
   { id: 'tools', title: 'Toolbox', subtitle: 'Page · Developer tools', target: 'tools/', kind: TARGET_KIND.PAGE },
   { id: 'login', title: 'Sign in', subtitle: 'Page · Account', target: 'login.html', kind: TARGET_KIND.PAGE },

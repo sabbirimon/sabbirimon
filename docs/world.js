@@ -1,5 +1,6 @@
 /** Original pixel worlds: procedural scenes and locally hosted, original illustrated landscapes. */
 export const WORLD_ART = {
+  'neon-coast': { name: 'Neon Coast', file: 'neon-coast', focus: .72 },
   'waterfall-valley': { name: 'Waterfall Valley', file: 'waterfall-valley', focus: .55 },
   'twilight-lake': { name: 'Twilight Lake', file: 'twilight-lake', focus: .52 },
   'neon-forest': { name: 'Neon Forest', file: 'neon-forest', focus: .52 }
@@ -437,6 +438,33 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       rect(roverX+2,cy+27,7,6,'#303953');rect(roverX+20,cy+27,7,6,'#303953');
       rect(roverX+11,cy+1,2,12,'#b8bbd0');rect(roverX+8,cy-1,8,3,'#d6d3ea');
       robot(width*.46,cy+27);
+    } else if(name==='energy-ridge') {
+      mountainLayer(cy-13, 32, p.mountain[0], 4);
+      mountainLayer(cy+5, 23, p.mountain[1], 6);
+      rect(0,cy+26,width,height-cy,p.grassShade);
+      const time = motion ? clock : 0;
+      const mid = width * .7;
+      rect(mid-34,cy+9,68,28,'#233649');
+      rect(mid-40,cy+32,80,6,'#47647c');
+      for (let i=0;i<3;i++) {
+        ctx.beginPath();
+        ctx.ellipse(mid,cy+7,28-i*6,11+i*2,Math.sin(time*.45+i)*.35,0,Math.PI*2);
+        ctx.strokeStyle=['#befcf4','#52cffa','#c5a5ff'][i];
+        ctx.lineWidth=2;
+        ctx.stroke();
+      }
+      rect(mid-4,cy+4,8,6,'#f1ffff');
+      for (let row=0;row<2;row++) for (let i=0;i<4;i++) {
+        const x=width*.17+i*21-row*5, y=cy+22+row*16;
+        rect(x+8,y+4,3,8,'#293849');
+        polygon([[x,y],[x+17,y],[x+14,y+7],[x-3,y+7]],'#245486');
+        rect(x+3,y+2,11,1,'#78bde0');
+        rect(x+5+Math.floor((time*2+i)%6),y+1,1,5,'#a5e2f4');
+      }
+      for(let x=width*.32; x<mid-37; x+=8) rect(x,cy+44,5,2,'#477883');
+      const span=Math.max(1,mid-37-width*.32);
+      rect(width*.32+(time*18)%span,cy+43,5,3,'#90f9d3');
+      robot(mid+33,cy+35);
     } else if(name==='cyberpunk') {
       const cyan='#6deafa',pink='#e877d7',ink='#09101f';
       const night=mixColor(p.sky[0],'#080d1d',.92);
@@ -481,6 +509,15 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
         rect(width*.5-spread,y,5,2,cyan);rect(width*.5+spread,y,5,2,pink);
         if(row%2===0)rect(width*.5,y,2,4,'#5c627c');
       }
+      // Elevated metro cars cross the lit viaduct at different depths.
+      const transitY = cy-16;
+      rect(0,transitY+3,width,3,'#453553');
+      for(let i=0;i<3;i++) {
+        const x=((motion?clock*18:width*.7)+i*18)%(width+70)-50;
+        rect(x,transitY-4,16,6,'#685187');
+        rect(x+2,transitY-3,10,2,cyan);
+        rect(x+14,transitY-2,2,2,'#ffd7a5');
+      }
       const holoX=width*.69;
       rect(holoX,cy+8,26,3,'#3c3559');rect(holoX+7,cy-13,12,20,'#153849');
       ctx.globalAlpha=.65;rect(holoX+1,cy-22,25,18,cyan);ctx.globalAlpha=1;
@@ -504,6 +541,16 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     ctx.globalAlpha = scene === 'neon-forest' ? .07 + (1-light)*.1 : .035 + (1-light)*.23;
     rect(0,0,width,height,p.sky[0]);ctx.globalAlpha=1;
     const t = motion ? clock : 0;
+    if (scene === 'neon-coast') {
+      for (let i=0;i<10;i++) {
+        const x=width*(.06+i*.056), y=height*(.64+(i%3)*.025);
+        ctx.globalAlpha=.2+.13*Math.sin(t+i);
+        rect(x+Math.sin(t*.5+i)*2,y,5+i%4,1,'#ffd6b3');
+      }
+      ctx.globalAlpha=1;
+      robot(width*.71,height*.89);
+      return;
+    }
     // Thin atmospheric clouds sit behind the UI; detail remains visible through them.
     cloud(width*.08+Math.sin(t*.08)*9,height*.16,.8,p,.11);
     cloud(width*.71-Math.sin(t*.07)*8,height*.26,.65,p,.09);
@@ -608,7 +655,13 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     ctx.restore();
     } else drawBiome(WORLD_ART[scene]?'forest':scene,p,cy,px,py);
     }
-    if(!['space','cave','cyberpunk'].includes(scene)){turbine(width*.15,height-19,.72);turbine(width*.88,height-27,.52);}
+    if (['mountains','islands','waterfall-valley','energy-ridge','forest'].includes(scene)) {
+      const ridgeX=width*.87, ridgeY=height*(scene==='energy-ridge'?.53:.75);
+      polygon([[width*.7,height],[width*.74,ridgeY+18],[ridgeX-12,ridgeY],[ridgeX+12,ridgeY],[width*.95,ridgeY+17],[width,height*.79],[width,height]],p.mountain[1]);
+      rect(ridgeX-11,ridgeY,22,2,p.grassLight);
+      turbine(ridgeX,ridgeY,portrait?1.05:1.48);
+      turbine(width*.95,ridgeY+17,portrait?.68:.92);
+    }
     // Coins track the translated scenery so visual targets and hit areas agree.
     coins.forEach(c=>coin({...c,x:c.x+Math.round(px),y:c.y+Math.round(py)},p));
     particles.forEach(pt=>{
@@ -745,7 +798,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       draw();schedule();
     },
     setScene(name) {
-      if(!['islands','forest','beach','desert','mountains','city','sakura','cave','space','cyberpunk',...Object.keys(WORLD_ART)].includes(name)||name===scene)return;
+      if(!['islands','forest','beach','desert','mountains','city','sakura','cave','space','cyberpunk','energy-ridge',...Object.keys(WORLD_ART)].includes(name)||name===scene)return;
       // One low-resolution snapshot provides a cheap scene dissolve; no second live renderer.
       if(motion) {
         try {
