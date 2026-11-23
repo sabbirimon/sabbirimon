@@ -12,11 +12,16 @@
 <h1>Meshlit</h1><p class="summary">Local-first AI chat, coding workspaces and model management for Android and desktop.</p><p>Use a bundled or owner-configured model, connect a compatible inference server, or open a project in Studio’s coding window. Desktop preview installers are built separately for Windows, Linux and macOS.</p>
 <h2>Download Meshlit Studio</h2>
 <p>Preview v2.0.48-studio.1. Extract the entire archive before opening the application.</p>
-<div class="links"><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Studio-Windows-X64.zip">Windows x64</a><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Studio-Linux-X64.tar.gz">Linux x64</a><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Studio-macOS-ARM64.tar.gz">macOS Apple Silicon</a></div>
+<div class="links"><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Studio-Windows-X64.zip">Windows x64</a><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Studio-Linux-X64.tar.gz">Linux x64</a><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Studio-macOS-ARM64.tar.gz">macOS Apple Silicon</a><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Studio-macOS-X64.tar.gz">macOS Intel</a></div>
 <p>On Windows, open <strong>Meshlit.exe</strong> inside the extracted Meshlit-Studio folder. General Chat opens first.</p>
 <p><a href="https://github.com/sabbirimon/meshlit/releases/tag/v2.0.48-studio.1">Release notes</a> · <a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/SHA256SUMS.txt">SHA-256 checksums</a> · <a href="https://github.com/sabbirimon/meshlit/tree/v2.0.48-studio.1">Source for this build</a> · <a href="https://github.com/sabbirimon/meshlit/tree/main">Main branch</a></p>
+<h2>Android ARM64</h2>
+<p>Build 48 preview APKs use a debug signing certificate. Full and Core install under separate package names.</p>
+<div class="links"><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Android-Full-ARM64-debug.apk">Android Full</a><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/Meshlit-Android-Core-ARM64.apk">Android Core</a><a href="https://github.com/sabbirimon/meshlit/releases/download/v2.0.48-studio.1/SHA256SUMS-Intel-Android.txt">Intel Mac and Android checksums</a></div>
 <h2>Verify your download</h2>
-<p>To verify the Windows archive, run this command with GitHub CLI. On Linux or macOS, substitute the filename you downloaded.</p>
+<p>To verify the Windows archive, run this command with GitHub CLI. On Linux or Apple Silicon, substitute the filename you downloaded.</p>
 <pre><code>gh attestation verify "Meshlit-Studio-Windows-X64.zip" --repo sabbirimon/meshlit --signer-workflow sabbirimon/meshlit/.github/workflows/full-studio.yml --source-digest 25ff596f9067b728b07471c929abc5f0d8518cf5</code></pre>
+<p>For the Intel Mac archive, use its dedicated build workflow.</p>
+<pre><code>gh attestation verify "Meshlit-Studio-macOS-X64.tar.gz" --repo sabbirimon/meshlit --signer-workflow sabbirimon/meshlit/.github/workflows/intel-release.yml --source-digest c8deafd6a79a91b37682812adaca1b7ff83b6f79</code></pre>
 <p><a href="https://cli.github.com/manual/gh_attestation_verify">GitHub CLI verification reference</a></p>
 </main></body></html>
