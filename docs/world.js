@@ -443,7 +443,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
       mountainLayer(cy+5, 23, p.mountain[1], 6);
       rect(0,cy+26,width,height-cy,p.grassShade);
       const time = motion ? clock : 0;
-      const mid = width * .7;
+      const mid = width * .62;
       rect(mid-34,cy+9,68,28,'#233649');
       rect(mid-40,cy+32,80,6,'#47647c');
       for (let i=0;i<3;i++) {
@@ -614,7 +614,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     rect(moonX-8,moonY-10,16,20,orbColor);rect(moonX-10,moonY-7,20,14,orbColor);
     ctx.globalAlpha=1-light;rect(moonX-2,moonY-10,10,15,p.sky[1]);rect(moonX+1,moonY-6,10,15,p.sky[1]);
     ctx.globalAlpha=1;
-    const cy=height-(portrait?86:46);
+    const cy=scene==='energy-ridge' ? Math.round(height*.6) : height-(portrait?86:46);
     if(scene==='islands') {
     mountainLayer(height-53,53,p.mountain[0],1);
     mountainLayer(height-35,39,p.mountain[1],3);

@@ -157,7 +157,7 @@ html[data-scene="cyberpunk"] .world-home { --studio-mint:#80f6ef; --line:#534568
 .cartridge-shelf a:nth-child(2) .cart-icon { color:#ffc781; }
 .cartridge-shelf a:nth-child(3) .cart-icon { color:#c3adff; }
 @media(max-width:780px){.cartridge-shelf{grid-template-columns:1fr;}}
-.coastal-radio { display:none; }
+html:not([data-scene="neon-coast"]) .world-home .sky-controls .coastal-radio { display:none; }
 html[data-scene="neon-coast"] .coastal-radio { display:inline-block;color:#ffe0f1;border-color:#c074a9; }
 .world-home #hero-title { font:400 clamp(1.65rem,3.5vw,3.4rem)/1.45 Pixel,monospace;letter-spacing:-.065em;text-shadow:3px 4px #162639; }
 .world-home .hero-content { max-width:min(50rem,94%); }
