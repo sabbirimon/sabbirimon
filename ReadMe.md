@@ -9,30 +9,20 @@
 
 # Sabbir Hassan Imon
 
-I build open-source software in Dhaka, Bangladesh. My work spans local-first AI, Android, networking and cloud infrastructure. **IMON World** is where I turn those interests into things you can try in a browser.
+I’m an open-source developer in Dhaka, Bangladesh. I build Android tools, experiment with local AI and work on networks and cloud infrastructure. On [IMON World](https://imon.com.bd/), you can try that work in a browser, from wiring a circuit to running a pixel city.
 
-| Enter the world | What you can do |
+### Try a lab
+
+<a href="https://imon.com.bd/courses.html"><img src="docs/art/course-valley.webp" width="100%" alt="Pixel-art meadow with a retro computer and a hilltop observatory. Open the IMON World course catalog."></a>
+
+| Workbench | Try a challenge |
 | --- | --- |
-| [Learning labs](https://imon.com.bd/courses.html) | Write code, inspect model output, measure a circuit or work through a systems simulation. |
-| [Jungle Campfire](https://imon.com.bd/?scene=jungle-camp) | Pitch up beside the fire, switch on recorded woodland sounds and change the weather. |
-| [Pixel Arcade](https://imon.com.bd/arcade/) | Play Snake, Brick Breaker, a space shooter and a side-scrolling runner. |
-| [The lost signal](https://imon.com.bd/guide/) | Follow Rafi and his robot through an illustrated introduction to the labs and quests. |
+| [Code Lab](https://imon.com.bd/lab.html) | [Build a form that enforces a date window](https://imon.com.bd/lab.html?exercise=html-remote-date) |
+| [AI Lab](https://imon.com.bd/ai-lab.html) | [Evaluate ranked search results in Python](https://imon.com.bd/ai-lab.html?exercise=ai-eval-ranking) |
+| [Circuits & Signals](https://imon.com.bd/circuits.html) | [Wire and balance a bridge circuit](https://imon.com.bd/circuits.html?exercise=circuit-bench-bridge) |
+| [Systems Lab](https://imon.com.bd/systems.html) | [Measure the backlog after a failover](https://imon.com.bd/systems.html?exercise=capacity-failover) |
 
-[Explore my projects](https://imon.com.bd/#projects) · [Open the browser tools](https://imon.com.bd/tools/) · [LinkedIn](https://linkedin.com/in/sabbirimon)
-
-### Choose your world
-
-A little preview of the live site. Pick a landscape to enter it.
-
-<table>
-  <tr>
-    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=waterfall-valley"><img src="docs/art/waterfall-valley.webp" width="280" alt="Waterfall Valley: a bright pixel village, emerald cliffs, and cascading blue water"><br><strong>Waterfall Valley ↗</strong></a><br><sub>Bright skies · Living landscapes</sub></td>
-    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=twilight-lake"><img src="docs/art/twilight-lake.webp" width="280" alt="Twilight Lake: a mountain lake reflecting gold and magenta skies"><br><strong>Twilight Lake ↗</strong></a><br><sub>Golden skies · Mountain reflections</sub></td>
-    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=neon-forest"><img src="docs/art/neon-forest.webp" width="280" alt="Neon Forest: luminous magenta trees beside a cyan river"><br><strong>Neon Forest ↗</strong></a><br><sub>Glowing woods · Firefly nights</sub></td>
-  </tr>
-</table>
-
-**[Explore the scenery presets](https://imon.com.bd/)** · **[Play the arcade](https://imon.com.bd/#arcade)** · **[Build your world in Gridworks](https://imon.com.bd/gridworks/)**
+[Course catalog](https://imon.com.bd/courses.html) · [Practical exams](https://imon.com.bd/exams/) · [Browser tools](https://imon.com.bd/tools/)
 
 ### A few things I'm building
 
@@ -51,28 +41,20 @@ A little preview of the live site. Pick a landscape to enter it.
 **Infrastructure** &nbsp; `Linux` · `Docker` · `Kubernetes` · `GitHub Actions`<br>
 **Always exploring** &nbsp; Local AI · Android · Cloud · RAN / SDN · GSM / LTE / 5G
 
-### Take a play break
+### Explore IMON World
 
-<a href="https://imon.com.bd/#arcade">
-  <img src="assets/pixel-arcade.svg" width="100%" alt="IMON Arcade — games, daily tech quests, and a full infrastructure management campaign.">
-</a>
+<a href="https://imon.com.bd/#arcade"><img src="assets/pixel-arcade.svg" width="100%" alt="Open the IMON World arcade"></a>
 
-**[IMON Gridworks](https://imon.com.bd/gridworks/)** — build power plants, communication networks, data centers, and connected cities in a full-screen management campaign.
-
-**[Pixel arcade](https://imon.com.bd/#arcade)** — Snake · Surf · Ludo with computer opponents · 2048 · Dev Slots · IMON Rally.
-
-**[Daily Tech Quest](https://imon.com.bd/#news)** — fresh tech MCQs in 5, 20, or 30-question rounds, scores, and live tech, science & space news.
-
-Explore animated pixel worlds with local-time lighting and customizable colors. Try light or heavy rain, snow, lightning, clouds, wind, fog, and fireflies from the weather controls, or preview them in World Studio. Tune the intensity, density, and strength—or pause the animation. Turn on ambience to mix field recordings and synthesized sound layers. Your preferences are saved on your device. Games support keyboard and touch, with personal progress saved on your device.
-
-**[Enter World Studio →](https://imon.com.bd/)** · **[Try Cyberpunk mode →](https://imon.com.bd/?world=cyberpunk)**
-
-Dev Slots uses free virtual collectibles; there are no purchases, cash stakes, or real-world prizes.
+| Play or explore | What you’ll find |
+| --- | --- |
+| [Gridworks](https://imon.com.bd/gridworks/) | Place power stations and network towers, then keep the city connected as its population grows. |
+| [Retro arcade](https://imon.com.bd/#arcade) | Play Snake, Surf, 2048 and Rally with touch controls. The [cartridge cabinet](https://imon.com.bd/arcade/) holds Signal Runner, Brick Breaker and Star Patrol. |
+| [Pixel landscapes](https://imon.com.bd/#worlds) | Explore 43 scenarios across 18 worlds, or [sit by the jungle campfire](https://imon.com.bd/?scene=jungle-camp&phase=twilight&weather=clear&view=scenery#scene-stage). |
+| [Daily Dispatch](https://imon.com.bd/#news) | Read technology, AI and science headlines, or try the daily quiz. |
+| [Illustrated player guide](https://imon.com.bd/guide/) | Follow Rafi and his robot through the labs and quests. |
 
 ### Find me around the internet
 
 [LinkedIn](https://linkedin.com/in/sabbirimon) · [Facebook](https://www.facebook.com/mr.sabbirimon/) · [Medium](https://medium.com/@sabbirimon) · [YouTube](https://youtube.com/@sabbirimon) · [X](https://x.com/sabbirimon) · [Buy me a coffee](https://buymeacoffee.com/sabbirimon)
 
-<p align="center"><sub>Built with curiosity. Shared in the open. A little more colorful every day.</sub></p>
-
-WhatsApp: **@imons** · [Facebook](https://www.facebook.com/mr.sabbirimon/)
+WhatsApp · **@imons**
