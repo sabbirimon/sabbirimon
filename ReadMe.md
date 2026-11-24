@@ -18,7 +18,7 @@
 
 <p align="center">
   <a href="https://imon.com.bd/courses.html"><img width="280" src="assets/profile-buttons/courses.svg" alt="Course catalog"></a>
-  <a href="https://imon.com.bd/#arcade"><img width="280" src="assets/profile-buttons/arcade.svg" alt="Play the arcade"></a><br>
+  <a href="https://imon.com.bd/#arcade"><img width="280" src="assets/play-games.svg" alt="Play Games — open the IMON World arcade"></a><br>
   <a href="https://imon.com.bd/gridworks/"><img width="280" src="assets/profile-buttons/gridworks.svg" alt="Build in Gridworks"></a>
   <a href="https://imon.com.bd/#worlds"><img width="280" src="assets/profile-buttons/worlds.svg" alt="Explore the pixel worlds"></a>
 </p>
@@ -40,6 +40,10 @@
 An open-source builder from **Dhaka, Bangladesh**, exploring the space between **local-first AI, Android, systems, and cloud infrastructure**. I like useful tools, curious experiments, and giving serious software a little personality.
 
 ### Try a lab
+
+<p align="center">
+  <a href="https://imon.com.bd/systems.html"><img src="assets/cellular-5g.svg" width="760" alt="Three cell towers exchanging signals with the 5G core. Open the Systems Lab."></a>
+</p>
 
 | Workbench | Try a challenge |
 | --- | --- |
