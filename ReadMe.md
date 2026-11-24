@@ -7,13 +7,39 @@
   </a>
 </p>
 
-# Sabbir Hassan Imon
+<p align="center">
+  <a href="https://imon.com.bd/" aria-label="Enter IMON World">
+    <picture>
+      <source media="(prefers-reduced-motion: reduce)" srcset="assets/enter-world.png">
+      <img src="assets/enter-world.gif" width="760" alt="ENTER IMON WORLD — Let's Code Together. Open the pixel worlds, arcade, and Gridworks campaign.">
+    </picture>
+  </a>
+</p>
 
-I’m an open-source developer in Dhaka, Bangladesh. I build Android tools, experiment with local AI and work on networks and cloud infrastructure. On [IMON World](https://imon.com.bd/), you can try that work in a browser, from wiring a circuit to running a pixel city.
+<p align="center">
+  <a href="https://imon.com.bd/courses.html"><img width="280" src="assets/profile-buttons/courses.svg" alt="Course catalog"></a>
+  <a href="https://imon.com.bd/#arcade"><img width="280" src="assets/profile-buttons/arcade.svg" alt="Play the arcade"></a><br>
+  <a href="https://imon.com.bd/gridworks/"><img width="280" src="assets/profile-buttons/gridworks.svg" alt="Build in Gridworks"></a>
+  <a href="https://imon.com.bd/#worlds"><img width="280" src="assets/profile-buttons/worlds.svg" alt="Explore the pixel worlds"></a>
+</p>
+
+### Choose your world
+
+<table>
+  <tr>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=waterfall-valley&amp;phase=daylight&amp;weather=wind&amp;view=scenery#scene-stage"><img src="docs/art/waterfall-valley.webp" width="280" alt="Waterfall Valley: a bright pixel village, emerald cliffs, and cascading blue water"><br><strong>Waterfall Valley ↗</strong></a><br><sub>Bright skies · Living landscapes</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=twilight-lake&amp;phase=sunset&amp;weather=clear&amp;view=scenery#scene-stage"><img src="docs/art/twilight-lake.webp" width="280" alt="Twilight Lake: a mountain lake reflecting gold and magenta skies"><br><strong>Twilight Lake ↗</strong></a><br><sub>Golden skies · Mountain reflections</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=neon-forest&amp;phase=twilight&amp;weather=clear&amp;view=scenery#scene-stage"><img src="docs/art/neon-forest.webp" width="280" alt="Neon Forest: luminous magenta trees beside a cyan river"><br><strong>Neon Forest ↗</strong></a><br><sub>Glowing woods · Firefly nights</sub></td>
+  </tr>
+</table>
+
+## IMON · Let’s Code Together
+
+### Hey, I'm Sabbir Hassan Imon 👋
+
+An open-source builder from **Dhaka, Bangladesh**, exploring the space between **local-first AI, Android, systems, and cloud infrastructure**. I like useful tools, curious experiments, and giving serious software a little personality.
 
 ### Try a lab
-
-<a href="https://imon.com.bd/courses.html"><img src="docs/art/course-valley.webp" width="100%" alt="Pixel-art meadow with a retro computer and a hilltop observatory. Open the IMON World course catalog."></a>
 
 | Workbench | Try a challenge |
 | --- | --- |
