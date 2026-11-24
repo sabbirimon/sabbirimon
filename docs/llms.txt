@@ -1,6 +1,6 @@
 # IMON.world
 
-> Sabbir Hassan Imon's personal site: open-source projects, a pixel-art world, browser games, and free browser-based learning labs. Static site, no server-side runtime, optional aggregate usage counts, no accounts required for learning.
+> Sabbir Hassan Imon's personal site: software projects, a pixel-art world, browser games, and free browser-based learning labs. Static site, no server-side runtime, optional aggregate usage counts, no accounts required for learning.
 
 This file is a plain-text map of the site for language models and other automated readers. Every URL below is a real page. Nothing here is a marketing claim beyond what the pages themselves state.
 
@@ -31,7 +31,9 @@ Fourteen browser-only simulations cover IPv4 subnets, VLANs, device troubleshoot
 
 ### [Home](https://imon.com.bd/)
 The main site. Sections:
-- [Projects](https://imon.com.bd/#projects) — open-source repositories: HyperL, meshlit, OmniCast, OmniRecovery, and a wider list on [GitHub](https://github.com/sabbirimon?tab=repositories).
+- [Projects](https://imon.com.bd/#projects) — software from Sabbir Hassan Imon, including OmniCast and OmniRecovery.
+- [HyperL](https://imon.com.bd/hyperl/) — native Rust tensor compute, Python graph tools and desktop inference downloads.
+- [Meshlit](https://imon.com.bd/meshlit/) — local GGUF chat and agents on Android, plus a native desktop coding workspace and device pairing.
 - [Pixel world](https://imon.com.bd/#pixel-world) — an illustrated pixel scene with a live weather layer, World Studio controls, day/night cycle and optional synthesised ambience.
 - [Arcade](https://imon.com.bd/#arcade) — free browser games: Snake, Surf, 2048, Ludo, Puzzle, Dev Slots and a racer. No payments, no wagers.
 - [Daily](https://imon.com.bd/#news) — live technology and science/space headlines plus a daily computer-science quiz.

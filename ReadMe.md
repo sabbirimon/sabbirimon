@@ -130,10 +130,10 @@ Meshlit and OmniCast approach the same phone from two directions. Meshlit gives 
 
 | Project | What it explores | Built with |
 | :--- | :--- | :--- |
-| [**Meshlit**](https://github.com/sabbirimon/meshlit) | Local-first AI chat, coding workspaces, and bots for Android and desktop. | Kotlin |
+| [**Meshlit**](https://github.com/sabbirimon/meshlit) | Local GGUF models and agents on Android, plus a native desktop workspace for chat and coding. | Kotlin on Android · Rust and JavaScript in Studio |
 | [**OmniCast**](https://github.com/sabbirimon/OmniCast) | Mirror, control, and record Android over USB or Wi-Fi, with desktop device tools. | Kotlin |
 | [**OmniRecovery**](https://github.com/sabbirimon/OmniRecovery) | Cross-platform data recovery, verified USB acquisition, and forensic inspection. | Rust |
-| [**HyperL**](https://github.com/sabbirimon/HyperL) | Experimental model execution, sharding, and heterogeneous compute. | Kotlin |
+| [**HyperL**](https://github.com/sabbirimon/HyperL) | Memory-budgeted tensor execution, Python graph tools and a desktop inference preview. | Rust · Python |
 
 [Browse my public repositories →](https://github.com/sabbirimon?tab=repositories)
 
