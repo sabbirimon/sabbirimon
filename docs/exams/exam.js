@@ -1,16 +1,20 @@
 import {exams,grade} from './cases.js';
+import {enablePictureMotion} from '../picture-motion.js';
+
+enablePictureMotion(document.getElementById('exam-motion'));
 const query=new URLSearchParams(location.search).get('track');
 const track=Object.hasOwn(exams,query)?query:'code', exam=exams[track];
 const paper=document.querySelector('#paper'),report=document.querySelector('#report');
-document.querySelector('#tracks a[href="?track='+track+'"]').setAttribute('aria-current','page');
+document.querySelector('#tracks [data-track="'+track+'"]').setAttribute('aria-current','page');
+document.getElementById('track-title').textContent=exam.name;
 const key='imon-practice-exam-v1-'+track;
 function el(tag,text){const node=document.createElement(tag);node.textContent=text;return node}
 function best(){try{const n=localStorage.getItem(key);return n===null?null:Number(n)}catch{return null}}
-function record(){const score=best();document.querySelector('#record').textContent=exam.name+' · '+(Number.isFinite(score)?'Best on this device: '+score+'%':'No graded attempt on this device.')}
+function record(){const score=best();document.querySelector('#record').textContent=Number.isFinite(score)?'Best on this device: '+score+'%':'First attempt on this device'}
 record();
 const questions=[];
 for(const study of exam.cases){
- const section=el('section','');section.append(el('h2',study.title),el('p',study.brief));
+ const section=el('section','');section.append(el('h3',study.title),el('p',study.brief));
  for(const task of study.tasks){
   const name='task-'+questions.length,field=el('fieldset','');questions.push({task,name});
   field.append(el('legend',task.prompt));

@@ -1,1 +1,55 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Practical exams · IMON World</title><meta name="description" content="Work through case studies in web development, AI, circuits and systems. Get scored feedback and explanations for each skill."><link rel="canonical" href="https://imon.com.bd/exams/"><link rel="icon" href="../icon.svg"><link rel="stylesheet" href="../studio.css"><link rel="stylesheet" href="exam.css"><script type="module" src="exam.js"></script></head><body class="catalog-page"><main><nav><a href="../">IMON World</a> · <a href="../courses.html">Course catalog</a> · <a href="../progress.html">My progress</a></nav><h1>Practical exams</h1><p>Work through two cases per track. Submit your decisions and calculations for a scored review. Each task is worth one point. The pass mark is 75%.</p><nav id="tracks" aria-label="Exam tracks"><a href="?track=code">Web development</a><a href="?track=ai">AI and data</a><a href="?track=circuits">Circuits and signals</a><a href="?track=systems">Systems and cloud</a></nav><p id="record"></p><form id="paper"></form><section id="report" hidden tabindex="-1"></section><noscript>Enable JavaScript for the interactive exam.</noscript></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Practical exams · IMON World</title>
+  <meta name="description" content="Take case-based exams in web development, AI, circuits and systems. Get scored feedback and explanations for each skill.">
+  <link rel="canonical" href="https://imon.com.bd/exams/">
+  <meta property="og:image" content="https://imon.com.bd/art/exam-room.png">
+  <link rel="icon" href="../icon.svg">
+  <link rel="stylesheet" href="../studio.css">
+  <link rel="stylesheet" href="exam.css">
+  <script type="module" src="exam.js"></script>
+</head>
+<body class="catalog-page exam-page">
+  <header class="exam-top">
+    <nav aria-label="Learning navigation">
+      <a class="exam-home" href="../"><img src="../icon.svg" width="30" height="30" alt="">IMON World</a>
+      <a href="../courses.html"><span class="nav-sprite catalog-icon" aria-hidden="true"></span>Course catalog</a>
+      <a href="../progress.html"><span class="nav-sprite progress-icon" aria-hidden="true"></span>My progress</a>
+    </nav>
+  </header>
+  <main>
+    <section class="exam-hero" aria-labelledby="exam-title">
+      <picture id="exam-panorama">
+        <source media="(prefers-reduced-motion: reduce)" srcset="../art/exam-room.png">
+        <img src="../art/exam-room.gif" width="896" height="320" alt="A sunset-lit pixel art exam desk with a waveform monitor, pencil and answer sheet." fetchpriority="high">
+      </picture>
+      <div class="exam-intro">
+        <h1 id="exam-title">Practical <span>exams</span></h1>
+        <p>Work through two case studies. Submit your answers for a score and a worked explanation of each task.</p>
+        <a class="exam-choose" href="#exam-tracks">Choose an exam <span aria-hidden="true">↓</span></a>
+      </div>
+      <button class="exam-motion" id="exam-motion" type="button" aria-controls="exam-panorama" hidden>Pause animation</button>
+    </section>
+    <section id="exam-tracks" aria-labelledby="tracks-heading">
+      <h2 id="tracks-heading">Exam tracks</h2>
+      <nav id="tracks" aria-label="Exam tracks">
+        <a href="?track=code#exam-paper" data-track="code"><img src="../art/lab-code.webp" alt=""><span><strong>Web development</strong><small>Menu events &amp; accessible layouts</small></span></a>
+        <a href="?track=ai#exam-paper" data-track="ai"><img src="../art/lab-ai.webp" alt=""><span><strong>AI and data</strong><small>Model metrics &amp; fair evaluation</small></span></a>
+        <a href="?track=circuits#exam-paper" data-track="circuits"><img src="../art/lab-circuits.webp" alt=""><span><strong>Circuits and signals</strong><small>Sensor inputs &amp; scope traces</small></span></a>
+        <a href="?track=systems#exam-paper" data-track="systems"><img src="../art/lab-systems.webp" alt=""><span><strong>Systems and cloud</strong><small>Subnet plans &amp; cloud costs</small></span></a>
+      </nav>
+    </section>
+    <section id="exam-paper" aria-labelledby="track-title">
+      <h2 id="track-title">Exam paper</h2>
+      <p id="record"></p>
+      <p class="exam-scoring">Each task is worth one point. A score of 75% passes.</p>
+      <form id="paper"></form>
+      <section id="report" hidden tabindex="-1"></section>
+      <noscript>Enable JavaScript to answer the questions and receive your score.</noscript>
+    </section>
+  </main>
+</body>
+</html>

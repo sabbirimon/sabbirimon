@@ -25,13 +25,50 @@
 
 ### Choose your world
 
+Pick a scene to open its animated landscape with the time and weather shown.
+
 <table>
   <tr>
-    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=waterfall-valley&amp;phase=daylight&amp;weather=wind&amp;view=scenery#scene-stage"><img src="docs/art/waterfall-valley.webp" width="280" alt="Waterfall Valley: a bright pixel village, emerald cliffs, and cascading blue water"><br><strong>Waterfall Valley ↗</strong></a><br><sub>Bright skies · Living landscapes</sub></td>
-    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=twilight-lake&amp;phase=sunset&amp;weather=clear&amp;view=scenery#scene-stage"><img src="docs/art/twilight-lake.webp" width="280" alt="Twilight Lake: a mountain lake reflecting gold and magenta skies"><br><strong>Twilight Lake ↗</strong></a><br><sub>Golden skies · Mountain reflections</sub></td>
-    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=neon-forest&amp;phase=twilight&amp;weather=clear&amp;view=scenery#scene-stage"><img src="docs/art/neon-forest.webp" width="280" alt="Neon Forest: luminous magenta trees beside a cyan river"><br><strong>Neon Forest ↗</strong></a><br><sub>Glowing woods · Firefly nights</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=waterfall-valley&amp;phase=daylight&amp;weather=wind&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/waterfall-valley.webp" width="280" alt=""><br><strong>Waterfall Valley ↗</strong></a><br><sub>Daylight · Wind</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=twilight-lake&amp;phase=sunset&amp;weather=clear&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/twilight-lake.webp" width="280" alt=""><br><strong>Twilight Lake ↗</strong></a><br><sub>Sunset · Clear / calm</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=neon-forest&amp;phase=twilight&amp;weather=clear&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/neon-forest.webp" width="280" alt=""><br><strong>Neon Forest ↗</strong></a><br><sub>Night · Clear / calm</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=jungle-camp&amp;phase=twilight&amp;weather=clear&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/jungle-camp.webp" width="280" alt=""><br><strong>Jungle Campfire ↗</strong></a><br><sub>Night · Clear / calm</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=riverbend-mills&amp;phase=daylight&amp;weather=wind&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/riverbend-mills.webp" width="280" alt=""><br><strong>Riverbend Mills ↗</strong></a><br><sub>Daylight · Wind</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=coastal-boardwalk&amp;phase=sunset&amp;weather=clear&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/coastal-boardwalk.webp" width="280" alt=""><br><strong>Sunset Boardwalk ↗</strong></a><br><sub>Sunset · Clear / calm</sub></td>
   </tr>
 </table>
+
+<details>
+<summary>Explore 12 more worlds</summary>
+
+<table>
+  <tr>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=energy-ridge&amp;phase=daylight&amp;weather=wind&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/energy-ridge.webp" width="280" alt=""><br><strong>Energy Ridge ↗</strong></a><br><sub>Daylight · Wind</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=islands&amp;phase=morning&amp;weather=clear&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/islands.webp" width="280" alt=""><br><strong>Floating Islands ↗</strong></a><br><sub>Morning · Clear / calm</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=neon-coast&amp;phase=sunset&amp;weather=clear&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/neon-coast.webp" width="280" alt=""><br><strong>Neon Coast ↗</strong></a><br><sub>Sunset · Clear / calm</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=sakura&amp;phase=morning&amp;weather=leaves&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/sakura.webp" width="280" alt=""><br><strong>Cherry Grove ↗</strong></a><br><sub>Morning · Falling leaves</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=forest&amp;phase=twilight&amp;weather=fireflies&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/forest.webp" width="280" alt=""><br><strong>Woodland ↗</strong></a><br><sub>Night · Fireflies</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=beach&amp;phase=daylight&amp;weather=clear&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/beach.webp" width="280" alt=""><br><strong>Ocean Shore ↗</strong></a><br><sub>Daylight · Clear / calm</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=mountains&amp;phase=twilight&amp;weather=aurora&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/mountains.webp" width="280" alt=""><br><strong>Alpine Peaks ↗</strong></a><br><sub>Night · Aurora</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=desert&amp;phase=sunset&amp;weather=clear&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/desert.webp" width="280" alt=""><br><strong>Canyon Desert ↗</strong></a><br><sub>Sunset · Clear / calm</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=cave&amp;phase=twilight&amp;weather=fog&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/cave.webp" width="280" alt=""><br><strong>Crystal Cavern ↗</strong></a><br><sub>Night · Fog</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=city&amp;phase=sunset&amp;weather=hail&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/city.webp" width="280" alt=""><br><strong>Metro City ↗</strong></a><br><sub>Sunset · Hailstorm</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=cyberpunk&amp;phase=twilight&amp;weather=glass-rain&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/cyberpunk.webp" width="280" alt=""><br><strong>Cyberpunk City ↗</strong></a><br><sub>Night · Rain on glass</sub></td>
+    <td align="center" width="33%"><a href="https://imon.com.bd/?scene=space&amp;phase=twilight&amp;weather=meteors&amp;view=scenery#scene-stage"><img src="assets/profile-worlds/space.webp" width="280" alt=""><br><strong>Outer Space ↗</strong></a><br><sub>Night · Meteor shower</sub></td>
+  </tr>
+</table>
+
+</details>
+
+[Browse all 43 scenarios and change the weather in World Studio →](https://imon.com.bd/#worlds)
 
 ## IMON · Let’s Code Together
 
@@ -45,7 +82,7 @@ An open-source builder from **Dhaka, Bangladesh**, exploring the space between *
   <a href="https://imon.com.bd/systems.html">
     <picture>
       <source media="(prefers-reduced-motion: reduce)" srcset="docs/art/tower-grid.png">
-      <img src="docs/art/tower-grid.gif" width="864" alt="A pixel landscape with solar panels, spinning wind turbines, three 5G towers and a data center.">
+      <img src="docs/art/tower-grid.gif" width="864" alt="Six spinning wind turbines, a solar farm, three 5G towers and two data halls connected by a three-wire power line.">
     </picture>
   </a>
 </p>
