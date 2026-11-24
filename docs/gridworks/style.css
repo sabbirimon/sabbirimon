@@ -40,3 +40,9 @@ body[data-palette=cyber]{--mint:#b7f77c;--cyan:#71edf0;--gold:#ffe25b}body[data-
   html { overflow:hidden }
   .game-dialog>header>button { flex:0 0 44px;width:44px }
 }
+
+@media (pointer:coarse) and (max-width:900px) {
+  .gridworks-page .site-utilities { flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding:.25rem .65rem;flex:none }
+  .gridworks-page .site-utilities>* { flex:none;min-height:44px;display:inline-flex;align-items:center }
+  .mobile-navigation { position:relative;z-index:5 }
+}
