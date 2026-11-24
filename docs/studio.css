@@ -401,3 +401,16 @@ html[data-title-face=sprite] .world-home h2[data-pixel-display]>.pixel-display {
 #model i.network { background:#67b9e3; } #model i.source { background:#80e5bb; } #model i.host { background:#ffd782; } #model i.alert { background:#f69d9d; }
 #model.wave { position:relative; flex-wrap:nowrap; gap:2px; height:8rem; background:linear-gradient(#0a1525 49%,#6b8395 50%,#0a1525 51%); }
 #model.wave i { position:relative; flex:1; background:#8fe7cd; }
+.library-lesson { max-width:52rem; padding:1.25rem; background:#152337; border:1px solid #425e74; margin:1rem 0; }
+.library-material { white-space:pre-line; }
+.library-lesson h2 { color:#9ef2d3; }
+.library-lesson input { display:block; font:inherit; margin:.5rem 0; border:1px solid #6986a2; color:white; background:#0a182a; padding:.6rem; }
+@media (max-width:650px) {
+  .world-home #pixel-world { filter:saturate(1.18) contrast(1.04); }
+  .world-home .hero-shade { background:linear-gradient(180deg,#07132358 0%,#08152888 36%,#0b1a3210 61%,transparent 80%,#0a142474); }
+  .world-home .hero-description { text-shadow:0 1px 3px #081323,0 1px 8px #081323; }
+  .world-home .learning-card .course-cover img { filter:saturate(1.13); }
+  .world-home .code-card { border-color:#55c6a7; }
+  .world-home .ai-card { border-color:#a28be5; }
+  .world-home .signal-card { border-color:#de9c61; }
+}

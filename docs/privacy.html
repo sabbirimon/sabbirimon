@@ -104,7 +104,7 @@
 <tr>
 <td>Supabase<span class="privacy-service-note">Public content, accounts and optional analytics</span></td>
 <td>Serves published site settings and editorial notes, handles accounts and private progress, and accepts optional aggregate usage counts. The account page checks which sign-in methods are available.</td>
-<td>Your IP address on account requests, your email and password for email sign-in, or your name, email and ID from your selected provider, plus saved progress. The session token is kept in your own browser. Row-level security means the database can only ever return your own row.</td>
+<td>Your IP address on account requests, your email and password for email sign-in, or your name, email and ID from your selected provider, plus saved progress. The session token is kept in your own browser. Row-level security limits ordinary learner access to their own cloud progress. Authorized site editors can search the member directory and view per-course completion totals and quiz bests.</td>
 <td><a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">Supabase privacy ↗</a></td>
 </tr>
 <tr>
@@ -219,7 +219,7 @@
 <p class="privacy-note">Asking for either file is an ordinary web request, so the service that serves it sees your IP address. Nothing else is involved: no account, no cookie, no identifier, and nothing about you is written into either file.</p>
 </section>
 
-<section class="privacy-section" aria-labelledby="not-title"><h2 id="not-title">Hosting and database access</h2><p>GitHub Pages hosts the public files. Supabase stores sign-in records, private progress, published editorial content and optional aggregate usage totals. Database permissions restrict access to progress and reporting.</p></section>
+<section class="privacy-section" aria-labelledby="not-title"><h2 id="not-title">Hosting and database access</h2><p>GitHub Pages hosts the public files. Supabase stores sign-in records, private progress, published editorial content and optional aggregate usage totals. The owner directory shows account email, account creation, last sign-in, last progress save and per-course results for member support. Site management records an action, time and item slug or account ID for administrative changes. Site snapshots contain editorial content and site preferences. Aggregate visit metrics remain separate from the account directory.</p></section>
 
 <section class="privacy-section" aria-labelledby="changes-title">
 <h2 id="changes-title">If this page ever changes</h2>

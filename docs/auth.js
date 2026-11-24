@@ -318,7 +318,7 @@ export function consumeEmailFlow() {
  */
 export function loginReturnTarget() {
   const page = new URLSearchParams(location.search).get('return') || '';
-  return /^(admin\/(content\/|metrics\/|settings\/)?|progress\.html|leaderboard\.html)$/.test(page) ? page : './';
+  return /^(admin\/(content\/|metrics\/|settings\/|users\/|library\/|data\/|backups\/)?|progress\.html|leaderboard\.html)$/.test(page) ? page : './';
 }
 
 export async function signIn(provider) {

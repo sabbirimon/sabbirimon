@@ -6,7 +6,10 @@ async function request(path,options={}){
   const session=await currentSession();
   if(!session)throw Error('Sign in with the owner account to continue.');
   const r=await siteRequest(path,{...options,headers:{Authorization:'Bearer '+session.access_token,...options.headers}});
-  if(!r.ok)throw Error(r.status===403||r.status===401?'Owner access is required.':'The request failed. Check your connection and try again.');
+  if(!r.ok){
+    const detail=await r.json().catch(()=>({}));
+    throw Error(r.status===403||r.status===401?'Owner access is required.':detail.message||'The request failed. Try again.');
+  }
   return r.json();
 }
 async function editor(){
@@ -79,6 +82,9 @@ async function settings(){
 try{
   if(!await request('rpc/can_edit_site',{method:'POST'}))throw Error('This account does not have site editor access.');
   $('#account').hidden=true;$('#private').hidden=false;status.textContent='Signed in as site editor.';
+  if(['users','library','data','backups'].includes(document.body.dataset.admin)){
+    const {setupManagement}=await import('./management.js');await setupManagement(document.body.dataset.admin,request);
+  }
   if(document.body.dataset.admin==='content')await editor();
   if(document.body.dataset.admin==='settings')await settings();
   if(document.body.dataset.admin==='metrics')await metrics();

@@ -886,6 +886,7 @@ export function initLab(root = document) {
     if (!next) return null;
     state.exercise = next;
     state.buffers = { ...next.starter };
+    selectTab(next.language);
     for (const [name, editor] of Object.entries(editors)) if (editor) editor.value = state.buffers[name];
     // The kicker names the chapter and the title names the exercise. They
     // are drawn separately, so the title is set after the kicker.
@@ -1103,7 +1104,6 @@ export function initLab(root = document) {
   renderRail();
   updateXp(earnedXp(saved));
   loadExercise(state.exercise.id);
-  selectTab(state.exercise.language);
   updateRail();
   updateCounter();
   if (reduced()) document.documentElement.setAttribute('data-reduced-motion', 'true');

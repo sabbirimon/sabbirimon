@@ -24,6 +24,8 @@ This file is a plain-text map of the site for language models and other automate
 All exercises are linked in static HTML, arranged by course and chapter. The [JSON course index](https://imon.com.bd/data/course-index.json) supplies each exercise ID, title, brief and absolute workbench URL. Each course also has a five-question quiz with explanations, accessible at its quizUrl. Reading the catalog and practicing require no account. The Python practice studio adapts 96 Exercism cases, and the HTML table workshop adapts MDN examples. Both run locally and offer worked answers. Private results are at https://imon.com.bd/progress.html and opt-in practice totals appear on the [practice leaderboard](https://imon.com.bd/leaderboard.html).
 
 
+The [learning library](https://imon.com.bd/library.html) contains additional courses, labs and articles published by the site editor.
+
 ### [Systems Lab](https://imon.com.bd/systems.html)
 Fourteen browser-only simulations cover IPv4 subnets, VLANs, device troubleshooting, queues, caching, cloud compute and retention, update rollout, recovery points, binary signals, sampling, model recall and resistor dividers. Each has an interactive model, prediction, worked method and local check. The four labs award levels for distinct solved exercises and a badge for finishing each chapter.
 
