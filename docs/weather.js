@@ -9,6 +9,7 @@ export function initWeather({ onThunder = () => {}, onHailImpact = () => {}, mou
   const ctx=canvas.getContext('2d'),hero=viewport?document.getElementById('pixel-world'):null,reduced=matchMedia('(prefers-reduced-motion: reduce)');
   let type='clear',intensity='vivid',power=1,density=1,motion=true,frame=0,last=null,width=1,height=1,destroyed=false;
   let animationTime=0,nextLightning=0,strikeAt=-Infinity,strikeX=.65,visible=true;
+  let channel=[], forks=[];
   const particles=Array.from({length:260},(_,i)=>({x:Math.random(),y:Math.random(),speed:.42+Math.random()*.58,size:i%9===0?3:i%3===0?2:1,depth:.38+(i%3)*.31,phase:i*2.399}));
   const hail = createHail(onHailImpact);
   const smoothTypes = new Set(['hail','stars','meteors','drizzle','rain','heavy-rain','storm','light-snow','snow','heavy-snow','blizzard','glass-rain','glass-fog']);
@@ -98,19 +99,35 @@ export function initWeather({ onThunder = () => {}, onHailImpact = () => {}, mou
   }
   function lightning(time,seconds,still){
     if(still)return;
-    if(time>=nextLightning){strikeAt=time;strikeX=.18+((Math.floor(seconds)*37)%65)/100;nextLightning=time+Math.max(9000,11500/Math.sqrt(density));try{onThunder(.45+strikeX*1.7);}catch{}}
+    if(time>=nextLightning){
+      strikeAt=time; strikeX=.13+Math.random()*.74;
+      const distance=.2+Math.random()*.8, reach=.8-distance*.35;
+      let x=strikeX;
+      channel=[[x,0]]; forks=[];
+      for(let n=1;n<=17;n++){
+        x+=(Math.random()-.52)*.045;
+        const y=reach*n/17;
+        channel.push([x,y]);
+        if(n%4===1){
+          const side=Math.random()<.5?-1:1;
+          forks.push([[x,y],[x+side*.018,y+.015],[x+side*.014,y+.032],[x+side*.042,y+.067]]);
+        }
+      }
+      nextLightning=time+(9500+Math.random()*4000)/Math.min(1.15,Math.sqrt(density));
+      try{onThunder(.35+distance*2.1);}catch{}
+    }
     const age=time-strikeAt;if(age<0||age>430)return;
     const strength=age<80?age/80:Math.max(0,1-(age-80)/350);
     ctx.globalAlpha=Math.min(1,strength*INTENSITIES[intensity]*power);rect(0,0,width,height,'#c0ddfb24');
-    const points=[[strikeX*width,0],[strikeX*width-13,height*.13],[strikeX*width+7,height*.13],[strikeX*width-19,height*.32],[strikeX*width-7,height*.32],[strikeX*width-35,height*.52]];
+    const points=channel.map(([x,y])=>[x*width,y*height]);
+    if(!points.length){ctx.globalAlpha=1;return;}
     ctx.lineCap='round';ctx.lineJoin='round';
     for(const [lineWidth,color] of [[6,'#96cfff22'],[2.7,'#a9d9ff66'],[power>1.3?1.5:1,'#effbff']]){ctx.lineWidth=lineWidth;ctx.strokeStyle=color;ctx.beginPath();points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();}
     // Forks are fixed for one strike, including the fading afterglow.
-    for(let i=1;i<=3;i++){
-      const [x,y]=points[i], direction=i%2?1:-1,span=width*(.018+.008*i);
-      ctx.strokeStyle='#ceebffb8';ctx.lineWidth=.8;
-      ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+span*direction,y+height*.035);
-      ctx.lineTo(x+span*.75*direction,y+height*.052);ctx.lineTo(x+span*1.6*direction,y+height*.09);ctx.stroke();
+    for(const branch of forks){
+      ctx.strokeStyle='#ceebffb8';ctx.lineWidth=.8;ctx.beginPath();
+      branch.forEach(([x,y],i)=>i?ctx.lineTo(x*width,y*height):ctx.moveTo(x*width,y*height));
+      ctx.stroke();
     }
     const reflectionX=points.at(-1)[0];ctx.globalAlpha*=.2;softEllipse(reflectionX,height*.82,width*.16,height*.19,'#b4ddf780');
     for(let i=0;i<5;i++){const y=height*(.7+i*.048),spread=8+i*5;ctx.strokeStyle='#d0edff99';ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(reflectionX-spread,y);ctx.quadraticCurveTo(reflectionX,y+2,reflectionX+spread,y-1);ctx.stroke();}

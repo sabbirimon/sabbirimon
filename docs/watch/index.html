@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src https://www.youtube-nocookie.com https://player.bilibili.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Video player · IMON World</title>
+<meta name="description" content="Watch a YouTube or Bilibili video inside IMON World. Paste a video link or Bilibili ID to open its official player.">
+<link rel="canonical" href="https://imon.com.bd/watch/"><link rel="icon" href="../icon.svg">
+<link rel="stylesheet" href="player.css"><script type="module" src="player.js"></script>
+</head><body><main>
+<nav aria-label="Video room navigation"><a href="../">← IMON World</a><a href="../courses.html">Courses</a><a href="../tools/">Toolbox</a></nav>
+<h1>Video player</h1>
+<form id="choose"><label for="video-url">YouTube or Bilibili video link</label>
+<div class="controls"><input id="video-url" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Paste a video URL or BV number" required aria-describedby="notice">
+<button type="submit">Load player</button></div>
+<p id="notice">Loading connects to the video provider. Use its play button to start watching.</p></form>
+<p id="status" role="status"></p>
+<div id="screen"><div id="cover"><span>Choose a video to watch</span></div></div>
+<div id="actions" hidden><a id="external" target="_blank" rel="noopener">Watch on provider ↗</a><button type="button" id="close">Close player</button></div>
+<p id="fallback" hidden>If the provider restricts embedded playback, use the link above to open the video in a new tab.</p>
+<details><summary>Supported video links</summary><p>YouTube watch, share, Shorts, live and embed links. Bilibili BV or av links and IDs, multipart videos and episode links. For a b23.tv short link, copy the full video address after opening it on Bilibili.</p></details>
+<noscript><p>Enable JavaScript to load the embedded player.</p></noscript>
+<footer><a href="../guide/">Visitor guide</a> · <a href="../privacy.html">Privacy</a></footer>
+</main></body></html>

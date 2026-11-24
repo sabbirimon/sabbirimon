@@ -81,9 +81,13 @@ async function settings(){
 }
 try{
   if(!await request('rpc/can_edit_site',{method:'POST'}))throw Error('This account does not have site editor access.');
-  $('#account').hidden=true;$('#private').hidden=false;status.textContent='Signed in as site editor.';
+  $('#account').hidden=true;
+  const loadingLibrary=document.body.dataset.admin==='library';
+  $('#private').hidden=loadingLibrary;
+  status.textContent=loadingLibrary?'Loading the content studio…':'Signed in as site editor.';
   if(['users','library','data','backups'].includes(document.body.dataset.admin)){
     const {setupManagement}=await import('./management.js');await setupManagement(document.body.dataset.admin,request);
+    if(loadingLibrary)$('#private').hidden=false;
   }
   if(document.body.dataset.admin==='content')await editor();
   if(document.body.dataset.admin==='settings')await settings();

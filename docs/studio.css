@@ -414,3 +414,22 @@ html[data-title-face=sprite] .world-home h2[data-pixel-display]>.pixel-display {
   .world-home .ai-card { border-color:#a28be5; }
   .world-home .signal-card { border-color:#de9c61; }
 }
+
+/* Chunky control faces sit outside the reading and practice surfaces. */
+.world-home .world-toolbar .sky-controls>button,
+.world-home .weather-choices button,
+.world-home .weather-deck-tools :is(button,select),
+.world-home .studio-controls select,
+.catalog-page .studio-control,.tools-page [role=tab] {
+  border-radius:0; border-width:2px; border-style:solid;
+  box-shadow:inset 0 2px #c9f5ff28, 3px 3px #061022;
+}
+.world-home .weather-name,.world-home .quick-world-choices span,
+.tools-page [role=tab],.recordings h3 {
+  font:400 clamp(1rem,1.2vw,1.15rem)/1.35 Silkscreen,monospace;
+}
+.world-home .quick-world-choices {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:1;min-width:0}
+.world-home .quick-world-choices>button {width:100%;min-width:0;border-radius:0}
+.world-home .quick-world-choices img {image-rendering:pixelated}
+.world-home .precipitation-size[hidden] {display:none}
+@media(max-width:700px){.world-home .quick-world-choices{width:100%;grid-template-columns:repeat(2,minmax(0,1fr))}}

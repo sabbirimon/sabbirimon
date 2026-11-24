@@ -1,13 +1,15 @@
+import { createFieldPlayer } from './field-audio.js';
 /**
- * IMON's procedural ambience. No recordings, downloads, or autoplay bypasses.
+ * Locally hosted field recordings and procedural ambience.
  * Preference starts OFF; AudioContext creation/resume happens only in unlock(),
  * after ambience is enabled by the visitor and a gesture allows audio. This is separate
  * from the game sound-effects switch in audio.js, which starts OFF.
  */
 export function initAmbient() {
   let enabled = false, unlocked = false, destroyed = false, volume = .35;
-  const layerKeys = ['weather','rain', 'wind', 'water', 'birds', 'crickets', 'music'];
-  let layers = { weather:true,rain: false, wind: false, water: false, birds: false, crickets: true, music: false };
+  let fields, nextOwl = 0;
+  const layerKeys = ['camp','weather','rain', 'wind', 'water', 'birds', 'crickets', 'music'];
+  let layers = { camp:true, weather:true,rain: false, wind: false, water: false, birds: false, crickets: true, music: false };
   let scene = 'islands', weather = 'clear', context = null, master = null;
   let wind = null, surf = null, rain = null, rainBody = null, water = null, hum = null;
   let timer = null, musicTimer = null, suspendTimer = null, nextGlassTap = 0, nextChirp = 0, nextBird = 0, nextCricket = 0, lastThunder = -Infinity, musicStep = 0;
@@ -42,6 +44,7 @@ export function initAmbient() {
   }
   function buildGraph() {
     master = context.createGain(); master.gain.value = 0; master.connect(context.destination);
+    fields = createFieldPlayer(context, master);
     // Independent stereo textures keep the sound spacious without recordings.
     const buffer = context.createBuffer(2, context.sampleRate * 6, context.sampleRate);
     const softBuffer = context.createBuffer(2, context.sampleRate * 6, context.sampleRate);
@@ -128,6 +131,11 @@ export function initAmbient() {
   function update() {
     if (!active()) return;
     const t = context.currentTime, family = sceneFamily();
+    fields.sync(scene, weather, layers);
+    if (scene === 'jungle-camp' && (!layers || layers.camp) && t >= nextOwl) {
+      nextOwl = t + 32 + Math.random() * 20;
+      void fields.play('owl', .55);
+    }
     let windLevel = .045, windFrequency = 650, surfLevel = 0, rainLevel = 0, humLevel = 0, humFrequency = 90;
     if (family === 'coastal-drive') {
       const passing = Math.pow((1+Math.sin(t*.55))*.5,4);
@@ -181,7 +189,7 @@ export function initAmbient() {
     target(rainBody.gain.gain, rainLevel * .65 * showerSwell);
     target(hum.gain.gain, humLevel); target(hum.source.frequency, humFrequency, 2);
     if (layers) {
-      if (layers.crickets && t >= nextCricket) {
+      if (scene !== 'jungle-camp' && layers.crickets && t >= nextCricket) {
         nextCricket = t + 2.7 + Math.random() * 1.8;
         chirp('cricket');
       }
@@ -224,6 +232,7 @@ export function initAmbient() {
     enabled = Boolean(value); clearTimeout(suspendTimer);
     if (!context) { if (enabled && navigator.userActivation?.isActive) void unlock(); notify(); return enabled; }
     if (!enabled) {
+      fields?.stopAll(); nextOwl = 0;
       target(master.gain, 0, .04);
       suspendTimer = setTimeout(() => { if (!enabled) context?.suspend().catch(() => {}); }, 220);
     } else if (!document.hidden && (unlocked || navigator.userActivation?.isActive)) {
@@ -259,17 +268,13 @@ export function initAmbient() {
 
   function thunder(delay=0) {
     if (!active() || (layers && !layers.rain && !layers.weather) || context.currentTime - lastThunder < 5) return;
-    lastThunder=context.currentTime; const t=lastThunder+Math.min(3,Math.max(0,delay));
-    // A gradual, rolling synthetic rumble with a longer distant tail.
-    const source = context.createBufferSource(), filter = context.createBiquadFilter(), gain = context.createGain();
-    source.buffer = wind.source.buffer; filter.type = 'lowpass'; filter.frequency.setValueAtTime(280, t); filter.frequency.exponentialRampToValueAtTime(95, t + 5); filter.Q.value = .5;
-    gain.gain.setValueAtTime(0, t); gain.gain.linearRampToValueAtTime(.38, t + .65); gain.gain.linearRampToValueAtTime(.2, t + 1.3); gain.gain.linearRampToValueAtTime(.28, t + 1.9); gain.gain.exponentialRampToValueAtTime(.0001, t + 5.3);
-    source.connect(filter); filter.connect(gain); gain.connect(master); source.onended = () => { source.disconnect(); filter.disconnect(); gain.disconnect(); }; source.start(t); source.stop(t + 5.4);
+    lastThunder = context.currentTime;
+    void fields.play('thunder', 1.65, false, Math.min(3, Math.max(0, delay)));
   }
   function visibilityChanged() {
     if (!context || destroyed) return;
     clearTimeout(suspendTimer);
-    if (document.hidden) context.suspend().catch(() => {});
+    if (document.hidden) { fields.stopAll(); context.suspend().catch(() => {}); }
     else if (enabled && unlocked) context.resume().then(() => {
       if (!enabled || document.hidden || destroyed) { context?.suspend().catch(() => {}); return; }
       target(master.gain, outputLevel(), .6); update();
@@ -280,11 +285,11 @@ export function initAmbient() {
     unlock, setEnabled, setVolume, setLayers, getLayers, thunder, hailImpact,
     isEnabled: () => enabled,
     getVolume: () => volume,
-    setScene(name) { const next=String(name || 'islands').toLowerCase(); if(scene!==next){scene=next;musicStep=0;update();} },
+    setScene(name) { const next=String(name || 'islands').toLowerCase(); if(scene!==next){scene=next;musicStep=0;nextOwl=0;update();} },
     setWeather(name) { if(name==='glass-fog')name='fog';if(name==='lightning')name='storm';weather = ['glass-rain','drizzle', 'rain', 'heavy-rain', 'storm', 'cloudy','light-snow','snow','heavy-snow','blizzard', 'fog', 'sandstorm', 'wind', 'hail', 'cyclone', 'flood', 'earthquake', 'aurora', 'meteors', 'fireflies', 'leaves'].includes(name) ? name : 'clear'; update(); },
     destroy() {
       if (destroyed) return;
-      destroyed = true; clearInterval(timer); clearInterval(musicTimer); clearTimeout(suspendTimer);
+      destroyed = true; fields?.stopAll(); clearInterval(timer); clearInterval(musicTimer); clearTimeout(suspendTimer);
       document.removeEventListener('visibilitychange', visibilityChanged);
       for (const source of sources) { try { source.stop(); } catch { /* Already stopped. */ } }
       sources.clear(); context?.close().catch(() => {}); context = null;

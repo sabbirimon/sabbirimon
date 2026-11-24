@@ -7,29 +7,18 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://imon.com.bd/" aria-label="Enter IMON World">
-    <picture>
-      <source media="(prefers-reduced-motion: reduce)" srcset="assets/enter-world.png">
-      <img src="assets/enter-world.gif" width="760" alt="ENTER IMON WORLD — Let's Code Together. Open the pixel worlds, arcade, and Gridworks campaign.">
-    </picture>
-  </a>
-</p>
+# Sabbir Hassan Imon
 
-<p align="center">
-  <a href="https://imon.com.bd/#arcade"><img src="assets/play-games.svg" width="440" alt="🎮 PLAY GAMES — Snake, Ludo, racing and Gridworks"></a><br>
-  <sub>Yes, there are playable games inside. Pick a side quest and chase a high score.</sub>
-</p>
+I build open-source software in Dhaka, Bangladesh. My work spans local-first AI, Android, networking and cloud infrastructure. **IMON World** is where I turn those interests into things you can try in a browser.
 
-<p align="center">
-  <a href="https://imon.com.bd/"><strong>Explore my world ↗</strong></a>
-  &nbsp; · &nbsp;
-  <a href="https://imon.com.bd/#projects">Selected projects</a>
-  &nbsp; · &nbsp;
-  <a href="https://imon.com.bd/#arcade">Play the arcade</a>
-  &nbsp; · &nbsp;
-  <a href="https://linkedin.com/in/sabbirimon">LinkedIn</a>
-</p>
+| Enter the world | What you can do |
+| --- | --- |
+| [Learning labs](https://imon.com.bd/courses.html) | Write code, inspect model output, measure a circuit or work through a systems simulation. |
+| [Jungle Campfire](https://imon.com.bd/?scene=jungle-camp) | Pitch up beside the fire, switch on recorded woodland sounds and change the weather. |
+| [Pixel Arcade](https://imon.com.bd/arcade/) | Play Snake, Brick Breaker, a space shooter and a side-scrolling runner. |
+| [The lost signal](https://imon.com.bd/guide/) | Follow Rafi and his robot through an illustrated introduction to the labs and quests. |
+
+[Explore my projects](https://imon.com.bd/#projects) · [Open the browser tools](https://imon.com.bd/tools/) · [LinkedIn](https://linkedin.com/in/sabbirimon)
 
 ### Choose your world
 
@@ -43,15 +32,7 @@ A little preview of the live site. Pick a landscape to enter it.
   </tr>
 </table>
 
-**[Explore 33 scenery presets](https://imon.com.bd/)** · **[Play the arcade](https://imon.com.bd/#arcade)** · **[Build your world in Gridworks](https://imon.com.bd/gridworks/)**
-
-## IMON · Let’s Code Together
-
-### Hey, I'm Sabbir Hassan Imon 👋
-
-An open-source builder from **Dhaka, Bangladesh**, exploring the space between **local-first AI, Android, systems, and cloud infrastructure**. I like useful tools, curious experiments, and giving serious software a little personality.
-
-My roots are in DevOps and networking: Linux, containers, Kubernetes, and the radio networks that connect us. These days, my public projects also explore device tooling, recovery, and experimental model execution.
+**[Explore the scenery presets](https://imon.com.bd/)** · **[Play the arcade](https://imon.com.bd/#arcade)** · **[Build your world in Gridworks](https://imon.com.bd/gridworks/)**
 
 ### A few things I'm building
 
@@ -82,7 +63,7 @@ My roots are in DevOps and networking: Linux, containers, Kubernetes, and the ra
 
 **[Daily Tech Quest](https://imon.com.bd/#news)** — fresh tech MCQs in 5, 20, or 30-question rounds, scores, and live tech, science & space news.
 
-Explore animated pixel worlds with local-time lighting and customizable colors. Try light or heavy rain, snow, lightning, clouds, wind, fog, and fireflies from the weather controls, or preview them in World Studio. Tune the intensity, density, and strength—or pause the animation. Sound starts off; mix optional synthesized rain, wind, water, birds, crickets, and music, with your selections saved on your device. Games support keyboard and touch, with personal progress saved on your device.
+Explore animated pixel worlds with local-time lighting and customizable colors. Try light or heavy rain, snow, lightning, clouds, wind, fog, and fireflies from the weather controls, or preview them in World Studio. Tune the intensity, density, and strength—or pause the animation. Turn on ambience to mix field recordings and synthesized sound layers. Your preferences are saved on your device. Games support keyboard and touch, with personal progress saved on your device.
 
 **[Enter World Studio →](https://imon.com.bd/)** · **[Try Cyberpunk mode →](https://imon.com.bd/?world=cyberpunk)**
 

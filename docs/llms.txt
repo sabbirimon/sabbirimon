@@ -82,3 +82,7 @@ Optional Google account registration and sign-in for private cloud progress. Sig
 - YouTube: https://youtube.com/@sabbirimon
 - Facebook: https://www.facebook.com/mr.sabbirimon/
 - WhatsApp: @imons
+
+- [Visitor guide and player rules](https://imon.com.bd/guide/)
+- [Scenario audio and recording credits](https://imon.com.bd/sounds/)
+- [On-site YouTube and Bilibili player](https://imon.com.bd/watch/)

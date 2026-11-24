@@ -1,5 +1,7 @@
 /** Original pixel worlds: procedural scenes and locally hosted, original illustrated landscapes. */
 export const WORLD_ART = {
+  'jungle-camp': { name: 'Jungle Campfire', file: 'jungle-camp', focus: .68 },
+  'coastal-boardwalk': { name: 'Sunset Boardwalk', file: 'coastal-boardwalk', focus: .70 },
   'neon-coast': { name: 'Neon Coast', file: 'neon-coast', focus: .72 },
   'waterfall-valley': { name: 'Waterfall Valley', file: 'waterfall-valley', focus: .55 },
   'twilight-lake': { name: 'Twilight Lake', file: 'twilight-lake', focus: .52 },
@@ -635,16 +637,49 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
   }
   function drawArtwork(record, p, light) {
     const image = record.image, iw = image.naturalWidth, ih = image.naturalHeight;
-    const fit = Math.max(width/iw, height/ih), sw = width/fit, sh = height/fit;
+    // In tall windows the campsite occupies the lower clearing, so both
+    // tents and the circle of travellers stay in frame below the hero text.
+    const mobileCamp = scene === 'jungle-camp' && portrait;
+    const pictureHeight = mobileCamp ? Math.min(height,width*.94) : height;
+    const pictureTop = height-pictureHeight;
+    const fit = Math.max(width/iw, pictureHeight/ih), sw = width/fit, sh = pictureHeight/fit;
     const focus = WORLD_ART[scene].focus;
     const sx = Math.max(0,Math.min(iw-sw,iw*focus-sw*.5));
     const sy = Math.max(0,Math.min(ih-sh,ih*.56-sh*.5));
-    ctx.drawImage(image,sx,sy,sw,sh,0,0,width,height);
+    if (mobileCamp) {
+      ctx.drawImage(image,0,0,iw*.54,ih*.36,0,0,width,pictureTop+1);
+    }
+    ctx.drawImage(image,sx,sy,sw,sh,0,pictureTop,width,pictureHeight);
+    if (mobileCamp) {
+      // A band of dusk haze softens the transition from canopy to clearing.
+      const haze=ctx.createLinearGradient(0,pictureTop-15,0,pictureTop+22);
+      haze.addColorStop(0,'#142e4000');haze.addColorStop(.42,'#142e40');haze.addColorStop(1,'#142e4000');
+      ctx.fillStyle=haze;ctx.fillRect(0,pictureTop-15,width,37);
+    }
     // Tint follows the existing smooth phase transition, retaining the painted colors.
     ctx.globalAlpha = scene === 'neon-forest' ? .07 + (1-light)*.1 : .035 + (1-light)*.23;
     rect(0,0,width,height,p.sky[0]);ctx.globalAlpha=1;
     const t = motion ? clock : 0;
-    if (scene === 'neon-coast') {
+    if (scene === 'jungle-camp') {
+      const fireX = (iw*.678-sx)*fit, fireY = pictureTop+(ih*.75-sy)*fit;
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      const glow = ctx.createRadialGradient(fireX,fireY,1,fireX,fireY,iw*fit*.078);
+      glow.addColorStop(0,'#ff92004a'); glow.addColorStop(1,'#ff840000');
+      ctx.fillStyle=glow; ctx.globalAlpha=.65+.3*Math.sin(t*6.3);
+      ctx.fillRect(fireX-iw*fit*.08,fireY-iw*fit*.08,iw*fit*.16,iw*fit*.16);
+      for(let i=0;i<16;i++){
+        const rise=(t*(.19+i%4*.035)+i*.173)%1;
+        const x=fireX+Math.sin(rise*6+i)*iw*fit*.011+(i%5-2)*2;
+        const y=fireY-(.015+rise*.20)*ih*fit;
+        ctx.globalAlpha=(1-rise)*.9;
+        rect(x,y,i%3===0?2:1,2,i%2?'#ffc342':'#ff8b41');
+      }
+      ctx.restore();
+      robot(width*(portrait?.16:.93),height*.95);
+      return;
+    }
+    if (scene === 'neon-coast' || scene === 'coastal-boardwalk') {
       for (let i=0;i<10;i++) {
         const x=width*(.06+i*.056), y=height*(.64+(i%3)*.025);
         ctx.globalAlpha=.2+.13*Math.sin(t+i);

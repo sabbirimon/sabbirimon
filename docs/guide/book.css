@@ -1,0 +1,34 @@
+.book {
+  --ink:#1b211e; --paper:#fff3d6; --mint:#87c2ac;
+  margin:0; color:var(--ink); background:#182c2a; font:1.06rem/1.65 system-ui,sans-serif;
+}
+.book * { box-sizing:border-box }
+.book [hidden] {display:none!important}
+.book main {width:min(100%,70rem); margin:auto; padding:clamp(.85rem,3vw,2.5rem)}
+.book nav {display:flex; flex-wrap:wrap; align-items:center; gap:.55rem 1.4rem; padding:.7rem 0}
+.book nav a,.book #account {color:#ffeab5}
+.book a {color:#00554a; font-weight:700; text-underline-offset:.19em}
+.book a:focus-visible {outline:3px solid #ed880c;outline-offset:4px}
+.book .cover,.book article,.book .rules {border:3px solid var(--ink); background:var(--paper); box-shadow:4px 5px #091613}
+.book .cover {padding:clamp(1.4rem,4vw,3.5rem);background-color:#efca7a;background-image:radial-gradient(#704e301c 1px,transparent 1.5px);background-size:5px 5px}
+.book h1,.book h2,.book h3,.book blockquote {font-family:Georgia,'Times New Roman',serif;color:var(--ink)}
+.book h1 {font-size:clamp(2.3rem,7vw,5.1rem);font-style:italic;letter-spacing:-.055em;line-height:.99;margin:.2em 0}
+.book h2 {font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.08;margin:0 0 .45em}
+.book h3 {font-size:1.2rem;margin:1em 0 0}
+.book .cover p,.book .rules p {max-width:65ch}
+.book .imprint {letter-spacing:.15em;text-transform:uppercase;font:700 .86rem/1.5 ui-monospace,monospace}
+.book .spread {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem;margin:1rem 0}
+.book article {overflow:hidden;align-self:stretch}
+.book figure {margin:0;position:relative}
+.book figure img {width:100%;height:auto;display:block;border-bottom:3px solid var(--ink)}
+.book blockquote {margin:0;padding:.65rem .95rem;background:white;border:2px solid var(--ink);box-shadow:3px 3px var(--ink);position:relative;margin:-1.8rem .8rem 0;border-radius:45% 40% 43% 20% / 20% 28% 24% 18%;text-align:center;font-size:1.25rem;font-weight:bold;line-height:1.25}
+.book .scene,.book .rules {padding:clamp(1rem,2.6vw,1.8rem)}
+.book .scene p {margin:.35rem 0 .9rem}
+.book .rules {background:#e1efdb}
+.book .rules dl {margin:0;display:grid;grid-template-columns:minmax(9rem,1fr) 3fr;gap:.75rem 1.4rem}
+.book dt {font-weight:800}
+.book dd {margin:0}
+.book #status,.book footer,.book footer a {color:#fff3d6}
+.book footer {padding:1rem 0}
+@media(max-width:720px){.book .spread{grid-template-columns:1fr}.book article{display:grid;grid-template-columns: minmax(9rem, .9fr) 1fr}.book .rules dl{display:block}.book dt{margin-top:.85rem}}
+@media(max-width:490px){.book article{display:block}.book figure img{aspect-ratio:1.36;object-fit:cover;object-position:50% 32%}}

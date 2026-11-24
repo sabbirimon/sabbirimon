@@ -10,9 +10,8 @@ const path = (d, extra='') => '<path d="'+d+'" '+extra+'/>';
 const at = (d,x,y,scale=1) => path(d,'transform="translate('+x+' '+y+') scale('+scale+')"');
 
 export const WEATHER_CARDS = [
-  ['glass-rain','Rain on glass'], ['glass-fog','Fogged glass'], ['earthquake','Earthquake'], ['drizzle','Light rain'],
-  ['rain','Medium rain'], ['heavy-rain','Heavy rain'], ['light-snow','Light snow'], ['snow','Medium snow'],
-  ['heavy-snow','Heavy snow'], ['hail','Hailstorm'], ['stars','Starlight'], ['storm','Thunderstorm'], ['lightning','Lightning'], ['wind','Wind'],
+  ['glass-rain','Rain on glass'], ['glass-fog','Fogged glass'], ['earthquake','Earthquake'], ['rain','Rain'], ['snow','Snow'],
+  ['hail','Hailstorm'], ['stars','Starlight'], ['storm','Thunderstorm'], ['lightning','Lightning'], ['wind','Wind'],
   ['cloudy','Clouds'], ['fog','Fog'], ['fireflies','Fireflies'], ['clear','Clear']
 ];
 
