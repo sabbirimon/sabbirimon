@@ -1,7 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { EXERCISES, addImportedExercises, allExercises } from '../docs/lab.js';
+import { access, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { pathToFileURL } from 'node:url';
+import { EXERCISES, addImportedExercises, allExercises, neighbourExercise } from '../docs/lab.js';
 import { JS_QUIZ, quizExercises, makeQuizChecker } from '../docs/lab-quiz.js';
 import { toExercises } from '../docs/lab-curriculum.js';
 import { CODE_LAB_SOLUTIONS } from './fixtures/code-lab-solutions.mjs';
@@ -30,11 +35,38 @@ test('every built-in exercise has a reference solution that passes', () => {
   const missing = taster.filter(exercise => !CODE_LAB_SOLUTIONS[exercise.id]);
   assert.deepEqual(missing.map(exercise => exercise.id), [], 'these exercises have no reference solution');
 
-  for (const exercise of taster) {
+  for (const exercise of taster.filter(exercise => !exercise.requiresBrowser)) {
     const solution = CODE_LAB_SOLUTIONS[exercise.id];
     const result = exercise.check({ html: '', css: '', js: '', ...solution });
     assert.equal(result.ok, true, `${exercise.id}: ${result.message}`);
   }
+});
+
+test('the browser accepts the form solutions and rejects their incomplete variants', async t => {
+  const candidates = [process.env.CHROME_BIN, '/usr/bin/google-chrome', '/usr/bin/chromium',
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'].filter(Boolean);
+  let browser;
+  for (const path of candidates) {
+    try { await access(path); browser = path; break; } catch { /* Try the next installation. */ }
+  }
+  if (!browser) return t.skip('Requires Chrome or Chromium; set CHROME_BIN to run browser validation.');
+  const temp = await mkdtemp(join(tmpdir(),'imon-form-'));
+  try {
+    const checker = await readFile(new URL('../docs/lab-form-engineering.js',import.meta.url),'utf8');
+    const samples = taster.filter(e => e.requiresBrowser).map(e => CODE_LAB_SOLUTIONS[e.id].html);
+    const page = join(temp,'form-test.html');
+    const run = `const samples = ${JSON.stringify(samples)}; const results = formEngineering.map((e,i) => {
+      const valid = samples[i];
+      return e.check({html:valid}).ok && !e.check({html:valid.replace(' required','')}).ok;
+    }); document.title = results.every(Boolean) ? 'All forms passed' : 'Failed: ' + results.join(',');`;
+    // A classic inline script avoids requiring a server for the browser tests.
+    await writeFile(page,'<!doctype html><title>Running</title><script>' +
+      checker.replace('export const formEngineering','const formEngineering') + run + '</script>');
+    const args = ['--headless','--disable-gpu','--disable-background-networking','--user-data-dir='+join(temp,'profile'),'--dump-dom',pathToFileURL(page).href];
+    if (process.getuid?.() === 0) args.unshift('--no-sandbox');
+    const {stdout} = await promisify(execFile)(browser,args,{timeout:20000});
+    assert.match(stdout,/<title>All forms passed<\/title>/);
+  } finally { await rm(temp,{recursive:true,force:true}); }
 });
 
 test('every built-in exercise rejects its own starter', () => {
@@ -143,4 +175,14 @@ test('the course holds every exercise it says it does', () => {
   // is added to the registry only once.
   assert.equal(every.length, EXERCISES.length + imported.length);
   assert.ok(every.length > 100, every.length);
+});
+
+test('next and previous stay within the current practice or quiz sequence', () => {
+  for (const quiz of [false,true]) {
+    const sequence = every.filter(exercise => (exercise.kind === 'quiz') === quiz);
+    for (const [index,exercise] of sequence.entries()) {
+      assert.equal(neighbourExercise(exercise.id,'prev')?.id, sequence[index-1]?.id);
+      assert.equal(neighbourExercise(exercise.id,'next')?.id, sequence[index+1]?.id);
+    }
+  }
 });

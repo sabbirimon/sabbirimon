@@ -1103,6 +1103,34 @@ export function makeBuildChecker(entry) {
         hint: 'Remove the parts the exercise does not need, or rewire them.'
       };
     }
+    if (entry.measurements?.length) {
+      const source = circuit.parts.find(p => p.id === 'battery');
+      const supplied = expected.find(p => p.id === 'battery').value;
+      if (Number(source?.value ?? CIRCUIT_PARTS.battery.defaults.value) !== supplied) {
+        return {ok:false,message:'Set the bench supply to ' + supplied + ' V.',hint:'Select the battery and restore the supply specified in the brief.'};
+      }
+    }
+    for (const probe of entry.measurements || []) {
+      // Test a copy so temporary loads and supply sweeps never edit the board.
+      const parts = circuit.parts.map((p,i) => ({...p, label:'P' + i, value:
+        p.id === 'battery' && probe.supply !== undefined ? probe.supply : p.value ?? CIRCUIT_PARTS[p.id].defaults.value}));
+      if (probe.loadOhms) parts.push({id:'resistor',label:'Meter',nodeA:probe.node,nodeB:0,value:probe.loadOhms});
+      const measured = nodalSolve({parts});
+      const voltage = measured.nodes[probe.node] - measured.nodes[probe.reference || 0];
+      const hint = probe.loadOhms ? 'Use the parallel combination of the lower leg and the meter load.'
+        : 'Probe the midpoint and check supply current with the simulator.';
+      if (measured.error || !Number.isFinite(voltage)) return {ok:false,message:'The meter could not solve this circuit.',hint};
+      if (Math.abs(voltage - probe.volts) > (probe.tolerance ?? .04) + 1e-9) {
+        return {ok:false, message:'Probe ' + probe.node + ' relative to ' + (probe.reference || 0) +
+          ' measured ' + voltage.toFixed(3) + ' V' + (probe.loadOhms ? ' under load' : '') +
+          '. Target ' + probe.volts + ' V.',hint};
+      }
+      if (probe.mA !== undefined && Math.abs(measured.current * 1000 - probe.mA) > .05 + 1e-9) {
+        return {ok:false,message:'The supply delivered ' + (measured.current*1000).toFixed(3) +
+          ' mA. Target ' + probe.mA + ' mA.',hint:'Scaling both resistors equally preserves their voltage ratio and changes branch current.'};
+      }
+    }
+    if (entry.measurements?.length) return {ok:true,message:'Your circuit passed every bench measurement.'};
     if (entry.id === 'circuit-build-divider' && circuit.parts.some(p => p.id === 'resistor' && (p.value ?? CIRCUIT_PARTS.resistor.defaults.value) !== 1000)) {
       return {ok:false, message:'The wiring is correct. Set both resistors to 1 kΩ.', hint:'Select each resistor, enter 1000 Ω, then probe node 2.'};
     }

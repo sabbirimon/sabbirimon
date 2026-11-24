@@ -4,13 +4,14 @@
 <link rel="canonical" href="https://imon.com.bd/systems.html"><link rel="icon" href="icon.svg"><link rel="stylesheet" href="studio.css">
 <script type="module" src="systems-ui.js"></script><script type="module" src="mastery.js"></script><script type="module" src="course-quiz.js"></script><link rel="stylesheet" href="study-nav.css"></head>
 <body class="catalog-page systems-page"><header><nav aria-label="Learning"><a href="./#learn">IMON.world</a><a href="courses.html#systems">Course catalog</a><a href="progress.html">My progress</a><button type="button" class="studio-control" data-open-quiz>Take course quiz</button></nav></header>
-<main><nav class="track-switch" aria-label="Learning tracks"><a href="lab.html">Code</a><a href="ai-lab.html">AI</a><a href="circuits.html">Circuits</a><a href="systems.html" aria-current="page">Systems</a><a href="exams/?track=systems">Practical exam →</a></nav><label for="scenario">Choose a simulation</label><select id="scenario"></select>
+<main><nav class="track-switch" aria-label="Learning tracks"><a href="lab.html">Code</a><a href="ai-lab.html">AI</a><a href="circuits.html">Circuits</a><a href="systems.html" aria-current="page">Systems</a><a href="exams/?track=systems">Practical exam →</a></nav><div class="lesson-filters systems-filters"><label>Module<select id="system-module"><option value="">All modules</option></select></label><label>Level<select id="system-level"><option value="">All levels</option></select></label><label>Simulation<select id="scenario"></select></label></div>
 <p id="chapter"></p><h1>Systems Lab</h1><p id="brief"></p>
 <div class="sim-grid"><section class="sim-panel"><h2>Model</h2><div id="model" role="img"></div><p id="legend"></p>
 <label id="control" for="setting">Model setting</label><div class="sim-inputs"><input type="range" id="setting"><input id="setting-number" type="number" aria-labelledby="control" required></div>
 <button class="studio-control" type="button" id="measure">Measure</button> <output id="meter" aria-live="polite"></output></section>
 <section class="sim-panel"><h2>Prediction</h2><p id="target"></p><form id="check"><label for="prediction">Your result (<span id="unit"></span>)</label><input id="prediction" type="number" step="any" required><button class="studio-control">Check prediction</button></form><p role="status" id="feedback"></p>
 <details id="guide"><summary>Study notes and worked method</summary><p id="study"></p><code id="formula"></code></details></section></div>
+<section class="topic-check" aria-label="Related topic check" data-topic-check hidden></section>
 <section class="mastery" data-mastery="systems" hidden><strong aria-live="polite"></strong><p></p><a></a></section>
 <p><a href="circuits.html?exercise=circuit-build-divider">Wire the divider on the electronics bench</a> · <a href="ai-lab.html">Practice Python and model evaluation</a></p>
 <p>All models run on your device. Networking and device support cover selected CCNA and CompTIA A+ foundation topics. These original lessons are independent practice.</p>

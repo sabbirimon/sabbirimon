@@ -26,3 +26,58 @@ button:disabled{opacity:.5}#play,.pad button:active{color:#152a26;background:var
   .pad button { min-height:50px;min-width:0;touch-action:none }
   .toolbar button { touch-action:manipulation }
 }
+
+.arcade-page {
+  --cabinet-line:#496779;--cabinet-bright:#a2efd6;
+  background:radial-gradient(ellipse at 13% 5%,#203b51 0%,transparent 48%),#0b1525;
+}
+.arcade-page main { width:min(var(--site-content-width,76rem),calc(100% - 2 * var(--site-gutter,clamp(1rem,3vw,3rem))));max-width:none;box-sizing:border-box;margin-inline:auto;padding:1rem 0 1.5rem }
+.arcade-page .arcade-links { justify-content:flex-start;gap:.55rem 1.35rem;align-items:center;border-color:#3d596e }
+.arcade-links label { margin-inline-start:auto }
+.arcade-page .cartridge-intro { display:flex;align-items:baseline;justify-content:space-between;gap:.65rem 1.5rem;flex-wrap:wrap;margin:.85rem 0 }
+.arcade-page h1 { margin:0;color:#ffe3a0;font:400 clamp(1.4rem,2.65vw,2.3rem)/1.22 Silkscreen,Pixel,monospace }
+.arcade-page #brief { margin:0;max-width:50rem;color:#ccdeec }
+.arcade-page .cabinet { box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"hud view" "screen screen" "tools pad";align-items:center;gap:.75rem 1rem;padding:clamp(.5rem,1.4vw,1.05rem);border:2px solid #5c8290;border-top-color:#8fb9b9;background:linear-gradient(135deg,#1c3647,#142337 65%);box-shadow:0 5px #050c16,inset 0 0 0 2px #273d52 }
+.arcade-page .hud { grid-area:hud;display:flex;justify-content:flex-start;gap:0;padding:0;flex-wrap:wrap;color:#e0f0fb }
+.arcade-page .hud span { padding:.32rem .75rem;border-inline-start:1px solid #547184 }
+.arcade-page .hud span:first-child { padding-inline-start:0;border:0;color:var(--cabinet-bright) }
+.arcade-page .cabinet .hh-view { grid-area:view;justify-content:flex-end;align-self:center;width:auto;margin:0 }
+.arcade-page .cabinet .hh-view button { font-size:.84rem }
+.arcade-page .cabinet .screen {
+  grid-area:screen;width:min(100%,calc((100dvh - 13.25rem) * var(--hh-ratio,1.777778)));min-width:0;max-width:100%;
+  border:2px solid #7594a2;box-shadow:0 0 0 3px #0a1424;margin-inline:auto;
+}
+.arcade-page .cabinet[data-cartridge="breaker"] { --cabinet-bright:#efc8ff }
+.arcade-page .cabinet[data-cartridge="space"] { --cabinet-bright:#a5dbff }
+.arcade-page .cabinet .overlay { display:grid;place-items:center;place-content:stretch;padding:.4rem;background:linear-gradient(0deg,#111b3524,#111b3500 52%,#111b3512) }
+.arcade-page .start-panel { box-sizing:border-box;text-align:center;max-width:92%;padding:clamp(.7rem,2.2vw,1.45rem) clamp(1rem,3vw,2.5rem);background:#11233aee;border:2px solid #a4c5ce;border-top:4px solid var(--cabinet-bright);box-shadow:4px 5px #0b12267d }
+.arcade-page .start-panel h2 { margin:0 0 .85rem;color:#fff2c9;font:400 clamp(1.1rem,2.25vw,2.1rem)/1.28 Silkscreen,Pixel,monospace;text-shadow:2px 2px #322944 }
+.arcade-page #play { min-height:44px;padding:.55rem 1.15rem;color:#122832;background:#a1eed3;border:2px solid #d2ffed;border-bottom:4px solid #5d9f92;font-weight:800 }
+.arcade-page .toolbar { grid-area:tools;justify-content:flex-start;gap:.45rem;margin:0 }
+.arcade-page .cabinet .pad { grid-area:pad;justify-self:end;justify-content:flex-end;margin:0 }
+.arcade-page .toolbar button,.arcade-page .pad button { min-height:44px }
+.arcade-page #help { margin:.95rem 0;color:#c2d6e8 }
+.arcade-page .cabinet.hh-expanded .screen { width:min(100%,calc((100dvh - 9rem) * var(--hh-ratio,1.777778))) }
+@media (min-width:751px) and (any-pointer:coarse) { .arcade-page .cabinet .pad { width:19.5rem } }
+@media(max-width:750px) {
+  .arcade-page main { padding-top:.6rem }
+  .arcade-page .arcade-links { gap:.3rem .8rem }
+  .arcade-page .arcade-links label { width:100%;margin:0;justify-content:space-between }
+  .arcade-page .cartridge-intro { display:grid;gap:.3rem }
+  .arcade-page .cabinet { grid-template-columns:minmax(0,1fr);grid-template-areas:"hud" "view" "screen" "pad" "tools";gap:.55rem }
+  .arcade-page .cabinet .hh-view,.arcade-page .toolbar,.arcade-page .hud { justify-content:center }
+  .arcade-page .cabinet .screen { width:100% }
+  .arcade-page .cabinet .pad { max-width:28rem;width:100%;justify-self:center }
+}
+@media (orientation:landscape) and (max-height:480px) and (min-width:550px) and (any-pointer:coarse) {
+  .arcade-page .arcade-links label { width:auto;margin-inline-start:auto }
+  .arcade-page .cabinet { grid-template-columns:minmax(0,1fr) 9.15rem;grid-template-rows:auto auto auto;grid-template-areas:"hud view" "screen tools" "screen pad";align-content:center;gap:.35rem .65rem }
+  .arcade-page .cabinet .hh-view,.arcade-page .toolbar { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:3px }
+  .arcade-page .cabinet .hh-ratios { display:contents }
+  .arcade-page .cabinet .hh-view button,.arcade-page .toolbar button { font-size:.74rem;padding:.2rem;min-height:44px }
+  .arcade-page .toolbar #sound { grid-column:1/-1 }
+  .arcade-page .cabinet .pad { grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto auto;gap:3px;padding:.24rem;justify-items:center }
+  .arcade-page .cabinet .pad button[data-key] { grid-column:auto;grid-row:auto;min-width:44px;min-height:44px;width:100% }
+  .arcade-page .cabinet .pad button:is([data-key="jump"],[data-key="fire"]) { width:44px;height:44px }
+  .arcade-page .cabinet .screen,.arcade-page .cabinet.hh-expanded .screen { width:min(100%,calc((100dvh - 8.15rem) * var(--hh-ratio,1.777778))) }
+}

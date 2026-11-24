@@ -34,6 +34,16 @@ export const AI_COURSE = {
  * exercises.
  */
 export const CHAPTERS = {
+  'Model evaluation studio': {
+    goal:'Use labeled examples to measure decision cost, choose a threshold and score a ranked retrieval result.',
+    material:[
+      {title:'Count decisions at a fixed cut',body:'A validation set pairs each score with a known label. For a threshold of 40, a score of 40 becomes positive. False positives use reviewer time; false negatives leave an event unnoticed. Apply the specified cost to each error.',code:'labels = [1, 0, 1]\nscores = [30, 80, 70]\n# At 40: one miss, one false alarm, one correct positive.'},
+      {title:'Compare operating points',body:'Repeat the evaluation on the same examples for each candidate. Specify tie behavior before looking at the results. Select your threshold on validation data and reserve a separate set for reporting final performance.',code:'candidates = [30, 50, 70]\n# Write a small table of threshold, misses, false alarms and total cost.'},
+      {title:'Keep retrieval order',body:'A search result is valuable when the first useful item appears early. Scan from rank one. A useful result at rank two earns one half of the maximum reciprocal-rank score; no relevant result earns zero.',code:'relevant = [12, 15]\nresults = [4, 15, 12]\n# First relevant rank: 2. Integer score: 50.'}
+    ],
+    exam:'The local Python interpreter runs each function on multiple inputs, including ties, repeated documents and empty lists.',
+    outcome:'You can compare decision thresholds and diagnose whether a retrieval change helped users reach a relevant item sooner.'
+  },
   'Python practice studio': {
     goal: 'Turn a small problem into a Python function and test it on several inputs.',
     material: [

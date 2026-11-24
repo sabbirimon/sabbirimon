@@ -1,6 +1,6 @@
 {
   "language": "en",
-  "exerciseCount": 231,
+  "exerciseCount": 243,
   "courses": [
     {
       "id": "code",
@@ -253,6 +253,27 @@
           "chapter": "JavaScript · Quiz",
           "brief": "Conditions & loops — pick the one right answer.",
           "url": "https://imon.com.bd/lab.html?exercise=js-quiz-25"
+        },
+        {
+          "id": "html-telemetry-step",
+          "title": "Validate a quarter-step measurement",
+          "chapter": "HTML · Form engineering",
+          "brief": "Write a labeled, required numeric input named gain inside a form. Accept settings from −1.5 to 2 inclusive in increments of 0.25. Try zero, a negative boundary, and a value between steps in the preview.",
+          "url": "https://imon.com.bd/lab.html?exercise=html-telemetry-step"
+        },
+        {
+          "id": "html-batch-id",
+          "title": "Constrain an instrument batch ID",
+          "chapter": "HTML · Form engineering",
+          "brief": "A batch ID consists of two uppercase ASCII letters, a hyphen and exactly three digits, including leading zeros. Give your form a labeled, required text input named batch. Verify that extra characters and lowercase letters are rejected.",
+          "url": "https://imon.com.bd/lab.html?exercise=html-batch-id"
+        },
+        {
+          "id": "html-remote-date",
+          "title": "Connect a remote scheduling control",
+          "chapter": "HTML · Form engineering",
+          "brief": "Create a form with id booking. Outside it, add a labeled, required date input named slot. Associate it with booking and allow dates from 2028-02-28 through 2028-03-02 inclusive. The submitted form must include February 29.",
+          "url": "https://imon.com.bd/lab.html?exercise=html-remote-date"
         },
         {
           "id": "cx-1-elements-01-star",
@@ -1263,6 +1284,27 @@
           "chapter": "Python practice studio",
           "brief": "For a nonnegative integer, raise each digit to the number of digits and add the results. Return whether the sum equals the input. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
           "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-isarmstrongnumber-armstrong-numbers"
+        },
+        {
+          "id": "ai-eval-cost",
+          "title": "Price a classifier’s mistakes",
+          "chapter": "Model evaluation studio",
+          "brief": "A monitoring classifier emits integer scores from 0 to 100. Predict positive when score ≥ threshold. A missed positive costs five review units and a false alarm costs two. Return the total cost for the paired lists; empty input costs zero.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=ai-eval-cost"
+        },
+        {
+          "id": "ai-eval-operating-point",
+          "title": "Choose an operating threshold",
+          "chapter": "Model evaluation studio",
+          "brief": "Evaluate each candidate using the same cost (miss 5, false alarm 2; scores at the threshold count positive). Return the cheapest threshold, choosing the larger threshold on a tie to limit alerts. Candidates is nonempty and may be unsorted.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=ai-eval-operating-point"
+        },
+        {
+          "id": "ai-eval-ranking",
+          "title": "Score retrieval with reciprocal rank",
+          "chapter": "Model evaluation studio",
+          "brief": "A search page returns a list of document IDs in ranked order. Return 100 divided by the one-based rank of the first relevant result, rounded down to a whole number. Return zero when the list is empty or none of the IDs are relevant. Later relevant results do not add points.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=ai-eval-ranking"
         }
       ]
     },
@@ -1545,6 +1587,27 @@
           "chapter": "LEDs and light",
           "brief": "Build an LED circuit: a battery across node 1, a resistor from node 1 to node 2, and an LED from node 2 to ground. Run the simulation and read the current through the LED.",
           "url": "https://imon.com.bd/circuits.html?exercise=circuit-build-led"
+        },
+        {
+          "id": "circuit-bench-bias",
+          "title": "Set a precision bias point",
+          "chapter": "Analog measurement bench",
+          "brief": "Use the supplied 6 V battery and two resistors: node 1 to 2, then 2 to ground. Design for 4 V at node 2 (±0.04 V) with 2 mA source current (±0.05 mA). Your ratio must also give 2 V when the checker changes only the supply to 3 V.",
+          "url": "https://imon.com.bd/circuits.html?exercise=circuit-bench-bias"
+        },
+        {
+          "id": "circuit-bench-loading",
+          "title": "Calibrate under load",
+          "chapter": "Analog measurement bench",
+          "brief": "Use two resistors from 1 to 2 and 2 to ground. On 6 V design for 3.6 V unloaded and 3.0 V when an instrument connects 6 kΩ from node 2 to ground (±0.04 V). The checker attaches the instrument temporarily. Build just the divider.",
+          "url": "https://imon.com.bd/circuits.html?exercise=circuit-bench-loading"
+        },
+        {
+          "id": "circuit-bench-bridge",
+          "title": "Null a two-arm bridge",
+          "chapter": "Analog measurement bench",
+          "brief": "Connect two divider arms from node 1 to ground with midpoints at nodes 2 and 3. On a 6 V supply both midpoints must read 4 V, their differential must be within 0.01 V of zero, and total supply current must be 3 mA (±0.05 mA). Multiple resistor combinations work.",
+          "url": "https://imon.com.bd/circuits.html?exercise=circuit-bench-bridge"
         }
       ]
     },
@@ -1652,6 +1715,27 @@
           "chapter": "Electronics",
           "brief": "A 12 V ideal source drives two resistors in series. The upper resistor is 1 kΩ. Predict the unloaded midpoint voltage with 3 kΩ below the probe.",
           "url": "https://imon.com.bd/systems.html?exercise=electronics-divider"
+        },
+        {
+          "id": "capacity-burst",
+          "title": "Find the peak backlog during a burst",
+          "chapter": "Capacity engineering",
+          "brief": "A cold queue receives 3, 18, 20, 0, then 0 jobs over five seconds. Arrivals enter before service. Each worker finishes four jobs per second. Predict the largest end-of-second backlog with three workers. Compare the peak with the final queue.",
+          "url": "https://imon.com.bd/systems.html?exercise=capacity-burst"
+        },
+        {
+          "id": "capacity-failover",
+          "title": "Size the queue after losing a zone",
+          "chapter": "Capacity engineering",
+          "brief": "Three equal zones serve a steady 75 requests per second. Lose one zone for 10 seconds starting with an empty queue. Each remaining replica serves 8 requests per second. Predict the outstanding requests with four replicas per zone.",
+          "url": "https://imon.com.bd/systems.html?exercise=capacity-failover"
+        },
+        {
+          "id": "capacity-tail",
+          "title": "Locate the p95 latency cliff",
+          "chapter": "Capacity engineering",
+          "brief": "In a batch of 100 requests, fast responses take 30 ms and slow ones 800 ms. Predict the nearest-rank 95th percentile with six slow responses. Compare with five to find where one response changes the reported percentile.",
+          "url": "https://imon.com.bd/systems.html?exercise=capacity-tail"
         }
       ]
     }

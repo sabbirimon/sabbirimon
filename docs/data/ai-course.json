@@ -1488,6 +1488,114 @@
       ],
       "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/armstrong-numbers/canonical-data.json",
       "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "ai-eval-cost",
+      "kind": "python",
+      "chapter": "Model evaluation studio",
+      "title": "Price a classifier’s mistakes",
+      "xp": 45,
+      "brief": "A monitoring classifier emits integer scores from 0 to 100. Predict positive when score ≥ threshold. A missed positive costs five review units and a false alarm costs two. Return the total cost for the paired lists; empty input costs zero.",
+      "starter": {
+        "python": "def solve(labels, scores, threshold):\n    pass\n"
+      },
+      "hint": "Scan matching positions. Treat equality as positive, add five for a miss and two for a false alarm.",
+      "solution": "def solve(labels, scores, threshold):\n    cost = 0\n    for i in range(len(labels)):\n        if scores[i] >= threshold and labels[i] == 0:\n            cost += 2\n        if scores[i] < threshold and labels[i] == 1:\n            cost += 5\n    return cost",
+      "cases": [
+        {
+          "call": "solve([], [], 50)",
+          "result": 0
+        },
+        {
+          "call": "solve([1,0,1,0], [50,50,49,10], 50)",
+          "result": 7
+        },
+        {
+          "call": "solve([1,1], [0,0], 1)",
+          "result": 10
+        },
+        {
+          "call": "solve([0,0,0], [90,90,90], 90)",
+          "result": 6
+        },
+        {
+          "call": "solve([0,1], [0,100], 60)",
+          "result": 0
+        }
+      ],
+      "origin": "Original IMON World exercise"
+    },
+    {
+      "id": "ai-eval-operating-point",
+      "kind": "python",
+      "chapter": "Model evaluation studio",
+      "title": "Choose an operating threshold",
+      "xp": 45,
+      "brief": "Evaluate each candidate using the same cost (miss 5, false alarm 2; scores at the threshold count positive). Return the cheapest threshold, choosing the larger threshold on a tie to limit alerts. Candidates is nonempty and may be unsorted.",
+      "starter": {
+        "python": "def solve(labels, scores, candidates):\n    pass\n"
+      },
+      "hint": "Track the best cost across candidates. Recompute the confusion counts for each threshold and break ties numerically.",
+      "solution": "def solve(labels, scores, candidates):\n    best = candidates[0]\n    lowest = 5 * len(labels) + 1\n    for threshold in candidates:\n        cost = 0\n        for i in range(len(labels)):\n            if scores[i] >= threshold and labels[i] == 0:\n                cost += 2\n            if scores[i] < threshold and labels[i] == 1:\n                cost += 5\n        if cost < lowest or (cost == lowest and threshold > best):\n            lowest = cost\n            best = threshold\n    return best",
+      "cases": [
+        {
+          "call": "solve([1,0,0], [60,65,2], [10,70,60])",
+          "result": 60
+        },
+        {
+          "call": "solve([0,1], [20,30], [30,21,50])",
+          "result": 30
+        },
+        {
+          "call": "solve([1,1,0], [5,10,100], [90,0,8])",
+          "result": 0
+        },
+        {
+          "call": "solve([], [], [50,10,70])",
+          "result": 70
+        }
+      ],
+      "origin": "Original IMON World exercise"
+    },
+    {
+      "id": "ai-eval-ranking",
+      "kind": "python",
+      "chapter": "Model evaluation studio",
+      "title": "Score retrieval with reciprocal rank",
+      "xp": 45,
+      "brief": "A search page returns a list of document IDs in ranked order. Return 100 divided by the one-based rank of the first relevant result, rounded down to a whole number. Return zero when the list is empty or none of the IDs are relevant. Later relevant results do not add points.",
+      "starter": {
+        "python": "def solve(relevant, results):\n    pass\n"
+      },
+      "hint": "Walk the results in their original order. Return immediately when a document occurs in the relevant list.",
+      "solution": "def solve(relevant, results):\n    for i in range(len(results)):\n        if results[i] in relevant:\n            return 100 // (i + 1)\n    return 0",
+      "cases": [
+        {
+          "call": "solve([3], [3,3])",
+          "result": 100
+        },
+        {
+          "call": "solve([3,5], [9,8,5,3])",
+          "result": 33
+        },
+        {
+          "call": "solve([2], [7,2])",
+          "result": 50
+        },
+        {
+          "call": "solve([90], [3,4])",
+          "result": 0
+        },
+        {
+          "call": "solve([8], [])",
+          "result": 0
+        },
+        {
+          "call": "solve([], [8])",
+          "result": 0
+        }
+      ],
+      "origin": "Original IMON World exercise"
     }
   ]
 }

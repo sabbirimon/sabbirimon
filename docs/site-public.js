@@ -8,19 +8,32 @@ panel.className='consent-panel';
 panel.setAttribute('aria-label','Cookie and privacy choices');
 panel.innerHTML='<strong>Cookie & privacy choices</strong><p>Choose which optional features to enable on this device.</p><label><input type="checkbox" name="weather"> Approximate location for weather and the map</label><label><input type="checkbox" name="metrics"> Anonymous usage counts for the site owner</label><div><button type="button" data-essential>Essential only</button><button type="button" data-save>Save choices</button><a data-policy>Privacy policy</a></div>';
 panel.querySelector('[data-policy]').href=new URL('privacy.html',base).href;
-function show(){
+const customize = document.createElement('button');
+customize.type = 'button';
+customize.textContent = 'Choose settings';
+customize.className = 'consent-customize';
+panel.querySelector('[data-save]').before(customize);
+function show(compact = false){
+  panel.classList.toggle('consent-summary', compact);
+  customize.hidden = !compact;
+  panel.querySelector('p').textContent = compact
+    ? 'Optional usage metrics and location are off.'
+    : 'Choose which optional features to enable on this device.';
   panel.hidden=false;
   const prefs=choices();
   panel.querySelector('[name=weather]').checked=!!prefs?.weather;
   panel.querySelector('[name=metrics]').checked=!!prefs?.metrics;
 }
+customize.onclick = () => { show(); panel.querySelector('input').focus(); };
 panel.querySelector('[data-essential]').onclick=()=>saveChoices(false,false);
 panel.querySelector('[data-save]').onclick=()=>saveChoices(panel.querySelector('[name=weather]').checked,panel.querySelector('[name=metrics]').checked);
 document.body.append(panel);
 const open=document.querySelector('[data-open-privacy]');
 open?.addEventListener('click',()=>{show();panel.querySelector('input').focus();});
 document.addEventListener('imon:open-privacy',()=>{show();panel.querySelector('input').focus();});
-if(choices())panel.hidden=true;else show();
+// The city game starts with optional features off. Its game menu opens the same choices.
+if (choices() || page === 'gridworks') panel.hidden = true;
+else show(true);
 const counted=new Set();
 async function record(event){
   if(!choices()?.metrics||navigator.globalPrivacyControl===true||!['page_view','game_start','quiz_complete','quest_complete','map_explore'].includes(event))return;

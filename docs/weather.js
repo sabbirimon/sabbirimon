@@ -2,11 +2,11 @@ import { createHail } from './hail.js';
 /** Original, bounded atmospheric weather. Visual atmosphere is separate from weather data. */
 export const WEATHER_TYPES = ['clear','glass-rain','glass-fog','cloudy','drizzle','rain','heavy-rain','storm','lightning','light-snow','snow','heavy-snow','blizzard','fog','wind','hail','sandstorm','cyclone','flood','earthquake','aurora','stars','meteors','fireflies','leaves'];
 const INTENSITIES = { gentle: .55, normal: .78, vivid: 1 };
-export function initWeather({ onThunder = () => {}, onHailImpact = () => {}, mount = document.body, id = 'weather-layer' } = {}) {
+export function initWeather({ onThunder = () => {}, onHailImpact = () => {}, mount = document.body, id = 'weather-layer', ground = null } = {}) {
   const viewport = mount === document.body || mount === document.documentElement;
   const canvas = document.createElement('canvas'); canvas.id=id; canvas.setAttribute('aria-hidden','true'); mount.append(canvas);
   Object.assign(canvas.style,{position:viewport?'fixed':'absolute',inset:'0',width:'100%',height:'100%',pointerEvents:'none',zIndex:'6',opacity:'1',imageRendering:'pixelated'});
-  const ctx=canvas.getContext('2d'),hero=viewport?document.getElementById('pixel-world'):null,reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  const ctx=canvas.getContext('2d'),hero=ground || (viewport?document.getElementById('pixel-world'):null),reduced=matchMedia('(prefers-reduced-motion: reduce)');
   let type='clear',intensity='vivid',power=1,density=1,motion=true,frame=0,last=null,width=1,height=1,destroyed=false;
   let animationTime=0,nextLightning=0,strikeAt=-Infinity,strikeX=.65,visible=true;
   let channel=[], forks=[];

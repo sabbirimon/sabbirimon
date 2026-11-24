@@ -457,6 +457,148 @@
           { "id": "led", "nodeA": 2, "nodeB": 0 }
         ]
       }
+    },
+    {
+      "id": "circuit-bench-bias",
+      "kind": "build",
+      "chapter": "Analog measurement bench",
+      "title": "Set a precision bias point",
+      "xp": 50,
+      "brief": "Use the supplied 6 V battery and two resistors: node 1 to 2, then 2 to ground. Design for 4 V at node 2 (±0.04 V) with 2 mA source current (±0.05 mA). Your ratio must also give 2 V when the checker changes only the supply to 3 V.",
+      "netlist": {
+        "parts": [
+          {
+            "id": "battery",
+            "nodeA": 1,
+            "nodeB": 0,
+            "value": 6
+          },
+          {
+            "id": "resistor",
+            "nodeA": 1,
+            "nodeB": 2,
+            "value": 1000
+          },
+          {
+            "id": "resistor",
+            "nodeA": 2,
+            "nodeB": 0,
+            "value": 2000
+          }
+        ]
+      },
+      "measurements": [
+        {
+          "node": 2,
+          "volts": 4,
+          "mA": 2
+        },
+        {
+          "supply": 3,
+          "node": 2,
+          "volts": 2
+        }
+      ]
+    },
+    {
+      "id": "circuit-bench-loading",
+      "kind": "build",
+      "chapter": "Analog measurement bench",
+      "title": "Calibrate under load",
+      "xp": 50,
+      "brief": "Use two resistors from 1 to 2 and 2 to ground. On 6 V design for 3.6 V unloaded and 3.0 V when an instrument connects 6 kΩ from node 2 to ground (±0.04 V). The checker attaches the instrument temporarily. Build just the divider.",
+      "netlist": {
+        "parts": [
+          {
+            "id": "battery",
+            "nodeA": 1,
+            "nodeB": 0,
+            "value": 6
+          },
+          {
+            "id": "resistor",
+            "nodeA": 1,
+            "nodeB": 2,
+            "value": 2000
+          },
+          {
+            "id": "resistor",
+            "nodeA": 2,
+            "nodeB": 0,
+            "value": 3000
+          }
+        ]
+      },
+      "measurements": [
+        {
+          "node": 2,
+          "volts": 3.6
+        },
+        {
+          "node": 2,
+          "volts": 3,
+          "loadOhms": 6000
+        }
+      ]
+    },
+    {
+      "id": "circuit-bench-bridge",
+      "kind": "build",
+      "chapter": "Analog measurement bench",
+      "title": "Null a two-arm bridge",
+      "xp": 50,
+      "brief": "Connect two divider arms from node 1 to ground with midpoints at nodes 2 and 3. On a 6 V supply both midpoints must read 4 V, their differential must be within 0.01 V of zero, and total supply current must be 3 mA (±0.05 mA). Multiple resistor combinations work.",
+      "netlist": {
+        "parts": [
+          {
+            "id": "battery",
+            "nodeA": 1,
+            "nodeB": 0,
+            "value": 6
+          },
+          {
+            "id": "resistor",
+            "nodeA": 1,
+            "nodeB": 2,
+            "value": 1000
+          },
+          {
+            "id": "resistor",
+            "nodeA": 2,
+            "nodeB": 0,
+            "value": 2000
+          },
+          {
+            "id": "resistor",
+            "nodeA": 1,
+            "nodeB": 3,
+            "value": 2000
+          },
+          {
+            "id": "resistor",
+            "nodeA": 3,
+            "nodeB": 0,
+            "value": 4000
+          }
+        ]
+      },
+      "measurements": [
+        {
+          "node": 2,
+          "volts": 4,
+          "mA": 3
+        },
+        {
+          "node": 3,
+          "volts": 4
+        },
+        {
+          "node": 2,
+          "reference": 3,
+          "volts": 0,
+          "tolerance": 0.01
+        }
+      ]
     }
   ]
 }

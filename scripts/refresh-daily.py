@@ -103,6 +103,16 @@ def news():
             print(f'News unavailable; retaining last successful snapshot: {fallback}', file=sys.stderr)
             if not (OUT / 'news.json').exists(): write('news.json', {'updated': None, 'source': 'Hacker News', 'sourceUrl': 'https://news.ycombinator.com/', 'stories': []})
 
+def ai_news():
+    """Keep a topic-specific offline edition if DEV is unavailable during publication."""
+    try:
+        records = sorted(devto(['ai', 'machinelearning', 'llm']), key=lambda item: item['time'], reverse=True)[:12]
+        if not records: raise ValueError('No AI stories returned')
+        write('ai-news.json', {'updated': NOW, 'source': 'DEV Community', 'sourceUrl': 'https://dev.to/', 'stories': records})
+        print(f'AI: {len(records)} DEV Community articles refreshed')
+    except Exception as error:
+        print(f'AI unavailable; retaining last successful snapshot: {error}', file=sys.stderr)
+
 def science():
     """Refresh the science and space headlines.
 
@@ -243,6 +253,7 @@ def github_stats():
 
 if __name__ == '__main__':
     news()
+    ai_news()
     science()
     quiz()
     github_stats()

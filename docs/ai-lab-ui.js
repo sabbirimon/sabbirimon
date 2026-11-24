@@ -1,3 +1,4 @@
+import {showTopicCheck} from './topic-check.js';
 import { scheduleProgressSync } from './auth.js';
 import { playSound } from './audio.js';
 /**
@@ -497,6 +498,7 @@ export function initAiLab(root = document) {
     const next = findAiExercise(state.exercises, id);
     if (!next) return null;
     state.exercise = next;
+    showTopicCheck(root.querySelector('[data-topic-check]'),'ai',next.chapter,next.id);
     state.buffers = { python: next.starter?.python || '', design: next.starter?.design || '' };
     if (editor) editor.value = aiStarterText(next);
     if (title) { title.textContent = next.title; }
@@ -504,7 +506,11 @@ export function initAiLab(root = document) {
     const guide = root.querySelector('[data-practice-guide]');
     if (guide) {
       guide.hidden = !next.solution;
-      root.querySelector('.lab-example').hidden = Boolean(next.solution);
+      const reference = root.querySelector('.lab-example');
+      reference.open = false;
+      reference.hidden = Boolean(next.solution) || !(next.expected?.length || next.ideas?.length);
+      reference.querySelector('summary').textContent = next.kind === 'design' ? 'Review design criteria' : 'Show expected output';
+      reference.querySelector('code').textContent = next.kind === 'design' ? (next.ideas || []).join(' · ') : (next.expected || []).join('\n');
       guide.querySelectorAll('details').forEach(panel => { panel.open = false; });
       if (next.solution) {
         guide.querySelector('[data-case-example]').textContent = 'Example: ' + next.sample.call + ' → ' + formatValue(next.sample.result, true);

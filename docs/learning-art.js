@@ -39,29 +39,49 @@ function circuits(g,t) {
     box(g,154+x,Math.min(y,last),1,Math.abs(y-last)+2,'#a7ff80');last=y;
   }
 }
-function meadow(g,t) {
-  // Small foreground sprites and drifting mist sit over the painted meadow.
-  for(let i=0;i<6;i++){
-    const x=205+(i*61+t*(1+i%3))%370, y=14+(i*13)%28;
-    box(g,x,y,12,1,'#edfdf184');box(g,x+4,y-1,6,1,'#ffffff80');
-    const flap=Math.floor(t*3+i)%2;
-    box(g,x-10,y+14,2,1,'#346a74');box(g,x-12,y+13+flap,2,1,'#346a74');box(g,x-8,y+13+flap,2,1,'#346a74');
+// The valley sprites use a logical pixel grid that follows the banner's aspect ratio.
+function valley(g,t) {
+  const {width:w,height:h}=g.canvas;
+  // Wind carries loose leaves from the two near banks across the skyline.
+  for(let i=0;i<14;i++){
+    const life=(t*.065+i*.271)%1, side=i%2?1:-1;
+    const x=side>0?w*life:w*(1-life), y=h*(.08+((i*17)%29)/100)+Math.sin(t*.9+i)*3;
+    const shade=['#fff1ad','#d5eb95','#f3bd87'][i%3];
+    box(g,x,y,3,1,shade);
+    box(g,x+(Math.sin(t*2+i)>0?2:0),y-1,2,1,shade);
   }
-  for(let i=0;i<35;i++){
-    const x=(i*131)%600,y=139+i*37%41,sway=Math.round(Math.sin(t*2+i));
-    box(g,x,y,1,3,'#4b8465');box(g,x+sway,y-1,2,2,['#ffd083','#e5a9bc','#b7e3a1'][i%3]);
-  }
+  // Small flocks stay in the sky. Separate drift speeds establish depth.
   for(let i=0;i<7;i++){
-    const phase=(t*.5+i*.21)%1;
-    box(g,205+i*8+phase*4,142+i%4,1+Math.floor(phase*4),1,'#e9ffffae');
+    const x=((t*(2+i%2)+i*37)%(w+20))-10, y=h*(.12+(i%3)*.043)+Math.sin(i+t*.65)*2;
+    const wing=Math.floor(t*3+i)%3-1;
+    box(g,x-3,y+wing,2,1,'#37576a');box(g,x-1,y,3,1,'#37576a');box(g,x+2,y+wing,2,1,'#37576a');
   }
-  const x=432,y=127+Math.round(Math.sin(t*2));
-  box(g,x-2,155,34,4,'#3f836f');box(g,x+3,y+20,5,7,'#454866');box(g,x+18,y+20,5,7,'#454866');
-  box(g,x,y,26,21,'#38435a');box(g,x+2,y+1,22,17,'#e5cfad');box(g,x+4,y+3,18,12,'#24585f');
-  box(g,x+7,y+7,3,Math.cos(t*2)>.96?1:4,'#9af5d9');box(g,x+16,y+7,3,Math.cos(t*2)>.96?1:4,'#9af5d9');
-  for(let i=0;i<5;i++){
-    const a=t*.8+i*1.3,bx=364+i*38+Math.sin(a)*8,by=129+Math.cos(a*2)*7;
-    box(g,bx,by,2,2,'#e2ab56');box(g,bx+2,by-(Math.floor(t*5+i)%2),2,2,'#ffe7a3');
+  for(let i=0;i<36;i++){
+    const x=(i*107)%w, y=h-2-(i*23)%Math.max(8,Math.round(h*.10));
+    const sway=Math.round(Math.sin(t*2+i)*1.5);
+    box(g,x,y,1,4,'#284759');box(g,x+sway,y-1,2,3,'#63865e');
+    if(i%3===0){
+      box(g,x+sway-1,y-2,4,2,'#e8a9a1');box(g,x+sway,y-3,2,3,'#fff0aa');
+    }
+  }
+  // In portrait the painted computer falls outside the crop. Keep the field terminal in view.
+  if(w/h<1.2){
+    const x=Math.round(w*.08),y=h-30;
+    box(g,x-4,y+22,36,3,'#27454c');box(g,x,y+16,28,6,'#605d69');box(g,x+2,y+15,25,3,'#b2a59a');
+    box(g,x+2,y-4,20,19,'#423f52');box(g,x+4,y-5,16,1,'#dbc9a4');box(g,x+3,y-3,17,17,'#b6a99d');
+    box(g,x+6,y,12,10,'#345566');box(g,x+7,y+1,10,8,'#54a99a');
+    box(g,x+8,y+3,2,1,'#b8f1b9');box(g,x+9,y+4,2,1,'#b8f1b9');box(g,x+8,y+5,2,1,'#b8f1b9');
+    if(Math.floor(t*1.8)%2===0)box(g,x+12,y+6,3,1,'#d6edac');
+    for(let key=0;key<6;key++)box(g,x+3+key*3,y+17,2,1,'#4f5561');
+  }
+  // Two sizes of butterflies thread the foreground; their wings fold in discrete steps.
+  for(let i=0;i<8;i++){
+    const side=i%2?1:-1, a=t*.52+i*1.13;
+    const x=(side>0?w*.86:w*.14)+Math.sin(a)*w*.09, y=h*(.68+(i%3)*.07)+Math.cos(a*1.7)*7;
+    const wings=Math.floor(t*5+i)%3, span=1+wings;
+    const tone=i%3===0?'#eab0dd':'#e6a052';
+    box(g,x-span,y-2,span,3,tone);box(g,x+1,y-2,span,3,tone);
+    box(g,x-span,y-3,1,2,'#fff2c3');box(g,x+span,y-3,1,2,'#fff2c3');box(g,x,y,1,2,'#4b3b49');
   }
 }
 function systems(g,t){
@@ -72,17 +92,23 @@ function systems(g,t){
       const step=Math.floor(t*4+i)%10;box(g,x+18+step*5,y+5+(i%2?1:-1)*step*3,4,3,'#ffe084');}
   }
 }
-const draw={code,ai,circuits,meadow,systems};
+const draw={code,ai,circuits,valley,systems};
 const scenes=new Map();
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-let frame=0,last=0,time=0;
+let frame=0,last=0,time=0,paused=false;
+function fitValley(canvas){
+  const area=canvas.getBoundingClientRect();
+  const grid=Math.max(2,Math.round(area.width/450));
+  const width=Math.max(1,Math.round(area.width/grid)),height=Math.max(1,Math.round(area.height/grid));
+  if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}
+}
 function paint(canvas){
   const g=canvas.getContext('2d');
   if(!g)return;
   g.clearRect(0,0,canvas.width,canvas.height);
   draw[canvas.dataset.learningArt](g,time);
 }
-function enabled(){return !document.hidden&&!reduced.matches&&document.body.dataset.motion!=='off'&&[...scenes.values()].some(Boolean);}
+function enabled(){return !paused&&!document.hidden&&!reduced.matches&&document.body.dataset.motion!=='off'&&[...scenes.values()].some(Boolean);}
 function tick(now){
   if(!last||now-last>=90){
     if(last)time+=Math.min(150,now-last)/1000;
@@ -96,22 +122,34 @@ function sync(){
   if(!enabled()&&frame){cancelAnimationFrame(frame);frame=0;}
 }
 const motionButton=document.querySelector('[data-cover-motion]');
-if(motionButton){
-  function showMotion(){
-    motionButton.hidden=false;
-    motionButton.disabled=reduced.matches;
-    const playing=!reduced.matches&&document.body.dataset.motion!=='off';
-    motionButton.textContent=reduced.matches?'Reduced motion enabled':playing?'Pause cover animations':'Play cover animations';
-    motionButton.setAttribute('aria-pressed',String(!playing));
-  }
-  motionButton.onclick=()=>{document.body.dataset.motion=document.body.dataset.motion==='off'?'on':'off';showMotion();sync();};
-  reduced.addEventListener('change',showMotion);showMotion();
+function updateMotion(){
+  if(!motionButton)return;
+  const globalOff=document.body.dataset.motion==='off';
+  motionButton.hidden=false;
+  motionButton.disabled=reduced.matches||globalOff;
+  motionButton.textContent=reduced.matches?'Reduced motion':globalOff?'World motion off':paused?'Play animation':'Pause animation';
 }
-const observer=new IntersectionObserver(entries=>{
-  for(const {target,isIntersecting} of entries){scenes.set(target,isIntersecting);if(isIntersecting)paint(target);}
-  sync();
+motionButton?.addEventListener('click',()=>{
+  paused=!paused;
+  updateMotion();sync();
 });
-for(const canvas of document.querySelectorAll('[data-learning-art]')) observer.observe(canvas);
-reduced.addEventListener('change',sync);
+const canvases=[...document.querySelectorAll('[data-learning-art]')].filter(canvas=>draw[canvas.dataset.learningArt]);
+const hero=canvases.find(canvas=>canvas.dataset.learningArt==='valley');
+if(hero){
+  fitValley(hero);paint(hero);
+  if(typeof ResizeObserver!=='undefined') new ResizeObserver(()=>{fitValley(hero);paint(hero);}).observe(hero);
+}
+if(typeof IntersectionObserver!=='undefined'){
+  const observer=new IntersectionObserver(entries=>{
+    for(const {target,isIntersecting} of entries){scenes.set(target,isIntersecting);if(isIntersecting)paint(target);}
+    sync();
+  });
+  for(const canvas of canvases)observer.observe(canvas);
+}else{
+  for(const canvas of canvases){scenes.set(canvas,true);paint(canvas);}
+  sync();
+}
+updateMotion();
+reduced.addEventListener('change',()=>{updateMotion();sync();});
 document.addEventListener('visibilitychange',sync);
-document.addEventListener('imon:motion',sync);
+document.addEventListener('imon:motion',()=>{updateMotion();sync();});

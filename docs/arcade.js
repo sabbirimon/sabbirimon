@@ -1,6 +1,6 @@
 /* Original, dependency-free arcade games. Canvas artwork is drawn in code. */
 import { playSound, setSound, isSoundEnabled } from './audio.js';
-import { SNAKE_BODY, SNAKE_TAIL, SNAKE_TAIL_TIP, SNAKE_TIP, SNAKE_HEADS, SNAKE_FOOD, SNAKE_TONGUE, SCENES, BOARD, sceneCells, wallBlocks } from './arcade-sprites.js';
+import { rotateSprite, SNAKE_HEADS, SNAKE_FOOD, SNAKE_TONGUE, SCENES, BOARD, sceneCells, wallBlocks } from './arcade-sprites.js';
 const DIRECTIONS = { up: [0, -1], right: [1, 0], down: [0, 1], left: [-1, 0] };
 const KEY_DIRECTION = { ArrowUp: 'up', w: 'up', W: 'up', ArrowRight: 'right', d: 'right', D: 'right', ArrowDown: 'down', s: 'down', S: 'down', ArrowLeft: 'left', a: 'left', A: 'left' };
 const W = 720, H = 480;
@@ -180,6 +180,75 @@ export function stepSurf(state, input, dt, difficulty = 'normal', random = Math.
 function safeRead(key) { try { return Math.max(0, Number(localStorage.getItem(key)) || 0); } catch { return 0; } }
 function safeWrite(key, value) { try { localStorage.setItem(key, String(value)); document.dispatchEvent(new CustomEvent('imon:progress', { detail: { key, value } })); } catch { /* Games still work in private storage modes. */ } }
 
+const SERPENT_SKINS = {
+  fern:   { rim:'#173b32', shade:'#266340', main:'#62bf61', light:'#a3ec73', mark:'#ffe78a' },
+  lagoon: { rim:'#102d4e', shade:'#126d88', main:'#35c5c5', light:'#96ffed', mark:'#ea94ff' },
+  ember:  { rim:'#461f39', shade:'#9c4051', main:'#ef7345', light:'#ffbd71', mark:'#ffeb9c' },
+  violet: { rim:'#2d184e', shade:'#593488', main:'#af70d3', light:'#f3b5f4', mark:'#7bffdf' }
+};
+const serpentTiles = new Map();
+const tongueSprites = Object.fromEntries(['right','down','left','up'].map((dir, i) => [dir, rotateSprite(SNAKE_TONGUE, i)]));
+
+function directionTo(part, adjacent) {
+  let x = adjacent.x - part.x, y = adjacent.y - part.y;
+  // A neighbour on the opposite border is one tile away across the portal.
+  if (Math.abs(x) > 1) x = -Math.sign(x);
+  if (Math.abs(y) > 1) y = -Math.sign(y);
+  return x ? (x > 0 ? 'right' : 'left') : (y > 0 ? 'down' : 'up');
+}
+
+function worldSkin(mode) {
+  const { scene, theme } = document.documentElement.dataset;
+  if (mode === 'night' || scene === 'neon-forest' || scene === 'cyberpunk' || theme === 'twilight') return 'violet';
+  if (mode === 'timed' || scene === 'neon-coast' || theme === 'sunset') return 'ember';
+  if (scene === 'river-mill' || theme === 'night') return 'lagoon';
+  return 'fern';
+}
+
+// Rasterize a curve between the shared edges of two tiles. Each longitudinal
+// sample carries the tail radius, so adjacent straight and elbow tiles match.
+function serpentTile(enter, exit, tailAge, skin) {
+  const key = [enter, exit, tailAge, skin].join('/');
+  if (serpentTiles.has(key)) return serpentTiles.get(key);
+  const size = BOARD.cell, mid = size / 2, palette = SERPENT_SKINS[skin];
+  const tile = document.createElement('canvas');
+  tile.width = tile.height = size;
+  const c = tile.getContext('2d');
+  const [ax, ay] = DIRECTIONS[enter], [bx, by] = DIRECTIONS[exit];
+  const points = [];
+  for (let i = 0; i <= size; i++) {
+    const t = i / size, a = (1-t)**2, b = t*t;
+    const reach = tailAge === 0 ? mid - 2 : mid;
+    const growth = Math.min(1, (tailAge + t) / 2.15);
+    points.push({ x:mid + a*ax*reach + b*bx*mid, y:mid + a*ay*reach + b*by*mid,
+      radius: 1 + growth*6.6, t });
+  }
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      let distance = Infinity, nearest;
+      for (const point of points) {
+        const d = (x+.5-point.x)**2 + (y+.5-point.y)**2;
+        if (d < distance) { distance = d; nearest = point; }
+      }
+      const edge = Math.sqrt(distance) / nearest.radius;
+      if (edge > 1) continue;
+      const ridge = (x+.5-nearest.x)*.48 + (y+.5-nearest.y)*.82;
+      let color = palette.main;
+      if (edge > .82) color = palette.rim;
+      else if (ridge > nearest.radius*.25) color = palette.shade;
+      else if (ridge < -nearest.radius*.33) color = palette.light;
+      if (edge < .76 && tailAge > 0) {
+        const chevron = nearest.t - .16*Math.abs(ridge)/nearest.radius;
+        if (chevron > .37 && chevron < .52) color = palette.shade;
+        if (chevron >= .52 && chevron < .63 && edge < .48) color = palette.mark;
+      }
+      c.fillStyle = color; c.fillRect(x, y, 1, 1);
+    }
+  }
+  serpentTiles.set(key, tile);
+  return tile;
+}
+
 export function initArcade() {
   if (document.getElementById('arcade-modal')) return;
   const dialog = document.createElement('dialog');
@@ -190,9 +259,9 @@ export function initArcade() {
     <header class="arcade-header"><div><span class="arcade-eyebrow">SABBIR'S POCKET ARCADE</span><h2 id="arcade-dialog-title">Pixel Snake</h2></div><button type="button" class="arcade-close" aria-label="Close game">×</button></header>
     <div class="arcade-hud"><div><span>SCORE</span><strong id="arcade-score">0000</strong></div><div><span>PERSONAL BEST</span><strong id="arcade-best">0000</strong></div><div class="arcade-life"><span id="arcade-detail-label">LENGTH</span><strong id="arcade-detail">03</strong></div><span class="arcade-state" id="arcade-state">READY</span></div>
     <div class="arcade-board"><canvas id="arcade-canvas" width="864" height="576" tabindex="0" aria-label="Game board. Use arrow keys or W A S D to move. Space pauses the game.">This game needs a browser with Canvas support. Use the direction buttons below to move.</canvas><div class="arcade-overlay"><span class="arcade-overlay-icon" aria-hidden="true">✦</span><h3 id="arcade-message">Small snake. Big ambition.</h3><p id="arcade-description">Collect the fruit. Grow your score. Mind the walls.</p><button type="button" class="arcade-start arcade-btn">LET'S PLAY <span aria-hidden="true">▶</span></button></div></div>
-    <div class="arcade-toolbar"><div class="arcade-actions"><button type="button" class="arcade-toggle arcade-btn">Start game</button><button type="button" class="arcade-restart arcade-secondary">Restart</button></div><div class="arcade-settings"><label for="arcade-mode">Mode <select id="arcade-mode"><option value="walls" selected>Wraparound</option><option value="classic">Classic</option><option value="night">Night</option><option value="timed">Timed</option></select></label><label><input type="checkbox" id="snake-path"> Turn preview</label><label for="snake-skin">Skin <select id="snake-skin"><option value="fern">Fern</option><option value="lagoon">Lagoon</option><option value="ember">Ember</option></select></label><label for="arcade-difficulty">Speed <select id="arcade-difficulty"><option value="easy">Chill</option><option value="normal" selected>Classic</option><option value="hard">Turbo</option></select></label><button type="button" class="arcade-sound arcade-secondary" aria-pressed="false" aria-label="Turn game sound on">Sound off</button></div></div>
+    <div class="arcade-toolbar" id="arcade-controls"><div class="arcade-actions"><button type="button" class="arcade-toggle arcade-btn">Start game</button><button type="button" class="arcade-restart arcade-secondary">Restart</button></div><div class="arcade-settings"><label for="arcade-mode">Mode <select id="arcade-mode"><option value="walls" selected>Wraparound</option><option value="classic">Classic</option><option value="night">Night</option><option value="timed">Timed</option></select></label><label><input type="checkbox" id="snake-path"> Turn preview</label><label for="snake-skin">Skin <select id="snake-skin"><option value="world">World theme</option><option value="fern">Fern</option><option value="lagoon">Lagoon</option><option value="ember">Ember</option><option value="violet">Neon viper</option></select></label><label for="arcade-difficulty">Speed <select id="arcade-difficulty"><option value="easy">Chill</option><option value="normal" selected>Classic</option><option value="hard">Turbo</option></select></label><button type="button" class="arcade-sound arcade-secondary" aria-pressed="false" aria-label="Turn game sound on">Sound off</button></div></div>
     <p class="arcade-mode-note" data-arcade-mode-note role="status" aria-live="polite"></p>
-    <div class="arcade-bottom"><p id="arcade-help"><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> or <kbd>W A S D</kbd> to move<br><kbd>Space</kbd> pause · <kbd>Esc</kbd> close</p><div class="arcade-dpad" aria-label="Touch direction controls"><button type="button" data-direction="up" aria-label="Move up">↑</button><button type="button" data-direction="left" aria-label="Move left">←</button><button type="button" data-direction="down" aria-label="Move down">↓</button><button type="button" data-direction="right" aria-label="Move right">→</button></div><p class="arcade-save-note">YOUR BEST STAYS<br>ON THIS DEVICE <span aria-hidden="true">★</span></p></div>
+    <div class="arcade-bottom"><p id="arcade-help"><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> or <kbd>W A S D</kbd> to move<br><kbd>Space</kbd> pause · <kbd>Esc</kbd> close</p><div class="arcade-dpad" aria-label="Touch direction controls"><button type="button" data-direction="up" aria-label="Move up">↑</button><button type="button" data-direction="left" aria-label="Move left">←</button><button type="button" data-direction="down" aria-label="Move down">↓</button><button type="button" data-direction="right" aria-label="Move right">→</button></div><div class="snake-action-pad"><button type="button" class="snake-action-b" aria-label="Open game settings" aria-expanded="false" aria-controls="arcade-controls"><b aria-hidden="true">B</b><span>Settings</span></button><button type="button" class="snake-action-a" aria-label="Start game"><b aria-hidden="true">A</b><span>Start</span></button></div><p class="arcade-save-note">YOUR BEST STAYS<br>ON THIS DEVICE <span aria-hidden="true">★</span></p></div>
     <p class="arcade-announcement" aria-live="polite" aria-atomic="true"></p>
   </div>`;
   document.body.append(dialog);
@@ -202,11 +271,6 @@ export function initArcade() {
   const difficultySelect = $('#arcade-difficulty');
   const turnPreview = $('#snake-path');
   const skinSelect = $('#snake-skin');
-  const skinColors = {
-    fern: {},
-    lagoon: {'#5fd068':'#49cadc','#3aa04a':'#19698a','#8bef92':'#a4fbf3','#4bb35c':'#123a57','#4fc463':'#5fe6e2','#2f8f4e':'#297ba3','#1f6b39':'#124664'},
-    ember: {'#5fd068':'#f47946','#3aa04a':'#984048','#8bef92':'#ffd586','#4bb35c':'#44213a','#4fc463':'#ffa162','#2f8f4e':'#b44b54','#1f6b39':'#652445'}
-  };
   skinSelect.addEventListener('change',()=>{if(game==='snake') draw();});
   const modeSelect = $('#arcade-mode');
   const modeNote = $('[data-arcade-mode-note]');
@@ -240,6 +304,10 @@ export function initArcade() {
       : game === 'snake' ? String(state.body.length).padStart(2, '0') : '♥'.repeat(state.lives) + '♡'.repeat(3 - state.lives);
     $('#arcade-state').textContent = ({ ready: 'READY', running: 'PLAYING', paused: 'PAUSED', over: 'GAME OVER', won: 'YOU WON!' })[state.status];
     $('.arcade-toggle').textContent = state.status === 'running' ? 'Pause' : state.status === 'paused' ? 'Resume' : state.status === 'ready' ? 'Start game' : 'Play again';
+    const action = $('.snake-action-a');
+    const label = $('.arcade-toggle').textContent;
+    action.setAttribute('aria-label', label);
+    action.lastElementChild.textContent = state.status === 'ready' ? 'Start' : label;
     const locked = state.status === 'running' || state.status === 'paused';
     difficultySelect.disabled = locked;
     if (modeSelect) modeSelect.disabled = locked;
@@ -280,6 +348,7 @@ export function initArcade() {
 
   function start() {
     if (state.status === 'over' || state.status === 'won') reset();
+    setSnakeOptions(false);
     state.status = 'running'; overlay.hidden = true; previousTime = 0; accumulator = 0;
     updateHud(); beep('start'); announce(`${game === 'snake' ? 'Pixel Snake' : 'Pixel Surf'} started.`);
     canvas.focus({ preventScroll: true });
@@ -345,7 +414,7 @@ export function initArcade() {
   function sprite(table, x, y, colors) {
     const factor = BOARD.cell / 30;
     for (const [rx, ry, rw, rh, colour] of table) {
-      rect(x + rx * factor, y + ry * factor, Math.max(1, rw * factor), Math.max(1, rh * factor), colors?.[colour] || colour);
+      rect(x + rx * factor, y + ry * factor, Math.max(1, Math.round((rx + rw) * factor) - Math.round(rx * factor)), Math.max(1, Math.round((ry + rh) * factor) - Math.round(ry * factor)), colors?.[colour] || colour);
     }
   }
 
@@ -485,23 +554,25 @@ export function initArcade() {
       sprite(table, x, y);
     }
 
-    // The body is drawn tail first, so the head sits on top of it.
     const body = state.body;
-    for (let index = body.length - 1; index >= 0; index -= 1) {
-      const part = body[index];
-      const x = margin + part.x * cell, y = margin + part.y * cell;
-      let table = SNAKE_BODY;
-      if (index === 0) table = SNAKE_HEADS[state.direction] || SNAKE_HEADS.right;
-      else if (index === body.length - 1) table = SNAKE_TIP;
-      else if (index === body.length - 2) table = SNAKE_TAIL_TIP;
-      else if (index === body.length - 3) table = SNAKE_TAIL;
-      sprite(table, x, y, skinColors[skinSelect.value]);
-      // The tongue flicks when the fruit is within reach.
-      if (index === 0 && state.food) {
-        const gap = Math.abs(state.food.x - part.x) + Math.abs(state.food.y - part.y);
-        if (gap <= 2 && !(reducedMotion.matches && Math.floor(state.timeLeft * 4) % 2 === 0)) sprite(SNAKE_TONGUE, x, y);
-      }
+    const skin = skinSelect.value === 'world' ? worldSkin(state.mode) : skinSelect.value;
+    const colors = SERPENT_SKINS[skin] || SERPENT_SKINS.fern;
+    const opposite = { up:'down', down:'up', left:'right', right:'left' };
+    ctx.save(); ctx.beginPath(); ctx.rect(margin, margin, BOARD.width, BOARD.height); ctx.clip();
+    for (let index = body.length - 1; index > 0; index--) {
+      const part = body[index], towardHead = directionTo(part, body[index-1]);
+      const towardTail = body[index+1] ? directionTo(part, body[index+1]) : opposite[towardHead];
+      const tile = serpentTile(towardTail, towardHead, Math.min(3, body.length-1-index), skin);
+      ctx.drawImage(tile, margin + part.x*cell, margin + part.y*cell);
     }
+    const head = body[0], hx = margin + head.x*cell, hy = margin + head.y*cell;
+    const headPalette = { '#1f6b39':colors.rim, '#2f8f4e':colors.shade, '#5fd068':colors.main,
+      '#4fc463':colors.light, '#8bef92':colors.mark };
+    if (state.food && !reducedMotion.matches && (state.status !== 'running' || accumulator < .055)) {
+      sprite(tongueSprites[state.direction], hx, hy);
+    }
+    sprite(SNAKE_HEADS[state.direction], hx, hy, headPalette);
+    ctx.restore();
 
     // Night mode dims the whole board and lights a small circle around the
     // head. The light is drawn in pixel rings, not a gradient, so it keeps
@@ -586,6 +657,7 @@ export function initArcade() {
 
   function open(which, opener) {
     if (which !== 'snake' && which !== 'surf') return;
+    setSnakeOptions(false);
     trigger = opener;
     game = which;
     reset();
@@ -612,6 +684,22 @@ export function initArcade() {
   dialog.addEventListener('close', close);
   dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
   $('.arcade-start').addEventListener('click', start);
+  function setSnakeOptions(open) {
+    dialog.classList.toggle('snake-options-open', open);
+    const button = $('.snake-action-b');
+    button.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-label', open ? 'Close game settings' : 'Open game settings');
+  }
+  $('.snake-action-b').addEventListener('click', () => {
+    const open = !dialog.classList.contains('snake-options-open');
+    if (open) pause();
+    setSnakeOptions(open);
+    if (open) $('.arcade-toolbar').scrollIntoView({ block: 'nearest' });
+  });
+  $('.snake-action-a').addEventListener('click', () => {
+    setSnakeOptions(false);
+    toggle();
+  });
   $('.arcade-toggle').addEventListener('click', toggle);
   $('.arcade-restart').addEventListener('click', () => { reset(); announce('Game reset. Select Start game when ready.'); });
   difficultySelect.addEventListener('change', reset);

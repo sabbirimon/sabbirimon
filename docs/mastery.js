@@ -13,7 +13,7 @@ export function mastery(course, saved) {
     if (solved.has(exercise.id)) chapter.completed++;
     chapters.set(exercise.chapter,chapter);
   }
-  const next = course.exercises.find(e => !solved.has(e.id));
+  const next = course.exercises.find(e => !solved.has(e.id) && (course.id !== 'code' || e.chapter !== 'JavaScript · Quiz'));
   const badges = [...chapters].filter(([,chapter]) => chapter.total === chapter.completed).map(([name]) => name);
   const milestones = [...new Set([1,3,6,12,24,48,96,course.exercises.length].filter(n=>n<=course.exercises.length))].sort((a,b)=>a-b);
   return {done,level:milestones.filter(n=>done>=n).length,goal:milestones.find(n=>n>done),next,badges};

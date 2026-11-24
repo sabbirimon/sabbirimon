@@ -1,3 +1,4 @@
+import {showTopicCheck} from './topic-check.js';
 import { scheduleProgressSync } from './auth.js';
 import { playSound } from './audio.js';
 /**
@@ -18,6 +19,7 @@ import { playSound } from './audio.js';
  * helpers below are exported so they can be tested under node.
  */
 
+import { formEngineering } from './lab-form-engineering.js';
 import { loadCurriculum } from './lab-curriculum.js';
 import { renderPixelText } from './pixel-type.js';
 import { initLabNotes, notesFor } from './lab-notes.js';
@@ -225,7 +227,8 @@ export const EXERCISES = [
   /* The knowledge check. Each question is an exercise with no editor:
      the learner picks one of four answers, a wrong answer explains
      itself, and the XP is paid the first time a question is right. */
-  ...quizExercises()
+  ...quizExercises(),
+  ...formEngineering
 ];
 
 /* ------------------------------------------------------------------ *
@@ -289,14 +292,16 @@ export function findExercise(id) {
   return allExercises().find(exercise => exercise.id === id) || null;
 }
 
-/**
- * The exercise that comes before or after `id` in the flat course order.
- *
- * Returns null at either end of the course so the caller can hide the
- * matching button instead of linking nowhere.
- */
+// Coding practice and multiple-choice questions have independent sequences.
+function practiceSequence(id) {
+  const current = findExercise(id);
+  if (!current) return [];
+  const quiz = current.kind === 'quiz';
+  return allExercises().filter(exercise => (exercise.kind === 'quiz') === quiz);
+}
+
 export function neighbourExercise(id, direction) {
-  const list = allExercises();
+  const list = practiceSequence(id);
   const index = list.findIndex(exercise => exercise.id === id);
   if (index < 0) return null;
   const step = direction === 'prev' ? -1 : 1;
@@ -841,11 +846,11 @@ export function initLab(root = document) {
    * progress through the course.
    */
   function updateCounter() {
-    const list = allExercises();
+    const list = practiceSequence(state.exercise.id);
     const index = list.findIndex(exercise => exercise.id === state.exercise.id);
     const position = index < 0 ? 0 : index + 1;
     if (counter) {
-      counter.textContent = `Exercise ${position} / ${list.length}`;
+      counter.textContent = `${state.exercise.kind === 'quiz' ? 'Question' : 'Exercise'} ${position} / ${list.length}`;
 
     }
     if (progressBar) {
@@ -862,7 +867,7 @@ export function initLab(root = document) {
     }
     if (prevButton) prevButton.hidden = !neighbourExercise(state.exercise.id, 'prev');
     if (nextButton) nextButton.hidden = !neighbourExercise(state.exercise.id, 'next');
-    if (doneButton) doneButton.hidden = !state.solved.has(state.exercise.id);
+    if (doneButton) doneButton.hidden = !state.solved.has(state.exercise.id) || !neighbourExercise(state.exercise.id, 'next');
     // The track under the bar lists every chapter and how far through it
     // the learner is.
     track?.render(labChapters(), list, state.solved, state.exercise.chapter, earnedXp({ solved: [...state.solved] }));
@@ -885,6 +890,7 @@ export function initLab(root = document) {
     const next = findExercise(id);
     if (!next) return null;
     state.exercise = next;
+    showTopicCheck(root.querySelector('[data-topic-check]'),'code',next.chapter,next.id);
     state.buffers = { ...next.starter };
     selectTab(next.language);
     for (const [name, editor] of Object.entries(editors)) if (editor) editor.value = state.buffers[name];
@@ -912,7 +918,7 @@ export function initLab(root = document) {
       if (next.solution) {
         example.querySelector('summary').textContent = 'Show worked answer';
         example.querySelector('code').textContent = next.solution;
-        example.querySelector('[data-example-explanation]').textContent = next.language === 'html' ? next.origin + ' · Compare each table section with your markup.' : 'Run the example and compare the preview and console with your answer.';
+        example.querySelector('[data-example-explanation]').textContent = 'Run the example and compare the preview and console with your answer.';
       } else if (note) {
         example.querySelector('summary').textContent = 'Worked example · ' + note.title;
         example.querySelector('code').textContent = note.example;
@@ -935,7 +941,7 @@ export function initLab(root = document) {
       if (helpQuiz) helpQuiz.hidden = false;
       if (stepsCode) stepsCode.hidden = true;
       if (stepsQuiz) stepsQuiz.hidden = false;
-      const list = allExercises();
+      const list = practiceSequence(next.id);
       const position = list.findIndex(exercise => exercise.id === next.id) + 1;
       quiz?.render(next, position, list.length);
       clearConsole();

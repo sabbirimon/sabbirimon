@@ -17,3 +17,7 @@
   .consent-panel {max-height:calc(100dvh - 2rem);overflow-y:auto}
   .consent-panel :is(label,button) {min-height:44px;box-sizing:border-box}
 }
+.consent-panel.consent-summary { max-width:min(25rem,calc(100vw - 2rem)); padding:.7rem .85rem; }
+.consent-summary :is(label,[data-save]),.consent-customize[hidden] { display:none!important; }
+.consent-panel.consent-summary p { margin:3px 0; }
+.consent-panel.consent-summary div { margin-top:.35rem; }

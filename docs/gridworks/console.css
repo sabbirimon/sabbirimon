@@ -1,0 +1,84 @@
+/* The map owns the play surface. All instruments live in the dock or in a drawer. */
+body.gridworks-page { min-height:0; height:100dvh; overflow:hidden; background:#091724; }
+#game-console { width:100%; height:100%; min-height:0; display:flex; flex-direction:column; container:console / size; isolation:isolate; }
+#game-console.turned { position:fixed; top:0; left:100%; width:100dvh; height:100vw; transform:rotate(90deg); transform-origin:0 0; }
+.gridworks-page .app-header { flex:0 0 auto; height:auto; min-height:56px; gap:12px; justify-content:flex-start; padding: max(4px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 4px max(14px,env(safe-area-inset-left)); background:#101f31; border-bottom:2px solid #38526a; }
+.wordmark small,.gridworks-page .header-region { display:none; }
+.gridworks-page .wordmark { font-size:10px; gap:8px; }
+.console-city { min-width:0; padding-left:15px; border-left:1px solid #426077; }
+.console-city h1 { margin:0; color:#b1f6db; font:800 clamp(14px,2vw,20px)/1.2 var(--body); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.console-city span { color:var(--console-muted); font:700 10px/1 var(--body); letter-spacing:.08em; }
+.console-status { display:flex; align-items:center; gap:.35em; color:#ffdc86; margin-left:auto; font:800 15px/1 var(--body); font-variant-numeric:tabular-nums; }
+.credit-symbol { display:grid; place-items:center; background:#e6aa43; border:2px solid #ffe09a; color:#442c10; width:19px; height:23px; font:900 15px/1 monospace; box-shadow:2px 2px #634320; }
+.app-header :is(#pause-button,#menu-button) { min-width:44px; min-height:44px; padding:0 10px; border:1px solid #4e6c80; background:#203449; color:#e3f5fc; font:800 14px/1 var(--body); }
+#pause-button[aria-pressed=true] { color:var(--console-gold); }
+.gridworks-page .game-layout { position:relative; display:flex; flex:1 1 0; min-height:0; isolation:isolate; }
+.gridworks-page .map-section { flex:1; width:100%; min-height:0; }
+.screen-mat { container-type:size; display:grid; place-items:center; flex:1 1 0; min-height:0; background-color:#0d1b29; background-image:radial-gradient(#2b4355 1px,transparent 1px); background-size:8px 8px; }
+.gridworks-page .map-viewport { flex:none; min-height:0; width:100%; height:100%; }
+#game-console[data-format=classic] .map-viewport { width:min(100cqw,133.333cqh); height:min(75cqw,100cqh); }
+#game-console[data-format=wide] .map-viewport { width:min(100cqw,177.778cqh); height:min(56.25cqw,100cqh); }
+.gridworks-page .map-bottom { display:none; }
+.gridworks-page .map-hint { top:auto; bottom:10px; padding:5px 10px; font:700 12px/1.35 var(--body); max-width:calc(100% - 16px); pointer-events:none; white-space:normal; text-align:center; color:#effcf7; background:#113137df; border-color:#83a69d; }
+.gridworks-page .map-legend { pointer-events:none; left:10px; top:10px; bottom:auto; }
+.gridworks-page .map-legend span { font:700 10px/1.35 var(--body); }
+.gridworks-page .paused-badge { pointer-events:none; }
+.gridworks-page .mobile-navigation { position:relative; z-index:4; display:flex; justify-content:center; align-items:stretch; flex:0 0 auto; height:auto; gap:4px; padding:5px max(6px,env(safe-area-inset-right)) max(5px,env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left)); background:#0e1d2c; border-top:2px solid #537587; }
+.gridworks-page .mobile-navigation button { flex:1; max-width:168px; min-width:0; min-height:46px; padding:4px; display:flex; justify-content:center; align-items:center; gap:8px; border:1px solid #3e566b; color:#c2d4df; background:#1b3043; }
+.gridworks-page .mobile-navigation button span { font:800 12px/1.2 var(--body); letter-spacing:.04em; }
+.gridworks-page .mobile-navigation button.selected { color:var(--console-gold); border-color:var(--console-gold); background:#30352e; box-shadow:inset 0 -3px var(--console-gold); }
+.gridworks-page :is(.panel.toolbox,.panel.management) { display:none; position:absolute; inset:8px auto 8px 8px; z-index:4; width:min(360px,calc(100% - 16px)); max-height:none; background:#101d2c; border:2px solid #58758b; box-shadow:4px 4px #07131ddd; overscroll-behavior:contain; overflow:auto; }
+.gridworks-page .panel.management { left:auto; right:8px; }
+body[data-mobile-panel=build] .panel.toolbox { display:flex; }
+body:is([data-mobile-panel=mission],[data-mobile-panel=inspect]) .panel.management { display:block; }
+.gridworks-page .mobile-panel-close { display:inline-grid; place-items:center; width:44px; height:44px; color:#f0f8ff; background:#22394e; border:1px solid #4d687c; font:24px/1 var(--body); flex:none; }
+.panel-heading,.management-tabs { position:sticky; top:0; z-index:2; background:#102132; }
+.gridworks-page .city-hud { height:auto; padding:4px 8px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.gridworks-page .hud-item { display:block; width:auto; min-height:0; padding:8px; background:#152738; border:1px solid #2c4053; }
+.gridworks-page .hud-item .hud-icon { display:none; }
+.gridworks-page .hud-item>div>span { font:800 10px/1.25 var(--body); color:#c0d3e3; }
+.gridworks-page .hud-item strong { font:800 16px/1.45 var(--body); }
+.gridworks-page .hud-item small { position:static; display:block; font:600 11px/1.2 var(--body); color:#b3c7d6; }
+.management .campaign-xp { display:inline-block; margin:8px 16px; font:800 12px/1.2 var(--body); }
+.console-menu { width:min(570px,calc(100% - 16px)); }
+.console-menu section { padding:12px 0; border-bottom:1px solid #345063; }
+.console-menu section h3 { color:var(--console-accent); font:800 15px/1.4 var(--body); margin:0 0 7px; }
+.console-menu :is(.header-actions,.map-toolbar,.zoom-controls,.simulation-controls,#appearance-controls,.render-controls,.screen-controls) { position:static; inset:auto; display:flex; flex-flow:row wrap; align-items:center; gap:6px; padding:0; margin:0; height:auto; border:0; box-shadow:none; background:none; }
+.console-menu :is(.mode-buttons,.map-overlays) { display:flex; flex-wrap:wrap; gap:6px; }
+.console-menu .zoom-controls { margin-top:6px; }
+.console-menu :is(section button,select,#view-angle,.render-controls button) { display:inline-flex; align-items:center; justify-content:center; gap:4px; min-height:44px; min-width:44px; height:auto; margin:0; padding:7px 11px; color:#e6f2fa; background:#20354a; border:1px solid #4c657a; font:800 13px/1.2 var(--body); }
+.console-menu :is(section button.selected,section button[aria-pressed=true]) { border-color:var(--console-accent); color:var(--console-accent); }
+.console-menu :is(.header-button span,.mode-buttons button span) { display:inline; font:inherit; }
+.console-menu label { display:flex; align-items:center; gap:6px; color:#cae1ee; font:700 13px/1.3 var(--body); }
+.console-menu .site-utilities { padding:12px 0 0; background:none; }
+.city-pad { position:absolute; inset:auto 8px 8px; display:flex; justify-content:space-between; align-items:flex-end; pointer-events:none; }
+.city-pad button { pointer-events:auto; touch-action:manipulation; user-select:none; color:white; background:#132c3bbd; border:1px solid #a3cbcb; font:800 17px/1 var(--body); min-width:44px; height:44px; }
+.city-pad button:active { background:#2a695beb; }
+.pad-cross { display:grid; grid-template: repeat(3,44px) / repeat(3,44px); }
+.pad-cross button:first-child {grid-area:1/2}.pad-cross button:nth-child(2){grid-area:2/1}.pad-cross button:nth-child(3){grid-area:2/3}.pad-cross button:nth-child(4){grid-area:3/2}
+.pad-actions { display:flex; align-items:flex-end; gap:6px; padding-bottom:8px; }
+.pad-actions button { border-radius:50%; background:#813e66c7; }.pad-actions button:last-child { margin-bottom:18px; }
+.map-viewport:has(.city-pad:not([hidden])) .map-hint { top:6px; bottom:auto; }
+.map-viewport:has(.city-pad:not([hidden])) .map-legend { display:none; }
+.gridworks-page .toast { pointer-events:none; }
+@container console (max-width:650px) {
+  .gridworks-page .app-header { gap:5px; min-height:48px; padding-inline:6px; }
+  .wordmark>span:nth-child(2),.console-city>span,.gridworks-page .header-region,.gridworks-page .map-legend { display:none; }
+  .gridworks-page .wordmark { display:flex; padding:4px; }
+  .console-city { border:0; padding-left:0; }
+  .gridworks-page .logo-pixels { width:29px; height:29px; }
+  .gridworks-page .mobile-navigation button { flex-direction:column; gap:2px; font-size:17px; }
+  .gridworks-page .panel { max-width:calc(100% - 16px); }
+}
+@container console (max-height:460px) {
+  .gridworks-page .app-header { min-height:44px; padding-block:0; }
+  .gridworks-page .mobile-navigation { padding-block:0; }
+  .gridworks-page .mobile-navigation button { min-height:44px; }
+}
+@container console (max-width:360px) {
+  #menu-button span { display:none; }
+  .console-city h1 { font-size:13px; }
+}
+#game-console.immersive:not(.turned) { position:fixed; inset:0; z-index:5; }
+#game-console:is(.immersive,:fullscreen) .mobile-navigation,
+:fullscreen #game-console .mobile-navigation { background:#112334dc; }

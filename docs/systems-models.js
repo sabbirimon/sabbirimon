@@ -59,3 +59,38 @@ scenarios.push(
     study:'Both resistors carry the same current. The larger resistance drops more voltage. Compare your result with a voltage-divider build in the circuit simulator.',
     formula:'Midpoint voltage = 12 × lower resistance / (1 + lower resistance)',value:n=>12*n/(1+n),visual:n=>Array.from({length:24},(_,i)=>i<Math.round(24*n/(1+n))?'source':'off'),legend:'Each green cell represents about half a volt at the probe.'}
 );
+
+function burstQueue(workers) {
+  // Discrete one-second arrivals, then service, with unused capacity expiring.
+  let waiting = 0, peak = 0;
+  for (const arrivals of [3,18,20,0,0]) {
+    waiting = Math.max(0, waiting + arrivals - 4*workers);
+    peak = Math.max(peak, waiting);
+  }
+  return peak;
+}
+function queueDiagram(count, maximum) {
+  return Array.from({length:maximum},(_,i)=>i<count ? 'alert' : 'off');
+}
+scenarios.push(
+  {id:'capacity-burst',chapter:'Capacity engineering',title:'Find the peak backlog during a burst',
+    control:'Workers',min:1,max:8,initial:1,target:3,unit:'queued jobs at peak',
+    brief:'A cold queue receives 3, 18, 20, 0, then 0 jobs over five seconds. Arrivals enter before service. Each worker finishes four jobs per second. Predict the largest end-of-second backlog with three workers. Compare the peak with the final queue.',
+    study:'Carry the unfinished jobs between seconds. Unused capacity expires at the end of each second. Measuring only the final backlog can hide a latency spike. Try one worker and eight workers to see the limits.',
+    formula:'Q[t] = max(0, Q[t−1] + arrivals[t] − 4 × workers); peak = max(Q)',
+    value:burstQueue,visual:n=>queueDiagram(burstQueue(n),38),legend:'Each red cell is one job waiting at the busiest end-of-second sample.'},
+  {id:'capacity-failover',chapter:'Capacity engineering',title:'Size the queue after losing a zone',
+    control:'Replicas per zone',min:1,max:9,initial:2,target:4,unit:'requests waiting after the outage',
+    brief:'Three equal zones serve a steady 75 requests per second. Lose one zone for 10 seconds starting with an empty queue. Each remaining replica serves 8 requests per second. Predict the outstanding requests with four replicas per zone.',
+    study:'Recompute capacity using only the two healthy zones. A steady arrival rate above service capacity accumulates backlog every second. Find the smallest replica count that can absorb an outage without queuing.',
+    formula:'Outstanding = 10 × max(0, 75 − 2 × replicas × 8)',
+    value:n=>10*Math.max(0,75-16*n),visual:n=>Array.from({length:3*n},(_,i)=>i<n?'alert':'source'),
+    legend:'Each cell is one replica. Red replicas are unavailable. Green replicas continue processing.'},
+  {id:'capacity-tail',chapter:'Capacity engineering',title:'Locate the p95 latency cliff',
+    control:'Slow responses in 100',min:0,max:15,initial:2,target:6,unit:'milliseconds at p95',
+    brief:'In a batch of 100 requests, fast responses take 30 ms and slow ones 800 ms. Predict the nearest-rank 95th percentile with six slow responses. Compare with five to find where one response changes the reported percentile.',
+    study:'Sort observed durations ascending and take the value at one-based position ceil(0.95 × N). With five slow requests the first 95 items are fast. A small slow cohort can dominate a tail percentile while the median stays fixed.',
+    formula:'Rank = ceil(0.95 × 100); fast count = 100 − slow count',
+    value:n=>100-n >= 95 ? 30 : 800,visual:n=>Array.from({length:100},(_,i)=>i<100-n?'network':'alert'),
+    legend:'Responses are sorted by duration. Blue responses take 30 ms. Red responses take 800 ms.'}
+);

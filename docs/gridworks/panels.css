@@ -1,0 +1,219 @@
+/* City controls share the map's palette. Tiny pixel lettering is reserved for short labels. */
+.gridworks-page {
+  --console-accent: #91efd0;
+  --console-edge: #344962;
+  --console-ink: #edf5ff;
+  --console-muted: #adc1d4;
+  --console-gold: #ffcf65;
+  --console-tile: #142338;
+}
+.gridworks-page[data-palette="cyber"] {
+  --console-accent: #ffa3dc;
+  --console-edge: #55476e;
+  --console-gold: #cdff85;
+  --console-tile: #211e35;
+}
+
+.panel-heading { align-items: center; padding: 16px; }
+.panel-heading h2,
+.mission-copy h2,
+.operator-intro h2,
+.inspector-title h2,
+.inspector-empty h2 {
+  color: var(--console-ink);
+  font: 800 20px/1.25 var(--body);
+  overflow-wrap: anywhere;
+}
+.panel-heading .eyebrow,
+.mission-copy .eyebrow,
+.operator-intro .eyebrow,
+.game-dialog .eyebrow {
+  font: 8px/1.8 var(--pixel);
+  color: var(--console-accent);
+}
+
+.build-categories { gap: 6px; padding-inline: 12px; }
+.build-categories button,
+.management-tabs > button:not(.mobile-panel-close),
+.city-actions button,
+.inspector-actions button,
+.operator-card > button,
+.quiet-button {
+  min-height: 44px;
+  padding: 8px;
+  color: #bdd0e1;
+  font: 800 12px/1.35 var(--body);
+  letter-spacing: .035em;
+}
+.build-categories button {
+  background: var(--console-tile);
+  border-color: var(--console-edge);
+}
+.build-categories button.selected,
+body[data-palette="cyber"] .build-categories button.selected,
+.management-tabs > button.selected:not(.mobile-panel-close) {
+  border-color: var(--console-accent);
+  background: var(--console-tile);
+  color: var(--console-accent);
+  box-shadow: inset 0 -3px var(--console-accent);
+}
+.management-tabs { height: auto; gap: 3px; padding: 5px 8px; }
+.management-tabs > button:not(.mobile-panel-close) { flex: 1 1 auto; }
+
+.build-catalog { gap: 7px; padding-inline: 12px; }
+.build-card {
+  min-width: 0;
+  padding: 9px;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 9px;
+  border-color: var(--console-edge);
+  background: var(--console-tile);
+}
+.build-card .building-icon,
+.inspector-title .building-icon {
+  width: 40px;
+  height: 40px;
+  background: repeating-linear-gradient(0deg, #182f3d 0 3px, #193340 3px 4px);
+  border-color: #466170;
+}
+.build-card-name { font: 800 14px/1.24 var(--body); color: var(--console-ink); overflow-wrap: anywhere; }
+.build-card-cost { display: flex; flex-wrap: wrap; gap: 2px 6px; margin-top: 5px; color: var(--console-gold); font: 800 12px/1.25 var(--body); }
+.build-card-cost small { margin: 0; color: var(--console-muted); font: 700 10px/1.5 var(--body); }
+.build-card.selected,
+body[data-palette="cyber"] .build-card.selected {
+  border-color: var(--console-gold);
+  box-shadow: inset 3px 0 var(--console-gold);
+  background: #26303b;
+}
+.build-card:disabled { opacity: 1; background: #111c2b; border-color: #29374b; }
+.build-card:disabled .building-icon { filter: saturate(.32); opacity: .75; }
+.build-card:disabled .build-card-name,
+.build-card:disabled .build-card-cost { color: #9cafc1; }
+.build-card-unlock { position: static; grid-column: 2; margin-top: -4px; font: 700 10px/1.2 var(--body); letter-spacing: .08em; color: #bdadc9; }
+.tool-description,
+.starter-guide,
+.story-task {
+  background: #152a31;
+  border: 1px solid #3a565b;
+  border-left: 3px solid var(--console-accent);
+}
+.tool-description { color: #b7d3d3; font-size: 13px; }
+.tool-description b { color: var(--console-accent); font-size: 14px; }
+.toolbox-footer { display: none; }
+
+.mission-art { border-color: #5e8e8c; }
+.mission-art > span { font: 800 10px/1.3 var(--body); letter-spacing: .055em; color: #e8ffdb; }
+.mission-copy p,
+.inspector-description,
+.operator-intro p,
+.service-control > p,
+.operator-card > p,
+.mission-complete p {
+  font: 400 14px/1.55 var(--body);
+  color: var(--console-muted);
+}
+.starter-guide { background: #292b27; border-color: #595340; border-left-color: var(--console-gold); }
+.starter-guide > b,
+.story-task > b,
+.story-log h3,
+.event-heading h2,
+.help-controls h3,
+.mission-complete > span {
+  font: 8px/1.8 var(--pixel);
+  color: var(--console-accent);
+}
+.starter-guide > b { color: var(--console-gold); }
+.starter-guide button,
+.story-log button { min-height: 44px; font: 700 13px/1.4 var(--body); }
+.starter-guide small { color: #c3c6b8; font-size: 12px; }
+.objective-top { font-size: 13px; align-items: baseline; color: #d2dfef; }
+.objective-check { align-self: start; margin-top: 3px; }
+.objective-value { font: 800 12px/1.4 var(--body); color: var(--console-ink); }
+.objective-bar { height: 5px; }
+.objective-bar > span { background: var(--console-accent); }
+.event-feed { font-size: 12px; color: var(--console-muted); }
+.event-feed time { font-size: 11px; color: #9ab1c5; }
+.city-actions button { background: var(--console-tile); }
+#restart-button { color: #f6beb2; }
+
+.inspector-title p,
+.operator-card > div > small { font: 800 11px/1.4 var(--body); color: var(--console-accent); letter-spacing: .04em; }
+.inspector-stats { gap: 6px; }
+.inspector-stats > div,
+.operator-card { min-width: 0; background: var(--console-tile); border-color: var(--console-edge); }
+.inspector-stats span { font-size: 12px; color: var(--console-muted); }
+.inspector-stats strong,
+.service-control .inspector-stats strong { color: var(--console-ink); font: 800 15px/1.3 var(--body); overflow-wrap: anywhere; }
+.inspector-empty { color: var(--console-muted); font-size: 14px; }
+.inspector-actions small,
+.asset-status { font-size: 12px; }
+.service-control { padding-block: 12px; }
+.service-control > label,
+.reserve-label { font: 800 13px/1.5 var(--body); }
+#forecast-window,
+.reserve-label input { min-height: 44px; padding-inline: 8px; background: #112033; border: 1px solid #536b84; color: var(--console-ink); font: 700 14px var(--body); }
+#service-price { height: 32px; margin-block: 5px; }
+.operator-list { gap: 8px; }
+.operator-card h3 { font-size: 15px; }
+.operator-toggle { min-height: 44px; font-size: 13px; }
+.hardware-upgrades button { min-height: 44px; }
+.operator-card > button:disabled,
+.inspector-actions button:disabled,
+.hardware-upgrades button:disabled { opacity: .67; }
+
+.game-dialog {
+  color: var(--console-ink);
+  border: 1px solid #5a778a;
+  border-top: 4px solid var(--console-accent);
+  background: #101b2b;
+  box-shadow: 0 6px 0 #07111b, 0 12px 48px #020913a6;
+  padding: clamp(17px, 3vw, 28px);
+  overscroll-behavior: contain;
+}
+.game-dialog > header { align-items: center; border-bottom: 1px solid var(--console-edge); padding-bottom: 14px; margin-bottom: 14px; }
+.game-dialog h2 { color: var(--console-ink); font: clamp(12px, 2vw, 17px)/1.65 var(--pixel); }
+.game-dialog > header > button { width: 44px; height: 44px; background: var(--console-tile); }
+.game-dialog .dialog-intro,
+.help-steps p,
+.help-controls p,
+.story-task p,
+.story-dialog #story-content > p { color: #c0d2e2; font: 400 14px/1.65 var(--body); }
+.campaign-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 175px), 1fr)); }
+.campaign-card { background: var(--console-tile); border-color: var(--console-edge); }
+.campaign-card.current { border-color: var(--console-gold); box-shadow: inset 3px 0 var(--console-gold); }
+.campaign-card:disabled { opacity: 1; background: #131f30; color: #aabccc; }
+.campaign-card:disabled .campaign-number { color: #aabccc; }
+.campaign-card .campaign-number,
+.campaign-card .campaign-status { font: 800 11px/1.4 var(--body); letter-spacing: .08em; }
+.campaign-card small,
+.sandbox-row p,
+.help-note,
+.story-advisor small { color: var(--console-muted); font: 400 13px/1.5 var(--body); }
+.story-log { max-height: none; }
+.help-steps { gap: 12px; }
+.help-steps article { padding: 14px; background: var(--console-tile); border: 1px solid var(--console-edge); gap: 14px; }
+.help-steps article > b { color: var(--console-gold); }
+.help-steps h3 { font-size: 16px; }
+.help-controls p + h3 { margin-top: 14px; }
+.game-dialog .pixel-button,
+.mission-complete .pixel-button {
+  min-height: 44px;
+  background: var(--console-gold);
+  border: 1px solid #ffe8a5;
+  color: #211a0e;
+  font: 800 13px/1.4 var(--body);
+  letter-spacing: .035em;
+}
+#confirm-restart { background: #ffb3a3; border-color: #ffd8cd; box-shadow: 0 3px 0 #77423c; }
+
+@media (max-width: 600px) {
+  .build-card { align-content: center; }
+  .mission-art { float: none; width: auto; height: 64px; margin: 12px 14px 0; }
+  .mission-copy { min-height: 0; padding: 12px 14px; }
+  .campaign-card { min-height: auto; }
+  .game-dialog { max-height: calc(100dvh - 16px); }
+}
+@media (max-width: 370px) {
+  .build-card { grid-template-columns: 32px minmax(0, 1fr); gap: 6px; padding: 7px; }
+  .build-card .building-icon { width: 32px; height: 32px; }
+}

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeNewsSnapshot, normalizeScienceSnapshot, normalizeDevtoSnapshot, safeNewsUrl, decodeNewsTitle, firstProvider, devtoQuery, mergeStories, formatRelative, formatCountdown } from '../docs/news.js';
+import { normalizeNewsSnapshot, normalizeScienceSnapshot, normalizeDevtoSnapshot, safeNewsUrl, decodeNewsTitle, firstProvider, devtoQuery, mergeStories, readNewsEdition, formatRelative, formatCountdown } from '../docs/news.js';
 test('news links reject scripts and credential-bearing URLs', () => {
   for (const url of ['javascript:alert(1)', 'data:text/html,x', 'https://user:pass@example.com/', 'not a url']) assert.equal(safeNewsUrl(url), null);
   assert.equal(safeNewsUrl('https://example.com/story'), 'https://example.com/story');
@@ -82,4 +82,22 @@ test('the DEV normalizer keeps the article author as the publisher', () => {
   assert.equal(result.stories[0].publisher, 'Grace');
   assert.equal(result.stories[0].provider, undefined);
   assert.equal(result.source, 'DEV Community');
+});
+
+test('editions retain the actual fallback provider and reject old tech stories in AI', () => {
+  const snapshot = { source: 'DEV Community', updated: '2026-11-22T00:00:00Z', stories: [
+    { id: 1, title: 'Model output', url: 'https://dev.to/ada/model', time: 1700000000, publisher: 'Ada' }
+  ] };
+  for (const topic of ['tech', 'science', 'ai']) {
+    assert.equal(readNewsEdition(topic, snapshot).source, 'DEV Community');
+    assert.equal(readNewsEdition(topic, snapshot).stories[0].publisher, 'Ada');
+  }
+  assert.equal(readNewsEdition('ai', { ...snapshot, source: 'Hacker News' }), null);
+  assert.equal(readNewsEdition('ai', { ...snapshot, stories: [{ ...snapshot.stories[0], url: 'https://example.test/not-ai' }] }), null);
+});
+test('combined headlines preserve provider-local ids and distinct query-based stories', () => {
+  const first = { id: 7, provider: 'Hacker News', url: 'https://news.ycombinator.com/item?id=7', time: 1 };
+  const second = { ...first, id: 8, url: 'https://news.ycombinator.com/item?id=8' };
+  const third = { ...first, provider: 'DEV Community', url: 'https://dev.to/a/story' };
+  assert.equal(mergeStories([[first, second], [third]]).length, 3);
 });

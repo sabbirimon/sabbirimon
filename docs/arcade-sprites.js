@@ -98,25 +98,17 @@ export const SNAKE_TIP = [
  * once and turned by `rotateSprite`.
  */
 const HEAD_RIGHT = [
-  // The dark base, which gives the head its outline.
-  [0, 5, 19, 20, '#2f8f4e'],
-  // The skull.
-  [1, 3, 18, 24, '#4fc463'],
-  // A lit crown along the top.
-  [2, 3, 16, 4, '#5fd068'],
-  // A dark jaw along the bottom.
-  [2, 23, 16, 4, '#1f6b39'],
-  // The snout, narrowing towards the nose in two steps.
-  [17, 10, 8, 10, '#4fc463'],
-  [23, 12, 6, 6, '#5fd068'],
-  [27, 13, 3, 4, '#5fd068'],
-  // The eyes, small and set wide apart on the skull.
-  [5, 7, 5, 5, '#f4ffe8'],
-  [5, 18, 5, 5, '#f4ffe8'],
-  [6, 8, 2, 2, '#10281c'],
-  [6, 19, 2, 2, '#10281c'],
-  // A nostril, so the nose end reads as a nose.
-  [22, 14, 2, 2, '#1f6b39']
+  [0, 8, 5, 14, '#1f6b39'], [3, 5, 4, 20, '#1f6b39'],
+  [7, 2, 10, 26, '#1f6b39'], [17, 4, 5, 22, '#1f6b39'],
+  [22, 7, 4, 16, '#1f6b39'], [26, 10, 4, 10, '#1f6b39'],
+  [0, 10, 7, 10, '#2f8f4e'], [5, 7, 16, 16, '#5fd068'],
+  [8, 4, 8, 22, '#4fc463'], [16, 6, 5, 18, '#4fc463'],
+  [21, 9, 4, 12, '#5fd068'], [25, 12, 4, 6, '#8bef92'],
+  [8, 11, 5, 8, '#2f8f4e'], [11, 13, 6, 4, '#8bef92'],
+  [11, 4, 7, 5, '#1f6b39'], [11, 21, 7, 5, '#1f6b39'],
+  [12, 4, 5, 4, '#f4ffe8'], [12, 22, 5, 4, '#f4ffe8'],
+  [15, 4, 2, 4, '#10281c'], [15, 22, 2, 4, '#10281c'],
+  [23, 10, 2, 2, '#1f6b39'], [23, 18, 2, 2, '#1f6b39']
 ];
 
 /**
@@ -167,8 +159,8 @@ export const SNAKE_HEADS = {
 
 /** The tongue is only drawn when the snake is reaching for the fruit. */
 export const SNAKE_TONGUE = [
-  [28, 12, 2, 2, '#fc647f'],
-  [28, 16, 2, 2, '#fc647f']
+  [28, 14, 5, 2, '#fc647f'], [33, 12, 3, 2, '#ff95a5'],
+  [33, 16, 3, 2, '#ff95a5']
 ];
 
 /**

@@ -126,7 +126,7 @@ export function normalizeDevtoSnapshot(value, updated) {
 /**
  * Build the dev.to query for a set of tags.
  *
- * The API takes one tag at a time, so the tags are fetched in parallel and
+ * The API takes one tag at a time, so the tags are fetched sequentially and
  * the results are merged. The order of the tags decides the order of the
  * stories, which keeps the list stable between refreshes.
  */
@@ -139,7 +139,7 @@ export function devtoQuery(tags = ['space', 'science']) {
 /**
  * Fetch the dev.to articles for a list of tags.
  *
- * The API takes one tag at a time, so the requests run in parallel and the
+ * The API takes one tag at a time, so the requests run in sequence and the
  * results are merged. A tag that fails is skipped rather than failing the
  * whole lookup, so one missing feed never silences the other.
  */
@@ -158,7 +158,7 @@ async function devtoSnapshot(tags, timeout = 9000) {
       batches.push(Array.isArray(raw) ? raw : []);
     } catch { batches.push([]); }
   }
-  const merged = batches.flat();
+  const merged = batches.flat().sort((a, b) => Date.parse(b.published_timestamp) - Date.parse(a.published_timestamp));
   const result = normalizeDevtoSnapshot(merged, new Date().toISOString());
   if (!result) throw new Error('DEV Community headlines unavailable.');
   return result;
@@ -197,11 +197,20 @@ export function mergeStories(lists, limit = 24) {
   for (const list of Array.isArray(lists) ? lists : []) {
     for (const story of Array.isArray(list) ? list : []) {
       if (!story || typeof story !== 'object') continue;
-      const link = typeof story.url === 'string' ? story.url.replace(/[#?].*$/, '').replace(/\/+$/, '').toLowerCase() : '';
+      let link = safeNewsUrl(story.url);
+      if (link) {
+        const url = new URL(link);
+        url.hash = '';
+        for (const key of [...url.searchParams.keys()]) {
+          if (/^(utm(?:_.*)?|fbclid|gclid)$/i.test(key)) url.searchParams.delete(key);
+        }
+        link = url.href.replace(/\/+$/, '');
+      }
+      const identity = story.id == null ? null : `${story.provider || ''}/${story.id}`;
       if (link && seenLinks.has(link)) continue;
-      if (story.id != null && seenIds.has(story.id)) continue;
+      if (identity && seenIds.has(identity)) continue;
       if (link) seenLinks.add(link);
-      if (story.id != null) seenIds.add(story.id);
+      if (identity) seenIds.add(identity);
       merged.push(story);
     }
   }
@@ -219,7 +228,7 @@ export function formatRelative(updated, now = Date.now()) {
   const stamp = Date.parse(updated);
   if (!Number.isFinite(stamp)) return 'time unavailable';
   const elapsed = Math.max(0, Math.floor(now / 1000 - stamp / 1000));
-  if (elapsed < 45) return 'just now';
+  if (elapsed < 60) return 'just now';
   if (elapsed < 3600) return `${Math.floor(elapsed / 60)} min ago`;
   if (elapsed < 86400) return `${Math.floor(elapsed / 3600)} h ago`;
   return `${Math.floor(elapsed / 86400)} d ago`;
@@ -238,237 +247,239 @@ export function formatCountdown(ms) {
 }
 
 
-export function initNews() {
-  const section = document.getElementById('news'), grid = document.getElementById('news-grid'), status = document.getElementById('news-status'), refreshButton = document.getElementById('news-refresh'), source = document.getElementById('news-source');
-  if (!section || !grid || !status || !refreshButton || !source || section.dataset.newsInitialized) return;
-  section.dataset.newsInitialized = 'true';
-  status.setAttribute('aria-live', 'polite');
-  // Every feed lists its providers in order of preference. The first one
-  // that answers wins; the rest are the safety net.
-  const feeds = {
-    tech: {
-      name: 'Hacker News', url: SOURCE, path: 'news.json',
-      normalize: normalizeNewsSnapshot,
-      // A saved snapshot can be in the shape of any provider that answered.
-      normalisers: [normalizeNewsSnapshot, value => normalizeDevtoSnapshot(value.stories || value, value.updated)],
-      providers: [
-        { name: 'Hacker News', url: SOURCE, load: liveSnapshot },
-        { name: 'DEV Community', url: DEVTO_SOURCE, load: () => devtoSnapshot(['webdev', 'programming', 'tech']) }
-      ]
-    },
-    science: {
-      name: 'Spaceflight News API', url: SCIENCE_SOURCE, path: 'science.json',
-      normalize: normalizeScienceSnapshot,
-      normalisers: [normalizeScienceSnapshot, value => normalizeDevtoSnapshot(value.stories || value, value.updated)],
-      providers: [
-        { name: 'Spaceflight News API', url: SCIENCE_SOURCE, load: async () => {
-          const result = normalizeScienceSnapshot({ ...await fetchJson(SCIENCE_API, 15000), updated: new Date().toISOString() });
-          if (!result) throw new Error('Science headlines unavailable.');
-          return result;
-        } },
-        { name: 'DEV Community', url: DEVTO_SOURCE, load: () => devtoSnapshot(['space', 'science']) }
-      ]
-    },
-    ai: {
-      name: 'DEV Community', url: DEVTO_SOURCE, path: 'news.json',
-      normalize: normalizeDevtoSnapshot,
-      // The AI feed is carried by the DEV Community API, which answers with
-      // the article shape the science feed already knows how to read.
-      normalisers: [value => normalizeDevtoSnapshot(value.stories || value, value.updated)],
-      providers: [
-        { name: 'DEV Community', url: DEVTO_SOURCE, load: () => devtoSnapshot(['ai', 'machinelearning', 'llm', 'tutorial']) }
-      ]
-    }
-  };
-  // The combined view draws from both feeds, so it carries its own entry
-  // rather than borrowing one of theirs.
-  feeds.all = { name: 'All headlines', url: SOURCE, path: 'news.json', providers: [] };
-  const states = Object.fromEntries(['tech', 'ai', 'science'].map(key => [key, { snapshot: null, mode: 'unavailable', started: false, pending: false, lastAttempt: 0 }]));
-  let selected = 'all', visible = false, sourceFilter = 'all', shown = 6;
-  const tabs = document.createElement('div'); tabs.className = 'news-tabs'; tabs.setAttribute('role', 'group'); tabs.setAttribute('aria-label', 'News category');
-  for (const [key, label] of [['all', '✦ All headlines'], ['tech', '⌘ Technology'], ['ai', '◆ Artificial intelligence'], ['science', '✦ Science & space']]) {
-    const button = document.createElement('button'); button.textContent = label; button.dataset.feed = key; button.setAttribute('aria-pressed', String(key === selected));
-    button.addEventListener('click', () => { selected = key; shown = 6; for (const tab of tabs.children) tab.setAttribute('aria-pressed', String(tab === button)); render(); if (key === 'all' || !states[key].started) refresh(key); else revalidate(); }); tabs.append(button);
+const TOPICS = { tech: 'Technology', ai: 'AI', science: 'Science & space' };
+const SOURCE_URLS = {
+  'Hacker News': SOURCE, 'Spaceflight News API': SCIENCE_SOURCE, 'DEV Community': DEVTO_SOURCE
+};
+const FEEDS = {
+  tech: {
+    path: 'news.json', primary: 'Hacker News',
+    providers: [
+      { load: liveSnapshot },
+      { load: () => devtoSnapshot(['webdev', 'programming', 'tech']) }
+    ]
+  },
+  ai: {
+    path: 'ai-news.json', primary: 'DEV Community',
+    providers: [{ load: () => devtoSnapshot(['ai', 'machinelearning', 'llm']) }]
+  },
+  science: {
+    path: 'science.json', primary: 'Spaceflight News API',
+    providers: [
+      { load: async () => {
+        const result = normalizeScienceSnapshot({ ...await fetchJson(SCIENCE_API, 15000), updated: new Date().toISOString() });
+        if (!result) throw new Error('Science headlines unavailable.');
+        return result;
+      } },
+      { load: () => devtoSnapshot(['space', 'science']) }
+    ]
   }
-  grid.before(tabs);
-  // The source chips narrow the list down to one provider. They are built
-  // from the providers that actually answered, so a chip never offers a
-  // feed that has nothing behind it.
-  const chips = document.createElement('div'); chips.className = 'news-sources'; chips.setAttribute('role', 'group'); chips.setAttribute('aria-label', 'News source');
-  grid.before(chips);
-  const more = document.createElement('button'); more.type = 'button'; more.className = 'news-more'; more.textContent = 'Show more headlines ↓';
-  more.addEventListener('click', () => { shown += 6; render(); });
-  grid.after(more);
-  function externalLink(url, text, className) {
-    const link = document.createElement('a'); link.href = safeNewsUrl(url) || SOURCE; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = text;
-    if (className) link.className = className;
-    return link;
-  }
-  /* The stories behind the current view.
-     A single feed uses its own snapshot. The combined view gathers the
-     stories of every feed and sorts them newest first, so a fresh science
-     headline can lead the list ahead of an older technology one. */
-  function viewStories() {
-    if (selected !== 'all') {
-      const snapshot = states[selected].snapshot;
-      return snapshot ? tagProvider(snapshot.stories, snapshot.source) : [];
-    }
-    return mergeStories([
-      tagProvider(states.tech.snapshot?.stories, states.tech.snapshot?.source),
-      tagProvider(states.ai.snapshot?.stories, states.ai.snapshot?.source),
-      tagProvider(states.science.snapshot?.stories, states.science.snapshot?.source)
-    ]);
-  }
-  /* The name of the provider behind a story.
-     Each snapshot carries the name of the provider that answered, so the
-     story is tagged with it when the two feeds are merged. A story that
-     was not tagged is told apart by its publisher instead. */
-  function storySource(story) {
-    if (story.provider) return story.provider;
-    if (Number.isFinite(story.score) && story.comments !== undefined) return 'Hacker News';
-    return story.publisher || 'Hacker News';
-  }
-  /* Tag every story with the provider that answered, so the merged view
-     can filter by provider instead of by author name. */
-  function tagProvider(stories, provider) {
-    return (stories || []).map(story => ({ ...story, provider }));
-  }
-  function providerNames(stories) {
-    const names = new Set();
-    for (const story of stories) names.add(storySource(story));
-    return [...names];
-  }
-  function renderChips(stories) {
-    const names = providerNames(stories);
-    const options = [['all', 'All sources'], ...names.map(name => [name, name])];
-    if (!options.some(option => option[0] === sourceFilter)) sourceFilter = 'all';
-    chips.replaceChildren();
-    for (const [key, label] of options) {
-      const chip = document.createElement('button'); chip.type = 'button'; chip.textContent = label; chip.dataset.source = key; chip.setAttribute('aria-pressed', String(key === sourceFilter));
-      chip.addEventListener('click', () => { sourceFilter = key; shown = 6; render(); });
-      chips.append(chip);
-    }
-    chips.hidden = names.length < 2;
-  }
-  /* The state of the view on screen.
-     The combined view has no snapshot of its own: it borrows the two
-     feeds underneath it, and its freshness is the freshest of the two. */
-  function viewState() {
-    if (selected !== 'all') return states[selected];
-    const feeds = [states.tech, states.ai, states.science].filter(item => item.snapshot);
-    if (!feeds.length) return { snapshot: null, mode: 'unavailable', lastAttempt: 0 };
-    const stamps = feeds.map(item => Date.parse(item.snapshot.updated || 0) || 0);
-    const freshest = stamps.indexOf(Math.max(...stamps));
-    return {
-      snapshot: { updated: feeds[freshest].snapshot.updated },
-      mode: feeds.some(item => item.mode === 'live') ? 'live' : feeds[0].mode,
-      lastAttempt: Math.max(...feeds.map(item => item.lastAttempt || 0))
-    };
-  }
-  function render() {
-    const state = viewState(), feed = feeds[selected];
-    const pending = Object.values(states).some(item => item.pending);
-    refreshButton.disabled = pending; refreshButton.textContent = pending ? 'Refreshing…' : 'Refresh headlines ↻'; grid.setAttribute('aria-busy', String(pending));
-    // The snapshot names the provider that answered, so the link points at
-    // the real source rather than the preferred one.
-    const providerName = state.snapshot?.source || feed.name;
-    const providerUrl = feed.providers?.find(item => item.name === providerName)?.url || feed.url;
-    source.href = providerUrl;
-    source.textContent = selected === 'all'
-      ? `Mixed from ${providerNames(viewStories()).join(' · ') || providerName} ↗`
-      : `${selected === 'tech' ? 'Community-curated on' : selected === 'ai' ? 'Machine learning & AI via' : 'Science & space via'} ${providerName} ↗`;
-    if (!state.snapshot) status.textContent = pending ? 'Loading the latest dispatch…' : 'News unavailable. Connect and try refreshing.';
-    else {
-      const stamp = state.snapshot.updated;
-      const modeLabel = state.mode === 'live' ? 'Live' : state.mode === 'snapshot' ? 'Daily snapshot' : 'Cached headlines';
-      const relative = formatRelative(stamp);
-      const remaining = REFRESH_MS - (Date.now() - state.lastAttempt);
-      const countdown = remaining > 0 && state.mode === 'live' ? ` · next refresh in ${formatCountdown(remaining)}` : '';
-      status.textContent = `${modeLabel} · Updated ${relative}${pending ? ' · Updating…' : countdown || (state.mode === 'cached' ? ' · Live refresh unavailable' : '')}`;
-    }
-    status.dataset.newsState = state.mode;
-    const all = viewStories();
-    const filtered = sourceFilter === 'all' ? all : all.filter(story => storySource(story) === sourceFilter);
-    renderChips(all);
-    const fragment = document.createDocumentFragment();
-    if (!filtered.length) { const empty = document.createElement('p'); empty.className = 'news-empty'; empty.textContent = pending ? 'Finding fresh discoveries…' : 'No saved headlines yet. Try again when you’re online.'; fragment.append(empty); }
-    filtered.slice(0, shown).forEach((story, index) => {
-      const card = document.createElement('article'); card.className = 'news-card';
-      const top = document.createElement('div'); top.className = 'news-card-top';
-      const number = document.createElement('span'); number.className = 'news-rank'; number.textContent = `${String(index + 1).padStart(2, '0')} / ${selected === 'science' ? 'SCIENCE' : selected === 'tech' ? 'TECH' : selected === 'ai' ? 'AI' : 'ALL'}`;
-      top.append(number, externalLink(story.url, `${new URL(story.url).hostname.replace(/^www\./, '')} ↗`, 'news-domain'));
-      const heading = document.createElement('h3'); heading.append(externalLink(story.url, story.title));
-      const meta = document.createElement('div'); meta.className = 'news-meta';
-      // The points and comment counts belong to Hacker News. A story from
-      // another provider has neither, so the publisher stands in.
-      const detail = document.createElement('span'); detail.className = 'news-points';
-      detail.textContent = Number.isFinite(story.score) && story.comments !== undefined ? `▲ ${story.score.toLocaleString()} points` : (story.publisher || storySource(story));
-      const time = document.createElement('time'); time.dateTime = new Date(story.time * 1000).toISOString(); time.textContent = newsTimeAgo(story.time); time.title = new Date(story.time * 1000).toLocaleString();
-      const discussion = Number.isFinite(story.comments) && story.comments !== undefined ? externalLink(`${SOURCE}item?id=${story.id}`, `${story.comments.toLocaleString()} comments ↗`, 'news-discussion') : externalLink(story.url, 'Read story ↗', 'news-discussion');
-      meta.append(detail, time, discussion); card.append(top, heading, meta); fragment.append(card);
+};
+
+export function readNewsEdition(topic, raw) {
+  const feed = FEEDS[topic];
+  if (!feed || !Array.isArray(raw?.stories)) return null;
+  const provider = raw.source || feed.primary;
+  if (provider === 'DEV Community') {
+    // Earlier AI caches sometimes held the tech edition with a DEV label.
+    const articles = raw.stories.filter(story => {
+      const url = safeNewsUrl(story?.url);
+      return url && new URL(url).hostname === 'dev.to';
     });
-    grid.replaceChildren(fragment);
-    more.hidden = filtered.length <= shown;
-    more.textContent = shown >= filtered.length ? 'Show more headlines ↓' : 'Show more headlines ↓';
+    return normalizeDevtoSnapshot(articles, raw.updated);
   }
-  async function refresh(key = selected) {
-    // The combined view has no provider of its own; it rides on the two
-    // feeds underneath it.
-    if (key === 'all') { await Promise.all(['tech', 'ai', 'science'].map(feedKey => refresh(feedKey))); return; }
-    const state = states[key], feed = feeds[key], cacheKey = `imon-${key}-news-v2`;
+  if (provider !== feed.primary) return null;
+  if (topic === 'tech') return normalizeNewsSnapshot(raw);
+  if (topic === 'science') return normalizeScienceSnapshot(raw);
+  return null;
+}
+
+function externalLink(url, text, className) {
+  const link = document.createElement('a');
+  link.href = url;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = text;
+  if (className) link.className = className;
+  return link;
+}
+
+function storyCard(story) {
+  const card = document.createElement('article');
+  card.className = 'news-card';
+  card.dataset.topic = story.topic;
+  const top = document.createElement('div');
+  top.className = 'news-card-top';
+  const topic = document.createElement('span');
+  topic.className = 'news-topic';
+  topic.textContent = TOPICS[story.topic];
+  const time = document.createElement('time');
+  const date = new Date(story.time * 1000);
+  time.dateTime = date.toISOString();
+  time.textContent = newsTimeAgo(story.time);
+  time.title = date.toLocaleString();
+  top.append(topic, time);
+  const heading = document.createElement('h3');
+  heading.append(externalLink(story.url, story.title));
+  const details = document.createElement('div');
+  details.className = 'news-byline';
+  const publisher = document.createElement('span');
+  const host = new URL(story.url).hostname.replace(/^www\./, '');
+  publisher.textContent = story.publisher || host;
+  details.append(publisher);
+  if (story.provider === 'Hacker News') {
+    const discussion = externalLink(`${SOURCE}item?id=${story.id}`, `${story.comments} comments ↗`, 'news-discussion');
+    discussion.setAttribute('aria-label', `${story.comments} comments on ${story.title} at Hacker News`);
+    discussion.title = `${story.score} points on Hacker News`;
+    details.append(discussion);
+  } else if (story.provider === 'DEV Community' && story.publisher !== 'DEV Community') {
+    const provider = document.createElement('span');
+    provider.textContent = 'DEV Community';
+    details.append(provider);
+  }
+  card.append(top, heading, details);
+  return card;
+}
+
+export function initNews() {
+  const section = document.getElementById('news');
+  if (!section || section.dataset.newsInitialized) return;
+  const grid = section.querySelector('#news-grid'), status = section.querySelector('#news-status');
+  const refreshButton = section.querySelector('#news-refresh'), countdown = section.querySelector('#news-countdown');
+  const tabs = section.querySelector('.news-tabs'), chips = section.querySelector('.news-sources');
+  const search = section.querySelector('#news-search'), sources = section.querySelector('#news-source'), more = section.querySelector('.news-more');
+  if (!grid || !status || !refreshButton || !tabs || !chips || !search || !countdown || !sources || !more) return;
+  section.dataset.newsInitialized = 'true';
+  const states = Object.fromEntries(Object.keys(FEEDS).map(key => [key, { snapshot: null, mode: 'unavailable', pending: false, lastAttempt: 0 }]));
+  let selected = 'all', sourceFilter = 'all', shown = 6, visible = false, chipsKey = null;
+  const topicKeys = () => selected === 'all' ? Object.keys(FEEDS) : [selected];
+
+  function updateCountdown() {
+    const live = topicKeys().map(key => states[key]).filter(state => state.mode === 'live' && !state.pending);
+    const next = live.length ? Math.min(...live.map(state => state.lastAttempt)) + REFRESH_MS - Date.now() : 0;
+    countdown.textContent = next > 0 ? `Next check in ${formatCountdown(next)}` : '';
+  }
+
+  function render() {
+    const keys = topicKeys(), editions = keys.map(key => states[key]);
+    const all = mergeStories(keys.map(topic => {
+      const edition = states[topic].snapshot;
+      return (edition?.stories || []).map(story => ({ ...story, provider: edition.source, topic }));
+    }), 36);
+    const names = [...new Set(all.map(story => story.provider))].sort();
+    if (!names.includes(sourceFilter)) sourceFilter = 'all';
+    if (chipsKey !== names.join('|')) {
+      const activeChip = chips.contains(document.activeElement) ? document.activeElement.dataset.source : null;
+      chipsKey = names.join('|');
+      chips.replaceChildren(...['all', ...names].map(name => {
+        const chip = document.createElement('button');
+        chip.type = 'button'; chip.dataset.source = name;
+        chip.textContent = name === 'all' ? 'All sources' : name;
+        return chip;
+      }));
+      chips.hidden = names.length < 2;
+      if (activeChip && !chips.hidden) [...chips.children].find(chip => chip.dataset.source === activeChip)?.focus({preventScroll: true});
+      const actualSources = names.length ? names : [...new Set(keys.map(key => FEEDS[key].primary))];
+      sources.replaceChildren(...actualSources.flatMap((name, index) => [...(index ? [' · '] : []), externalLink(SOURCE_URLS[name], name)]));
+    }
+    for (const chip of chips.children) chip.setAttribute('aria-pressed', String(chip.dataset.source === sourceFilter));
+    const query = search.value.trim().toLocaleLowerCase();
+    const matches = all.filter(story => (sourceFilter === 'all' || story.provider === sourceFilter) && (!query ||
+      [story.title, story.publisher, story.provider, new URL(story.url).hostname].some(value => value?.toLocaleLowerCase().includes(query))));
+    const pending = editions.some(state => state.pending);
+    refreshButton.disabled = pending;
+    refreshButton.textContent = pending ? 'Refreshing…' : 'Refresh headlines ↻';
+    grid.setAttribute('aria-busy', String(pending));
+    const modes = new Set(editions.filter(state => state.snapshot).map(state => state.mode));
+    const missing = editions.some(state => !state.snapshot && !state.pending);
+    const mode = modes.size > 1 || (modes.size && missing) ? 'mixed' : [...modes][0];
+    const label = { live: 'Live feed', snapshot: 'Daily edition', cached: 'Saved edition', mixed: 'Mixed availability' }[mode];
+    const stamp = Math.max(...editions.map(state => Date.parse(state.snapshot?.updated) || 0));
+    let message = label ? `${label} · ${matches.length} headline${matches.length === 1 ? '' : 's'}` : (pending ? 'Checking sources…' : 'Headlines unavailable');
+    if (stamp) message += ` · Last updated ${formatRelative(new Date(stamp).toISOString())}`;
+    if (status.textContent !== message) status.textContent = message;
+    status.dataset.newsState = mode || 'unavailable';
+    updateCountdown();
+
+    const focusedLink = grid.contains(document.activeElement) ? document.activeElement.href : null;
+    grid.replaceChildren(...matches.slice(0, shown).map(storyCard));
+    if (focusedLink) [...grid.querySelectorAll('a')].find(link => link.href === focusedLink)?.focus({ preventScroll: true });
+    if (!matches.length) {
+      const empty = document.createElement('p'); empty.className = 'news-empty';
+      empty.textContent = query && all.length ? 'No matching headlines. Try another headline or publisher.' :
+        pending ? 'Finding headlines…' : 'No headlines are available for this edition. Refresh to check again.';
+      grid.append(empty);
+    }
+    more.hidden = matches.length <= shown;
+    more.textContent = `Show ${Math.min(6, Math.max(0, matches.length - shown))} more headlines ↓`;
+  }
+
+  async function refreshTopic(key) {
+    const state = states[key], feed = FEEDS[key], cacheKey = `imon-${key}-news-v2`;
     if (state.pending) return;
-    const firstLoad = !state.started;
-    state.started = true; state.pending = true; state.lastAttempt = Date.now();
-    const display = () => { if (selected === key || selected === 'all') render(); };
-    const accept = (value, mode) => { state.snapshot = value; state.mode = mode; try { localStorage.setItem(cacheKey, JSON.stringify(value)); } catch {} display(); };
-    // A stored snapshot may have come from any provider, so each shape is
-    // tried until one of them fits.
-    const readStored = raw => {
-      for (const normalise of feed.normalisers) {
-        try { const value = normalise(raw); if (value) return value; } catch { /* Try the next shape. */ }
-      }
-      return null;
-    };
+    const firstLoad = !state.lastAttempt;
+    state.pending = true;
+    state.lastAttempt = Date.now();
+    const display = () => { if (selected === 'all' || selected === key) render(); };
+    function accept(value, mode) {
+      state.snapshot = value;
+      state.mode = mode;
+      try { localStorage.setItem(cacheKey, JSON.stringify(value)); } catch {}
+      display();
+    }
     if (firstLoad) {
-      try { state.snapshot = readStored(JSON.parse(localStorage.getItem(cacheKey))); state.mode = state.snapshot ? 'cached' : 'unavailable'; } catch {}
+      try {
+        state.snapshot = readNewsEdition(key, JSON.parse(localStorage.getItem(cacheKey)));
+        if (state.snapshot) state.mode = 'cached';
+      } catch {}
       display();
       try {
-        const raw = await fetchJson(new URL(`./data/${feed.path}`, import.meta.url).href, 5000);
-        const daily = readStored(raw);
-        if (daily && (!state.snapshot || Date.parse(daily.updated || 0) > Date.parse(state.snapshot.updated || 0))) accept(daily, navigator.onLine === false ? 'cached' : 'snapshot');
+        const daily = readNewsEdition(key, await fetchJson(new URL(`./data/${feed.path}`, import.meta.url).href, 5000));
+        if (daily && (!state.snapshot || Date.parse(daily.updated) > Date.parse(state.snapshot.updated))) accept(daily, 'snapshot');
       } catch {}
     }
     display();
     try {
       if (navigator.onLine === false) throw new Error('Offline');
-      // The providers are tried in order, so one dead service does not stop
-      // the feed. The snapshot that comes back names the provider that
-      // answered, and the page labels the feed with that name.
       accept(await firstProvider(feed.providers), 'live');
-    }
-    catch { state.mode = state.snapshot ? 'cached' : 'unavailable'; }
-    finally { state.pending = false; display(); }
+    } catch {
+      state.mode = state.snapshot ? 'cached' : 'unavailable';
+    } finally { state.pending = false; display(); }
   }
-  /* The view is refreshed when it is on screen, when the tab is not
-     hidden, and when the last attempt is old enough. The combined view
-     refreshes when either of its two feeds is due. */
-  function revalidate() {
+
+  function refreshVisible(force = false) {
     if (!visible || document.hidden) return;
-    const due = ['tech', 'ai', 'science'].filter(key => !states[key].started || Date.now() - states[key].lastAttempt >= REFRESH_MS);
-    if (due.length) refresh(selected === 'all' ? 'all' : selected);
+    for (const key of topicKeys()) {
+      if (force || Date.now() - states[key].lastAttempt >= REFRESH_MS) refreshTopic(key);
+    }
   }
-  refreshButton.addEventListener('click', () => refresh());
-  if ('IntersectionObserver' in window) new IntersectionObserver(entries => { visible = entries[0].isIntersecting; revalidate(); }, { threshold: .01 }).observe(section);
-  else { visible = true; revalidate(); }
-  document.addEventListener('visibilitychange', revalidate);
-  window.addEventListener('offline', () => { for (const state of Object.values(states)) if (state.snapshot && !state.pending) state.mode = 'cached'; render(); });
-  window.addEventListener('online', () => { if (visible && !document.hidden) refresh(); });
-  setInterval(revalidate, REFRESH_MS);
-  // The countdown in the status line has to keep moving, so the line is
-  // redrawn once a second while the section is on screen.
-  setInterval(() => { if (visible && !document.hidden) render(); }, 1000);
-  render();
-  // Every feed loads on the first visit so the combined view has something
-  // to draw from.
-  refresh('tech'); refresh('ai'); refresh('science');
+  tabs.addEventListener('click', event => {
+    const tab = event.target.closest('button[data-feed]');
+    if (!tab) return;
+    selected = tab.dataset.feed;
+    shown = 6; sourceFilter = 'all'; chipsKey = null;
+    for (const button of tabs.children) button.setAttribute('aria-pressed', String(button === tab));
+    render(); refreshVisible();
+  });
+  chips.addEventListener('click', event => {
+    const button = event.target.closest('button[data-source]');
+    if (button) { sourceFilter = button.dataset.source; shown = 6; render(); }
+  });
+  search.addEventListener('input', () => { shown = 6; render(); });
+  more.addEventListener('click', () => {
+    const firstNew = shown;
+    shown += 6; render();
+    grid.children[firstNew]?.querySelector('h3 a')?.focus();
+  });
+  refreshButton.addEventListener('click', () => refreshVisible(true));
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; refreshVisible(); }).observe(section);
+  } else { visible = true; refreshVisible(); }
+  document.addEventListener('visibilitychange', () => refreshVisible());
+  window.addEventListener('offline', () => {
+    for (const state of Object.values(states)) if (state.snapshot) state.mode = 'cached';
+    render();
+  });
+  window.addEventListener('online', () => refreshVisible(true));
+  setInterval(() => { if (visible && !document.hidden) { refreshVisible(); updateCountdown(); } }, 1000);
 }

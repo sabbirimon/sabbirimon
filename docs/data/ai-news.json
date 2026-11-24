@@ -1,0 +1,91 @@
+{
+  "updated": "2026-11-24T03:03:06.971275+00:00",
+  "source": "DEV Community",
+  "sourceUrl": "https://dev.to/",
+  "stories": [
+    {
+      "id": 5104363,
+      "title": "Gemini Took the Crown - But No AI Model Wins Everything",
+      "url": "https://dev.to/minoru-iwasaki/gemini-took-the-crown-but-no-ai-model-wins-everything-6oc",
+      "time": 1795488527.0,
+      "publisher": "くるあああ"
+    },
+    {
+      "id": 5104311,
+      "title": "Rules or LLMs for Purchase Requests? Designing a Control Flow for Small Businesses",
+      "url": "https://dev.to/dnaiacademy/rules-or-llms-for-purchase-requests-designing-a-control-flow-for-small-businesses-53ce",
+      "time": 1795487429.0,
+      "publisher": "DNAI Academy"
+    },
+    {
+      "id": 5104220,
+      "title": "Your AI Model Isn't Broken. The File You Downloaded Is Out of Date.",
+      "url": "https://dev.to/vanshaj1999/your-ai-model-isnt-broken-the-file-you-downloaded-is-out-of-date-4ibp",
+      "time": 1795486499.0,
+      "publisher": "Vanshaj Kakkar"
+    },
+    {
+      "id": 5104175,
+      "title": "64 GB VRAM: What Local LLMs Actually Fit",
+      "url": "https://dev.to/wayne_lay_957709c8ebac47a/64-gb-vram-what-local-llms-actually-fit-2b3f",
+      "time": 1795485686.0,
+      "publisher": "Wayne Lay"
+    },
+    {
+      "id": 4965824,
+      "title": "Mixup's Confidence Isn't Miscalibrated. It's Obedient",
+      "url": "https://dev.to/b1ackjack12/mixups-confidence-isnt-miscalibrated-its-obedient-4pl7",
+      "time": 1795485085.0,
+      "publisher": "b1ackjack12"
+    },
+    {
+      "id": 5103984,
+      "title": "I asked four AI models to rank each other. I think I found the narcissist.",
+      "url": "https://dev.to/vadim_albarov/i-asked-four-ai-models-to-rank-each-other-i-think-i-found-the-narcissist-2li5",
+      "time": 1795483382.0,
+      "publisher": "vadim albarov"
+    },
+    {
+      "id": 5103892,
+      "title": "I made a product video without opening a video editor: Chrome DevTools Protocol, a local AI voice and ffmpeg",
+      "url": "https://dev.to/moonjikwang/i-made-a-product-video-without-opening-a-video-editor-chrome-devtools-protocol-a-local-ai-voice-19ng",
+      "time": 1795482145.0,
+      "publisher": "Jikwang Moon"
+    },
+    {
+      "id": 5103713,
+      "title": "Hermes Agent + local Gemma(llama)",
+      "url": "https://dev.to/metis_atelier_studio/hermes-agent-local-gemmallama-593p",
+      "time": 1795479287.0,
+      "publisher": "metis atelier"
+    },
+    {
+      "id": 5103281,
+      "title": "Day 1 of Building an AI SQL Assistant: What I Learned Just Calling the LLM",
+      "url": "https://dev.to/hernanchilabert/day-1-of-building-an-ai-sql-assistant-what-i-learned-just-calling-the-llm-1ca4",
+      "time": 1795470360.0,
+      "publisher": "Hernan Chilabert"
+    },
+    {
+      "id": 5102981,
+      "title": "Tired of catching Claude, Gemini, and ChatGPT up on the same project?",
+      "url": "https://dev.to/naw103/tired-of-catching-claude-gemini-and-chatgpt-up-on-the-same-project-hif",
+      "time": 1795465455.0,
+      "publisher": "Nick Woodhead"
+    },
+    {
+      "id": 5102856,
+      "title": "We pulled 7,224 public benchmark trials apart. The scaffold is one variable - and the floor belongs to the harness.",
+      "url": "https://dev.to/quilldf/we-pulled-7224-public-benchmark-trials-apart-the-scaffold-is-one-variable-and-the-floor-belongs-dmb",
+      "time": 1795464014.0,
+      "publisher": "Quill Datafix"
+    },
+    {
+      "id": 5102818,
+      "title": "Why millions of agents don't need millions of VMs on Agent Substrate",
+      "url": "https://dev.to/googlecloud/why-millions-of-agents-dont-need-millions-of-vms-on-agent-substrate-2ech",
+      "time": 1795463290.0,
+      "publisher": "Elia Secchi"
+    }
+  ]
+}

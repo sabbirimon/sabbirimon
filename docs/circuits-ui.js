@@ -1,3 +1,4 @@
+import {showTopicCheck} from './topic-check.js';
 import { scheduleProgressSync } from './auth.js';
 import { playSound } from './audio.js';
 /**
@@ -931,6 +932,21 @@ export function initCircuits(root) {
     const exercise = state.exercises.find(item => item.id === id);
     if (!exercise) return false;
     state.exercise = exercise;
+    showTopicCheck(root.querySelector('[data-topic-check]'),'circuits',exercise.chapter,exercise.id);
+    const reference = root.querySelector('.lab-example');
+    if (reference) {
+      reference.open = false;
+      const criteria = exercise.kind === 'design';
+      const values = criteria ? exercise.ideas : exercise.expected;
+      const sample = exercise.netlist?.parts?.map(part => {
+        const value = Number.isFinite(part.value) ? ' · ' + formatValue(part.id,part.value) : '';
+        return part.id + ' · node ' + part.nodeA + ' to node ' + part.nodeB + value;
+      }).join('\n');
+      reference.hidden = !(values?.length || sample);
+      reference.querySelector('summary').textContent = criteria ? 'Review design criteria' : 'Show reference answer';
+      reference.querySelector('code').textContent = sample || (values || []).map(value => criteria ? value : value + ' ' + (exercise.unit || '')).join(' · ');
+    }
+
     state.circuit = startingCircuit(exercise);
     state.selected = null;
     state.probe = 2;

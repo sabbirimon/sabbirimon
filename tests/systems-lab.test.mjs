@@ -5,7 +5,7 @@ import {mastery} from '../docs/mastery.js';
 import {mergeProgress} from '../docs/auth.js';
 
 test('each model produces a finite measurement and a diagram across its input range',()=>{
-  const answers=[62,7,2,2,9,15,30,28,6,40,1,8,80,9];
+  const answers=[62,7,2,2,9,15,30,28,6,40,1,8,80,9,14,110,800];
   assert.equal(scenarios.length,answers.length);
   scenarios.forEach((s,index)=>{
     assert.equal(s.value(s.target),answers[index],s.id);

@@ -1,34 +1,48 @@
+import {levels} from './learning-modules.js';
+
 const field = document.querySelector('#find-lesson');
 const count = document.querySelector('#find-count');
 const courses = [...document.querySelectorAll('.catalog-list > section')];
 const expanded = new Set();
 let searching = false;
+const levelLabel = document.createElement('label');
+levelLabel.textContent = 'Level ';
+const level = document.createElement('select');
+level.setAttribute('aria-label','Level');
+level.add(new Option('All levels',''));
+for (const name of levels) level.add(new Option(name,name));
+levelLabel.append(level);
+field.closest('label').after(levelLabel);
 
 function filter() {
   const terms = field.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  if (terms.length && !searching) {
+  if ((terms.length || level.value) && !searching) {
     expanded.clear();
     for (const chapter of document.querySelectorAll('.catalog-list details[open]')) expanded.add(chapter);
   }
   const wasSearching = searching;
-  searching = terms.length > 0;
+  searching = terms.length > 0 || Boolean(level.value);
   let total = 0;
   for (const course of courses) {
     const description = course.querySelector('.catalog-copy > p').textContent;
     const subject = course.querySelector('h2').textContent + ' ' + description;
     let courseHits = 0;
     for (const chapter of course.querySelectorAll('details')) {
-      const topic = subject + ' ' + chapter.querySelector('summary').textContent;
+      const moduleTitle = chapter.closest('.course-module')?.querySelector('h3')?.textContent || '';
+      const topic = [subject,moduleTitle,chapter.querySelector('summary').textContent].join(' ');
       let hits = 0;
       for (const lesson of chapter.querySelectorAll('li')) {
         const text = [topic, lesson.textContent, lesson.dataset.brief].join(' ').toLowerCase();
-        lesson.hidden = !terms.every(term => text.includes(term));
+        lesson.hidden = (level.value && chapter.dataset.level !== level.value) || !terms.every(term => text.includes(term));
         if (!lesson.hidden) hits++;
       }
       chapter.hidden = !hits;
       if (searching) chapter.open = hits > 0;
       else if (wasSearching) chapter.open = expanded.has(chapter);
       courseHits += hits;
+    }
+    for (const module of course.querySelectorAll('.course-module')) {
+      module.hidden = !module.querySelector('details:not([hidden])');
     }
     course.hidden = !courseHits;
     total += courseHits;
@@ -38,9 +52,11 @@ function filter() {
 
 field.form.addEventListener('submit', event => event.preventDefault());
 field.addEventListener('input', filter);
+level.addEventListener('change', filter);
 document.querySelector('nav[aria-label="Courses"]').addEventListener('click', event => {
   if (searching && event.target.closest('a[href^="#"]')) {
     field.value = '';
+    level.value = '';
     filter();
   }
 });

@@ -356,6 +356,17 @@ export const CIRCUITS_COURSE = {
       ],
       exam: 'You are asked for a number — a sampling rate, a bandwidth, a noise margin — or for a written explanation of a choice.',
       outcome: 'You can reason about a real design and reach for the right open-source tool to check it.'
+    },
+    {
+      id:'analog-measurement-bench',title:'Analog measurement bench',
+      goal:'Choose component values to satisfy multiple operating conditions and verify the result with the local circuit solver.',
+      material:[
+        {title:'Set a voltage and a current together',body:'In a two-resistor series divider, both legs carry the same current. Subtract the target midpoint voltage from the supply to find the drop across the upper leg. Divide each drop by the desired branch current.',code:'At 8 V and 1 mA, a 3 V midpoint needs 5 kΩ above it and 3 kΩ below it.'},
+        {title:'Account for the measuring instrument',body:'A finite input resistance draws current. For a probe referenced to ground, its input resistance appears in parallel with the lower leg. First predict the unloaded ratio, then recalculate using the parallel combination.',code:'Rbottom_effective = Rbottom × Rmeter / (Rbottom + Rmeter)'},
+        {title:'Measure a difference between two nodes',body:'A bridge places two divider branches across one supply. The differential reading is Vleft minus Vright. Matching ratios balances the bridge, while scaling a whole branch changes its current. Total battery current is the sum of both branch currents.',code:'Vdiff = V2 − V3;  Isource = Ileft + Iright'}
+      ],
+      exam:'The checker verifies the wiring and solves your actual resistor values. Selected exercises repeat the solve with a temporary supply or load.',
+      outcome:'You can distinguish a correct open-circuit ratio from a design that also satisfies loading and current constraints.'
     }
   ]
 };

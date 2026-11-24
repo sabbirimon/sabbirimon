@@ -470,6 +470,16 @@ test('a build exercise names the part that is missing',()=>{
   assert.ok(/missing/i.test(result.message));
 });
 
+test('bench exercises measure component values and leave the learner circuit intact', () => {
+  for (const exercise of exercises.filter(item => item.chapter === 'Analog measurement bench')) {
+    const circuit = structuredClone(exercise.netlist);
+    assert.equal(exercise.check({circuit}).ok, true, exercise.id);
+    assert.deepEqual(circuit, exercise.netlist);
+    circuit.parts.at(-1).value *= 2;
+    assert.equal(exercise.check({circuit}).ok, false, exercise.id);
+  }
+});
+
 test('a build exercise says when the circuit is empty',()=>{
   const exercise = exercises.find(item => item.id === 'circuit-build-divider');
   const result = exercise.check({ circuit: { parts: [] } });
@@ -505,8 +515,9 @@ test('every piece of material has a title and a body',()=>{
   }
 });
 
-test('the course has twelve chapters',()=>{
-  assert.equal(CIRCUITS_COURSE.chapters.length, 12);
+test('the course includes the measurement bench after the twelve foundation chapters',()=>{
+  assert.equal(CIRCUITS_COURSE.chapters.length, 13);
+  assert.equal(CIRCUITS_COURSE.chapters.at(-1).id, 'analog-measurement-bench');
 });
 
 test('every exercise points at a chapter that exists',()=>{

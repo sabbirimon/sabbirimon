@@ -77,7 +77,7 @@ export function collectStats(store = globalThis.localStorage) {
     puzzleBest: readNumber(store, 'sabbir-2048-best-v1', 0),
     racerBest: readNumber(store, 'imon-rally-best-v1', 0),
     gridworksCities: Array.isArray(cities) ? cities.length : Object.keys(cities || {}).length,
-    gridworksChapters: Object.keys(gridworks?.chapters || {}).length
+    gridworksChapters: Array.isArray(gridworks?.completed) ? new Set(gridworks.completed).size : Object.keys(gridworks?.chapters || {}).length
   };
 }
 
@@ -104,54 +104,54 @@ export function initAchievements(root = document) {
   const countLabel = root.querySelector('[data-ach-count]');
   const grid = root.querySelector('#achievement-grid');
 
-  if (levelLabel) levelLabel.textContent = String(profile.level.level).padStart(2, '0');
-  if (levelName) levelName.textContent = profile.level.name;
-  if (xpLabel) xpLabel.textContent = `${profile.xp} XP`;
-  if (bar) {
-    bar.max = 100;
-    bar.value = profile.progress.percent;
-    bar.setAttribute('aria-valuetext', `${profile.progress.percent}% towards level ${profile.progress.current.level}`);
-  }
-  if (countLabel) countLabel.textContent = `${profile.unlockedCount} of ${profile.totalCount} unlocked`;
+  function render(profile) {
+    if (levelLabel) levelLabel.textContent = String(profile.level.level).padStart(2, '0');
+    if (levelName) levelName.textContent = profile.level.name;
+    if (xpLabel) xpLabel.textContent = `${profile.xp} XP`;
+    if (bar) {
+      bar.max = 100;
+      bar.value = profile.progress.percent;
+      bar.setAttribute('aria-valuetext', `${profile.progress.percent}% towards level ${profile.progress.next?.level ?? profile.level.level}`);
+    }
+    if (countLabel) countLabel.textContent = `${profile.unlockedCount} of ${profile.totalCount} unlocked`;
 
-  const upcoming = nextAchievement(profile);
-  if (nextLabel) {
-    nextLabel.textContent = upcoming
-      ? (profile.progress.next
-        ? `Next up: ${upcoming.name} — ${upcoming.note}`
-        : `Next up: ${upcoming.name} — ${upcoming.note}`)
-      : 'Every achievement unlocked. That is the whole map.';
-  }
+    const upcoming = nextAchievement(profile);
+    if (nextLabel) {
+      nextLabel.textContent = upcoming ? 'Next up · ' + upcoming.name + ' — ' + upcoming.note : 'Every achievement unlocked.';
+    }
 
-  if (grid) {
-    grid.replaceChildren();
-    const ordered = [...profile.achievements].sort((a, b) => {
-      if (a.unlocked !== b.unlocked) return a.unlocked ? -1 : 1;
-      const order = { gold: 0, silver: 1, bronze: 2 };
-      return order[a.tier] - order[b.tier];
-    });
-    for (const achievement of ordered) {
-      const item = element('li', `achievement achievement-${achievement.tier}${achievement.unlocked ? ' is-unlocked' : ' is-locked'}`);
-      item.append(
-        element('span', 'achievement-icon', achievement.unlocked ? achievement.icon : '·'),
-        element('span', 'achievement-name', achievement.name),
-        element('span', 'achievement-note', achievement.note)
-      );
-      if (!achievement.unlocked) item.setAttribute('aria-label', `${achievement.name}. Locked. ${achievement.note}`);
-      grid.append(item);
+    if (grid) {
+      grid.replaceChildren();
+      const ordered = [...profile.achievements].sort((a, b) => {
+        if (a.unlocked !== b.unlocked) return a.unlocked ? -1 : 1;
+        const order = { bronze: 0, silver: 1, gold: 2 };
+        return order[a.tier] - order[b.tier];
+      });
+      for (const achievement of ordered) {
+        const item = element('li', `achievement achievement-${achievement.tier}${achievement.unlocked ? ' is-unlocked' : ' is-locked'}`);
+        item.append(
+          element('span', 'achievement-icon', achievement.icon),
+          element('span', 'achievement-name', achievement.name),
+          element('span', 'achievement-note', achievement.note)
+        );
+        if (!achievement.unlocked) item.setAttribute('aria-label', `${achievement.name}. Locked. ${achievement.note}`);
+        grid.append(item);
+      }
     }
   }
-
+  render(profile);
   // The lab, the AI lab and the arcade all write to storage while the visitor
   // is on the page, so the profile is refreshed when the tab regains focus.
+  let lastSignature = JSON.stringify(stats);
   const refresh = () => {
-    const fresh = buildProfile(collectStats());
-    if (levelLabel) levelLabel.textContent = String(fresh.level.level).padStart(2, '0');
-    if (levelName) levelName.textContent = fresh.level.name;
-    if (xpLabel) xpLabel.textContent = `${fresh.xp} XP`;
-    if (bar) bar.value = fresh.progress.percent;
-    if (countLabel) countLabel.textContent = `${fresh.unlockedCount} of ${fresh.totalCount} unlocked`;
+    const current = collectStats();
+    const signature = JSON.stringify(current);
+    if (lastSignature !== signature) {
+      lastSignature = signature;
+      render(buildProfile(current));
+    }
   };
+  window.addEventListener('storage', refresh);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
   document.addEventListener('imon:progress', refresh);
 

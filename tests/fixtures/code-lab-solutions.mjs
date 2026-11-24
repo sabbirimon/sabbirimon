@@ -10,6 +10,15 @@
 // entry's own requirements.
 
 export const CODE_LAB_SOLUTIONS = {
+  'html-telemetry-step': {
+    html:'<form><label>Gain <input type="number" name="gain" min="-1.5" max="2" step=".25" required></label></form>'
+  },
+  'html-batch-id': {
+    html:'<form><label>Batch <input name="batch" pattern="[A-Z]{2}-[0-9]{3}" required></label></form>'
+  },
+  'html-remote-date': {
+    html:'<form id="booking"></form><label>Day <input type="date" name="slot" form="booking" min="2028-02-28" max="2028-03-02" required></label>'
+  },
   'html-first-tag': {
     html: '<p>I am a paragraph.</p>\n<p>I am another paragraph.</p>'
   },

@@ -117,7 +117,11 @@ function loadCity(index, free = false, fresh = false) {
   $('#header-region').textContent = free ? 'SANDBOX / OPEN WORLD' : level().region || level().name || `REGION ${index + 1}`;
   $('#mission-number').textContent = free ? 'SANDBOX / ALL SYSTEMS UNLOCKED' : `REGION ${String(index + 1).padStart(2, '0')} / ${String(LEVELS.length).padStart(2, '0')}`;
   saveCity(); draw();
-  if (!free && !meta.seen.includes(index)) requestAnimationFrame(() => showStory(index));
+  closeMobilePanel();
+  hover = { x: Math.floor(state.width / 2), y: Math.floor(state.height / 2) };
+  if (!free && index === 0 && !state.cells.some(cell => cell.type === 'coal')) {
+    $('#map-hint').textContent = 'Build → Coal station → yellow tile 1';
+  }
 }
 function showStory(index = state.levelIndex, complete = false) {
   const chapter = CHAPTERS[index], mission = LEVELS[index];
@@ -242,7 +246,7 @@ function renderHUD() {
   const power = analysis.power || {}, data = analysis.data || {};
   const income = Number(analysis.income ?? analysis.economy?.income ?? 0), maintenance = Number(analysis.maintenance ?? analysis.economy?.maintenance ?? 0);
   const net = Number(analysis.net ?? analysis.economy?.net ?? income - maintenance);
-  $('#hud-credits').textContent = fmt(credits()); $('#hud-net').textContent = `${net >= 0 ? '+' : ''}${Number(net.toFixed(1))} CR / min`;
+  $('#quick-credits').textContent = $('#hud-credits').textContent = fmt(credits()); $('#hud-net').textContent = `${net >= 0 ? '+' : ''}${Number(net.toFixed(1))} CR / min`;
   $('#hud-credits').closest('.hud-item').title = `Revenue ${fmt(income)} CR/min · Operating costs ${fmt(maintenance)} CR/min`;
   $('#hud-net').className = net < 0 ? 'is-negative' : 'is-positive';
   $('#hud-power').textContent = `${fmt(power.generation)} / ${fmt(power.demand)}`;
@@ -311,7 +315,7 @@ function renderOperations(force = false) {
 }
 function selectCell(cell) {
   selectedId = cell?.id ?? null; setManagement('inspect'); renderInspector(true);
-  if (window.innerWidth <= 900) openMobilePanel('inspect');
+  if (cell) openMobilePanel('inspect');
 }
 function renderInspector(force = false) {
   if (!force && $('#inspector-content').contains(document.activeElement)) return;
@@ -340,11 +344,19 @@ function renderCampaign() {
   $('#campaign-grid').innerHTML = LEVELS.map((mission, index) => `<button class="campaign-card${CHAPTERS[index]?.milestone ? ' rainbow-milestone' : ''}${!sandbox && state?.levelIndex === index ? ' current' : ''}${meta.completed.includes(index) ? ' completed' : ''}" data-region="${index}" ${index > unlockedIndex ? 'disabled' : ''}><span class="campaign-number">${CHAPTERS[index]?.milestone ? '✦ MILESTONE' : 'REGION'} ${String(index + 1).padStart(2, '0')}</span><strong>${esc(mission.name || mission.title || `Region ${index + 1}`)}</strong><small>${esc(mission.region || mission.description || 'A new infrastructure challenge')}</small><span class="campaign-status">${meta.completed.includes(index) ? '✓ COMPLETED / REVISIT' : index > unlockedIndex ? 'LOCKED / KEEP BUILDING' : saves[String(index)] ? '↳ CONTINUE CITY' : '→ BEGIN CHAPTER'}</span></button>`).join('');
 }
 function setPaused(value) { paused = value; $('#pause-button').textContent = value ? '▶' : 'Ⅱ'; $('#pause-button').setAttribute('aria-pressed', String(value)); $('#pause-button').title = value ? 'Resume simulation' : 'Pause simulation'; $('#paused-badge').hidden = !value; lastTime = 0; renderHUD(); }
-function openMobilePanel(name) { document.body.dataset.mobilePanel = name; if (name === 'mission' || name === 'inspect') setManagement(name); $$('.mobile-navigation button').forEach(b => b.classList.toggle('selected', b.dataset.mobilePanel === name)); }
-function closeMobilePanel() { document.body.dataset.mobilePanel = 'map'; $$('.mobile-navigation button').forEach(b => b.classList.toggle('selected', b.dataset.mobilePanel === 'map')); }
+function openMobilePanel(name) {
+  document.body.dataset.mobilePanel = name;
+  if (name === 'mission' || name === 'inspect') setManagement(name);
+  for (const button of $$('.mobile-navigation button')) {
+    const active = button.dataset.mobilePanel === name;
+    button.classList.toggle('selected', active);
+    button.setAttribute('aria-pressed', String(active));
+  }
+}
+function closeMobilePanel() { openMobilePanel('map'); }
 
 function resizeMap() {
-  const box = viewport.getBoundingClientRect(); if (!box.width || !box.height) return;
+  const box = { width: viewport.clientWidth, height: viewport.clientHeight }; if (!box.width || !box.height) return;
   if (hasFit) { camera.x += (box.width - cssWidth) / 2; camera.y += (box.height - cssHeight) / 2; }
   cssWidth = box.width; cssHeight = box.height; const ratio = renderRatio();
   canvas.width = Math.round(cssWidth * ratio); canvas.height = Math.round(cssHeight * ratio);
@@ -368,7 +380,9 @@ function zoomAt(factor, x = cssWidth / 2, y = cssHeight / 2) {
   const next = clamp(camera.zoom * factor, .28, 3.2), ratio = next / camera.zoom;
   camera.x = x - (x - camera.x) * ratio; camera.y = y - (y - camera.y) * ratio; camera.zoom = next; draw();
 }
-function point(event) { const bounds = canvas.getBoundingClientRect(); return { x: event.clientX - bounds.left, y: event.clientY - bounds.top }; }
+function point(event) { const bounds = canvas.getBoundingClientRect(); return $('#game-console').classList.contains('turned')
+  ? { x: event.clientY - bounds.top, y: bounds.right - event.clientX }
+  : { x: event.clientX - bounds.left, y: event.clientY - bounds.top }; }
 function tilePoint(p) {
   let x = (p.x - camera.x) / camera.zoom, y = (p.y - camera.y) / camera.zoom;
   if (angledView) { y = (y - state.height * TILE * .1) / .8; x += .28 * y - state.height * TILE * .14; }
@@ -513,12 +527,15 @@ document.addEventListener('click', event => {
   const button = event.target.closest('button'); if (!button) return;
   if (button.dataset.build) selectTool(button.dataset.build);
   if (button.dataset.category) { category = button.dataset.category; $$('.build-categories button').forEach(b => { const on = b === button; b.classList.toggle('selected', on); b.setAttribute('aria-pressed', String(on)); }); renderCatalog(); playSound('click'); }
-  if (button.dataset.mode) { setMode(button.dataset.mode); draw(); }
-  if (button.dataset.overlay) { overlay = button.dataset.overlay; $$('.map-overlays button').forEach(b => { const on = b === button; b.classList.toggle('selected', on); b.setAttribute('aria-pressed', String(on)); }); draw(); }
+  if (button.dataset.mode) { setMode(button.dataset.mode); closeMobilePanel(); settings.close(); draw(); }
+  if (button.dataset.overlay) { settings.close(); overlay = button.dataset.overlay; $$('.map-overlays button').forEach(b => { const on = b === button; b.classList.toggle('selected', on); b.setAttribute('aria-pressed', String(on)); }); draw(); }
   if (button.dataset.speed) { speed = Number(button.dataset.speed); $$('.simulation-controls [data-speed]').forEach(b => { const on = b === button; b.classList.toggle('selected', on); b.setAttribute('aria-pressed', String(on)); }); renderHUD(); }
-  if (button.dataset.management) setManagement(button.dataset.management);
-  if (button.dataset.mobilePanel) button.dataset.mobilePanel === 'map' ? closeMobilePanel() : openMobilePanel(button.dataset.mobilePanel);
-  if (button.hasAttribute('data-close-panel')) closeMobilePanel();
+  if (button.dataset.management) {
+    if (button.dataset.management === 'operate') setManagement('operate');
+    else openMobilePanel(button.dataset.management);
+  }
+  if (button.dataset.mobilePanel) openMobilePanel(document.body.dataset.mobilePanel === button.dataset.mobilePanel ? 'map' : button.dataset.mobilePanel);
+  if (button.hasAttribute('data-close-panel')) { closeMobilePanel(); canvas.focus({ preventScroll:true }); }
   if (button.hasAttribute('data-close-dialog')) button.closest('dialog').close();
   if (button.dataset.region !== undefined) { loadCity(Number(button.dataset.region)); $('#campaign-dialog').close(); closeMobilePanel(); }
   if (button.dataset.hardware) { const cell = cellById(selectedId); if (cell) doAction('upgradeModule', cell.id, button.dataset.hardware); }
@@ -541,38 +558,75 @@ $('#campaign-button').onclick = () => { renderCampaign(); $('#campaign-dialog').
 $('#story-button').onclick = () => showStory(sandbox ? meta.active : state.levelIndex);
 $('#story-dialog').addEventListener('click', event => { const button = event.target.closest('[data-story-chapter]'); if (button) showStory(Number(button.dataset.storyChapter)); });
 $('#starter-guide').addEventListener('click', event => { const button = event.target.closest('[data-starter]'); if (button) { selectTool(button.dataset.starter); hover = { x: button.dataset.starter === 'coal' ? 13 : 14, y: 11 }; closeMobilePanel(); draw(); } });
-// First-time players see the quick start after the opening story closes, never
-// stacked above another dialog. GUIDE remains available for later reference.
-let quickStartSeen = false;
-try { quickStartSeen = localStorage.getItem('imon-gridworks-guide-v1') === 'seen'; } catch {}
-function openQuickStart() {
-  if (document.querySelector('dialog[open]')) return;
-  $('#help-dialog').showModal();
-  $('#help-dialog').querySelector('button[aria-label="Close guide"]')?.focus({ preventScroll: true });
+const settings = $('#settings-dialog');
+const gameConsole = $('#game-console');
+$('#menu-button').onclick = () => { closeMobilePanel(); settings.showModal(); };
+settings.addEventListener('click', event => {
+  // Release the menu before opening the atlas, guide or privacy preferences.
+  if (event.target.closest('#campaign-button,#story-button,#globe-button,#help-button,[data-open-privacy]')) settings.close();
+}, true);
+$('#help-button').onclick = () => $('#help-dialog').showModal();
+function displayFormat(value) {
+  const format = ['classic', 'wide'].includes(value) ? value : 'fit';
+  gameConsole.dataset.format = format;
+  $('#screen-format').value = format;
 }
-$('#help-button').onclick = openQuickStart;
-$('#help-dialog').addEventListener('close', () => {
-  quickStartSeen = true;
-  try { localStorage.setItem('imon-gridworks-guide-v1', 'seen'); } catch {}
-});
-$('#story-dialog').addEventListener('close', () => {
-  if (!quickStartSeen && !sandbox && state?.levelIndex === 0 && meta.completed.length === 0) {
-    requestAnimationFrame(openQuickStart);
+try { displayFormat(localStorage.getItem('imon-gridworks-format')); } catch { displayFormat('fit'); }
+$('#screen-format').onchange = event => {
+  displayFormat(event.target.value);
+  try { localStorage.setItem('imon-gridworks-format', event.target.value); } catch {}
+  settings.close();
+};
+$('#rotate-screen').onclick = event => {
+  const turned = gameConsole.classList.toggle('turned');
+  event.currentTarget.setAttribute('aria-pressed', String(turned));
+  event.currentTarget.textContent = turned ? 'Restore orientation' : 'Rotate screen';
+  settings.close();
+};
+$('#pad-switch').onclick = event => {
+  const pad = $('#city-pad');
+  pad.hidden = !pad.hidden;
+  event.currentTarget.setAttribute('aria-pressed', String(!pad.hidden));
+  event.currentTarget.textContent = pad.hidden ? 'Show controller' : 'Hide controller';
+  if (!pad.hidden) settings.close();
+};
+$('#pad-act').onclick = () => actOnTile(hover);
+$('#pad-cancel').onclick = () => { setMode('select'); closeMobilePanel(); draw(); };
+for (const button of $$('[data-step]')) button.onclick = () => moveCursor(...button.dataset.step.split(',').map(Number));
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !document.querySelector('dialog[open]') && document.body.dataset.mobilePanel !== 'map') {
+    closeMobilePanel(); canvas.focus({ preventScroll:true });
   }
 });
 $('#sandbox-button').onclick = () => { loadCity(LEVELS.length - 1, true); $('#campaign-dialog').close(); closeMobilePanel(); };
 $('#next-mission').onclick = () => { if (state.levelIndex >= LEVELS.length - 1) { renderCampaign(); $('#campaign-dialog').showModal(); } else loadCity(state.levelIndex + 1); };
 $('#sound-button').onclick = () => { const on = setSound(!isSoundEnabled()); $('#sound-button').setAttribute('aria-pressed', String(on)); $('#sound-button span').textContent = `SOUND ${on ? 'ON' : 'OFF'}`; if (on) playSound('start'); };
-const renderControls = document.createElement('div'); renderControls.className = 'render-controls'; renderControls.setAttribute('role','group'); renderControls.setAttribute('aria-label','World appearance and rendering quality'); renderControls.innerHTML = '<button id="cyber-view" aria-pressed="false" title="Toggle the neon cyberpunk world">✦ CYBER OFF</button><button id="render-quality" title="Cycle Auto, Low, and High canvas rendering quality">QUALITY: AUTO</button><output id="render-fps" title="Measured animation frames per second; not GPU usage">FPS —</output>'; viewport.append(renderControls);
+const renderControls = document.createElement('div'); renderControls.className = 'render-controls'; renderControls.setAttribute('role','group'); renderControls.setAttribute('aria-label','World appearance and rendering quality'); renderControls.innerHTML = '<button id="cyber-view" aria-pressed="false" title="Toggle the neon cyberpunk world">✦ CYBER OFF</button><button id="render-quality" title="Cycle Auto, Low, and High canvas rendering quality">QUALITY: AUTO</button><output id="render-fps" title="Measured animation frames per second; not GPU usage">FPS —</output>'; $('#appearance-controls').append(renderControls);
 $('#cyber-view').onclick = () => { cyberView = !cyberView; document.body.dataset.palette = cyberView ? 'cyber' : 'natural'; $('#cyber-view').textContent = cyberView ? '✦ CYBER ON' : '✦ CYBER OFF'; $('#cyber-view').setAttribute('aria-pressed', String(cyberView)); draw(); };
 $('#render-quality').onclick = () => { quality = ['auto','low','high'][(['auto','low','high'].indexOf(quality)+1)%3]; $('#render-quality').textContent = `QUALITY: ${quality.toUpperCase()}`; slowWindows=fastWindows=0; resizeMap(); };
-const weather = initWeather({ onThunder: () => playSound('hit') }); $('#weather-layer').style.zIndex = '2'; weather.setMotion(motion);
+const weather = initWeather({ mount:viewport, onThunder: () => playSound('hit') }); $('#weather-layer').style.zIndex = '2'; weather.setMotion(motion);
 const weatherLabel = document.createElement('label'); weatherLabel.className = 'weather-control'; weatherLabel.textContent = 'WEATHER'; const weatherSelect = document.createElement('select'); weatherSelect.setAttribute('aria-label','Decorative weather effects'); weatherSelect.title = 'Visual atmosphere; simulation weather is managed separately'; weatherSelect.innerHTML = ['clear','rain','storm','snow','fog','wind','aurora','fireflies','leaves'].map(type => `<option value="${type}">${type.toUpperCase()}</option>`).join(''); weatherLabel.append(weatherSelect); renderControls.insertBefore(weatherLabel, $('#render-fps')); weatherSelect.onchange = () => weather.setWeather(weatherSelect.value);
 const angleButton = document.createElement('button'); angleButton.id = 'view-angle'; angleButton.textContent = 'VIEW: TOP-DOWN'; angleButton.setAttribute('aria-pressed', 'false'); angleButton.title = 'Switch between top-down and angled map views'; $('#motion-button').before(angleButton);
 angleButton.onclick = () => { angledView = !angledView; angleButton.textContent = angledView ? 'VIEW: ANGLED' : 'VIEW: TOP-DOWN'; angleButton.setAttribute('aria-pressed', String(angledView)); draw(); };
 $('#motion-button').onclick = () => { motion = !motion; weather.setMotion(motion); document.body.dataset.motion = motion ? 'on' : 'off'; $('#motion-button').setAttribute('aria-pressed', String(motion)); $('#motion-button').textContent = `MOTION ${motion ? 'ON' : 'OFF'}`; draw(); };
-$('#fullscreen-button').onclick = async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen(); else toast('Fullscreen is not available in this browser. The game already fills this tab.'); } catch { toast('Fullscreen is unavailable here. Keep playing in this tab.'); } };
-document.addEventListener('fullscreenchange', () => { $('#fullscreen-button span').textContent = document.fullscreenElement ? 'EXIT FULLSCREEN' : 'FULLSCREEN'; setTimeout(() => { resizeMap(); fitMap(); }, 50); });
+function syncFullscreen() {
+  const active = Boolean(document.fullscreenElement || document.webkitFullscreenElement || gameConsole.classList.contains('immersive'));
+  $('#fullscreen-button span').textContent = active ? 'EXIT FULLSCREEN' : 'FULLSCREEN';
+  $('#fullscreen-button').setAttribute('aria-pressed', String(active));
+}
+$('#fullscreen-button').onclick = async () => {
+  settings.close();
+  const root = document.documentElement;
+  try {
+    if (document.fullscreenElement || document.webkitFullscreenElement) await (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    else if (gameConsole.classList.contains('immersive')) gameConsole.classList.remove('immersive');
+    else if (root.requestFullscreen || root.webkitRequestFullscreen) await (root.requestFullscreen || root.webkitRequestFullscreen).call(root);
+    else gameConsole.classList.add('immersive');
+  } catch { gameConsole.classList.add('immersive'); }
+  syncFullscreen();
+};
+document.addEventListener('fullscreenchange', syncFullscreen);
+document.addEventListener('webkitfullscreenchange', syncFullscreen);
 $$('dialog').forEach(dialog => dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } }));
 const mapTouches = new Map();
 function pinchGeometry() {
@@ -619,9 +673,10 @@ canvas.addEventListener('lostpointercapture', event => {
   if (pointer?.id===event.pointerId) pointer=null;
 });
 canvas.addEventListener('wheel', event => { event.preventDefault(); const p = point(event); zoomAt(event.deltaY < 0 ? 1.13 : .885, p.x, p.y); }, { passive: false });
+function moveCursor(dx, dy) { hover = { x: clamp(hover.x + dx, 0, state.width - 1), y: clamp(hover.y + dy, 0, state.height - 1) }; const {x: px, y: py} = tileScreenPoint(hover); if (px < 30 || px > cssWidth - 30) camera.x += cssWidth / 2 - px; if (py < 30 || py > cssHeight - 30) camera.y += cssHeight / 2 - py; const cells = cellAt(hover.x, hover.y); $('#map-announcer').textContent = `Tile ${hover.x + 1}, ${hover.y + 1}. ${cells.length ? cells.map(c => buildingName(c.type)).join(', ') : 'Empty'}.`; draw(); }
 canvas.addEventListener('keydown', event => {
   const moves = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
-  if (moves[event.key]) { event.preventDefault(); const [dx, dy] = moves[event.key]; hover = { x: clamp(hover.x + dx, 0, state.width - 1), y: clamp(hover.y + dy, 0, state.height - 1) }; const {x: px, y: py} = tileScreenPoint(hover); if (px < 30 || px > cssWidth - 30) camera.x += cssWidth / 2 - px; if (py < 30 || py > cssHeight - 30) camera.y += cssHeight / 2 - py; const cells = cellAt(hover.x, hover.y); $('#map-announcer').textContent = `Tile ${hover.x + 1}, ${hover.y + 1}. ${cells.length ? cells.map(c => buildingName(c.type)).join(', ') : 'Empty'}.`; draw(); }
+  if (moves[event.key]) { event.preventDefault(); moveCursor(...moves[event.key]); }
   if (event.key === 'Enter') { event.preventDefault(); actOnTile(hover); }
   if (event.key === ' ') { event.preventDefault(); spaceHeld = true; viewport.style.cursor = 'grab'; }
   if (event.key === 'Escape') { setMode('select'); selectedId = null; renderInspector(); draw(); }

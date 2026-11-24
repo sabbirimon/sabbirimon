@@ -52,6 +52,16 @@ export const CSS_COURSE = {
  * The chapter keys are matched against the `chapter` field of an exercise.
  */
 export const CHAPTERS = {
+  'HTML · Form engineering': {
+    goal:'Make data-entry constraints executable in the browser and keep controls labeled and submittable.',
+    material:[
+      {title:'Work from the boundaries',body:'Write down the smallest valid value, the largest valid value and an example between two allowed settings. On a number control, the step sequence starts at min when min is supplied.',code:'<label>Voltage <input type="number" name="volts" min="1" max="4" step="0.5" required></label>'},
+      {title:'Describe an entire identifier',body:'An HTML pattern checks the entire text value. A character class limits which characters may appear. A quantifier repeats the preceding character or class. Required controls reject an empty value.',code:'<input name="code" type="text" pattern="[A-Z]{3}[0-9]{2}" required>'},
+      {title:'Test ownership and submitted data',body:'A control outside a form can name its owner with the form attribute. The name determines the submitted key. Test an empty value, both inclusive bounds and a real leap date.',code:'<form id="schedule"></form>\n<label>Day <input form="schedule" name="day" type="date"></label>'}
+    ],
+    exam:'The checker parses your markup, changes the field through several boundary cases and calls the browser’s native constraint-validation API. It reads FormData to check submitted values.',
+    outcome:'You can ship an accessible form whose acceptance rules and serialized values agree.'
+  },
   /* -- HTML --------------------------------------------------------- */
   'HTML · Elements': {
     goal: 'Learn the elements a page is built from, and how to write them correctly.',
