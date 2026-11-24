@@ -65,8 +65,48 @@
   filter: brightness(1.08);
 }
 
+.grid-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem 1rem;
+  margin-top: .75rem;
+}
+
+.grid-caption button {
+  min-height: 44px;
+}
+
+.grid-key {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .3rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: .88rem;
+}
+
+.grid-key li {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.grid-key li::before {
+  content: '';
+  width: 1rem;
+  border-top: 3px solid #ffdc65;
+}
+
+.grid-key li + li::before {
+  border-top: 3px dashed #72efff;
+}
+
 .grid-launch p {
-  margin: .75rem 0;
+  margin: .6rem 0 0;
   color: #cedbe7;
 }
 
