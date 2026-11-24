@@ -42,19 +42,54 @@ An open-source builder from **Dhaka, Bangladesh**, exploring the space between *
 ### Try a lab
 
 <p align="center">
-  <a href="https://imon.com.bd/systems.html"><img src="assets/cellular-5g.svg" width="760" alt="Three cell towers exchanging signals with the 5G core. Open the Systems Lab."></a>
+  <a href="https://imon.com.bd/systems.html">
+    <picture>
+      <source media="(prefers-reduced-motion: reduce)" srcset="docs/art/tower-grid.png">
+      <img src="docs/art/tower-grid.gif" width="864" alt="A pixel landscape with solar panels, spinning wind turbines, three 5G towers and a data center.">
+    </picture>
+  </a>
+</p>
+<p align="center">
+  <a href="https://imon.com.bd/systems.html#workbench"><img src="assets/profile-buttons/try-labs.svg" width="240" alt="Try labs"></a>
 </p>
 
-| Workbench | Try a challenge |
-| --- | --- |
-| [Code Lab](https://imon.com.bd/lab.html) | [Build a form that enforces a date window](https://imon.com.bd/lab.html?exercise=html-remote-date) |
-| [AI Lab](https://imon.com.bd/ai-lab.html) | [Evaluate ranked search results in Python](https://imon.com.bd/ai-lab.html?exercise=ai-eval-ranking) |
-| [Circuits & Signals](https://imon.com.bd/circuits.html) | [Wire and balance a bridge circuit](https://imon.com.bd/circuits.html?exercise=circuit-bench-bridge) |
-| [Systems Lab](https://imon.com.bd/systems.html) | [Measure the backlog after a failover](https://imon.com.bd/systems.html?exercise=capacity-failover) |
+Follow the yellow power lines from the solar panels and wind turbines, then trace the cyan data packets between towers. Open the Systems Lab to predict what happens when a service loses capacity, or [build your own city grid in Gridworks](https://imon.com.bd/gridworks/).
+
+#### Four ways to practice
+
+<table>
+  <tr>
+    <td width="50%" valign="top"><a href="https://imon.com.bd/lab.html"><img src="docs/art/lab-code.webp" width="360" alt="Pixel-art coding desk"><br><strong>Code Lab</strong></a><br>Write HTML, CSS and JavaScript and run your changes in the browser.<br><a href="https://imon.com.bd/lab.html?exercise=html-remote-date">Build a form with a date window →</a></td>
+    <td width="50%" valign="top"><a href="https://imon.com.bd/ai-lab.html"><img src="docs/art/lab-ai.webp" width="360" alt="Robot at a purple observatory workbench"><br><strong>AI Lab</strong></a><br>Use Python to inspect data and measure how well a model performs.<br><a href="https://imon.com.bd/ai-lab.html?exercise=ai-eval-ranking">Score a set of ranked search results →</a></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><a href="https://imon.com.bd/circuits.html"><img src="docs/art/lab-circuits.webp" width="360" alt="Oscilloscope on an electronics bench"><br><strong>Circuits &amp; Signals</strong></a><br>Wire components, predict a reading, then check it on the virtual bench.<br><a href="https://imon.com.bd/circuits.html?exercise=circuit-bench-bridge">Balance a bridge circuit →</a></td>
+    <td width="50%" valign="top"><a href="https://imon.com.bd/systems.html"><img src="docs/art/lab-systems.webp" width="360" alt="Pixel-art network and data center"><br><strong>Systems Lab</strong></a><br>Change a network or cloud setting and measure the effect on the system.<br><a href="https://imon.com.bd/systems.html?exercise=capacity-failover">Measure the backlog after a failover →</a></td>
+  </tr>
+</table>
 
 [Course catalog](https://imon.com.bd/courses.html) · [Practical exams](https://imon.com.bd/exams/) · [Browser tools](https://imon.com.bd/tools/)
 
+#### A closer look at the radio link
+
+<p align="center">
+  <a href="https://imon.com.bd/systems.html"><img src="assets/cellular-5g.svg" width="760" alt="Three cell towers exchanging signals with the 5G core. Open the Systems Lab."></a>
+</p>
+
+The phone is the user equipment (UE). Each tower is a 5G base station (gNB). The arcs illustrate a handover between neighboring base stations, which lets a moving phone stay connected.
+
 ### A few things I'm building
+
+<p align="center">
+  <a href="https://github.com/sabbirimon?tab=repositories">
+    <picture>
+      <source media="(prefers-reduced-motion: reduce)" srcset="assets/profile-projects.png">
+      <img src="assets/profile-projects.gif" width="704" alt="Three animated pixel workbenches for local AI, Android screen mirroring and compute.">
+    </picture>
+  </a>
+</p>
+
+Meshlit and OmniCast approach the same phone from two directions. Meshlit gives it a local AI workspace. OmniCast brings its screen and controls to a desktop.
 
 | Project | What it explores | Built with |
 | :--- | :--- | :--- |
@@ -78,10 +113,21 @@ An open-source builder from **Dhaka, Bangladesh**, exploring the space between *
 | Play or explore | What you’ll find |
 | --- | --- |
 | [Gridworks](https://imon.com.bd/gridworks/) | Place power stations and network towers, then keep the city connected as its population grows. |
-| [Retro arcade](https://imon.com.bd/#arcade) | Play Snake, Surf, 2048 and Rally with touch controls. The [cartridge cabinet](https://imon.com.bd/arcade/) holds Signal Runner, Brick Breaker and Star Patrol. |
+| [Retro arcade](https://imon.com.bd/#arcade) | Play Snake, Surf, 2048 and Rally with touch controls. The [cartridge cabinet](https://imon.com.bd/arcade/) holds Signal Runner, Prism Breaker and Star Patrol. |
 | [Pixel landscapes](https://imon.com.bd/#worlds) | Explore 43 scenarios across 18 worlds, or [sit by the jungle campfire](https://imon.com.bd/?scene=jungle-camp&phase=twilight&weather=clear&view=scenery#scene-stage). |
 | [Daily Dispatch](https://imon.com.bd/#news) | Read technology, AI and science headlines, or try the daily quiz. |
 | [Illustrated player guide](https://imon.com.bd/guide/) | Follow Rafi and his robot through the labs and quests. |
+
+<p align="center">
+  <a href="https://imon.com.bd/arcade/">
+    <picture>
+      <source media="(prefers-reduced-motion: reduce)" srcset="assets/profile-arcade-reel.png">
+      <img src="assets/profile-arcade-reel.gif" width="720" alt="Arcade reel showing a snake collecting food, a paddle breaking bricks and a starship in flight.">
+    </picture>
+  </a>
+</p>
+
+Pick a game from the reel. Steer [Snake](https://imon.com.bd/#arcade) toward its next meal, bounce a shot off the paddle in [Prism Breaker](https://imon.com.bd/arcade/?game=breaker), or fly [Star Patrol](https://imon.com.bd/arcade/?game=space).
 
 ### Find me around the internet
 
