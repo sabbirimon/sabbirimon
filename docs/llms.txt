@@ -86,3 +86,4 @@ Optional Google account registration and sign-in for private cloud progress. Sig
 - [Visitor guide and player rules](https://imon.com.bd/guide/)
 - [Scenario audio and recording credits](https://imon.com.bd/sounds/)
 - [On-site YouTube and Bilibili player](https://imon.com.bd/watch/)
+- [Practical exams and case-based assessment](https://imon.com.bd/exams/)

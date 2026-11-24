@@ -292,6 +292,10 @@ function hardwareMarkup(cell) {
 }
 function renderOperations(force = false) {
   if (!state || !analysis || !force && $('#operator-panel').contains(document.activeElement)) return;
+  const horizon=Number($('#forecast-window').value);
+  const projected=clamp(state.credits+analysis.net*horizon,0,1000000000);
+  const bottleneck=analysis.power.deficit>0?'Power shortfall':analysis.data.deficit>0?'Data shortfall':'Demand is covered';
+  $('#forecast-note').textContent=bottleneck+' · At current rates: '+fmt(projected)+' credits after '+horizon+' minutes.';
   $('#service-price').value = state.servicePrice || 1;
   $('#service-price-label').textContent = `${Number(state.servicePrice || 1).toFixed(2)}×`;
   $('#service-metrics').innerHTML = [['Customers', fmt(analysis.customers)], ['Service', `${fmt(analysis.service)}%`], ['Revenue', `${fmt(analysis.income)} / min`], ['Operating cost', `${fmt(analysis.maintenance)} / min`], ['Compute', `${fmt(analysis.compute)} units`], ['Heat', `${fmt(analysis.heat)} units`]].map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join('');
@@ -521,6 +525,7 @@ document.addEventListener('change', event => {
   if (input.dataset.operatorToggle) doAction('configureAutomation', input.dataset.operatorToggle, { enabled: input.checked });
   if (input.dataset.operatorReserve) doAction('configureAutomation', input.dataset.operatorReserve, { reserve: clamp(Number(input.value) || 0, 0, 1000000) });
 });
+$('#forecast-window').onchange=()=>renderOperations(true);
 $('#service-price').oninput = event => { $('#service-price-label').textContent = `${Number(event.target.value).toFixed(2)}×`; };
 $('#service-price').onchange = event => doAction('setServicePrice', Number(event.target.value));
 $('#pause-button').onclick = () => setPaused(!paused);

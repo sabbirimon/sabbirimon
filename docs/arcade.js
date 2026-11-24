@@ -190,7 +190,7 @@ export function initArcade() {
     <header class="arcade-header"><div><span class="arcade-eyebrow">SABBIR'S POCKET ARCADE</span><h2 id="arcade-dialog-title">Pixel Snake</h2></div><button type="button" class="arcade-close" aria-label="Close game">×</button></header>
     <div class="arcade-hud"><div><span>SCORE</span><strong id="arcade-score">0000</strong></div><div><span>PERSONAL BEST</span><strong id="arcade-best">0000</strong></div><div class="arcade-life"><span id="arcade-detail-label">LENGTH</span><strong id="arcade-detail">03</strong></div><span class="arcade-state" id="arcade-state">READY</span></div>
     <div class="arcade-board"><canvas id="arcade-canvas" width="864" height="576" tabindex="0" aria-label="Game board. Use arrow keys or W A S D to move. Space pauses the game.">This game needs a browser with Canvas support. Use the direction buttons below to move.</canvas><div class="arcade-overlay"><span class="arcade-overlay-icon" aria-hidden="true">✦</span><h3 id="arcade-message">Small snake. Big ambition.</h3><p id="arcade-description">Collect the fruit. Grow your score. Mind the walls.</p><button type="button" class="arcade-start arcade-btn">LET'S PLAY <span aria-hidden="true">▶</span></button></div></div>
-    <div class="arcade-toolbar"><div class="arcade-actions"><button type="button" class="arcade-toggle arcade-btn">Start game</button><button type="button" class="arcade-restart arcade-secondary">Restart</button></div><div class="arcade-settings"><label for="arcade-mode">Mode <select id="arcade-mode"><option value="walls" selected>Wraparound</option><option value="classic">Classic</option><option value="night">Night</option><option value="timed">Timed</option></select></label><label for="snake-skin">Skin <select id="snake-skin"><option value="fern">Fern</option><option value="lagoon">Lagoon</option><option value="ember">Ember</option></select></label><label for="arcade-difficulty">Speed <select id="arcade-difficulty"><option value="easy">Chill</option><option value="normal" selected>Classic</option><option value="hard">Turbo</option></select></label><button type="button" class="arcade-sound arcade-secondary" aria-pressed="false" aria-label="Turn game sound on">Sound off</button></div></div>
+    <div class="arcade-toolbar"><div class="arcade-actions"><button type="button" class="arcade-toggle arcade-btn">Start game</button><button type="button" class="arcade-restart arcade-secondary">Restart</button></div><div class="arcade-settings"><label for="arcade-mode">Mode <select id="arcade-mode"><option value="walls" selected>Wraparound</option><option value="classic">Classic</option><option value="night">Night</option><option value="timed">Timed</option></select></label><label><input type="checkbox" id="snake-path"> Turn preview</label><label for="snake-skin">Skin <select id="snake-skin"><option value="fern">Fern</option><option value="lagoon">Lagoon</option><option value="ember">Ember</option></select></label><label for="arcade-difficulty">Speed <select id="arcade-difficulty"><option value="easy">Chill</option><option value="normal" selected>Classic</option><option value="hard">Turbo</option></select></label><button type="button" class="arcade-sound arcade-secondary" aria-pressed="false" aria-label="Turn game sound on">Sound off</button></div></div>
     <p class="arcade-mode-note" data-arcade-mode-note role="status" aria-live="polite"></p>
     <div class="arcade-bottom"><p id="arcade-help"><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> or <kbd>W A S D</kbd> to move<br><kbd>Space</kbd> pause · <kbd>Esc</kbd> close</p><div class="arcade-dpad" aria-label="Touch direction controls"><button type="button" data-direction="up" aria-label="Move up">↑</button><button type="button" data-direction="left" aria-label="Move left">←</button><button type="button" data-direction="down" aria-label="Move down">↓</button><button type="button" data-direction="right" aria-label="Move right">→</button></div><p class="arcade-save-note">YOUR BEST STAYS<br>ON THIS DEVICE <span aria-hidden="true">★</span></p></div>
     <p class="arcade-announcement" aria-live="polite" aria-atomic="true"></p>
@@ -267,6 +267,7 @@ export function initArcade() {
     snakeBackdrop = null;
     dialog.dataset.game = game;
     skinSelect.closest('label').hidden=!isSnake;
+    $('#snake-path').closest('label').hidden=!isSnake;
     if (modeSelect) modeSelect.closest('label').hidden = !isSnake;
     if (modeNote) {
       modeNote.hidden = !isSnake;
@@ -462,6 +463,16 @@ export function initArcade() {
       snakeBackdrop.dataset.mode = state.mode;
     }
     ctx.drawImage(snakeBackdrop, 0, 0);
+    if ($('#snake-path').checked) {
+      let {x,y}=state.body[0];
+      for(let i=0;i<3;i++){
+        const dir=state.queue[Math.min(i,state.queue.length-1)]||state.direction;
+        const [dx,dy]=DIRECTIONS[dir]; x+=dx;y+=dy;
+        if(snakeMode(state.mode).wraps){x=(x+state.cols)%state.cols;y=(y+state.rows)%state.rows}
+        if(x<0||x>=state.cols||y<0||y>=state.rows)break;
+        ctx.fillStyle='#ffeaa5';ctx.fillRect(BOARD.margin+(x+.5)*BOARD.cell-2,BOARD.margin+(y+.5)*BOARD.cell-2,4,4);
+      }
+    }
     const { cell, margin } = BOARD;
 
     if (state.food) {

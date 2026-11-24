@@ -64,24 +64,32 @@
 <link rel="stylesheet" href="studio.css">
 <script type="module" src="learning-art.js"></script>
 <link rel="stylesheet" href="quests.css"><script type="module" src="quests.js" data-quest-page="home"></script>
-<link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="home"></script></head>
+<link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="home"></script><link rel="stylesheet" href="home.css"></head>
 <body class="world-home">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
 <a class="brand" href="#" aria-label="IMON home"><span class="brand-mark" aria-hidden="true">I</span><span data-wordmark>IMON.WORLD</span></a>
-<nav aria-label="Main navigation"><a href="#projects">Projects</a><a href="#learn">Learn</a><a href="#arcade">Arcade <span class="nav-new">PLAY</span></a><a href="#news">Daily</a><a href="#map">Map</a><a href="#about">About</a></nav>
+<nav aria-label="Main navigation"><a href="courses.html">Courses</a><a href="#learn">Labs</a><a href="arcade/">Arcade</a><a href="watch/">Watch</a><a href="#destinations">Explore</a><a href="guide/">Guide</a></nav>
 <button type="button" class="nav-toggle" data-nav-toggle aria-label="Open the menu" aria-expanded="false"><span class="nav-toggle-label">Menu</span><span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
 <button type="button" class="command-palette-launcher" data-command-palette-open aria-haspopup="dialog" aria-label="Open the command palette, then press Control or Command K"><span class="command-palette-launcher-icon" aria-hidden="true">⌕</span><span>Search</span><kbd aria-hidden="true">Ctrl K</kbd></button>
 <div class="auth-bar"><a class="auth-name" href="login.html" data-auth-name hidden></a><a class="auth-button" href="login.html" data-auth-signin><svg class="auth-button-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z"/></svg><span class="auth-button-label">Sign in</span></a><button type="button" class="auth-button" data-auth-signout hidden><svg class="auth-button-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z"/></svg><span class="auth-button-label">Sign out</span></button></div>
 <a class="github-link" href="https://github.com/sabbirimon" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.5 21.6c.6.1.8-.2.8-.5v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.6-1.3-1.6-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6a4.7 4.7 0 0 1 1.2-3.2c-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2a4.7 4.7 0 0 1 1.2 3.2c0 4.7-2.8 5.7-5.5 6 .5.4.8 1.1.8 2.2V22c0 .3.2.6.8.5A11.1 11.1 0 0 0 12 .9Z"/></svg><span>GitHub</span><span aria-hidden="true">↗</span></a>
 </header>
 <main id="main">
-<section class="hero" aria-labelledby="hero-title">
+<div class="arrival"><section class="hero" aria-labelledby="hero-title">
 <canvas id="pixel-world" aria-label="Interactive pixel landscape. Click the floating gold coins, or use the Collect a coin button below."></canvas><div class="hero-shade"></div>
-<div class="hero-content"><div class="eyebrow"><span class="status-dot"></span> HELLO, WORLD. I'M IMON.</div><h1 id="hero-title">Build. Play.<br><span>Learn by doing.</span></h1><p class="hero-description">I’m Sabbir Hassan Imon. Explore my open-source projects, build a circuit, or write your first line of code.</p><div class="hero-actions"><a class="pixel-button gold" href="#learn">Explore the labs</a><a class="pixel-button play-games-button" href="#arcade"><svg class="controller-icon" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3h20v3h3v15h-6l-4-5h-6l-4 5H3V6h3Z" fill="currentColor"/><path d="M8 7h3v3h3v3h-3v3H8v-3H5v-3h3Z" fill="#20203f"/><path d="M22 7h3v3h-3Z" fill="#ff64bf"/><path d="M25 11h3v3h-3Z" fill="#ffda54"/></svg> Play games</a></div><p class="hero-location"><span aria-hidden="true">⌖</span> BUILT ACROSS THE WORLD <span class="divider">/</span> <span id="visitor-time">YOUR LOCAL TIME</span></p></div>
+<div class="hero-content"><h1 id="hero-title">IMON<br><span>World</span></h1><p class="hero-description">A pixel world by Sabbir Hassan Imon. Learn a skill, build a circuit, or find your next game.</p><div class="hero-actions"><a class="pixel-button gold" href="courses.html">Browse courses →</a><a class="pixel-button play-games-button" href="progress.html">My progress</a></div><p class="hero-location"><span id="visitor-time">Local time</span></p></div>
 <p id="conditions" class="world-conditions" aria-live="polite">Following your local time</p>
 <div class="world-toolbar"><button class="coin-counter" id="collect-coin" aria-label="Collect a coin"><span class="coin-icon" aria-hidden="true"></span><span id="coin-count">0 / 5</span><span class="coin-label">Coins found</span></button><div class="sky-controls"><button id="cyber-mode" class="cyber-mode-button" aria-pressed="false">▦ CYBERPUNK</button><button id="world-settings" class="world-studio-trigger">World Studio</button><button id="ambient-toggle" aria-pressed="false">Music &amp; ambience: off</button><button id="sfx-toggle" aria-pressed="false">Game sound off</button></div></div>
 </section>
+<aside class="arrival-menu" aria-labelledby="destinations"><h2 id="destinations">Choose a destination</h2>
+<div class="portals">
+<a href="#learn"><img src="art/lab-circuits.webp" alt=""><span>Learning labs</span></a>
+<a href="arcade/"><img src="art/neon-forest.webp" alt=""><span>Pixel Arcade</span></a>
+<a href="watch/"><img src="art/coastal-boardwalk.webp" alt=""><span>Video room</span></a>
+<a href="#worlds"><img src="art/jungle-camp.webp" alt=""><span>World Studio</span></a>
+</div><nav aria-label="More destinations"><a href="arcade/puzzles/">Word &amp; brain games</a><a href="gridworks/">Gridworks</a><a href="exams/">Exams</a><a href="quests.html">Quest journal</a><a href="sounds/">Sounds</a><a href="tools/">Tools</a><a href="guide/">Player guide</a><a href="#map">World map</a><a href="#projects">Projects</a><a href="#news">Daily quiz</a><a href="leaderboard.html">Leaderboard</a></nav></aside></div>
+<details id="worlds" class="world-drawer"><summary>Landscapes &amp; weather</summary><div id="world-controls"></div></details>
 <section class="section learning-section" id="learn" aria-labelledby="learn-title">
   <div class="learning-heading meadow-banner">
     <canvas data-learning-art="meadow" width="600" height="180" aria-hidden="true"></canvas>

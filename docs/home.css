@@ -1,0 +1,17 @@
+.world-home .arrival{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(18rem,1fr);gap:8px;padding:8px;background:#091322;align-items:stretch}
+.world-home .arrival .hero{width:100%;height:clamp(37rem,75vh,55rem);min-height:0;isolation:isolate;border:2px solid #7ba2a9}
+.world-home .arrival .hero-content{margin:0;padding:clamp(1.35rem,4vw,3.5rem);width:min(100%,37rem);text-align:left}
+.world-home .arrival h1#hero-title{font-size:clamp(2.4rem,5vw,5.5rem);line-height:1.08;letter-spacing:-.065em;margin:.15em 0}
+.world-home .arrival .hero-description{max-width:32ch;margin:.75rem 0;color:white;line-height:1.5}
+.world-home .arrival .hero-actions{justify-content:flex-start}.world-home .arrival .hero-actions a{border-radius:0}
+.world-home .arrival-menu{padding:clamp(.9rem,2vw,2rem);background:#112742;color:#f5f3da;border:2px solid #527b99;display:flex;flex-direction:column;justify-content:center;gap:1rem}
+.world-home .arrival-menu h2{font:400 clamp(1.25rem,2.2vw,2rem)/1.2 Silkscreen,monospace;color:var(--heading-light);margin:0}
+.portals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}
+.portals a{display:grid;background:#091728;border:2px solid #79aca9;box-shadow:3px 3px #080f20;text-decoration:none;min-width:0}
+.portals a:hover,.portals a:focus-visible{border-color:#ffd681}.portals img{display:block;width:100%;aspect-ratio:2.1;object-fit:cover;image-rendering:pixelated}
+.portals span{padding:.58rem;color:#cfffea;font:400 1rem/1.15 Silkscreen,monospace}
+.arrival-menu nav{display:flex;flex-wrap:wrap;gap:.45rem .85rem}.arrival-menu nav a{color:#c5ecff;text-underline-offset:.2em;font:600 1rem/1.5 var(--studio-font,system-ui)}
+.world-drawer{background:#101f37;border-block:2px solid #5b8096}.world-drawer>summary{cursor:pointer;color:#ffe6a9;padding:1rem clamp(1rem,4vw,4rem);font:400 1.15rem/1.45 Silkscreen,monospace}
+@media(min-width:901px){.arrival .world-toolbar{padding-inline:.6rem}.world-home .arrival .world-toolbar .sky-controls>button{font-size:.85rem}}
+@media(max-width:900px){.world-home .arrival{grid-template-columns:minmax(0,1fr)}.world-home .arrival .hero{height:clamp(37rem,78vh,49rem)}.world-home .arrival .hero-content{padding:1.25rem;text-align:left}.world-home .arrival .hero-actions{justify-content:flex-start}.world-home .arrival .hero-location{justify-content:flex-start}.portals img{aspect-ratio:3.3}.arrival-menu nav{row-gap:.65rem}}
+.world-home .arrival .hero-content{text-align:center}.world-home .arrival .hero-description{margin:.75rem auto}.world-home .arrival .hero-actions,.world-home .arrival .hero-location{justify-content:center}.arrival-menu h2,.portals span{text-align:center}.arrival-menu nav{justify-content:center}.portals span{display:grid;place-items:center;min-height:2.6rem;padding-inline:.35rem}.world-home .weather-choices button{align-content:center;justify-items:center}.world-home .arrival .world-toolbar .sky-controls>button{display:flex;align-items:center;justify-content:center;text-align:center;gap:.3em}

@@ -46,6 +46,11 @@ export const SEARCH_INDEX = [
   { id: 'prism-breaker', title: 'Prism Breaker', subtitle: 'Game · Brick breaker', target: 'arcade/?game=breaker', kind: TARGET_KIND.PAGE },
   { id: 'star-patrol', title: 'Star Patrol', subtitle: 'Game · Space shooter', target: 'arcade/?game=space', kind: TARGET_KIND.PAGE },
   { id: 'gridworks', title: 'Gridworks', subtitle: 'Page · Infrastructure simulator', target: 'gridworks/', kind: TARGET_KIND.PAGE },
+  { id: 'watch', title: 'Video player', subtitle: 'Page · IMON World', target: 'watch/', kind: TARGET_KIND.PAGE },
+  { id: 'exam', title: 'Practical exams', subtitle: 'Page · IMON World', target: 'exams/', kind: TARGET_KIND.PAGE },
+  { id: 'brain', title: 'Word and brain games', subtitle: 'Page · IMON World', target: 'arcade/puzzles/', kind: TARGET_KIND.PAGE },
+  { id: 'book', title: 'Visitor field guide', subtitle: 'Page · IMON World', target: 'guide/', kind: TARGET_KIND.PAGE },
+  { id: 'sounds', title: 'Field recordings', subtitle: 'Page · IMON World', target: 'sounds/', kind: TARGET_KIND.PAGE },
   { id: 'tools', title: 'Toolbox', subtitle: 'Page · Developer tools', target: 'tools/', kind: TARGET_KIND.PAGE },
   { id: 'login', title: 'Sign in', subtitle: 'Page · Account', target: 'login.html', kind: TARGET_KIND.PAGE },
 

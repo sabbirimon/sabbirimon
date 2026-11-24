@@ -12,13 +12,13 @@
 <h1>Video player</h1>
 <form id="choose"><label for="video-url">YouTube or Bilibili video link</label>
 <div class="controls"><input id="video-url" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Paste a video URL or BV number" required aria-describedby="notice">
-<button type="submit">Load player</button></div>
+<button type="submit">Load player</button><button type="button" id="enqueue">Add to playlist</button></div>
 <p id="notice">Loading connects to the video provider. Use its play button to start watching.</p></form>
 <p id="status" role="status"></p>
-<div id="screen"><div id="cover"><span>Choose a video to watch</span></div></div>
+<div class="watch-layout" id="room"><div class="view"><div class="view-controls"><button type="button" id="wide" aria-pressed="false">Theater mode</button><button type="button" id="full">Full window</button></div><div id="screen"><div id="cover"><span>Choose a video to watch</span></div></div>
 <div id="actions" hidden><a id="external" target="_blank" rel="noopener">Watch on provider ↗</a><button type="button" id="close">Close player</button></div>
 <p id="fallback" hidden>If the provider restricts embedded playback, use the link above to open the video in a new tab.</p>
-<details><summary>Supported video links</summary><p>YouTube watch, share, Shorts, live and embed links. Bilibili BV or av links and IDs, multipart videos and episode links. For a b23.tv short link, copy the full video address after opening it on Bilibili.</p></details>
+</div><aside class="watch-side"><h2>Playlist</h2><ol id="queue"></ol><p id="empty">Add a video link to keep it in this browser.</p><h2>Recommended</h2><div id="picks"></div></aside></div><details><summary>Supported video links</summary><p>YouTube watch, share, Shorts, live and embed links. Bilibili BV or av links and IDs, multipart videos and episode links. For a b23.tv short link, copy the full video address after opening it on Bilibili.</p></details>
 <noscript><p>Enable JavaScript to load the embedded player.</p></noscript>
 <footer><a href="../guide/">Visitor guide</a> · <a href="../privacy.html">Privacy</a></footer>
 </main></body></html>

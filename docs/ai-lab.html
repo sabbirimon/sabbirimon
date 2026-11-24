@@ -66,7 +66,7 @@
 <link rel="stylesheet" href="studio.css">
 <script type="module" src="mastery.js"></script><script type="module" src="course-quiz.js"></script>
 <link rel="stylesheet" href="quests.css"><script type="module" src="quests.js" data-quest-page="ai"></script>
-<link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="ai"></script></head>
+<link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="ai"></script><link rel="stylesheet" href="study-nav.css"></head>
 <body class="lab-page ai-lab-page">
 <a class="lab-skip" href="#ai-lab-work">Skip to the workbench</a>
 
@@ -103,7 +103,7 @@
       <h1 class="lab-title" id="ai-lab-title" data-ai-title>Loading the course</h1>
       <p class="lab-lead" data-ai-brief>The course is being loaded. If it does not appear, the JSON file could not be read.</p>
 
-      <aside hidden data-published-content aria-label="Course update"></aside><div class="study-actions"><a class="workbench-link" href="#ai-lab-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button><a class="workbench-link" href="progress.html">My progress</a></div>
+      <aside hidden data-published-content aria-label="Course update"></aside><nav class="track-switch" aria-label="Learning tracks"><a href="lab.html">Code</a><a href="ai-lab.html" aria-current="page">AI</a><a href="circuits.html">Circuits</a><a href="systems.html">Systems</a><a href="exams/?track=ai">Practical exam →</a></nav><div class="study-actions"><a class="workbench-link" href="#ai-lab-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button><a class="workbench-link" href="progress.html">My progress</a></div>
       <section class="mastery" data-mastery="ai" hidden><strong aria-live="polite"></strong><p></p><a></a></section>
       <div data-practice-guide hidden><p data-case-example></p><details><summary>Hint</summary><p data-case-hint></p></details><details><summary>Show worked answer</summary><pre class="lab-learn-code"><code data-case-answer></code></pre></details><small>Practice cases adapted from Exercism · <a href="data/exercism-license.txt">MIT license</a></small></div>
       <details class="lab-example"><summary>Worked example</summary><p><code>print(2 * 3)</code></p><p>Try this in a Python exercise. Predict the output, press Run, then change one number and run it again.</p></details>
