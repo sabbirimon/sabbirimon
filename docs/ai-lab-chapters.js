@@ -23,7 +23,8 @@ export const AI_COURSE = {
     'AI safety',
     'System design',
     'Working with APIs',
-    'Working with data'
+    'Working with data',
+    'Python practice studio'
   ],
   outcome: 'You can write the small pieces that hold an AI system together: the scoring, the caching, the limits and the guards.'
 };
@@ -33,6 +34,15 @@ export const AI_COURSE = {
  * exercises.
  */
 export const CHAPTERS = {
+  'Python practice studio': {
+    goal: 'Turn a small problem into a Python function and test it on several inputs.',
+    material: [
+      {title:'Return a value', body:'Define solve with the parameters shown in the editor. Return the result from the function. To see it in the console, call the function inside print.', code:'def solve(number):\n    return number * 2\n\nprint(solve(3))'},
+      {title:'Try the boundary', body:'Check an ordinary input, a limit and an input just beyond it. Predict each result before you run the example.', code:'print(solve(0))\nprint(solve(1))'}
+    ],
+    exam:'Check answer runs your function against the exercise’s local cases. A mismatch shows the input and expected value. Read the hint or reveal the worked answer to compare approaches.',
+    outcome:'You can trace a failing case, revise a function, and explain why it handles the edge cases.'
+  },
   'Python for models': {
     goal: 'Write the small Python functions that sit under a model — tokenising, scoring, comparing and limiting.',
     material: [

@@ -438,8 +438,8 @@ export const CHAPTERS = {
       },
       {
         title: 'Further reading',
-        body: 'The w3schools JavaScript quiz covers the same ground. Every question on this page was written for IMON.world; only the topic list was inspired by it.',
-        code: 'https://www.w3schools.com/js/js_quiz.asp'
+        body: 'Use the JavaScript quiz in this workbench to review values, functions and control flow. Each answer includes an explanation.',
+        code: 'const doubled = [2, 3].map(n => n * 2);'
       }
     ],
     exam: 'You pick one of four answers. A wrong answer shows you the right one and the reason, and you can try again. You earn XP the first time you get a question right.',

@@ -1,5 +1,13 @@
+import {scheduleProgressSync} from './auth.js';
 // Each course keeps its own question bank and personal best on this device.
 const banks={
+  systems:[
+    ['How many usable hosts fit in a conventional IPv4 /27 broadcast subnet?',['30','32','64'],0,'Five host bits give 32 addresses. The network and broadcast use two.'],
+    ['Which unit measures compute use over time?',['GiB','Instance-hours','Hertz'],1,'Multiply running instances by the hours they run.'],
+    ['What does a recovery point objective describe?',['Time to install a patch','Maximum network latency','Tolerable data loss measured in time'],2,'It defines how recent a usable recovery point must be.'],
+    ['Which bit has weight one?',['Most significant bit','Least significant bit','Parity byte'],1,'The least significant bit contributes zero or one to an unsigned integer.'],
+    ['Which observation helps diagnose memory pressure?',['Working set exceeds available RAM','Screen brightness is high','The Ethernet cable is short'],0,'A working set larger than available RAM can cause paging.']
+  ],
   code:[
     ['Which element gives a page its main heading?',['<title>','<h1>','<header>'],1,'The h1 names the main topic in the page content.'],
     ['Which selector styles every element with class notice?',['#notice','notice','.notice'],2,'A dot introduces a CSS class selector.'],
@@ -35,6 +43,7 @@ if(dialog){
     if(index===questions.length){
       let best=score;
       try{best=Math.max(score,Number(localStorage.getItem(storageKey))||0);localStorage.setItem(storageKey,String(best));}catch{}
+      scheduleProgressSync();
       if(!graded)document.dispatchEvent(new CustomEvent('imon:metric',{detail:'quiz_complete'}));
       if(score>=3)document.dispatchEvent(new CustomEvent('imon:quest-find',{detail:'quiz-'+course}));
       question.textContent='Quiz complete';status.textContent='Score '+score+' / '+questions.length+' · Personal best '+best+' / '+questions.length;

@@ -1,5 +1,5 @@
 {
- "source": "Codédex course repositories (html-101 and css-101 are MIT licensed) and the w3schools module demos",
+ "source": "Codédex course repositories (html-101 and css-101 are MIT licensed) and the w3schools module demos and MDN Learning Area table examples (CC0)",
  "license": "MIT",
  "licenseUrl": "https://github.com/codedex-io/html-101/blob/main/LICENSE",
  "repo": "https://github.com/codedex-io",
@@ -1336,7 +1336,8 @@
    ],
    "forbidden": [],
    "source": "w3schools/module/[js]calc with ja/calc.html",
-   "origin": "After the w3schools calculator demo"
+   "origin": "After the w3schools calculator demo",
+   "solution": "function add(a, b) {\n  return a + b;\n}\nconsole.log(add(19, 23));"
   },
   {
    "id": "cx-js-2-dom",
@@ -1357,7 +1358,8 @@
    ],
    "forbidden": [],
    "source": "w3schools/module/[js]recognition browser/recognition.html",
-   "origin": "After the w3schools DOM demo"
+   "origin": "After the w3schools DOM demo",
+   "solution": "document.getElementById(\"greeting\").textContent = \"Hello, world!\";"
   },
   {
    "id": "cx-js-3-event",
@@ -1378,7 +1380,8 @@
    ],
    "forbidden": [],
    "source": "w3schools/module/[js]slide show/index.html",
-   "origin": "After the w3schools slide show demo"
+   "origin": "After the w3schools slide show demo",
+   "solution": "document.getElementById(\"go\").addEventListener(\"click\", () => {\n  console.log(\"clicked\");\n});"
   },
   {
    "id": "cx-js-4-object",
@@ -1400,7 +1403,8 @@
    ],
    "forbidden": [],
    "source": "w3schools/module/[js]create object/Objects.html",
-   "origin": "After the w3schools objects demo"
+   "origin": "After the w3schools objects demo",
+   "solution": "const book = { title: \"River Light\", author: \"J. Ali\" };\nconsole.log(book.title);"
   },
   {
    "id": "cx-js-5-storage",
@@ -1408,7 +1412,7 @@
    "title": "Remember a value",
    "chapter": "JavaScript · The Basics",
    "xp": 35,
-   "brief": "localStorage keeps a value for next time. Save the number 42 under the key `score`, read it back and log it.",
+   "brief": "localStorage keeps a value for next time. Save the number 42 under the key `score`, read it back and log it. In this sandbox the practice store resets each time you run the example.",
    "starter": {
     "html": "",
     "css": "",
@@ -1422,7 +1426,8 @@
    ],
    "forbidden": [],
    "source": "w3schools/module/[jq]localstorage/indexx.html",
-   "origin": "After the w3schools localStorage demo"
+   "origin": "After the w3schools localStorage demo",
+   "solution": "localStorage.setItem(\"score\", \"42\");\nconsole.log(localStorage.getItem(\"score\"));"
   },
   {
    "id": "cx-js-6-format",
@@ -1446,7 +1451,70 @@
     "eval"
    ],
    "source": "w3schools/module/[js]price format text field/index.html",
-   "origin": "After the w3schools price formatter demo"
+   "origin": "After the w3schools price formatter demo",
+   "solution": "function formatPrice(number) {\n  return String(number).replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\n}\nconsole.log(formatPrice(1234567));"
+  },
+  {
+   "id": "mdn-spending-caption",
+   "title": "Name a spending table",
+   "brief": "Give the spending table a caption that tells a reader what the figures describe.",
+   "language": "html",
+   "chapter": "HTML · Structure",
+   "xp": 25,
+   "requirements": [
+    "caption"
+   ],
+   "starter": {
+    "html": "<table>\n        <!-- Describe the table here -->\n        <thead>\n          <tr>\n            <th>Purchase</th>\n            <th>Location</th>\n            <th>Date</th>\n            <th>Evaluation</th>\n            <th>Cost (€)</th>\n          </tr>\n        </thead>\n        <tfoot>\n          <tr>\n            <td colspan=\"4\">SUM</td>\n            <td>118</td>\n          </tr>\n        </tfoot>\n        <tbody>\n          <tr>\n            <td>Haircut</td>\n            <td>Hairdresser</td>\n            <td>12/09</td>\n            <td>Great idea</td>\n            <td>30</td>\n          </tr>\n          <tr>\n            <td>Lasagna</td>\n            <td>Restaurant</td>\n            <td>12/09</td>\n            <td>Regrets</td>\n            <td>18</td>\n          </tr>\n          <tr>\n            <td>Shoes</td>\n            <td>Shoeshop</td>\n            <td>13/09</td>\n            <td>Big regrets</td>\n            <td>65</td>\n          </tr>\n          <tr>\n            <td>Toothpaste</td>\n            <td>Supermarket</td>\n            <td>13/09</td>\n            <td>Good</td>\n            <td>5</td>\n          </tr>\n        </tbody>\n    </table>",
+    "css": "body { color: #17202b; background: #fafafa; }\nhtml {\n  font-family: sans-serif;\n}\n\ntable {\n  border-collapse: collapse;\n  border: 2px solid rgb(200,200,200);\n  letter-spacing: 1px;\n  font-size: 0.8rem;\n}\n\ntd, th {\n  border: 1px solid rgb(190,190,190);\n  padding: 10px 20px;\n}\n\nth {\n  background-color: rgb(235,235,235);\n}\n\ntd {\n  text-align: center;\n}\n\ntr:nth-child(even) td {\n  background-color: rgb(250,250,250);\n}\n\ntr:nth-child(odd) td {\n  background-color: rgb(245,245,245);\n}\n\ncaption {\n  padding: 10px;\n}\n",
+    "js": ""
+   },
+   "solution": "<table>\n        <caption>How I chose to spend my money</caption>\n        <thead>\n          <tr>\n            <th>Purchase</th>\n            <th>Location</th>\n            <th>Date</th>\n            <th>Evaluation</th>\n            <th>Cost (€)</th>\n          </tr>\n        </thead>\n        <tfoot>\n          <tr>\n            <td colspan=\"4\">SUM</td>\n            <td>118</td>\n          </tr>\n        </tfoot>\n        <tbody>\n          <tr>\n            <td>Haircut</td>\n            <td>Hairdresser</td>\n            <td>12/09</td>\n            <td>Great idea</td>\n            <td>30</td>\n          </tr>\n          <tr>\n            <td>Lasagna</td>\n            <td>Restaurant</td>\n            <td>12/09</td>\n            <td>Regrets</td>\n            <td>18</td>\n          </tr>\n          <tr>\n            <td>Shoes</td>\n            <td>Shoeshop</td>\n            <td>13/09</td>\n            <td>Big regrets</td>\n            <td>65</td>\n          </tr>\n          <tr>\n            <td>Toothpaste</td>\n            <td>Supermarket</td>\n            <td>13/09</td>\n            <td>Good</td>\n            <td>5</td>\n          </tr>\n        </tbody>\n    </table>",
+   "source": "https://github.com/mdn/learning-area/blob/21973263ba859ff3477919087b488157f9d618a6/html/tables/advanced/spending-record-finished.html",
+   "origin": "MDN Learning Area (CC0 1.0)"
+  },
+  {
+   "id": "mdn-spending-headers",
+   "title": "Identify column headings",
+   "brief": "Change the five cells naming the columns from data cells to header cells.",
+   "language": "html",
+   "chapter": "HTML · Structure",
+   "xp": 25,
+   "requirements": [
+    "th"
+   ],
+   "starter": {
+    "html": "<table>\n        <caption>How I chose to spend my money</caption>\n        <thead>\n          <tr>\n            <td>Purchase</td>\n            <td>Location</td>\n            <td>Date</td>\n            <td>Evaluation</td>\n            <td>Cost (€)</td>\n          </tr>\n        </thead>\n        <tfoot>\n          <tr>\n            <td colspan=\"4\">SUM</td>\n            <td>118</td>\n          </tr>\n        </tfoot>\n        <tbody>\n          <tr>\n            <td>Haircut</td>\n            <td>Hairdresser</td>\n            <td>12/09</td>\n            <td>Great idea</td>\n            <td>30</td>\n          </tr>\n          <tr>\n            <td>Lasagna</td>\n            <td>Restaurant</td>\n            <td>12/09</td>\n            <td>Regrets</td>\n            <td>18</td>\n          </tr>\n          <tr>\n            <td>Shoes</td>\n            <td>Shoeshop</td>\n            <td>13/09</td>\n            <td>Big regrets</td>\n            <td>65</td>\n          </tr>\n          <tr>\n            <td>Toothpaste</td>\n            <td>Supermarket</td>\n            <td>13/09</td>\n            <td>Good</td>\n            <td>5</td>\n          </tr>\n        </tbody>\n    </table>",
+    "css": "body { color: #17202b; background: #fafafa; }\nhtml {\n  font-family: sans-serif;\n}\n\ntable {\n  border-collapse: collapse;\n  border: 2px solid rgb(200,200,200);\n  letter-spacing: 1px;\n  font-size: 0.8rem;\n}\n\ntd, th {\n  border: 1px solid rgb(190,190,190);\n  padding: 10px 20px;\n}\n\nth {\n  background-color: rgb(235,235,235);\n}\n\ntd {\n  text-align: center;\n}\n\ntr:nth-child(even) td {\n  background-color: rgb(250,250,250);\n}\n\ntr:nth-child(odd) td {\n  background-color: rgb(245,245,245);\n}\n\ncaption {\n  padding: 10px;\n}\n",
+    "js": ""
+   },
+   "solution": "<table>\n        <caption>How I chose to spend my money</caption>\n        <thead>\n          <tr>\n            <th>Purchase</th>\n            <th>Location</th>\n            <th>Date</th>\n            <th>Evaluation</th>\n            <th>Cost (€)</th>\n          </tr>\n        </thead>\n        <tfoot>\n          <tr>\n            <td colspan=\"4\">SUM</td>\n            <td>118</td>\n          </tr>\n        </tfoot>\n        <tbody>\n          <tr>\n            <td>Haircut</td>\n            <td>Hairdresser</td>\n            <td>12/09</td>\n            <td>Great idea</td>\n            <td>30</td>\n          </tr>\n          <tr>\n            <td>Lasagna</td>\n            <td>Restaurant</td>\n            <td>12/09</td>\n            <td>Regrets</td>\n            <td>18</td>\n          </tr>\n          <tr>\n            <td>Shoes</td>\n            <td>Shoeshop</td>\n            <td>13/09</td>\n            <td>Big regrets</td>\n            <td>65</td>\n          </tr>\n          <tr>\n            <td>Toothpaste</td>\n            <td>Supermarket</td>\n            <td>13/09</td>\n            <td>Good</td>\n            <td>5</td>\n          </tr>\n        </tbody>\n    </table>",
+   "source": "https://github.com/mdn/learning-area/blob/21973263ba859ff3477919087b488157f9d618a6/html/tables/advanced/spending-record-finished.html",
+   "origin": "MDN Learning Area (CC0 1.0)"
+  },
+  {
+   "id": "mdn-spending-sections",
+   "title": "Group the rows",
+   "brief": "Wrap the column headings in thead, the purchase rows in tbody, and the total row in tfoot.",
+   "language": "html",
+   "chapter": "HTML · Structure",
+   "xp": 25,
+   "requirements": [
+    "thead",
+    "tbody",
+    "tfoot"
+   ],
+   "starter": {
+    "html": "<table>\n        <caption>How I chose to spend my money</caption>\n        \n          <tr>\n            <th>Purchase</th>\n            <th>Location</th>\n            <th>Date</th>\n            <th>Evaluation</th>\n            <th>Cost (€)</th>\n          </tr>\n        \n        \n          <tr>\n            <td colspan=\"4\">SUM</td>\n            <td>118</td>\n          </tr>\n        \n        \n          <tr>\n            <td>Haircut</td>\n            <td>Hairdresser</td>\n            <td>12/09</td>\n            <td>Great idea</td>\n            <td>30</td>\n          </tr>\n          <tr>\n            <td>Lasagna</td>\n            <td>Restaurant</td>\n            <td>12/09</td>\n            <td>Regrets</td>\n            <td>18</td>\n          </tr>\n          <tr>\n            <td>Shoes</td>\n            <td>Shoeshop</td>\n            <td>13/09</td>\n            <td>Big regrets</td>\n            <td>65</td>\n          </tr>\n          <tr>\n            <td>Toothpaste</td>\n            <td>Supermarket</td>\n            <td>13/09</td>\n            <td>Good</td>\n            <td>5</td>\n          </tr>\n        \n    </table>",
+    "css": "body { color: #17202b; background: #fafafa; }\nhtml {\n  font-family: sans-serif;\n}\n\ntable {\n  border-collapse: collapse;\n  border: 2px solid rgb(200,200,200);\n  letter-spacing: 1px;\n  font-size: 0.8rem;\n}\n\ntd, th {\n  border: 1px solid rgb(190,190,190);\n  padding: 10px 20px;\n}\n\nth {\n  background-color: rgb(235,235,235);\n}\n\ntd {\n  text-align: center;\n}\n\ntr:nth-child(even) td {\n  background-color: rgb(250,250,250);\n}\n\ntr:nth-child(odd) td {\n  background-color: rgb(245,245,245);\n}\n\ncaption {\n  padding: 10px;\n}\n",
+    "js": ""
+   },
+   "solution": "<table>\n        <caption>How I chose to spend my money</caption>\n        <thead>\n          <tr>\n            <th>Purchase</th>\n            <th>Location</th>\n            <th>Date</th>\n            <th>Evaluation</th>\n            <th>Cost (€)</th>\n          </tr>\n        </thead>\n        <tfoot>\n          <tr>\n            <td colspan=\"4\">SUM</td>\n            <td>118</td>\n          </tr>\n        </tfoot>\n        <tbody>\n          <tr>\n            <td>Haircut</td>\n            <td>Hairdresser</td>\n            <td>12/09</td>\n            <td>Great idea</td>\n            <td>30</td>\n          </tr>\n          <tr>\n            <td>Lasagna</td>\n            <td>Restaurant</td>\n            <td>12/09</td>\n            <td>Regrets</td>\n            <td>18</td>\n          </tr>\n          <tr>\n            <td>Shoes</td>\n            <td>Shoeshop</td>\n            <td>13/09</td>\n            <td>Big regrets</td>\n            <td>65</td>\n          </tr>\n          <tr>\n            <td>Toothpaste</td>\n            <td>Supermarket</td>\n            <td>13/09</td>\n            <td>Good</td>\n            <td>5</td>\n          </tr>\n        </tbody>\n    </table>",
+   "source": "https://github.com/mdn/learning-area/blob/21973263ba859ff3477919087b488157f9d618a6/html/tables/advanced/spending-record-finished.html",
+   "origin": "MDN Learning Area (CC0 1.0)"
   }
- ]
+ ],
+ "sourceLicenses": {
+  "mdn/learning-area": "CC0-1.0"
+ }
 }

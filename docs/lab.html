@@ -58,7 +58,7 @@
 <link rel="stylesheet" href="lab.css"><link rel="stylesheet" href="lab-layout.css">
 <script>document.documentElement.classList.remove('no-js');</script>
 <link rel="stylesheet" href="studio.css">
-<script type="module" src="course-quiz.js"></script>
+<script type="module" src="mastery.js"></script><script type="module" src="course-quiz.js"></script>
 <link rel="stylesheet" href="quests.css"><script type="module" src="quests.js" data-quest-page="code"></script>
 <link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="code"></script></head>
 <body class="lab-page">
@@ -97,7 +97,8 @@
       <h1 class="lab-title" id="lab-title" data-lab-title>Your first tag</h1>
       <p class="lab-lead" data-lab-brief></p>
 
-      <aside hidden data-published-content aria-label="Course update"></aside><div class="study-actions"><a class="workbench-link" href="#lab-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button></div>
+      <aside hidden data-published-content aria-label="Course update"></aside><div class="study-actions"><a class="workbench-link" href="#lab-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button><a class="workbench-link" href="progress.html">My progress</a></div>
+      <section class="mastery" data-mastery="code" hidden><strong aria-live="polite"></strong><p></p><a></a></section>
       <details class="lab-example"><summary>Worked example</summary><p><code>&lt;h1&gt;Hello, world!&lt;/h1&gt;</code></p><p data-example-explanation>Try it in the HTML tab, then change the words between the tags and compare the preview.</p></details>
       <details class="study-chapter"><summary>Study this chapter</summary><div class="lab-learn" data-lab-learn></div></details>
       <div class="lab-instructions">
@@ -123,7 +124,7 @@
 
 
     <div class="lab-help">
-      <p>Explore more examples in <a href="https://www.codedex.io/">Codédex</a> and <a href="https://www.w3schools.com/">W3Schools</a>.</p>
+      <p>Browse <a href="courses.html">all exercises</a> or open <a href="progress.html">your learning progress</a>.</p>
       <h2 class="lab-help-title">Help</h2>
       <p data-lab-help-code>If you get stuck, press <strong>Reset</strong> to bring the starting code back, then work through it one step at a time.</p>
       <p data-lab-help-quiz hidden>A wrong answer shows you the right one and the reason, and you can try again. Press <strong>Try again</strong> to have another go.</p>

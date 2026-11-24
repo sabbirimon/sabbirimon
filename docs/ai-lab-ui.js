@@ -1,3 +1,4 @@
+import { scheduleProgressSync } from './auth.js';
 import { playSound } from './audio.js';
 /**
  * The AI lab page controller — the workbench for the AI and system-design
@@ -360,13 +361,16 @@ export function initAiLab(root = document) {
     }
     playSound(result.ok ? 'correct' : 'retry');
     if (result.ok) {
+      const first = !state.solved.has(state.exercise.id);
       state.solved.add(state.exercise.id);
       const progress = mergeAiProgress(readAiProgress(), [state.exercise.id], state.exercises);
       writeAiProgress(progress);
+      scheduleProgressSync();
+      document.dispatchEvent(new Event('imon:lesson-saved'));
       updateXp(progress.xp);
       updateRail();
       updateCounter();
-      print('ok', `+${state.exercise.xp} XP · ${result.message}`);
+      print('ok', first ? `+${state.exercise.xp} XP · ${result.message}` : `Review complete · ${result.message}`);
     } else {
       print('error', result.message);
       if (result.hint) print('warn', 'Hint: ' + result.hint);
@@ -497,6 +501,17 @@ export function initAiLab(root = document) {
     if (editor) editor.value = aiStarterText(next);
     if (title) { title.textContent = next.title; }
     if (brief) brief.textContent = next.brief;
+    const guide = root.querySelector('[data-practice-guide]');
+    if (guide) {
+      guide.hidden = !next.solution;
+      root.querySelector('.lab-example').hidden = Boolean(next.solution);
+      guide.querySelectorAll('details').forEach(panel => { panel.open = false; });
+      if (next.solution) {
+        guide.querySelector('[data-case-example]').textContent = 'Example: ' + next.sample.call + ' → ' + formatValue(next.sample.result, true);
+        guide.querySelector('[data-case-hint]').textContent = next.hint;
+        guide.querySelector('[data-case-answer]').textContent = next.solution;
+      }
+    }
     learn?.render(next.chapter);
     if (hint) hint.textContent = aiEditorHint(next);
     if (kindBadge) { kindBadge.textContent = aiKindLabel(next); }

@@ -1,5 +1,5 @@
 {
-  "source": "Original exercises written for IMON.world",
+  "source": "IMON.world exercises and adapted Exercism practice cases (MIT)",
   "license": "MIT",
   "version": 2,
   "exercises": [
@@ -804,6 +804,690 @@
       "starter": {
         "python": "import sqlite3\n\ndb = sqlite3.connect(\"shop\")\ndb.execute(\"CREATE TABLE orders (id INTEGER, item TEXT, price INTEGER)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (1, 'book', 12)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (2, 'pen', 2)\")\ndb.execute(\"INSERT INTO orders (id, item, price) VALUES (3, 'lamp', 30)\")\n# Ask the database for the total price of every order.\nrows = db.query(\"SELECT SUM(price) AS total FROM orders\")\n\n# Print the total.\n"
       }
+    },
+    {
+      "id": "exercism-twofer-two-fer",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Two for tea",
+      "xp": 25,
+      "brief": "Return \"One for NAME, one for me.\" Substitute \"you\" when name is None. Define solve(name). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(name):\n    pass\n\n# Try an input with Run:\n# print(solve('Alice'))\n"
+      },
+      "hint": "Choose a default before joining the pieces of the sentence.",
+      "solution": "def solve(name):\n    if name == None:\n        name = \"you\"\n    return \"One for \" + name + \", one for me.\"",
+      "cases": [
+        {
+          "id": "1cf3e15a-a3d7-4a87-aeb3-ba1b43bc8dce",
+          "call": "solve(None)",
+          "result": "One for you, one for me."
+        },
+        {
+          "id": "b4c6dbb8-b4fb-42c2-bafd-10785abe7709",
+          "call": "solve('Alice')",
+          "result": "One for Alice, one for me."
+        },
+        {
+          "id": "3549048d-1a6e-4653-9a79-b0bda163e8d5",
+          "call": "solve('Bob')",
+          "result": "One for Bob, one for me."
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/two-fer/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "exercism-leapyear-leap",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Build a leap-year calendar",
+      "xp": 25,
+      "brief": "Return True when a year is divisible by four, except for century years unless also divisible by 400. Define solve(year). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(year):\n    pass\n\n# Try an input with Run:\n# print(solve(1970))\n"
+      },
+      "hint": "Use the remainder operator to check divisibility. Check a century such as 1900 separately.",
+      "solution": "def solve(year):\n    return year % 400 == 0 or (year % 4 == 0 and year % 100 != 0)",
+      "cases": [
+        {
+          "id": "6466b30d-519c-438e-935d-388224ab5223",
+          "call": "solve(2015)",
+          "result": false
+        },
+        {
+          "id": "ac227e82-ee82-4a09-9eb6-4f84331ffdb0",
+          "call": "solve(1970)",
+          "result": false
+        },
+        {
+          "id": "4fe9b84c-8e65-489e-970b-856d60b8b78e",
+          "call": "solve(1996)",
+          "result": true
+        },
+        {
+          "id": "7fc6aed7-e63c-48f5-ae05-5fe182f60a5d",
+          "call": "solve(1960)",
+          "result": true
+        },
+        {
+          "id": "78a7848f-9667-4192-ae53-87b30c9a02dd",
+          "call": "solve(2100)",
+          "result": false
+        },
+        {
+          "id": "9d70f938-537c-40a6-ba19-f50739ce8bac",
+          "call": "solve(1900)",
+          "result": false
+        },
+        {
+          "id": "42ee56ad-d3e6-48f1-8e3f-c84078d916fc",
+          "call": "solve(2000)",
+          "result": true
+        },
+        {
+          "id": "57902c77-6fe9-40de-8302-587b5c27121e",
+          "call": "solve(2400)",
+          "result": true
+        },
+        {
+          "id": "c30331f6-f9f6-4881-ad38-8ca8c12520c1",
+          "call": "solve(1800)",
+          "result": false
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/leap/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "exercism-convert-raindrops",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Translate numbers into rain sounds",
+      "xp": 25,
+      "brief": "Append Pling for a factor of 3, Plang for 5, and Plong for 7, in that order. Return the number as text if none fit. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(number):\n    pass\n\n# Try an input with Run:\n# print(solve(3))\n"
+      },
+      "hint": "Independent if statements let the same number trigger several sounds.",
+      "solution": "def solve(number):\n    sound = \"\"\n    if number % 3 == 0:\n        sound += \"Pling\"\n    if number % 5 == 0:\n        sound += \"Plang\"\n    if number % 7 == 0:\n        sound += \"Plong\"\n    if sound == \"\":\n        return str(number)\n    return sound",
+      "cases": [
+        {
+          "id": "1575d549-e502-46d4-a8e1-6b7bec6123d8",
+          "call": "solve(1)",
+          "result": "1"
+        },
+        {
+          "id": "1f51a9f9-4895-4539-b182-d7b0a5ab2913",
+          "call": "solve(3)",
+          "result": "Pling"
+        },
+        {
+          "id": "2d9bfae5-2b21-4bcd-9629-c8c0e388f3e0",
+          "call": "solve(5)",
+          "result": "Plang"
+        },
+        {
+          "id": "d7e60daa-32ef-4c23-b688-2abff46c4806",
+          "call": "solve(7)",
+          "result": "Plong"
+        },
+        {
+          "id": "6bb4947b-a724-430c-923f-f0dc3d62e56a",
+          "call": "solve(6)",
+          "result": "Pling"
+        },
+        {
+          "id": "ce51e0e8-d9d4-446d-9949-96eac4458c2d",
+          "call": "solve(8)",
+          "result": "8"
+        },
+        {
+          "id": "0dd66175-e3e2-47fc-8750-d01739856671",
+          "call": "solve(9)",
+          "result": "Pling"
+        },
+        {
+          "id": "022c44d3-2182-4471-95d7-c575af225c96",
+          "call": "solve(10)",
+          "result": "Plang"
+        },
+        {
+          "id": "37ab74db-fed3-40ff-b7b9-04acdfea8edf",
+          "call": "solve(14)",
+          "result": "Plong"
+        },
+        {
+          "id": "31f92999-6afb-40ee-9aa4-6d15e3334d0f",
+          "call": "solve(15)",
+          "result": "PlingPlang"
+        },
+        {
+          "id": "ff9bb95d-6361-4602-be2c-653fe5239b54",
+          "call": "solve(21)",
+          "result": "PlingPlong"
+        },
+        {
+          "id": "d2e75317-b72e-40ab-8a64-6734a21dece1",
+          "call": "solve(25)",
+          "result": "Plang"
+        },
+        {
+          "id": "a09c4c58-c662-4e32-97fe-f1501ef7125c",
+          "call": "solve(27)",
+          "result": "Pling"
+        },
+        {
+          "id": "bdf061de-8564-4899-a843-14b48b722789",
+          "call": "solve(35)",
+          "result": "PlangPlong"
+        },
+        {
+          "id": "c4680bee-69ba-439d-99b5-70c5fd1a7a83",
+          "call": "solve(49)",
+          "result": "Plong"
+        },
+        {
+          "id": "17f2bc9a-b65a-4d23-8ccd-266e8c271444",
+          "call": "solve(52)",
+          "result": "52"
+        },
+        {
+          "id": "e46677ed-ff1a-419f-a740-5c713d2830e4",
+          "call": "solve(105)",
+          "result": "PlingPlangPlong"
+        },
+        {
+          "id": "13c6837a-0fcd-4b86-a0eb-20572f7deb0b",
+          "call": "solve(3125)",
+          "result": "Plang"
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/raindrops/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "exercism-squareofsum-difference-of-squares",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Square a running total",
+      "xp": 25,
+      "brief": "Add the integers from one through number and square the final total. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(number):\n    pass\n\n# Try an input with Run:\n# print(solve(5))\n"
+      },
+      "hint": "range stops before its upper bound.",
+      "solution": "def solve(number):\n    total = sum(range(1, number + 1))\n    return total * total",
+      "cases": [
+        {
+          "id": "e46c542b-31fc-4506-bcae-6b62b3268537",
+          "call": "solve(1)",
+          "result": 1
+        },
+        {
+          "id": "9b3f96cb-638d-41ee-99b7-b4f9c0622948",
+          "call": "solve(5)",
+          "result": 225
+        },
+        {
+          "id": "54ba043f-3c35-4d43-86ff-3a41625d5e86",
+          "call": "solve(100)",
+          "result": 25502500
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/difference-of-squares/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "exercism-sumofsquares-difference-of-squares",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Add the square numbers",
+      "xp": 25,
+      "brief": "Square each integer from one through number and add those squares. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(number):\n    pass\n\n# Try an input with Run:\n# print(solve(5))\n"
+      },
+      "hint": "Keep a running sum inside your loop.",
+      "solution": "def solve(number):\n    total = 0\n    for n in range(1, number + 1):\n        total += n * n\n    return total",
+      "cases": [
+        {
+          "id": "01d84507-b03e-4238-9395-dd61d03074b5",
+          "call": "solve(1)",
+          "result": 1
+        },
+        {
+          "id": "c93900cd-8cc2-4ca4-917b-dd3027023499",
+          "call": "solve(5)",
+          "result": 55
+        },
+        {
+          "id": "94807386-73e4-4d9e-8dec-69eb135b19e4",
+          "call": "solve(100)",
+          "result": 338350
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/difference-of-squares/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "exercism-differenceofsquares-difference-of-squares",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Compare two square totals",
+      "xp": 25,
+      "brief": "Subtract the sum of the individual squares from the square of the sum for integers 1 through number. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(number):\n    pass\n\n# Try an input with Run:\n# print(solve(5))\n"
+      },
+      "hint": "Compute the two totals separately before subtracting.",
+      "solution": "def solve(number):\n    total = sum(range(1, number + 1))\n    squares = sum([n*n for n in range(1, number + 1)])\n    return total * total - squares",
+      "cases": [
+        {
+          "id": "44f72ae6-31a7-437f-858d-2c0837adabb6",
+          "call": "solve(1)",
+          "result": 0
+        },
+        {
+          "id": "005cb2bf-a0c8-46f3-ae25-924029f8b00b",
+          "call": "solve(5)",
+          "result": 170
+        },
+        {
+          "id": "b1bf19de-9a16-41c0-a62b-1f02ecc0b036",
+          "call": "solve(100)",
+          "result": 25164150
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/difference-of-squares/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "exercism-ispangram-pangram",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Check alphabet coverage",
+      "xp": 25,
+      "brief": "Return True if the sentence contains every English letter at least once. Ignore case and punctuation. Define solve(sentence). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(sentence):\n    pass\n\n# Try an input with Run:\n# print(solve('abcdefghijklmnopqrstuvwxyz'))\n"
+      },
+      "hint": "Look for each lowercase letter in a normalized copy of the input.",
+      "solution": "def solve(sentence):\n    for letter in \"abcdefghijklmnopqrstuvwxyz\":\n        if letter not in sentence.lower():\n            return False\n    return True",
+      "cases": [
+        {
+          "id": "64f61791-508e-4f5c-83ab-05de042b0149",
+          "call": "solve('')",
+          "result": false
+        },
+        {
+          "id": "74858f80-4a4d-478b-8a5e-c6477e4e4e84",
+          "call": "solve('abcdefghijklmnopqrstuvwxyz')",
+          "result": true
+        },
+        {
+          "id": "61288860-35ca-4abe-ba08-f5df76ecbdcd",
+          "call": "solve('the quick brown fox jumps over the lazy dog')",
+          "result": true
+        },
+        {
+          "id": "6564267d-8ac5-4d29-baf2-e7d2e304a743",
+          "call": "solve('a quick movement of the enemy will jeopardize five gunboats')",
+          "result": false
+        },
+        {
+          "id": "c79af1be-d715-4cdb-a5f2-b2fa3e7e0de0",
+          "call": "solve('five boxing wizards jump quickly at it')",
+          "result": false
+        },
+        {
+          "id": "d835ec38-bc8f-48e4-9e36-eb232427b1df",
+          "call": "solve('the_quick_brown_fox_jumps_over_the_lazy_dog')",
+          "result": true
+        },
+        {
+          "id": "8cc1e080-a178-4494-b4b3-06982c9be2a8",
+          "call": "solve('the 1 quick brown fox jumps over the 2 lazy dogs')",
+          "result": true
+        },
+        {
+          "id": "bed96b1c-ff95-45b8-9731-fdbdcb6ede9a",
+          "call": "solve('7h3 qu1ck brown fox jumps ov3r 7h3 lazy dog')",
+          "result": false
+        },
+        {
+          "id": "938bd5d8-ade5-40e2-a2d9-55a338a01030",
+          "call": "solve('\"Five quacking Zephyrs jolt my wax bed.\"')",
+          "result": true
+        },
+        {
+          "id": "2577bf54-83c8-402d-a64b-a2c0f7bb213a",
+          "call": "solve('the quick brown fox jumps over with lazy FX')",
+          "result": false
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/pangram/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "exercism-isisogram-isogram",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Find repeated letters",
+      "xp": 25,
+      "brief": "Return True when no letter occurs twice. Ignore case, spaces and hyphens. Define solve(phrase). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(phrase):\n    pass\n\n# Try an input with Run:\n# print(solve('isogram'))\n"
+      },
+      "hint": "Track the letters you have seen as you scan the text.",
+      "solution": "def solve(phrase):\n    seen = \"\"\n    for letter in phrase.lower():\n        if letter in \"abcdefghijklmnopqrstuvwxyz\":\n            if letter in seen:\n                return False\n            seen += letter\n    return True",
+      "cases": [
+        {
+          "id": "a0e97d2d-669e-47c7-8134-518a1e2c4555",
+          "call": "solve('')",
+          "result": true
+        },
+        {
+          "id": "9a001b50-f194-4143-bc29-2af5ec1ef652",
+          "call": "solve('isogram')",
+          "result": true
+        },
+        {
+          "id": "8ddb0ca3-276e-4f8b-89da-d95d5bae78a4",
+          "call": "solve('eleven')",
+          "result": false
+        },
+        {
+          "id": "6450b333-cbc2-4b24-a723-0b459b34fe18",
+          "call": "solve('zzyzx')",
+          "result": false
+        },
+        {
+          "id": "a15ff557-dd04-4764-99e7-02cc1a385863",
+          "call": "solve('subdermatoglyphic')",
+          "result": true
+        },
+        {
+          "id": "f1a7f6c7-a42f-4915-91d7-35b2ea11c92e",
+          "call": "solve('Alphabet')",
+          "result": false
+        },
+        {
+          "id": "14a4f3c1-3b47-4695-b645-53d328298942",
+          "call": "solve('alphAbet')",
+          "result": false
+        },
+        {
+          "id": "423b850c-7090-4a8a-b057-97f1cadd7c42",
+          "call": "solve('thumbscrew-japingly')",
+          "result": true
+        },
+        {
+          "id": "93dbeaa0-3c5a-45c2-8b25-428b8eacd4f2",
+          "call": "solve('thumbscrew-jappingly')",
+          "result": false
+        },
+        {
+          "id": "36b30e5c-173f-49c6-a515-93a3e825553f",
+          "call": "solve('six-year-old')",
+          "result": true
+        },
+        {
+          "id": "cdabafa0-c9f4-4c1f-b142-689c6ee17d93",
+          "call": "solve('Emily Jung Schwartzkopf')",
+          "result": true
+        },
+        {
+          "id": "5fc61048-d74e-48fd-bc34-abfc21552d4d",
+          "call": "solve('accentor')",
+          "result": false
+        },
+        {
+          "id": "310ac53d-8932-47bc-bbb4-b2b94f25a83e",
+          "call": "solve('angola')",
+          "result": false
+        },
+        {
+          "id": "0d0b8644-0a1e-4a31-a432-2b3ee270d847",
+          "call": "solve('up-to-date')",
+          "result": false
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/isogram/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "exercism-steps-collatz-conjecture",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Count a number sequence",
+      "xp": 25,
+      "brief": "Start with a positive integer. Halve an even number or triple an odd number and add one. Count the steps to reach one. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(number):\n    pass\n\n# Try an input with Run:\n# print(solve(16))\n"
+      },
+      "hint": "Use a while loop and increase the counter once per transition.",
+      "solution": "def solve(number):\n    steps = 0\n    while number != 1:\n        if number % 2 == 0:\n            number = number // 2\n        else:\n            number = 3 * number + 1\n        steps += 1\n    return steps",
+      "cases": [
+        {
+          "id": "540a3d51-e7a6-47a5-92a3-4ad1838f0bfd",
+          "call": "solve(1)",
+          "result": 0
+        },
+        {
+          "id": "3d76a0a6-ea84-444a-821a-f7857c2c1859",
+          "call": "solve(16)",
+          "result": 4
+        },
+        {
+          "id": "754dea81-123c-429e-b8bc-db20b05a87b9",
+          "call": "solve(12)",
+          "result": 9
+        },
+        {
+          "id": "ecfd0210-6f85-44f6-8280-f65534892ff6",
+          "call": "solve(1000000)",
+          "result": 152
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/collatz-conjecture/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "exercism-value-resistor-color-duo",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Read a resistor color pair",
+      "xp": 25,
+      "brief": "Read the first two bands as decimal digits. In order from 0 to 9 the colors are black, brown, red, orange, yellow, green, blue, violet, grey and white. Define solve(colors). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(colors):\n    pass\n\n# Try an input with Run:\n# print(solve(['blue', 'grey']))\n"
+      },
+      "hint": "The first band gives the tens digit. Additional bands do not affect this reading.",
+      "solution": "def solve(colors):\n    digits = {\"black\":0, \"brown\":1, \"red\":2, \"orange\":3, \"yellow\":4, \"green\":5, \"blue\":6, \"violet\":7, \"grey\":8, \"white\":9}\n    return digits[colors[0]] * 10 + digits[colors[1]]",
+      "cases": [
+        {
+          "id": "ce11995a-5b93-4950-a5e9-93423693b2fc",
+          "call": "solve(['brown', 'black'])",
+          "result": 10
+        },
+        {
+          "id": "7bf82f7a-af23-48ba-a97d-38d59406a920",
+          "call": "solve(['blue', 'grey'])",
+          "result": 68
+        },
+        {
+          "id": "f1886361-fdfd-4693-acf8-46726fe24e0c",
+          "call": "solve(['yellow', 'violet'])",
+          "result": 47
+        },
+        {
+          "id": "b7a6cbd2-ae3c-470a-93eb-56670b305640",
+          "call": "solve(['white', 'red'])",
+          "result": 92
+        },
+        {
+          "id": "77a8293d-2a83-4016-b1af-991acc12b9fe",
+          "call": "solve(['orange', 'orange'])",
+          "result": 33
+        },
+        {
+          "id": "0c4fb44f-db7c-4d03-afa8-054350f156a8",
+          "call": "solve(['green', 'brown', 'orange'])",
+          "result": 51
+        },
+        {
+          "id": "4a8ceec5-0ab4-4904-88a4-daf953a5e818",
+          "call": "solve(['black', 'brown'])",
+          "result": 1
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/resistor-color-duo/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "exercism-score-darts",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Score a target by distance",
+      "xp": 25,
+      "brief": "A dart lands at (x, y). Award 10 points within radius 1, 5 within radius 5, 1 within radius 10, and 0 outside. Boundaries count. Define solve(x, y). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(x, y):\n    pass\n\n# Try an input with Run:\n# print(solve(0, 10))\n"
+      },
+      "hint": "Compare x squared plus y squared against the squared radii.",
+      "solution": "def solve(x, y):\n    distance = x*x + y*y\n    if distance <= 1:\n        return 10\n    if distance <= 25:\n        return 5\n    if distance <= 100:\n        return 1\n    return 0",
+      "cases": [
+        {
+          "id": "9033f731-0a3a-4d9c-b1c0-34a1c8362afb",
+          "call": "solve(-9, 9)",
+          "result": 0
+        },
+        {
+          "id": "4c9f6ff4-c489-45fd-be8a-1fcb08b4d0ba",
+          "call": "solve(0, 10)",
+          "result": 1
+        },
+        {
+          "id": "14378687-ee58-4c9b-a323-b089d5274be8",
+          "call": "solve(-5, 0)",
+          "result": 5
+        },
+        {
+          "id": "849e2e63-85bd-4fed-bc3b-781ae962e2c9",
+          "call": "solve(0, -1)",
+          "result": 10
+        },
+        {
+          "id": "1c5ffd9f-ea66-462f-9f06-a1303de5a226",
+          "call": "solve(0, 0)",
+          "result": 10
+        },
+        {
+          "id": "b65abce3-a679-4550-8115-4b74bda06088",
+          "call": "solve(-0.1, -0.1)",
+          "result": 10
+        },
+        {
+          "id": "66c29c1d-44f5-40cf-9927-e09a1305b399",
+          "call": "solve(0.7, 0.7)",
+          "result": 10
+        },
+        {
+          "id": "d1012f63-c97c-4394-b944-7beb3d0b141a",
+          "call": "solve(0.8, -0.8)",
+          "result": 5
+        },
+        {
+          "id": "ab2b5666-b0b4-49c3-9b27-205e790ed945",
+          "call": "solve(-3.5, 3.5)",
+          "result": 5
+        },
+        {
+          "id": "70f1424e-d690-4860-8caf-9740a52c0161",
+          "call": "solve(-3.6, -3.6)",
+          "result": 1
+        },
+        {
+          "id": "a7dbf8db-419c-4712-8a7f-67602b69b293",
+          "call": "solve(-7.0, 7.0)",
+          "result": 1
+        },
+        {
+          "id": "e0f39315-9f9a-4546-96e4-a9475b885aa7",
+          "call": "solve(7.1, -7.1)",
+          "result": 0
+        },
+        {
+          "id": "045d7d18-d863-4229-818e-b50828c75d19",
+          "call": "solve(0.5, -4)",
+          "result": 5
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/darts/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
+    },
+    {
+      "id": "exercism-isarmstrongnumber-armstrong-numbers",
+      "kind": "python",
+      "chapter": "Python practice studio",
+      "title": "Raise digits to a power",
+      "xp": 25,
+      "brief": "For a nonnegative integer, raise each digit to the number of digits and add the results. Return whether the sum equals the input. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+      "starter": {
+        "python": "def solve(number):\n    pass\n\n# Try an input with Run:\n# print(solve(5))\n"
+      },
+      "hint": "Use the decimal representation to count digits, including the single digit in zero.",
+      "solution": "def solve(number):\n    digits = str(number)\n    total = 0\n    for digit in digits:\n        total += int(digit) ** len(digits)\n    return total == number",
+      "cases": [
+        {
+          "id": "c1ed103c-258d-45b2-be73-d8c6d9580c7b",
+          "call": "solve(0)",
+          "result": true
+        },
+        {
+          "id": "579e8f03-9659-4b85-a1a2-d64350f6b17a",
+          "call": "solve(5)",
+          "result": true
+        },
+        {
+          "id": "2d6db9dc-5bf8-4976-a90b-b2c2b9feba60",
+          "call": "solve(10)",
+          "result": false
+        },
+        {
+          "id": "509c087f-e327-4113-a7d2-26a4e9d18283",
+          "call": "solve(153)",
+          "result": true
+        },
+        {
+          "id": "7154547d-c2ce-468d-b214-4cb953b870cf",
+          "call": "solve(100)",
+          "result": false
+        },
+        {
+          "id": "6bac5b7b-42e9-4ecb-a8b0-4832229aa103",
+          "call": "solve(9474)",
+          "result": true
+        },
+        {
+          "id": "eed4b331-af80-45b5-a80b-19c9ea444b2e",
+          "call": "solve(9475)",
+          "result": false
+        },
+        {
+          "id": "f971ced7-8d68-4758-aea1-d4194900b864",
+          "call": "solve(9926315)",
+          "result": true
+        },
+        {
+          "id": "7ee45d52-5d35-4fbd-b6f1-5c8cd8a67f18",
+          "call": "solve(9926314)",
+          "result": false
+        }
+      ],
+      "source": "https://github.com/exercism/problem-specifications/blob/eef9f3998561d3228d2ae7e6ceb636893fef1f71/exercises/armstrong-numbers/canonical-data.json",
+      "origin": "Exercism (MIT), adapted for IMON.world"
     }
   ]
 }

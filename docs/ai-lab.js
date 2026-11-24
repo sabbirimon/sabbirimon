@@ -356,6 +356,7 @@ export function runPython(source, options = {}) {
     // reported as a plain message rather than crashing the page.
     return { output, error: error?.message || 'This program stopped unexpectedly.' };
   }
+  if (options.capture) return {output, error: null, value: scope.globals[options.capture]};
   return { output, error: null };
 }
 
@@ -810,13 +811,32 @@ function parseAnd(parser, scope, builtins) {
   return left;
 }
 
+// A nested list comprehension is a normal argument. Only a top-level for
+// introduces the single generator argument to the surrounding call.
+function hasGeneratorClause(tokens) {
+  let depth = 0;
+  for (const token of tokens) {
+    if (token.value === 'for' && depth === 0) return true;
+    if (['[','{','('].includes(token.value)) depth++;
+    if ([']','}',')'].includes(token.value)) depth--;
+  }
+  return false;
+}
+
 function parseComparison(parser, scope, builtins) {
   let left = parseAdditive(parser, scope, builtins);
-  while (peek(parser) && ['==', '!=', '<', '>', '<=', '>=', 'in'].includes(peek(parser).value)) {
-    const operator = peek(parser).value;
-    parser.position++;
+  while (peek(parser)) {
+    let operator = peek(parser).value;
+    if (operator === 'not' && parser.tokens[parser.position + 1]?.value === 'in') {
+      operator = 'not in';
+      parser.position += 2;
+    } else if (['==', '!=', '<', '>', '<=', '>=', 'in'].includes(operator)) {
+      parser.position++;
+    } else break;
     const right = parseAdditive(parser, scope, builtins);
-    left = operator === 'in' ? contains(right, left) : compare(left, operator, right);
+    if (operator === 'in') left = contains(right, left);
+    else if (operator === 'not in') left = !contains(right, left);
+    else left = compare(left, operator, right);
   }
   return left;
 }
@@ -978,7 +998,7 @@ function parsePrimary(parser, scope, builtins) {
       // A lone argument that starts with a `for` is a generator expression:
       // `sum(x * x for x in xs)`. It is the only argument, so it can be
       // recognised by looking for the `for` in it.
-      if (parts.length === 1 && parts[0].some(part => part.value === 'for')) {
+      if (parts.length === 1 && hasGeneratorClause(parts[0])) {
         const inner = { tokens: parts[0], position: 0 };
         const valueStart = 0;
         const valueTokens = [];
@@ -1514,6 +1534,16 @@ export function makePythonChecker(entry) {
     if (!source.trim()) {
       return { ok: false, message: 'The Python editor is empty.', hint: 'Write some code and run it to see what happens.' };
     }
+    if (entry.cases?.length) {
+      for (const test of entry.cases) {
+        const result = runPython(source + '\ncase_result = ' + test.call, {capture:'case_result'});
+        const actual = result.value;
+        if (result.error || actual !== test.result) {
+          return { ok: false, message: result.error || test.call + ' returned ' + JSON.stringify(actual) + '. Expected ' + JSON.stringify(test.result) + '.', hint: entry.hint };
+        }
+      }
+      return { ok: true, message: 'Passed all ' + entry.cases.length + ' practice cases.' };
+    }
     const result = runPython(source);
     if (result.error) {
       return { ok: false, message: `Your code stopped: ${result.error}`, hint: 'Read the message and fix the line it points at.' };
@@ -1555,6 +1585,9 @@ export function toAiExercise(entry) {
       python: typeof starter.python === 'string' ? starter.python : '',
       design: typeof starter.design === 'string' ? starter.design : ''
     },
+    solution: entry.solution || '',
+    hint: entry.hint || '',
+    sample: entry.cases?.[0],
     check: kind === 'design' ? makeDesignChecker(entry) : makePythonChecker(entry),
     // The expected output is kept on the exercise, so the brief can show
     // the learner what they are aiming for.

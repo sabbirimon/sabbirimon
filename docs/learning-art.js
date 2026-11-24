@@ -64,7 +64,15 @@ function meadow(g,t) {
     box(g,bx,by,2,2,'#e2ab56');box(g,bx+2,by-(Math.floor(t*5+i)%2),2,2,'#ffe7a3');
   }
 }
-const draw={code,ai,circuits,meadow};
+function systems(g,t){
+  for(let i=0;i<7;i++){
+    const x=42+i*62,y=i%2?63:98;
+    box(g,x,y,18,11,'#123c52');box(g,x+2,y+2,14,5,'#65ddcf');
+    if(i<6){for(let n=0;n<10;n++)box(g,x+18+n*5,y+5+(i%2?1:-1)*n*3,3,2,'#94b7cd');
+      const step=Math.floor(t*4+i)%10;box(g,x+18+step*5,y+5+(i%2?1:-1)*step*3,4,3,'#ffe084');}
+  }
+}
+const draw={code,ai,circuits,meadow,systems};
 const scenes=new Map();
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 let frame=0,last=0,time=0;

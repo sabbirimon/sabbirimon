@@ -152,3 +152,9 @@ The journal at `/quests.html` offers six independent trails. Players can complet
 | Cartridge collector | Arcade cabinet and all three game cartridges | Arcade badge |
 
 The journal uses one local storage key per find. A repeat visit or a second tab can add a new find without replacing an earlier one. Quizzes award their coin at three correct answers out of five. Site metrics count completed badges only when a visitor opts in.
+
+## Learning catalog and data
+
+Run `node scripts/course-catalog.mjs` after changing an exercise or simulator. This updates the linked catalog, the public JSON index and the lesson registry in `scripts/learning-board.sql`. Apply that transaction to the configured Supabase project whenever exercise IDs change. The board ranks only recognized local completions and best quiz scores for enrolled players. Generated aliases keep public rankings separate from account identity.
+
+The Python practice studio uses selected MIT-licensed canonical cases from Exercism. Each imported case retains its UUID and each lesson records the pinned source URL. The HTML table workshop adapts MDN Learning Area CC0 examples. Both license notices ship under `docs/data/`. Systems Lab scenarios are original local numerical and visual models. They use no cloud accounts or paid resources.

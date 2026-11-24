@@ -175,7 +175,7 @@
 <p class="privacy-note">A small note on <code>imon-auth-session-v1</code>: it holds an access and refresh token for your Supabase session. That is standard for any "sign in with Google" site — it is how the site knows you are signed in — but it does mean that key is sensitive. Clearing site data signs you out and removes it.</p>
 
 <h3 class="privacy-subhead">On the server (the Supabase database)</h3>
-<p>Each course quiz also saves its personal best in local storage under its own <code>imon-course-quiz-</code> key. This score stays on this device.</p>
+<p>Each course quiz also saves its personal best in local storage under its own <code>imon-course-quiz-</code> key. Signed-in learners also sync their quiz bests and completed exercise IDs to their private account save. Joining the practice leaderboard publishes a generated alias, completed exercise count, quiz points and total. Your email and individual answers stay off the board. Leave the board to remove your entry.</p>
 <p class="privacy-lede">For signed-in progress, the site uses a Supabase table called <code>progress</code>, which holds a single JSON blob per signed-in account:</p>
 <ul class="privacy-list">
 <li><strong>What it holds:</strong> the same score and progress values listed above, plus your Supabase user ID and the time of the last update. Your name and email come from Google or GitHub via Supabase Auth, which stores them in its own user table.</li>

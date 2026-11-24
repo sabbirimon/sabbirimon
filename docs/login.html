@@ -97,7 +97,7 @@
   </div>
 </main>
 <script type="module">
-import { initAuth, isConfigured, configurationMessage, emailAuth, authOptions, getSession } from './auth.js';
+import { initAuth, isConfigured, configurationMessage, emailAuth, authOptions, getSession, loginReturnTarget } from './auth.js';
 import { initPixelArt } from './pixel-art.js';
 import { initWordmark } from './logo.js';
 // The site name is drawn as pixel art, not typed in a font.
@@ -139,7 +139,7 @@ form.addEventListener('submit',async event=>{
   try {
     const result=await emailAuth(action,email.value.trim(),password.value);
     password.value='';
-    if(result.access_token || action==='update'){location.replace('./');return;}
+    if(result.access_token || action==='update'){location.replace(loginReturnTarget());return;}
     say(action==='signup'?'Check your inbox to confirm your account in this browser.':'If your account is eligible, a recovery link will arrive by email. Open it in this browser.','ok');
   } catch(error) {say(error.message||'The service is unavailable. Try again shortly.','error');}
   finally {submit.disabled=false;}

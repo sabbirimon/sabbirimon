@@ -243,10 +243,10 @@ test('the chapter lists the topics the questions cover',()=>{
  for(const topic of QUIZ_TOPICS) assert.ok(text.includes(topic),`${topic} is not in the study material`);
 });
 
-test('the chapter points at the w3schools quiz as further reading',()=>{
+test('the chapter provides a worked JavaScript example on site',()=>{
  const chapter=CHAPTERS[QUIZ_CHAPTER];
  const text=chapter.material.map(part=>part.code).join(' ');
- assert.ok(text.includes('w3schools.com/js/js_quiz.asp'));
+ assert.ok(text.includes('[2, 3].map('));
 });
 
 /* -- the page ------------------------------------------------------- */

@@ -547,3 +547,13 @@ test('a failed load gives an empty course rather than throwing',async()=>{
   const course = await loadCircuitsCourse(broken, './data/circuits-course.json');
   assert.deepEqual(course.exercises, []);
 });
+
+test('the divider check detects duplicate branches, reversed supplies and incorrect resistances',()=>{
+  const divider=exercises.find(e=>e.id==='circuit-build-divider');
+  const battery={id:'battery',nodeA:1,nodeB:0,value:9};
+  const upper={id:'resistor',nodeA:1,nodeB:2,value:1000};
+  const lower={id:'resistor',nodeA:2,nodeB:0,value:1000};
+  for(const parts of [[battery,upper,lower,upper],[{...battery,nodeA:0,nodeB:1},upper,lower],[battery,upper,{...lower,value:470}]]){
+    assert.equal(divider.check({circuit:{parts}}).ok,false);
+  }
+});

@@ -1,6 +1,6 @@
 {
   "language": "en",
-  "exerciseCount": 202,
+  "exerciseCount": 231,
   "courses": [
     {
       "id": "code",
@@ -762,7 +762,7 @@
           "id": "cx-js-5-storage",
           "title": "Remember a value",
           "chapter": "JavaScript · The Basics",
-          "brief": "localStorage keeps a value for next time. Save the number 42 under the key `score`, read it back and log it.",
+          "brief": "localStorage keeps a value for next time. Save the number 42 under the key `score`, read it back and log it. In this sandbox the practice store resets each time you run the example.",
           "url": "https://imon.com.bd/lab.html?exercise=cx-js-5-storage"
         },
         {
@@ -771,6 +771,27 @@
           "chapter": "JavaScript · The Basics",
           "brief": "Prices read better with thousands separators. Write a function called `formatPrice` that takes a number and returns it with a comma every three digits, then log `formatPrice(1234567)`.",
           "url": "https://imon.com.bd/lab.html?exercise=cx-js-6-format"
+        },
+        {
+          "id": "mdn-spending-caption",
+          "title": "Name a spending table",
+          "chapter": "HTML · Structure",
+          "brief": "Give the spending table a caption that tells a reader what the figures describe.",
+          "url": "https://imon.com.bd/lab.html?exercise=mdn-spending-caption"
+        },
+        {
+          "id": "mdn-spending-headers",
+          "title": "Identify column headings",
+          "chapter": "HTML · Structure",
+          "brief": "Change the five cells naming the columns from data cells to header cells.",
+          "url": "https://imon.com.bd/lab.html?exercise=mdn-spending-headers"
+        },
+        {
+          "id": "mdn-spending-sections",
+          "title": "Group the rows",
+          "chapter": "HTML · Structure",
+          "brief": "Wrap the column headings in thead, the purchase rows in tbody, and the total row in tfoot.",
+          "url": "https://imon.com.bd/lab.html?exercise=mdn-spending-sections"
         }
       ]
     },
@@ -1158,6 +1179,90 @@
           "chapter": "Working with data",
           "brief": "Not every question needs the rows back. Write code that creates a table `orders` with three rows — `(1, 'book', 12)`, `(2, 'pen', 2)` and `(3, 'lamp', 30)` — then asks the database for the total price with a `SUM` and prints it. The answer is 44.",
           "url": "https://imon.com.bd/ai-lab.html?exercise=ai-db-aggregate"
+        },
+        {
+          "id": "exercism-twofer-two-fer",
+          "title": "Two for tea",
+          "chapter": "Python practice studio",
+          "brief": "Return \"One for NAME, one for me.\" Substitute \"you\" when name is None. Define solve(name). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-twofer-two-fer"
+        },
+        {
+          "id": "exercism-leapyear-leap",
+          "title": "Build a leap-year calendar",
+          "chapter": "Python practice studio",
+          "brief": "Return True when a year is divisible by four, except for century years unless also divisible by 400. Define solve(year). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-leapyear-leap"
+        },
+        {
+          "id": "exercism-convert-raindrops",
+          "title": "Translate numbers into rain sounds",
+          "chapter": "Python practice studio",
+          "brief": "Append Pling for a factor of 3, Plang for 5, and Plong for 7, in that order. Return the number as text if none fit. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-convert-raindrops"
+        },
+        {
+          "id": "exercism-squareofsum-difference-of-squares",
+          "title": "Square a running total",
+          "chapter": "Python practice studio",
+          "brief": "Add the integers from one through number and square the final total. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-squareofsum-difference-of-squares"
+        },
+        {
+          "id": "exercism-sumofsquares-difference-of-squares",
+          "title": "Add the square numbers",
+          "chapter": "Python practice studio",
+          "brief": "Square each integer from one through number and add those squares. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-sumofsquares-difference-of-squares"
+        },
+        {
+          "id": "exercism-differenceofsquares-difference-of-squares",
+          "title": "Compare two square totals",
+          "chapter": "Python practice studio",
+          "brief": "Subtract the sum of the individual squares from the square of the sum for integers 1 through number. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-differenceofsquares-difference-of-squares"
+        },
+        {
+          "id": "exercism-ispangram-pangram",
+          "title": "Check alphabet coverage",
+          "chapter": "Python practice studio",
+          "brief": "Return True if the sentence contains every English letter at least once. Ignore case and punctuation. Define solve(sentence). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-ispangram-pangram"
+        },
+        {
+          "id": "exercism-isisogram-isogram",
+          "title": "Find repeated letters",
+          "chapter": "Python practice studio",
+          "brief": "Return True when no letter occurs twice. Ignore case, spaces and hyphens. Define solve(phrase). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-isisogram-isogram"
+        },
+        {
+          "id": "exercism-steps-collatz-conjecture",
+          "title": "Count a number sequence",
+          "chapter": "Python practice studio",
+          "brief": "Start with a positive integer. Halve an even number or triple an odd number and add one. Count the steps to reach one. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-steps-collatz-conjecture"
+        },
+        {
+          "id": "exercism-value-resistor-color-duo",
+          "title": "Read a resistor color pair",
+          "chapter": "Python practice studio",
+          "brief": "Read the first two bands as decimal digits. In order from 0 to 9 the colors are black, brown, red, orange, yellow, green, blue, violet, grey and white. Define solve(colors). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-value-resistor-color-duo"
+        },
+        {
+          "id": "exercism-score-darts",
+          "title": "Score a target by distance",
+          "chapter": "Python practice studio",
+          "brief": "A dart lands at (x, y). Award 10 points within radius 1, 5 within radius 5, 1 within radius 10, and 0 outside. Boundaries count. Define solve(x, y). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-score-darts"
+        },
+        {
+          "id": "exercism-isarmstrongnumber-armstrong-numbers",
+          "title": "Raise digits to a power",
+          "chapter": "Python practice studio",
+          "brief": "For a nonnegative integer, raise each digit to the number of digits and add the results. Return whether the sum equals the input. Define solve(number). Use Run to experiment and Check answer to try the full set of inputs.",
+          "url": "https://imon.com.bd/ai-lab.html?exercise=exercism-isarmstrongnumber-armstrong-numbers"
         }
       ]
     },
@@ -1440,6 +1545,113 @@
           "chapter": "LEDs and light",
           "brief": "Build an LED circuit: a battery across node 1, a resistor from node 1 to node 2, and an LED from node 2 to ground. Run the simulation and read the current through the LED.",
           "url": "https://imon.com.bd/circuits.html?exercise=circuit-build-led"
+        }
+      ]
+    },
+    {
+      "id": "systems",
+      "title": "Systems Lab",
+      "subject": "Networking, cloud usage, device support, defensive security and digital signals",
+      "url": "https://imon.com.bd/systems.html",
+      "quizUrl": "https://imon.com.bd/systems.html#course-quiz",
+      "exercises": [
+        {
+          "id": "network-subnet",
+          "title": "Size an IPv4 subnet",
+          "chapter": "Networking · CCNA foundations",
+          "brief": "A classroom needs fifty host addresses. Move from /24 to /26 and predict how many usable addresses remain in a conventional broadcast subnet.",
+          "url": "https://imon.com.bd/systems.html?exercise=network-subnet"
+        },
+        {
+          "id": "network-switch",
+          "title": "Divide a switch into VLANs",
+          "chapter": "Networking · CCNA foundations",
+          "brief": "A switch has twelve connected access ports. One device broadcasts. Predict the number of other lab ports receiving the frame when eight ports share its VLAN.",
+          "url": "https://imon.com.bd/systems.html?exercise=network-switch"
+        },
+        {
+          "id": "support-memory",
+          "title": "Diagnose memory pressure",
+          "chapter": "Device support · A+ foundations",
+          "brief": "An OS uses 3 GiB and a workload needs 7 GiB. Predict the shortfall with 8 GiB installed. Then increase memory and observe where the shortfall ends.",
+          "url": "https://imon.com.bd/systems.html?exercise=support-memory"
+        },
+        {
+          "id": "support-storage",
+          "title": "Plan a recovery image",
+          "chapter": "Device support · A+ foundations",
+          "brief": "A workstation needs a 12 GiB recovery image. Predict how many whole images fit in 30 GiB, then test the next capacity threshold.",
+          "url": "https://imon.com.bd/systems.html?exercise=support-storage"
+        },
+        {
+          "id": "system-queue",
+          "title": "Drain a worker queue",
+          "chapter": "System design",
+          "brief": "Start a one-second window with 15 queued jobs. Twelve more arrive, and each worker can finish six. Predict the remaining backlog with three workers.",
+          "url": "https://imon.com.bd/systems.html?exercise=system-queue"
+        },
+        {
+          "id": "system-cache",
+          "title": "Measure cache misses",
+          "chapter": "System design",
+          "brief": "Serve 100 independent reads through a cache. Predict the database reads if 85 are cache hits. Assume a single origin read per miss.",
+          "url": "https://imon.com.bd/systems.html?exercise=system-cache"
+        },
+        {
+          "id": "cloud-runtime",
+          "title": "Budget a compute workload",
+          "chapter": "Cloud usage",
+          "brief": "A job runs for six hours. Predict the usage meter for five identical instances, then compare it with a smaller deployment.",
+          "url": "https://imon.com.bd/systems.html?exercise=cloud-runtime"
+        },
+        {
+          "id": "cloud-retention",
+          "title": "Size a backup retention window",
+          "chapter": "Cloud usage",
+          "brief": "A bucket keeps one full 4 GiB backup per day. Predict steady-state storage for seven daily copies, with no deduplication or compression.",
+          "url": "https://imon.com.bd/systems.html?exercise=cloud-retention"
+        },
+        {
+          "id": "defense-updates",
+          "title": "Prioritize an update rollout",
+          "chapter": "Defensive cybersecurity",
+          "brief": "A fleet inventory lists 24 devices needing an approved update. Predict how many still need the update after deployment succeeds on 18.",
+          "url": "https://imon.com.bd/systems.html?exercise=defense-updates"
+        },
+        {
+          "id": "defense-restore",
+          "title": "Test a recovery point objective",
+          "chapter": "Defensive cybersecurity",
+          "brief": "A service writes ten records per hour. Estimate the worst-case records since the last successful snapshot when snapshots are four hours apart.",
+          "url": "https://imon.com.bd/systems.html?exercise=defense-restore"
+        },
+        {
+          "id": "signals-lsb",
+          "title": "Read the least significant bit",
+          "chapter": "Digital signals",
+          "brief": "Read the eight-bit representation of sample 173. Predict the value of its rightmost bit. Compare with 172.",
+          "url": "https://imon.com.bd/systems.html?exercise=signals-lsb"
+        },
+        {
+          "id": "signals-sampling",
+          "title": "Measure samples per cycle",
+          "chapter": "Digital signals",
+          "brief": "Sample a 4 Hz sine wave at 32 Hz. Predict how many equally spaced readings fall within one cycle, then compare the shape at 8 Hz.",
+          "url": "https://imon.com.bd/systems.html?exercise=signals-sampling"
+        },
+        {
+          "id": "model-recall",
+          "title": "Read a classifier result",
+          "chapter": "Model evaluation",
+          "brief": "Twenty samples in a validation set are positive. Predict recall when the classifier finds sixteen. Change the count and inspect the missed examples.",
+          "url": "https://imon.com.bd/systems.html?exercise=model-recall"
+        },
+        {
+          "id": "electronics-divider",
+          "title": "Probe a resistor divider",
+          "chapter": "Electronics",
+          "brief": "A 12 V ideal source drives two resistors in series. The upper resistor is 1 kΩ. Predict the unloaded midpoint voltage with 3 kΩ below the probe.",
+          "url": "https://imon.com.bd/systems.html?exercise=electronics-divider"
         }
       ]
     }

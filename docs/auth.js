@@ -43,6 +43,11 @@ export const LOCAL_PROGRESS_KEYS = [
   'imon-quiz-best-30',
   'imon-dev-slots-v1',
   'imon-gridworks-progress-v1',
+  'imon-systems-v1',
+  'imon-course-quiz-systems',
+  'imon-course-quiz-code',
+  'imon-course-quiz-ai',
+  'imon-course-quiz-circuits',
   'imon-lab-progress-v1',
   'imon-ai-lab-v1',
   'imon-circuits-v1',
@@ -311,6 +316,11 @@ export function consumeEmailFlow() {
  * @returns {Promise<boolean>} false when the provider is unknown or the
  *   module is not configured.
  */
+export function loginReturnTarget() {
+  const page = new URLSearchParams(location.search).get('return') || '';
+  return /^(admin\/(content\/|metrics\/|settings\/)?|progress\.html|leaderboard\.html)$/.test(page) ? page : './';
+}
+
 export async function signIn(provider) {
   if (!isConfigured()) return false;
   if (provider !== 'google' && provider !== 'github') return false;
@@ -324,7 +334,7 @@ export async function signIn(provider) {
     const redirectTo = new URL('auth-callback.html', base.href).href;
     // Remember the page the player came from, so the callback can send
     // them back there instead of always to the home page.
-    try { sessionStorage.setItem('imon-auth-return-page', new URL(new URLSearchParams(location.search).get('return')?.match(/^admin\/(content\/|metrics\/|settings\/)?$/)?.[0] || './',location.href).href); } catch { /* Storage is optional. */ }
+    try { sessionStorage.setItem('imon-auth-return-page', new URL(loginReturnTarget(),location.href).href); } catch { /* Storage is optional. */ }
     const url = new URL(`${AUTH_BASE()}/authorize`);
     url.searchParams.set('provider', provider);
     url.searchParams.set('redirect_to', redirectTo);
@@ -405,6 +415,10 @@ export function mergeProgress(local, cloud) {
   const right = cloud && typeof cloud === 'object' && !Array.isArray(cloud) ? cloud : {};
   for (const key of new Set([...Object.keys(left), ...Object.keys(right)])) {
     result[key] = mergeValue(left[key], right[key]);
+    if (['imon-lab-progress-v1','imon-ai-lab-v1','imon-circuits-v1','imon-systems-v1'].includes(key)
+        && Array.isArray(left[key]?.solved) && Array.isArray(right[key]?.solved)) {
+      result[key].solved = [...new Set([...left[key].solved, ...right[key].solved])];
+    }
   }
   return result;
 }
@@ -522,12 +536,12 @@ export async function syncLocalProgress() {
   const local = readLocalProgress();
   const cloud = await loadProgress();
   if (!cloud || getSession()?.user.id!==session.user.id) return null;
-  const merged = mergeProgress(local, cloud);
+  const merged = mergeProgress(mergeProgress(local, readLocalProgress()), cloud);
   if (!Object.keys(merged).length) return merged;
-  await saveProgress(merged);
+  if (!await saveProgress(merged)) return null;
   if (getSession()?.user.id!==session.user.id) return null;
   try {
-    for (const [key, value] of Object.entries(merged)) {
+    for (const [key, value] of Object.entries(mergeProgress(merged, readLocalProgress()))) {
       if (!LOCAL_PROGRESS_KEYS.includes(key)) continue;
       if (typeof value === 'number') write(key, String(value));
       else if (value && typeof value === 'object') write(key, JSON.stringify(value));

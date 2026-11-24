@@ -1,3 +1,4 @@
+import { scheduleProgressSync } from './auth.js';
 import { playSound } from './audio.js';
 /**
  * The code practice lab — a browser-based playground for HTML, CSS and
@@ -427,7 +428,7 @@ ${html}
  * the parent through `postMessage`, so the lab can print it in its own
  * console without giving the script access to the host page.
  */
-export function buildScriptFrame(js) {
+export function buildScriptFrame(js, html = '', css = '', practiceStorage = false) {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -473,10 +474,13 @@ export function buildScriptFrame(js) {
   send('ready', {});
 })();
 </script>
+<style>body { font: 16px/1.5 system-ui; color: #f5f5fc; background: #0b1026; padding: 1rem; } ${css}</style>
 </head>
 <body>
+${html}
 <script>
 try {
+${practiceStorage ? 'const values = new Map(); const localStorage = {setItem(key, value) {values.set(String(key), String(value));}, getItem(key) {return values.get(String(key)) ?? null;}};' : ''}
 ${String(js || '').split('\n').map(line => '  ' + line).join('\n')}
 } catch (error) {
   console.error(error && error.message ? error.message : String(error));
@@ -650,13 +654,15 @@ export function initLab(root = document) {
   function refreshPreview() {
     if (!previewFrame) return;
     const doc = buildPreviewDocument(state.buffers.html, state.buffers.css);
-    previewFrame.srcdoc = doc;
+    previewFrame.srcdoc = state.exercise.language === 'js'
+      ? buildScriptFrame(state.buffers.js, state.buffers.html, state.buffers.css, state.exercise.id === 'cx-js-5-storage')
+      : doc;
   }
 
   function runScript() {
     if (!scriptFrame) return;
     clearConsole();
-    scriptFrame.srcdoc = buildScriptFrame(state.buffers.js);
+    if (state.exercise.language !== 'js') scriptFrame.srcdoc = buildScriptFrame(state.buffers.js);
   }
 
   function refreshAll() {
@@ -692,6 +698,8 @@ export function initLab(root = document) {
       const progress = mergeLabProgress(readLabProgress(), { solved: [state.exercise.id] });
       progress.xp = earnedXp(progress);
       writeLabProgress(progress);
+      scheduleProgressSync();
+      document.dispatchEvent(new Event('imon:lesson-saved'));
       updateXp(progress.xp);
       updateRail();
       updateCounter();
@@ -898,9 +906,13 @@ export function initLab(root = document) {
     const example = root.querySelector('.lab-example');
     if (example) {
       const note = notesFor(next).find(item => item.example);
-      example.hidden = next.kind === 'quiz' || !note;
+      example.hidden = next.kind === 'quiz' || !(note || next.solution);
       example.open = false;
-      if (note) {
+      if (next.solution) {
+        example.querySelector('summary').textContent = 'Show worked answer';
+        example.querySelector('code').textContent = next.solution;
+        example.querySelector('[data-example-explanation]').textContent = next.language === 'html' ? next.origin + ' · Compare each table section with your markup.' : 'Run the example and compare the preview and console with your answer.';
+      } else if (note) {
         example.querySelector('summary').textContent = 'Worked example · ' + note.title;
         example.querySelector('code').textContent = note.example;
         example.querySelector('[data-example-explanation]').textContent = note.body;
@@ -950,7 +962,7 @@ export function initLab(root = document) {
     const language = event.target?.dataset?.labEditor;
     if (!language) return;
     state.buffers[language] = event.target.value;
-    if (language === 'js') runScript(); else refreshPreview();
+    if (language === 'js') refreshAll(); else refreshPreview();
   };
 
   const onTabClick = event => {
@@ -981,7 +993,8 @@ export function initLab(root = document) {
 
   const onMessage = event => {
     const data = event.data;
-    if (!scriptFrame || event.source !== scriptFrame.contentWindow || !data || data.source !== 'imon-lab') return;
+    const activeFrame = state.exercise.language === 'js' ? previewFrame : scriptFrame;
+    if (!activeFrame || event.source !== activeFrame.contentWindow || !data || data.source !== 'imon-lab') return;
     if (data.kind === 'console') {
       // The sandbox sends `{ source, kind, payload: { level, args, kinds } }`.
       const payload = data.payload || {};

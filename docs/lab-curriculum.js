@@ -143,13 +143,28 @@ export function makeChecker(entry) {
         // never counts as the answer.
         const code = String(source).replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
         const escaped = requirement.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        found = new RegExp('(^|[^\\w.$])' + escaped + '(?![\\w$])', 'i').test(code);
+        found = new RegExp('(^|[^\\w$])' + escaped + '(?![\\w$])', 'i').test(code);
       } else {
         found = hasTag(source, requirement);
       }
       if (!found) missing.push(requirement);
     }
 
+    if (!missing.length && entry.id?.startsWith('mdn-spending-') && typeof document !== 'undefined') {
+      const template = document.createElement('template');
+      template.innerHTML = html;
+      const table = template.content.querySelector('table');
+      const headers = [...(table?.tHead?.rows[0]?.cells || [])];
+      const namedHeaders = ['Purchase', 'Location', 'Date', 'Evaluation', 'Cost (€)'];
+      const hasHeaders = headers.length === namedHeaders.length && headers.every((cell, i) =>
+        cell.tagName === 'TH' && cell.textContent.trim().toLowerCase() === namedHeaders[i].toLowerCase());
+      const completed = {
+        'mdn-spending-caption': Boolean(table?.caption?.textContent.trim()),
+        'mdn-spending-headers': hasHeaders,
+        'mdn-spending-sections': hasHeaders && table.tBodies[0]?.rows.length === 4 && table.tFoot?.rows[0]?.cells[1]?.textContent.trim() === '118'
+      };
+      if (!completed[entry.id]) return {ok:false, message:'The table structure is still incomplete.', hint:entry.brief};
+    }
     if (missing.length) {
       const list = missing.map(item => (language === 'html' ? `<${item}>` : item)).join(', ');
       const plural = missing.length > 1 ? 'are' : 'is';
@@ -188,6 +203,7 @@ export function toExercise(entry) {
       css: typeof starter.css === 'string' ? starter.css : '',
       js: typeof starter.js === 'string' ? starter.js : ''
     },
+    solution: typeof entry.solution === 'string' ? entry.solution : '',
     check: makeChecker(entry),
     // The requirements name the tags, properties and APIs the exercise is
     // about. They drive the notes panel and the documentation lookup, so

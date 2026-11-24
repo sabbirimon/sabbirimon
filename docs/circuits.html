@@ -59,7 +59,7 @@
 <link rel="stylesheet" href="circuits.css">
 <script>document.documentElement.classList.remove('no-js');</script>
 <link rel="stylesheet" href="studio.css">
-<script type="module" src="course-quiz.js"></script>
+<script type="module" src="mastery.js"></script><script type="module" src="course-quiz.js"></script>
 <link rel="stylesheet" href="quests.css"><script type="module" src="quests.js" data-quest-page="circuits"></script>
 <link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="circuits"></script></head>
 <body class="lab-page circuits-page">
@@ -98,7 +98,8 @@
       <h1 class="lab-title" id="circuits-title" data-circuits-title>Loading the course</h1>
       <p class="lab-lead" data-circuits-brief>The course is being loaded. If it does not appear, the JSON file could not be read.</p>
 
-      <aside hidden data-published-content aria-label="Course update"></aside><div class="study-actions"><a class="workbench-link" href="#circuits-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button></div>
+      <aside hidden data-published-content aria-label="Course update"></aside><div class="study-actions"><a class="workbench-link" href="#circuits-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button><a class="workbench-link" href="progress.html">My progress</a></div>
+      <section class="mastery" data-mastery="circuits" hidden><strong aria-live="polite"></strong><p></p><a></a></section>
       <details class="lab-example"><summary>Worked example</summary><p><code>I = V / R = 3 V / 1000 Ω = 3 mA</code></p><p>With a fixed 3 V source, doubling the resistance halves the current. Try comparing two resistor values on the bench.</p></details>
       <details class="study-chapter"><summary>Study this chapter</summary><div class="lab-learn" data-circuits-learn></div></details>
       <div class="lab-instructions">

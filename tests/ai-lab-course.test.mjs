@@ -17,12 +17,12 @@ test('every Python exercise has a reference solution that passes its own checker
   // The reference solutions are the proof that an exercise can actually be
   // solved. If one of them stops working, the exercise is broken — either
   // the brief changed or the interpreter lost a feature.
-  const missing = pythonExercises.filter(entry => !AI_SOLUTIONS[entry.id]);
+  const missing = pythonExercises.filter(entry => !(entry.solution || AI_SOLUTIONS[entry.id]));
   assert.deepEqual(missing.map(entry => entry.id), [], 'these Python exercises have no reference solution');
 
   for (const entry of pythonExercises) {
     const exercise = toAiExercise(entry);
-    const result = exercise.check({ js: AI_SOLUTIONS[entry.id] });
+    const result = exercise.check({ js: entry.solution || AI_SOLUTIONS[entry.id] });
     assert.equal(result.ok, true, `${entry.id}: ${result.message}`);
   }
 });

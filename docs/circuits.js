@@ -1088,7 +1088,13 @@ export function makeBuildChecker(entry) {
         hint: 'Check the nodes each part is connected to, not just the parts you placed.'
       };
     }
-    const extra = built.filter(item => !wanted.includes(item));
+    const remaining = [...wanted];
+    const extra = built.filter(item => {
+      const index = remaining.indexOf(item);
+      if (index < 0) return true;
+      remaining.splice(index,1);
+      return false;
+    });
     if (extra.length) {
       const labels = extra.map(item => item.replace(/\|/g, ' between '));
       return {
@@ -1096,6 +1102,9 @@ export function makeBuildChecker(entry) {
         message: `Not part of the answer: ${labels.join(', ')}.`,
         hint: 'Remove the parts the exercise does not need, or rewire them.'
       };
+    }
+    if (entry.id === 'circuit-build-divider' && circuit.parts.some(p => p.id === 'resistor' && (p.value ?? CIRCUIT_PARTS.resistor.defaults.value) !== 1000)) {
+      return {ok:false, message:'The wiring is correct. Set both resistors to 1 kΩ.', hint:'Select each resistor, enter 1000 Ω, then probe node 2.'};
     }
     return { ok: true, message: 'That is the right topology. The circuit matches.' };
   };
@@ -1113,7 +1122,8 @@ function signature(parts) {
     .map(part => {
       const a = Number(part.nodeA) || 0;
       const b = Number(part.nodeB) || 0;
-      const [low, high] = a <= b ? [a, b] : [b, a];
+      const polarized = ['source','diode'].includes(CIRCUIT_PARTS[part.id].kind);
+      const [low, high] = polarized || a <= b ? [a, b] : [b, a];
       return `${part.id}|${low}|${high}`;
     })
     .sort();

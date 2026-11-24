@@ -1,3 +1,4 @@
+import { scheduleProgressSync } from './auth.js';
 import { playSound } from './audio.js';
 /**
  * The Circuits & Signals page controller — the bench for the electronics
@@ -151,7 +152,8 @@ export function startingCircuit(exercise) {
   const netlist = exercise?.netlist?.parts;
   const parts = [];
   if (Array.isArray(netlist) && netlist.length) {
-    netlist.forEach((part, index) => {
+    const starter = exercise.kind === 'build' ? netlist.filter(part => part.id === 'battery') : netlist;
+    starter.forEach((part, index) => {
       parts.push({
         id: part.id,
         label: part.id.slice(0, 1).toUpperCase() + (index + 1),
@@ -729,9 +731,10 @@ export function initCircuits(root) {
     }
     // The time step is chosen from the circuit itself, so a fast circuit
     // still gets a sensible number of steps.
-    const tau = parts.reduce((sum, part) => sum + (Number(part.value) || 0), 0);
-    const dt = Math.max(1e-6, Math.min(0.001, tau / 400));
-    const result = simulate(circuit, { dt, duration: tau * 0.02 || 0.05, probe: state.probe });
+    const resistance = parts.filter(p => p.id === 'resistor').reduce((sum,p) => sum + p.value,0) || 1000;
+    const times = parts.flatMap(p => p.id === 'capacitor' ? [resistance*p.value] : p.id === 'inductor' ? [p.value/resistance] : []);
+    const duration = times.length ? Math.max(1e-9, Math.max(...times)*5) : 0.05;
+    const result = simulate(circuit, {dt:duration/600, duration, probe:state.probe});
     state.samples = result.samples;
     state.scopeError = result.error;
 
@@ -768,6 +771,8 @@ export function initCircuits(root) {
         state.solved.add(exercise.id);
         state.xp += exercise.xp;
         writeCircuitsProgress({ solved: [...state.solved], xp: state.xp });
+        scheduleProgressSync();
+        document.dispatchEvent(new Event('imon:lesson-saved'));
         updateXp(state.xp);
         updateRail();
         updateCounter();
