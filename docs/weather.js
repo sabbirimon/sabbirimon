@@ -113,7 +113,7 @@ export function initWeather({ onThunder = () => {}, onHailImpact = () => {}, mou
           forks.push([[x,y],[x+side*.018,y+.015],[x+side*.014,y+.032],[x+side*.042,y+.067]]);
         }
       }
-      nextLightning=time+(9500+Math.random()*4000)/Math.min(1.15,Math.sqrt(density));
+      nextLightning=time+Math.max(9000,11500/Math.sqrt(density));
       try{onThunder(.35+distance*2.1);}catch{}
     }
     const age=time-strikeAt;if(age<0||age>430)return;
