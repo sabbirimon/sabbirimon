@@ -8,8 +8,7 @@
  * The project URL and publishable key are public browser configuration.
  * Postgres row-level security limits each authenticated user to their own save.
  */
-const SUPABASE_URL = 'https://zscjhwxeshnbslvqmpui.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_dLIZWZOH-3J949i_eVW1Ag_h7FOFTTc';
+import {SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY} from './site-services.js';
 
 /* ── Supabase REST endpoints ───────────────────────────────────────────── */
 const AUTH_BASE = () => `${SUPABASE_URL}/auth/v1`;
@@ -240,7 +239,7 @@ function emitAuthChange(session) {
 }
 
 // Re-read inside the lock because another tab can rotate the refresh token.
-async function currentSession() {
+export async function currentSession() {
   const fresh = session => session && session.expires_at > Date.now()/1000 + 45;
   const previous = getSession();
   if (!previous || fresh(previous)) return previous;
@@ -325,7 +324,7 @@ export async function signIn(provider) {
     const redirectTo = new URL('auth-callback.html', base.href).href;
     // Remember the page the player came from, so the callback can send
     // them back there instead of always to the home page.
-    try { sessionStorage.setItem('imon-auth-return-page', new URL('./',location.href).href); } catch { /* Storage is optional. */ }
+    try { sessionStorage.setItem('imon-auth-return-page', new URL(new URLSearchParams(location.search).get('return')?.match(/^admin\/(content\/|metrics\/|settings\/)?$/)?.[0] || './',location.href).href); } catch { /* Storage is optional. */ }
     const url = new URL(`${AUTH_BASE()}/authorize`);
     url.searchParams.set('provider', provider);
     url.searchParams.set('redirect_to', redirectTo);

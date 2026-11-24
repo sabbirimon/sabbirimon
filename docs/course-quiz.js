@@ -35,6 +35,8 @@ if(dialog){
     if(index===questions.length){
       let best=score;
       try{best=Math.max(score,Number(localStorage.getItem(storageKey))||0);localStorage.setItem(storageKey,String(best));}catch{}
+      if(!graded)document.dispatchEvent(new CustomEvent('imon:metric',{detail:'quiz_complete'}));
+      if(score>=3)document.dispatchEvent(new CustomEvent('imon:quest-find',{detail:'quiz-'+course}));
       question.textContent='Quiz complete';status.textContent='Score '+score+' / '+questions.length+' · Personal best '+best+' / '+questions.length;
       action.textContent='Try again';action.disabled=false;return;
     }

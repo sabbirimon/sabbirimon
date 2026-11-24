@@ -16,10 +16,11 @@
  * geolocation is persisted. IP lookup may be unavailable because of CORS,
  * blocking, or provider limits.
  */
+import {choices} from './site-choices.js';
 const CACHE_KEY = 'imon-local-weather-v1';
 const CACHE_TTL = 30 * 60 * 1000;
 const REQUEST_TIMEOUT = 8000;
-const WEATHER_TYPES = new Set(['clear','cloudy','fog','drizzle','rain','heavy-rain','light-snow','snow','heavy-snow','storm']);
+const WEATHER_TYPES = new Set(['clear','cloudy','fog','drizzle','rain','heavy-rain','light-snow','snow','heavy-snow','storm','hail']);
 const WMO_LABELS = {
   0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
   45: 'Fog', 48: 'Freezing fog', 51: 'Light drizzle', 53: 'Drizzle', 55: 'Dense drizzle',
@@ -35,8 +36,8 @@ const WMO_LABELS = {
 // but it now answers API requests with a Cloudflare challenge page (HTTP 403
 // without CORS headers), so freeipapi.com carries the lookup when it fails.
 const IP_PROVIDERS = [
-  { url: 'https://ipapi.co/json/', pick: data => ({ latitude: data.latitude, longitude: data.longitude, city: data.city || data.region }) },
-  { url: 'https://freeipapi.com/api/json', pick: data => ({ latitude: data.latitude, longitude: data.longitude, city: data.cityName || data.regionName }) }
+  { url: 'https://ipapi.co/json/', pick: data => ({ latitude: data.latitude, longitude: data.longitude, countryCode:data.country_code, city: data.city || data.region }) },
+  { url: 'https://freeipapi.com/api/json', pick: data => ({ latitude: data.latitude, longitude: data.longitude, countryCode:data.countryCode, city: data.cityName || data.regionName }) }
 ];
 export const IP_PROVIDER_URLS = IP_PROVIDERS.map(provider => provider.url);
 export const pickIpPlace = (index, data) => IP_PROVIDERS[index].pick(data);
@@ -143,11 +144,12 @@ export async function initLocalContext({ onPhase, onWeather, onLocation, onClock
         continue;
       }
       const city = typeof place.city === 'string' && place.city.trim() ? place.city.trim() : 'Approximate area';
-      return { latitude: place.latitude, longitude: place.longitude, city };
+      return { latitude: place.latitude, longitude: place.longitude, city, countryCode:/^[A-Z]{2}$/.test(place.countryCode)?place.countryCode:'' };
     }
     throw lastError || new Error('Provider unavailable');
   }
   function applyWeather(data, status, source) {
+    if(data.countryCode)document.dispatchEvent(new CustomEvent('imon:country',{detail:data.countryCode}));
     lastCity = data.city; lastSource = source;
     emit(onLocation, { city: data.city, source, status: 'ready', weatherStatus: status });
     emit(onWeather, data.weather, metadata(data, status));
@@ -158,19 +160,20 @@ export async function initLocalContext({ onPhase, onWeather, onLocation, onClock
     emit(onLocation, { city, source, status: city ? 'ready' : 'unavailable', weatherStatus: 'unavailable' });
     emit(onWeather, 'clear', { status: 'unavailable', code: null, description: 'Weather unavailable', updatedAt: null });
   }
-  async function loadWeather(coords, city, source, id) {
+  async function loadWeather(coords, city, source, id, countryCode='') {
     const params = new URLSearchParams({ latitude: String(coords.latitude), longitude: String(coords.longitude), current: 'weather_code,is_day', daily: 'sunrise,sunset', timezone: 'auto', forecast_days: '1' });
     const result = await fetchJson(`https://api.open-meteo.com/v1/forecast?${params}`);
     if (stopped || id !== requestId) return { status: 'cancelled' };
     const code = result.current?.weather_code;
     if (!Number.isInteger(code) || !WMO_LABELS[code]) throw new Error('Weather unavailable');
-    const data = { savedAt: Date.now(), city: city.slice(0, 80), weather: weatherForCode(code), code, isDay: result.current?.is_day === 1, sunrise: result.daily?.sunrise?.[0] || null, sunset: result.daily?.sunset?.[0] || null, timezone: typeof result.timezone === 'string' ? result.timezone : null };
+    const data = { countryCode, savedAt: Date.now(), city: city.slice(0, 80), weather: weatherForCode(code), code, isDay: result.current?.is_day === 1, sunrise: result.daily?.sunrise?.[0] || null, sunset: result.daily?.sunset?.[0] || null, timezone: typeof result.timezone === 'string' ? result.timezone : null };
     writeCache(data); applyWeather(data, 'live', source);
     return { status: 'ready', city: data.city, weather: data.weather };
   }
 
   function refresh({ force = false } = {}) {
     if (stopped) return Promise.resolve({ status: 'stopped' });
+    if (!choices()?.weather) return Promise.resolve({status:'disabled'});
     if (inFlight) return inFlight;
     const cached = force ? null : readCache();
     if (cached) { applyWeather(cached, 'cached', 'cache'); return Promise.resolve({ status: 'cached', city: cached.city, weather: cached.weather }); }
@@ -185,7 +188,8 @@ export async function initLocalContext({ onPhase, onWeather, onLocation, onClock
         city = place.city;
         source = 'ip'; lastCity = city; lastSource = source;
         emit(onLocation, { city, source, status: 'ready', weatherStatus: 'loading' });
-        return await loadWeather(coords, city, source, id);
+        if(place.countryCode)document.dispatchEvent(new CustomEvent('imon:country',{detail:place.countryCode}));
+        return await loadWeather(coords, city, source, id, place.countryCode);
       } catch {
         if (!stopped && id === requestId) unavailable(city, source);
         return { status: stopped || id !== requestId ? 'cancelled' : 'unavailable' };
@@ -198,6 +202,7 @@ export async function initLocalContext({ onPhase, onWeather, onLocation, onClock
 
   async function locatePrecisely() {
     if (stopped) return { status: 'stopped' };
+    if(!choices()?.weather){document.dispatchEvent(new Event('imon:open-privacy'));return {status:'disabled'};}
     if (!navigator.geolocation || navigator.userActivation?.isActive === false) return { status: 'unavailable', reason: 'location-needs-user-click' };
     controllers.forEach(controller => controller.abort());
     cancelGeolocation?.();
@@ -220,18 +225,28 @@ export async function initLocalContext({ onPhase, onWeather, onLocation, onClock
     }
   }
 
+  function consentChanged(){
+    if(choices()?.weather){void refresh();return;}
+    requestId++;inFlight=null;clearTimeout(cacheExpiryTimer);
+    controllers.forEach(controller=>controller.abort());cancelGeolocation?.();
+    try{localStorage.removeItem(CACHE_KEY);}catch{}
+    document.dispatchEvent(new CustomEvent('imon:country',{detail:''}));
+    lastCity='';lastSource='browser';unavailable();
+  }
+  document.addEventListener('imon:privacy',consentChanged);
   function onVisibility() { if (!document.hidden && !stopped) { tick(); void refresh(); } }
   tick(); // Synchronous first paint: a visitor opening at night immediately gets night.
   emit(onWeather, 'clear', { status: 'unavailable', code: null, description: 'Weather loading', updatedAt: null });
   const clockTimer = setInterval(tick, 1000);
   const weatherTimer = setInterval(() => { if (!document.hidden) void refresh(); }, CACHE_TTL);
   document.addEventListener('visibilitychange', onVisibility);
-  void refresh();
+  consentChanged();
   return { refresh, locatePrecisely, stop() {
     if (stopped) return;
     stopped = true; requestId++;
     clearInterval(clockTimer); clearInterval(weatherTimer); clearTimeout(cacheExpiryTimer); clearTimeout(geolocationTimer);
     controllers.forEach(controller => controller.abort()); controllers.clear(); cancelGeolocation?.();
     document.removeEventListener('visibilitychange', onVisibility);
+    document.removeEventListener('imon:privacy',consentChanged);
   } };
 }

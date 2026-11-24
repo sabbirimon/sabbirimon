@@ -9,6 +9,7 @@
  */
 import { WORLD_VIEWBOX, countryNote, findCountry, labelPosition } from './world-map.js';
 
+import {choices} from './site-choices.js';
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 function element(tag, attributes = {}) {
@@ -41,8 +42,30 @@ export function initWorldMap(root = document) {
   svg.append(grid, shapes, marker);
   host.append(svg);
 
-  let countries = [];
+  let countries = [],countryCode='',wantsCountry=false;
+  const note=root.querySelector('#map-local-note'),search=root.querySelector('#map-search');
+  function findLocal(){
+    const flag=Array.from(countryCode,c=>String.fromCodePoint(127397+c.charCodeAt(0))).join('');
+    const match=countries.find(country=>country.flag===flag);
+    if(match){selectCountry(match.name);note.textContent='Approximate country from your network: '+match.name+'.';wantsCountry=false;}
+    else note.textContent=countryCode?'This outline is unavailable. Use the country picker.':'Country estimate unavailable or loading. You can use the country picker.';
+  }
+  root.addEventListener('imon:country',event=>{countryCode=event.detail||'';if(!countryCode){note.textContent='';return;}if(wantsCountry)findLocal();});
+  root.querySelector('#map-locate').onclick=()=>{wantsCountry=true;if(!choices()?.weather){root.dispatchEvent(new Event('imon:open-privacy'));note.textContent='Enable approximate location or pick a country below.';return;}findLocal();};
+  root.querySelector('#map-surprise').onclick=()=>{if(countries.length)selectCountry(countries[Math.floor(Math.random()*countries.length)].name);};
+  search.oninput=()=>{let matches=0;for(const item of list.children){item.hidden=!item.dataset.country.toLowerCase().includes(search.value.trim().toLowerCase());if(!item.hidden)matches++;}note.textContent=matches+' matching countries';};
 
+
+  const zoom=root.querySelector('#map-zoom'),worldBox=svg.getAttribute('viewBox');
+  let selectedPath=null,zoomed=false;
+  function zoomCountry(){
+    if(!selectedPath)return;
+    zoomed=!zoomed;zoom.textContent=zoomed?'Show full map':'Zoom to country';
+    if(!zoomed){svg.setAttribute('viewBox',worldBox);return;}
+    const b=selectedPath.getBBox(),w=Math.min(WORLD_VIEWBOX.width,Math.max(3200,b.width*1.55,b.height*2.8)),h=w*WORLD_VIEWBOX.height/WORLD_VIEWBOX.width;
+    svg.setAttribute('viewBox',[Math.max(0,Math.min(WORLD_VIEWBOX.width-w,b.x+b.width/2-w/2)),Math.max(WORLD_VIEWBOX.top,Math.min(WORLD_VIEWBOX.top+WORLD_VIEWBOX.height-h,b.y+b.height/2-h/2)),w,h].join(' '));
+  }
+  zoom.onclick=zoomCountry;
   function drawGrid() {
     const top = WORLD_VIEWBOX.top;
     const bottom = top + WORLD_VIEWBOX.height;
@@ -61,17 +84,20 @@ export function initWorldMap(root = document) {
   function selectCountry(name) {
     const country = findCountry(countries, name);
     if (!country) return;
+    root.dispatchEvent(new CustomEvent('imon:metric',{detail:'map_explore'}));
     for (const path of shapes.querySelectorAll('path')) {
       const active = path.dataset.country === country.name;
+      if(active){selectedPath=path;zoom.disabled=false;}
       path.classList.toggle('is-selected', active);
       path.setAttribute('aria-current', active ? 'true' : 'false');
     }
+    if(zoomed){zoomed=false;zoomCountry();}
     clearMarker();
     const position = labelPosition(country.name);
     if (position) {
       marker.append(
-        element('circle', { class: 'world-map-marker-halo', cx: position.x, cy: position.y, r: 14 }),
-        element('circle', { class: 'world-map-marker-dot', cx: position.x, cy: position.y, r: 5 })
+        element('circle', { class: 'world-map-marker-halo', cx: position.x, cy: position.y, r: 400 }),
+        element('circle', { class: 'world-map-marker-dot', cx: position.x, cy: position.y, r: 170 })
       );
     }
     if (status) status.textContent = `${country.flag || '🌐'} ${country.name} — ${countryNote(country.name)}`;
@@ -81,7 +107,7 @@ export function initWorldMap(root = document) {
         item.classList.toggle('is-active', active);
         item.setAttribute('aria-current', active ? 'true' : 'false');
         // The list scrolls, so bring the chosen country into view.
-        if (active) item.scrollIntoView({ block: 'nearest' });
+        if(active&&!item.hidden)list.scrollTop+=item.getBoundingClientRect().top-list.getBoundingClientRect().top-list.clientHeight/2;
       });
     }
     if (select && select.value !== country.name) select.value = country.name;
@@ -143,6 +169,8 @@ export function initWorldMap(root = document) {
           path.addEventListener('click', () => selectCountry(country.name));
           shapes.append(path);
         }
+        root.querySelector('[data-outline-count]').textContent=countries.length;
+        if(wantsCountry&&countryCode)findLocal();
         drawGrid();
         renderSelect();
         renderList();
@@ -152,7 +180,7 @@ export function initWorldMap(root = document) {
       })
       .catch(() => {
         shapes.replaceChildren();
-        if (status) status.textContent = 'The map could not be loaded. The country list below still works.';
+        if (status) status.textContent = 'The map could not be loaded. Reload the page to try again.';
       });
   }
 

@@ -903,7 +903,7 @@ export function initLab(root = document) {
       if (note) {
         example.querySelector('summary').textContent = 'Worked example · ' + note.title;
         example.querySelector('code').textContent = note.example;
-        example.querySelector('p:last-child').textContent = note.body;
+        example.querySelector('[data-example-explanation]').textContent = note.body;
       }
     }
     learn?.render(next.chapter);

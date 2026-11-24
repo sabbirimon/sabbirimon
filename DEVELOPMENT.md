@@ -137,3 +137,18 @@ Both files are static and carry nothing about a visitor. Asking for one is an or
 Rain uses layered smooth strokes with weather-dependent drop sizes, flow and gust angles; wind, fog, clouds and lightning use soft drawing with subtle reflection ripples. Snow uses feathered layers and melting flakes at the glass. Hailstones approach at different depths, scatter into ice fragments and occasionally leave a fading hairline fracture. Starlight and meteors use round lights and soft trails. Foreground trees sway, and wind turbines rotate faster as wind strength increases. World Studio’s Rotor speed control adjusts turbine blades and windmill sails from stopped to triple speed. The Riverbend waterwheel turns with the current. Cyberpunk uses gentle, sparse drizzle and retains the sound preference. The main weather deck and World Studio share density, strength and intensity settings.
 
 Rain on glass and fogged glass are decorative window effects with the same intensity, density and strength controls. Lightning uses strength-controlled glows/reflections with deliberately spaced flashes. The Earthquake control opens a pixel city with a repeating building-collapse/rebuild vignette; it is visual decoration and never modifies Gridworks saves.
+
+## Mystery quest plan
+
+The journal at `/quests.html` offers six independent trails. Players can complete steps in any order. The next clue points to the first unfinished step. Each trail combines four finds or actions and awards its own badge.
+
+| Trail | Where to explore | Reward |
+| --- | --- | --- |
+| Valley cartographer | Atlas caption, Riverbend Mills, rotor controls, landscape coins | Compass badge |
+| Workbench wanderer | Course catalog, Code Lab example, AI notes, circuits example | Notebook badge |
+| Exam keeper | Electronics catalog and all three course quizzes | Scholar badge |
+| Circuit courier | Meshlit, HyperL, Gridworks guide and power overlay | Relay badge |
+| Wave detective | Sound library, URL inspector, Unicode counter and color bench | Wave badge |
+| Cartridge collector | Arcade cabinet and all three game cartridges | Arcade badge |
+
+The journal uses one local storage key per find. A repeat visit or a second tab can add a new find without replacing an earlier one. Quizzes award their coin at three correct answers out of five. Site metrics count completed badges only when a visitor opts in.

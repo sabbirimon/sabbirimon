@@ -65,7 +65,8 @@
 <script>document.documentElement.classList.remove('no-js');</script>
 <link rel="stylesheet" href="studio.css">
 <script type="module" src="course-quiz.js"></script>
-</head>
+<link rel="stylesheet" href="quests.css"><script type="module" src="quests.js" data-quest-page="ai"></script>
+<link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="ai"></script></head>
 <body class="lab-page ai-lab-page">
 <a class="lab-skip" href="#ai-lab-work">Skip to the workbench</a>
 
@@ -102,7 +103,7 @@
       <h1 class="lab-title" id="ai-lab-title" data-ai-title>Loading the course</h1>
       <p class="lab-lead" data-ai-brief>The course is being loaded. If it does not appear, the JSON file could not be read.</p>
 
-      <div class="study-actions"><a class="workbench-link" href="#ai-lab-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button></div>
+      <aside hidden data-published-content aria-label="Course update"></aside><div class="study-actions"><a class="workbench-link" href="#ai-lab-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button></div>
       <details class="lab-example"><summary>Worked example</summary><p><code>print(2 * 3)</code></p><p>Try this in a Python exercise. Predict the output, press Run, then change one number and run it again.</p></details>
       <details class="study-chapter"><summary>Study this chapter</summary><div class="lab-learn" data-ai-learn></div></details>
       <div class="lab-instructions">
@@ -115,7 +116,7 @@
         <pre class="ai-expected" data-ai-expected hidden></pre>
       </div>
 
-      
+
 
       <p class="lab-status" data-ai-status role="status" aria-live="polite"></p>
 
@@ -197,7 +198,7 @@
   <p role="status"></p><button type="button" class="studio-control" data-grade>Check answer</button>
 </dialog>
 <footer class="lab-foot"><a href="courses.html#ai">Browse all AI Lab lessons</a>
-  <p>Built for practice. Every exercise runs locally in your browser — no account, no upload, no tracking, and no paid API.</p>
+  <p>Built for practice. Every exercise runs locally in your browser. Your work stays in this browser.</p>
 </footer>
 
 <script type="module">
@@ -235,5 +236,5 @@ document.querySelector('[data-ai-rail]')?.addEventListener('click', event => {
 });
 
 </script>
-</body>
+<nav class="site-utilities" aria-label="Site information"><a href="sitemap.html">Site map</a><a href="quests.html">Quest journal</a><a href="privacy.html">Privacy policy</a><button type="button" data-open-privacy>Cookie settings</button></nav></body>
 </html>

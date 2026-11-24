@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="wordmark.css">
 <link rel="stylesheet" href="privacy.css">
 <link rel="stylesheet" href="studio.css">
-</head>
+<link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="privacy"></script></head>
 <body class="privacy-page">
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -26,15 +26,15 @@
 <div class="privacy-head">
 <p class="privacy-kicker"><span aria-hidden="true">✦</span> IMON.WORLD · PRIVACY NOTICE</p>
 <h1>What this site does with your data</h1>
-<p>This page is written by hand from the site's own source code. It describes every third-party service the browser actually contacts, every key written to your browser's local storage, and everything that is never stored anywhere.</p>
-<p class="privacy-updated">LAST UPDATED: 22 NOVEMBER 2026</p>
+<p>Read how account access, local progress, location choices, and optional usage counts work on IMON.world.</p>
+<p class="privacy-updated">LAST UPDATED · 24 NOVEMBER 2026</p>
 </div>
 
 <section class="privacy-summary" aria-labelledby="summary-title">
 <h2 id="summary-title">The short version</h2>
 <ul>
-<li><strong>No analytics, no tracking pixels, no advertising beacons, no fingerprinting.</strong> Nothing on this site measures who you are or follows you around the web.</li>
-<li><strong>No server-side visitor logging.</strong> This is a static site on GitHub Pages. There is no application server that could keep a log of you.</li>
+<li><strong>Optional site metrics.</strong> If you enable usage counts, the owner can see daily totals for pages and actions.</li>
+<li>GitHub Pages serves the site. Hosting, authentication and API providers receive ordinary network information when contacted.</li>
 <li><strong>Your game scores, quiz results, and settings stay in your browser</strong> unless you choose to sign in, in which case they are saved to a database row that only you can read.</li>
 <li><strong>A handful of free public APIs are contacted</strong> so the page can show local weather, live headlines, and — only when you press the button — answers to your own code questions. Each one receives the ordinary network information that any website request reveals — your IP address.</li>
 <li><strong>Nothing is sold, shared, or used for ads.</strong> There is no third party that profiles you because of this site.</li>
@@ -55,7 +55,7 @@
 <tbody>
 <tr>
 <td>ipapi.co<span class="privacy-service-note">Tried first for the IP lookup</span></td>
-<td>Looks up your approximate city and coordinates from your network address, so the sky can match your local weather.</td>
+<td>When approximate location is enabled, looks up your country, city and rounded coordinates from your network address, so the sky can match your local weather.</td>
 <td>Your IP address (inherent to any web request), and the standard request headers the browser adds. No cookies, no referrer (<code>referrerPolicy: "no-referrer"</code>), no credentials (<code>credentials: "omit"</code>).</td>
 <td><a href="https://ipapi.co/privacy" target="_blank" rel="noopener noreferrer">ipapi.co privacy ↗</a></td>
 </tr>
@@ -102,8 +102,8 @@
 <td><a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Cloudflare privacy ↗</a></td>
 </tr>
 <tr>
-<td>Supabase<span class="privacy-service-note">Account page and signed-in play</span></td>
-<td>Provides account registration, sign-in, password management and private progress storage. The account page checks which sign-in methods are available.</td>
+<td>Supabase<span class="privacy-service-note">Public content, accounts and optional analytics</span></td>
+<td>Serves published site settings and editorial notes, handles accounts and private progress, and accepts optional aggregate usage counts. The account page checks which sign-in methods are available.</td>
 <td>Your IP address on account requests, your email and password for email sign-in, or your name, email and ID from your selected provider, plus saved progress. The session token is kept in your own browser. Row-level security means the database can only ever return your own row.</td>
 <td><a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">Supabase privacy ↗</a></td>
 </tr>
@@ -176,11 +176,11 @@
 
 <h3 class="privacy-subhead">On the server (the Supabase database)</h3>
 <p>Each course quiz also saves its personal best in local storage under its own <code>imon-course-quiz-</code> key. This score stays on this device.</p>
-<p class="privacy-lede">This only applies if you sign in. The site uses one Supabase table called <code>progress</code>, which holds a single JSON blob per signed-in account:</p>
+<p class="privacy-lede">For signed-in progress, the site uses a Supabase table called <code>progress</code>, which holds a single JSON blob per signed-in account:</p>
 <ul class="privacy-list">
 <li><strong>What it holds:</strong> the same score and progress values listed above, plus your Supabase user ID and the time of the last update. Your name and email come from Google or GitHub via Supabase Auth, which stores them in its own user table.</li>
 <li><strong>Who can read it:</strong> only you. A row-level security policy ties every row to <code>auth.uid() = id</code>, and the browser only ever holds a publishable key — never a secret key. One player cannot read or overwrite another's row.</li>
-<li><strong>When it is written:</strong> after you sign in, the site merges your existing browser scores into your cloud row once, then pushes an update whenever a game writes a new score. Nothing is written for visitors who never sign in.</li>
+<li><strong>When it is written:</strong> after you sign in, the site merges your existing browser scores into your cloud row once, then pushes an update whenever a game writes a new score. Guests have no cloud progress row.</li>
 </ul>
 
 <h3 class="privacy-subhead">Never stored anywhere</h3>
@@ -188,20 +188,18 @@
 <li><strong>Your IP address.</strong> The two lookup providers see it in transit, but the site never writes it down, in your browser or on the server.</li>
 <li><strong>Your exact coordinates.</strong> Only the rounded one-decimal values are sent to Open-Meteo, and they are not persisted.</li>
 <li><strong>Your postal code, city, or device location</strong> from the browser geolocation API. The location permission is optional, only used if you press "Use my location", and its result is rounded the same way and then discarded.</li>
-<li><strong>Any browsing behaviour</strong> — which pages you visited, how long you stayed, what you clicked, what you searched for.</li>
+<li><strong>Individual browsing histories.</strong> The optional report counts events by category and day. Searches and sequences of pages for a particular person are not recorded.</li>
 <li><strong>Anything from the "Daily" section you did not ask for</strong> — the site reads public headline feeds and nothing else.</li>
 <li><strong>The code you write in the Code Lab.</strong> It stays in the editor and the preview frame in your own browser. Only a tag or property name you explicitly ask about is sent to the Stack Exchange search, and never the code around it.</li>
 </ul>
 </section>
 
 <section class="privacy-section" aria-labelledby="tracking-title">
-<h2 id="tracking-title">No tracking, and what that means here</h2>
-<div class="privacy-callout">
-<h2>There is no analytics on this site</h2>
-<p>There is no Google Analytics, no tag manager, no Plausible, Matomo, Fathom, Hotjar, Microsoft Clarity, Sentry, Segment, Mixpanel, Amplitude, or any other analytics, error-reporting, or advertising tag anywhere in this site's code. There are no tracking pixels, no <code>navigator.sendBeacon</code> calls, no third-party iframes, and no third-party fonts or images loaded from someone else's server.</p>
-<p>The only code that talks to the network is the handful of API calls listed at the top of this page, and each one is there to make a visible feature work.</p>
-</div>
-<p class="privacy-lede">One thing worth naming plainly: the site does use cookies — but only the ones a website cannot function without. If you sign in, the site stores a Supabase session in browser local storage to keep you signed in. If you do not sign in, no cookie identifies you, and the site's own features do not need one.</p>
+<h2 id="tracking-title">Cookie settings and usage metrics</h2>
+<p>Use Cookie settings at the bottom of any public page to change either option. Essential only keeps both off. The settings are stored under <code>imon-privacy-v1</code> in this browser. Turning off approximate location clears the saved weather estimate and stops future lookups. You can still select a country manually.</p>
+<p>If you enable usage counts, the site sends a page category, an event type, and a coarse automation category to Supabase. Events include page views, map exploration, completed course quizzes, arcade starts and completed quest trails. The database increments daily totals. The report is available only to the site editor. It contains no contact details, account IDs, IP addresses, unique visitor IDs, raw user-agent strings, exercise answers or exact URLs. The network provider still receives the IP address needed to deliver a request.</p>
+<p>Declared automated browsers can identify themselves through browser automation signals. Other browsers remain unverified. The numbers count activity, not unique people. Automated readers are welcome. Global Privacy Control suppresses usage counts. Withdrawing consent stops future counts. Existing aggregate totals cannot be linked back to an individual.</p>
+<p>Account sessions, game progress, title preferences and mystery coin finds use browser storage. Supabase handles optional sign-in and private progress. Your sign-in provider may use its own cookies during sign-in.</p>
 <p class="privacy-lede">There is also a service worker (<code>sw.js</code>) that caches the site's own files in your browser so the games keep working offline. It stores static assets of this site — HTML, CSS, JavaScript, images — in the browser's cache storage. It does not cache, store, or transmit anything about you, and it does not run any tracking.</p>
 </section>
 
@@ -221,14 +219,7 @@
 <p class="privacy-note">Asking for either file is an ordinary web request, so the service that serves it sees your IP address. Nothing else is involved: no account, no cookie, no identifier, and nothing about you is written into either file.</p>
 </section>
 
-<section class="privacy-section" aria-labelledby="not-title">
-<h2 id="not-title">What this site is not</h2>
-<div class="privacy-callout">
-<h2>A static site on GitHub Pages, with no server-side runtime</h2>
-<p>This site is a folder of plain HTML, CSS, and JavaScript files. It is published to GitHub Pages, which serves the files straight to your browser. There is no application server, no database behind the pages themselves, no PHP or Node runtime, and no code executing on a server that could log your visit. The only server-side component anywhere is the optional Supabase project used for sign-in and cloud save, and that is described above.</p>
-<p>Put simply: there is no place where a record of "who visited this page" could be kept, because there is no server keeping records of visits.</p>
-</div>
-</section>
+<section class="privacy-section" aria-labelledby="not-title"><h2 id="not-title">Hosting and database access</h2><p>GitHub Pages hosts the public files. Supabase stores sign-in records, private progress, published editorial content and optional aggregate usage totals. Database permissions restrict access to progress and reporting.</p></section>
 
 <section class="privacy-section" aria-labelledby="changes-title">
 <h2 id="changes-title">If this page ever changes</h2>
@@ -254,5 +245,5 @@
 <a class="privacy-back" href="./">← Back to IMON.WORLD</a>
 </footer>
 </main>
-</body>
+<nav class="site-utilities" aria-label="Site information"><a href="sitemap.html">Site map</a><a href="quests.html">Quest journal</a><a href="privacy.html">Privacy policy</a><button type="button" data-open-privacy>Cookie settings</button></nav></body>
 </html>

@@ -30,12 +30,14 @@
       "tracksVisitors": false
     },
     "privacyPolicy": "https://imon.com.bd/privacy.html",
-    "privacySummary": "No analytics, no tracking pixels, no advertising, no fingerprinting and no server-side visitor logging. A small number of free public APIs are contacted directly from the browser, each of which necessarily sees the visitor's IP address.",
+    "privacySummary": "Optional first-party usage counts are aggregated daily. Location personalization is separately opt-in. A small number of free public APIs are contacted directly from the browser, each of which necessarily sees the visitor's IP address.",
     "textSummary": "https://imon.com.bd/llms.txt",
     "sitemap": "https://imon.com.bd/sitemap.xml",
     "robots": "https://imon.com.bd/robots.txt"
   },
   "entryPoints": [
+    { "path": "/quests.html", "title": "Mystery quests", "summary": "Six trails, 24 coins, and a local quest journal." },
+    { "path": "/sitemap.html", "title": "Site map", "summary": "Public navigation directory." },
     { "path": "/courses.html", "title": "Course catalog", "summary": "Crawlable lesson links grouped by course and chapter, with links to the three built-in quizzes. All lessons can be opened without an account." },
     {
       "path": "/",
@@ -47,7 +49,7 @@
         { "id": "pixel-world", "title": "Pixel world", "summary": "An illustrated scene with a live weather layer, World Studio controls, a day/night cycle and optional synthesised ambience." },
         { "id": "arcade", "title": "Arcade", "summary": "Free browser games: Snake, Surf, 2048, Ludo, Puzzle, Dev Slots and a racer." },
         { "id": "news", "title": "Daily", "summary": "Live technology and science/space headlines plus a daily computer-science quiz." },
-        { "id": "map", "title": "Map", "summary": "An interactive world map of 18 fictional countries with flags, tied to the Gridworks campaign." },
+        { "id": "map", "title": "Map", "summary": "A searchable atlas of 176 country and territory outlines, with optional approximate country matching." },
         { "id": "achievements", "title": "Achievements", "summary": "Badges earned from the games and the labs." },
         { "id": "about", "title": "About", "summary": "Who the owner is, the toolkit and the current focus." }
       ]
@@ -100,7 +102,7 @@
     { "path": "/data/quiz-bank.json", "format": "application/json", "description": "The original local question bank used when the quiz API is unavailable." },
     { "path": "/data/ai-course.json", "format": "application/json", "description": "The AI Lab course: 54 exercises with briefs, requirements and reference answers." },
     { "path": "/data/lab-curriculum.json", "format": "application/json", "description": "The imported Code Lab curriculum." },
-    { "path": "/art/world-countries.json", "format": "application/json", "description": "The 18 fictional countries on the world map." }
+    { "path": "/art/world-countries.json", "format": "application/json", "description": "Locally hosted country and territory outlines and flags." }
   ],
   "thirdPartyServices": [
     { "host": "ipapi.co", "purpose": "Approximate city lookup from the visitor's IP address.", "when": "Weather widget, first choice." },
@@ -111,11 +113,11 @@
     { "host": "dev.to", "purpose": "Fallback headlines for the tech and science feeds.", "when": "Daily section, only when a preferred provider is unreachable." },
     { "host": "api.stackexchange.com", "purpose": "Public Stack Overflow question search.", "when": "Code Lab lookup button. Only the search words are sent." },
     { "host": "cloudflare-dns.com", "purpose": "DNS-over-HTTPS resolution of a domain the visitor types.", "when": "Tools page DNS lookup, only on an explicit button press." },
-    { "host": "supabase.co", "purpose": "Account authentication and private cloud saves.", "when": "Only when the visitor chooses to sign in." }
+    { "host": "supabase.co", "purpose": "Published content and settings, optional usage metrics, authentication and private cloud saves.", "when": "Public editorial pages, opted-in metrics, and account operations." }
   ],
   "content": {
-    "writtenBy": "the owner, by hand",
-    "generativeAI": "not used for page copy; AI-generated artwork is limited to three illustrated landscape backgrounds, and the generation prompts and provenance are published in the repository under docs/art/PROMPTS.md",
+    "writtenBy": "Maintained by the site owner with AI-assisted development",
+    "generativeAI": "Original generated pixel landscapes and learning covers with browser-rendered animation.",
     "thirdPartyAttribution": "Headlines are credited to Hacker News, the Spaceflight News API and DEV Community. Quiz questions come from Open Trivia DB under CC BY-SA 4.0, with attribution travelling with each pack. Weather data is by Open-Meteo. Code Lab lookup results are from Stack Overflow.",
     "license": {
       "siteContent": "Hand-written by the owner. All rights reserved unless stated otherwise.",

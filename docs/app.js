@@ -27,10 +27,10 @@ initWordmark(document);
 // The page headings use the wide pixel face, which is drawn rather than
 // downloaded, so it never shifts the layout when the font arrives.
 initPixelDisplay(document);
+initWorldMap();
 initExperience();
 initPlayerCard();
 initOrbs();
-initWorldMap();
 initArcade(); initLudo(); initPuzzle(); initSlots(); initRacer(); initQuiz(); initNews(); initGameSoundControls();
 initAuth();
 initCommandPalette();

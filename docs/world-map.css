@@ -13,7 +13,7 @@
 .world-map-shape.is-selected { fill: var(--gold); stroke: #fff3b0; stroke-width: 5; }
 .world-map-marker-halo { fill: rgba(250,204,21,.22); stroke: #fff3b0; stroke-width: 3; shape-rendering: crispEdges; animation: world-map-pulse 1.9s ease-out infinite; }
 .world-map-marker-dot { fill: #fff3b0; shape-rendering: crispEdges; }
-@keyframes world-map-pulse { 0% { r: 12; opacity: .95; } 100% { r: 30; opacity: 0; } }
+@keyframes world-map-pulse { 0% { r: 250; opacity: .95; } 100% { r: 550; opacity: 0; } }
 /* The right column is a card that matches the map's frame: same border colour,
    same radius, same padding, so the two boxes read as one row. */
 /* The caption and the picker share the row above the list. The list spans the
@@ -33,3 +33,16 @@
 .world-map-list li.is-active .world-map-country-button { color: var(--gold); background: rgba(250,204,21,.1); }
 @media (max-width: 900px) { .world-map-side { grid-template-columns: minmax(0,1fr); } .world-map-caption { grid-column: 1; grid-row: 1; } .world-map-picker { grid-column: 1; grid-row: 2; } .world-map-list { grid-column: 1; grid-row: 3; height: 240px; } }
 @media (prefers-reduced-motion: reduce) { .world-map-marker-halo { animation: none; } .world-map-shape { transition: none; } }
+.map-explore-controls { display:flex; align-items:center; flex-wrap:wrap; gap:.65rem; margin:.75rem 0 1rem; }
+.map-explore-controls :is(button,input) { min-height:44px; padding:.55rem .75rem; color:#ebf6fb; background:#192b3f; border:1px solid #638094; font:inherit; }
+.map-explore-controls button { cursor:pointer; }
+.map-explore-controls label { display:flex; align-items:center; flex-wrap:wrap; gap:.5rem; }
+.map-explore-controls input { max-width:100%; }
+.world-map-list li[hidden] { display:none; }
+#map-local-note { color:#c2eadc; }
+.world-map { background:radial-gradient(ellipse at 55% 30%,#1c3e50,#102334 75%); border-color:#688f9c; }
+.world-map-shape { fill:#427469; stroke:#a3d5b3; vector-effect:non-scaling-stroke; stroke-width:.55px; }
+.world-map-shape:hover { fill:#5c9582; }
+.world-map-shape.is-selected { fill:#ffd785; stroke:#fff2bf; stroke-width:1px; }
+.world-map-picker { position:relative; }
+.world-map-picker .mystery-coin { position:absolute; inset:-.8rem 0 auto auto; }

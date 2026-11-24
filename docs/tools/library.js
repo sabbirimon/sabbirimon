@@ -10,7 +10,7 @@ for(const key of Object.keys(effectNotes)){
   button.addEventListener('click',async()=>{
     try{
       audio ||= new (window.AudioContext||window.webkitAudioContext)();
-      await audio.resume();soundEffect(audio,key);feedback.textContent='Played '+label+'.';
+      await audio.resume();soundEffect(audio,key);if(key==='beacon')document.dispatchEvent(new CustomEvent('imon:quest-find',{detail:'heard'}));feedback.textContent='Played '+label+'.';
     }catch{feedback.textContent='Audio playback is unavailable in this browser.';}
   });
   shelf.append(button);
@@ -22,6 +22,7 @@ document.querySelector('#inspect-url').onclick=()=>{
     if(!['http:','https:'].includes(url.protocol))throw Error();
     const parts=['Scheme  '+url.protocol,'Host  '+url.host,'Path  '+url.pathname,'Fragment  '+(url.hash||'—')];
     for(const [key,value] of url.searchParams) parts.push(key+' = '+value);
+    if(url.searchParams.size)document.dispatchEvent(new CustomEvent('imon:quest-find',{detail:'address'}));
     target.textContent=parts.join('\n');
   }catch{target.textContent='Enter a full web address starting with https:// or http://.';}
 };
@@ -29,6 +30,7 @@ const characters=typeof Intl.Segmenter==='function'?new Intl.Segmenter(undefined
 const words=typeof Intl.Segmenter==='function'?new Intl.Segmenter(undefined,{granularity:'word'}):null;
 document.querySelector('#count-source').oninput=event=>{
   const value=event.target.value;
+  if(/\p{Extended_Pictographic}/u.test(value))document.dispatchEvent(new CustomEvent('imon:quest-find',{detail:'glyph'}));
   const count=characters?[...characters.segment(value)].length:Array.from(value).length;
   const wordCount=words?[...words.segment(value)].filter(item=>item.isWordLike).length:(value.trim().match(/\S+/g)||[]).length;
   const lines=value?value.split(/\r\n?|\n/).length:0;

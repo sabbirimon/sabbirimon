@@ -59,7 +59,8 @@
 <script>document.documentElement.classList.remove('no-js');</script>
 <link rel="stylesheet" href="studio.css">
 <script type="module" src="course-quiz.js"></script>
-</head>
+<link rel="stylesheet" href="quests.css"><script type="module" src="quests.js" data-quest-page="code"></script>
+<link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="code"></script></head>
 <body class="lab-page">
 <a class="lab-skip" href="#lab-work">Skip to the workbench</a>
 
@@ -96,8 +97,8 @@
       <h1 class="lab-title" id="lab-title" data-lab-title>Your first tag</h1>
       <p class="lab-lead" data-lab-brief></p>
 
-      <div class="study-actions"><a class="workbench-link" href="#lab-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button></div>
-      <details class="lab-example"><summary>Worked example</summary><p><code>&lt;h1&gt;Hello, world!&lt;/h1&gt;</code></p><p>Try it in the HTML tab, then change the words between the tags and compare the preview.</p></details>
+      <aside hidden data-published-content aria-label="Course update"></aside><div class="study-actions"><a class="workbench-link" href="#lab-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button></div>
+      <details class="lab-example"><summary>Worked example</summary><p><code>&lt;h1&gt;Hello, world!&lt;/h1&gt;</code></p><p data-example-explanation>Try it in the HTML tab, then change the words between the tags and compare the preview.</p></details>
       <details class="study-chapter"><summary>Study this chapter</summary><div class="lab-learn" data-lab-learn></div></details>
       <div class="lab-instructions">
         <h2 class="lab-instructions-title">Instructions</h2>
@@ -117,7 +118,7 @@
     <!-- The learning panel: the goal, the study material, how the answer is
          checked and what you can do afterwards. It sits under the brief so
          the task is read first and the teaching follows. -->
-    
+
 
 
 
@@ -170,7 +171,7 @@
         </div>
         <div class="lab-preview">
           <h2 class="lab-pane-title">Preview</h2>
-          <iframe class="lab-preview-frame" data-lab-preview title="Live preview" sandbox="allow-scripts allow-same-origin"></iframe>
+          <iframe class="lab-preview-frame" data-lab-preview title="Live preview" sandbox="allow-scripts"></iframe>
         </div>
       </div>
 
@@ -253,7 +254,7 @@
   <p role="status"></p><button type="button" class="studio-control" data-grade>Check answer</button>
 </dialog>
 <footer class="lab-foot"><a href="courses.html#code">Browse all Code Lab lessons</a>
-  <p>Built for practice. Every exercise runs locally in your browser — no account, no upload, no tracking.</p>
+  <p>Built for practice. Every exercise runs locally in your browser. Your work stays in this browser.</p>
 </footer>
 
 <script type="module">
@@ -299,5 +300,5 @@ document.querySelector('[data-lab-rail]')?.addEventListener('click', event => {
   }
 });
 </script>
-</body>
+<nav class="site-utilities" aria-label="Site information"><a href="sitemap.html">Site map</a><a href="quests.html">Quest journal</a><a href="privacy.html">Privacy policy</a><button type="button" data-open-privacy>Cookie settings</button></nav></body>
 </html>

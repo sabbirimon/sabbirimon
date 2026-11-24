@@ -1,6 +1,6 @@
 # IMON.world
 
-> Sabbir Hassan Imon's personal site: open-source projects, a pixel-art world, browser games, and free browser-based learning labs. Static site, no server-side runtime, no tracking, no accounts required.
+> Sabbir Hassan Imon's personal site: open-source projects, a pixel-art world, browser games, and free browser-based learning labs. Static site, no server-side runtime, optional aggregate usage counts, no accounts required for learning.
 
 This file is a plain-text map of the site for language models and other automated readers. Every URL below is a real page. Nothing here is a marketing claim beyond what the pages themselves state.
 
@@ -10,12 +10,15 @@ This file is a plain-text map of the site for language models and other automate
 - Owner: Sabbir Hassan Imon (also known as IMON, GitHub handle `sabbirimon`)
 - Built from South Asia
 - Published on GitHub Pages as a folder of plain HTML, CSS and JavaScript files. There is no build step, no bundler, no server-side runtime.
-- No analytics, no tracking pixels, no advertising, no fingerprinting, no third-party iframes.
+- Optional aggregate usage counts are consent-based. Approximate IP location for weather and the atlas is a separate choice.
 - Third-party APIs are contacted from the browser only; see https://imon.com.bd/privacy.html for the complete list and exactly what each one receives.
 - All game currency is fictional. No real money, payments, wagers or cash value anywhere on the site.
-- Content is written by hand by the owner. Source code is public.
+- The owner maintains this site with AI-assisted development. Source code is public.
 
 ## Pages
+
+- [Human-readable site map](https://imon.com.bd/sitemap.html)
+- [Mystery quest journal](https://imon.com.bd/quests.html) — six trails with 24 clues and challenges.
 
 ### [Course catalog](https://imon.com.bd/courses.html)
 All exercises are linked in static HTML, arranged by course and chapter. The [JSON course index](https://imon.com.bd/data/course-index.json) supplies each exercise ID, title, brief and absolute workbench URL. Each course also has a five-question quiz with explanations, accessible at its quizUrl. Reading the catalog and practicing require no account.
@@ -27,7 +30,7 @@ The main site. Sections:
 - [Pixel world](https://imon.com.bd/#pixel-world) — an illustrated pixel scene with a live weather layer, World Studio controls, day/night cycle and optional synthesised ambience.
 - [Arcade](https://imon.com.bd/#arcade) — free browser games: Snake, Surf, 2048, Ludo, Puzzle, Dev Slots and a racer. No payments, no wagers.
 - [Daily](https://imon.com.bd/#news) — live technology and science/space headlines plus a daily computer-science quiz.
-- [Map](https://imon.com.bd/#map) — an interactive world map with 18 fictional countries and their flags, used to explore the Gridworks world.
+- [Map](https://imon.com.bd/#map) — a searchable atlas with 176 country and territory outlines and optional approximate country selection.
 - [Achievements](https://imon.com.bd/#achievements) — badges earned from the games and labs.
 - [About](https://imon.com.bd/#about) — who the owner is, toolkit and current focus.
 

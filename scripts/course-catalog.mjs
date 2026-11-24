@@ -34,10 +34,11 @@ const html=`<!doctype html>
 <title>Course catalog · IMON.world</title><meta name="description" content="${description}">
 <link rel="canonical" href="${origin}courses.html"><link rel="alternate" type="application/json" href="data/course-index.json" title="Course and exercise index">
 <meta property="og:title" content="Course catalog · IMON.world"><meta property="og:description" content="${description}"><meta property="og:image" content="${origin}art/lab-code.webp"><meta property="og:url" content="${origin}courses.html">
-<script type="module" src="learning-art.js"></script><link rel="icon" href="icon.svg"><link rel="stylesheet" href="studio.css"><script type="application/ld+json">${JSON.stringify(schema)}</script></head>
+<script type="module" src="learning-art.js"></script><link rel="icon" href="icon.svg"><link rel="stylesheet" href="studio.css"><script type="application/ld+json">${JSON.stringify(schema)}</script><link rel="stylesheet" href="quests.css"><script type="module" src="quests.js" data-quest-page="courses"></script>
+<link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="courses"></script></head>
 <body class="catalog-page"><header><a href="./#learn">← IMON.world</a></header><main><h1>Course catalog</h1><p>${description}</p>
 <nav aria-label="Courses">${courses.map(c=>`<a href="#${c.id}">${escape(c.title)}</a>`).join('')}<button type="button" class="studio-control" data-cover-motion hidden>Pause cover animations</button></nav>
-<div class="catalog-list">${courses.map(courseSection).join('\n')}</div></main></body></html>
+<div class="catalog-list">${courses.map(courseSection).join('\n')}</div></main><nav class="site-utilities" aria-label="Site information"><a href="sitemap.html">Site map</a><a href="quests.html">Quest journal</a><a href="privacy.html">Privacy policy</a><button type="button" data-open-privacy>Cookie settings</button></nav></body></html>
 `;
 for(const [path,content] of [['courses.html',html],['data/course-index.json',JSON.stringify({language:'en',exerciseCount:count,courses},null,2)+'\n']]){
   const url=new URL(path,docs);

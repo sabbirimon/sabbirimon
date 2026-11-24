@@ -82,8 +82,10 @@ function tick(time){
 }
 function play(){
   if(mode==='playing')return;
+  if(mode==='ready'||mode==='over')document.dispatchEvent(new CustomEvent('imon:metric',{detail:'game_start'}));
   if(mode==='over')state=newStage(game);
   if(mode==='advance')state=newStage(game,state.level+1,state.score,state.lives);
+  document.dispatchEvent(new CustomEvent('imon:quest-find',{detail:game}));
   mode='playing';overlay.hidden=true;el('pause').disabled=false;last=0;accumulator=0;
   canvas.focus({preventScroll:true});playSound('start');hud();frame=requestAnimationFrame(tick);
 }

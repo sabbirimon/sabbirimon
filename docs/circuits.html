@@ -60,7 +60,8 @@
 <script>document.documentElement.classList.remove('no-js');</script>
 <link rel="stylesheet" href="studio.css">
 <script type="module" src="course-quiz.js"></script>
-</head>
+<link rel="stylesheet" href="quests.css"><script type="module" src="quests.js" data-quest-page="circuits"></script>
+<link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="circuits"></script></head>
 <body class="lab-page circuits-page">
 <a class="lab-skip" href="#circuits-work">Skip to the workbench</a>
 
@@ -97,7 +98,7 @@
       <h1 class="lab-title" id="circuits-title" data-circuits-title>Loading the course</h1>
       <p class="lab-lead" data-circuits-brief>The course is being loaded. If it does not appear, the JSON file could not be read.</p>
 
-      <div class="study-actions"><a class="workbench-link" href="#circuits-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button></div>
+      <aside hidden data-published-content aria-label="Course update"></aside><div class="study-actions"><a class="workbench-link" href="#circuits-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button></div>
       <details class="lab-example"><summary>Worked example</summary><p><code>I = V / R = 3 V / 1000 Ω = 3 mA</code></p><p>With a fixed 3 V source, doubling the resistance halves the current. Try comparing two resistor values on the bench.</p></details>
       <details class="study-chapter"><summary>Study this chapter</summary><div class="lab-learn" data-circuits-learn></div></details>
       <div class="lab-instructions">
@@ -122,7 +123,7 @@
     </article>
 
     <!-- The study material --------------------------------------------- -->
-    
+
   </section>
 
   <!-- The workbench --------------------------------------------------- -->
@@ -246,7 +247,7 @@
   <p role="status"></p><button type="button" class="studio-control" data-grade>Check answer</button>
 </dialog>
 <footer class="lab-foot"><a href="courses.html#circuits">Browse all Circuits &amp; Signals lessons</a>
-  <p>Built for practice. Every circuit is solved in your browser — no account, no upload, no tracking.</p>
+  <p>Built for practice. Every circuit is solved in your browser. Your work stays in this browser.</p>
 </footer>
 
 <script type="module">
@@ -268,5 +269,5 @@ lab.importCourse().then(() => {
   if (id) lab.loadExercise(id);
 });
 </script>
-</body>
+<nav class="site-utilities" aria-label="Site information"><a href="sitemap.html">Site map</a><a href="quests.html">Quest journal</a><a href="privacy.html">Privacy policy</a><button type="button" data-open-privacy>Cookie settings</button></nav></body>
 </html>

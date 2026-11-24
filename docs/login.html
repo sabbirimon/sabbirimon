@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="pixel-art.css">
 <script>document.documentElement.classList.remove('no-js');</script>
 <link rel="stylesheet" href="studio.css">
-</head>
+<link rel="stylesheet" href="site-public.css"><script type="module" src="site-public.js" data-public-page="account"></script></head>
 <body class="auth-page">
 <div class="auth-sky" aria-hidden="true">
   <span class="auth-star" style="left:6%;top:12%"></span>
@@ -148,5 +148,5 @@ form.hidden=action==='signup'||action==='recover';
 if(form.hidden) say(action==='signup'?'Choose Google to create your free account.':'Choose Google to sign in again. Then use Set account password to choose a new password.','info');
 if(action==='update'&&!getSession()){submit.disabled=true;say('Sign in with Google first, then open Set account password.','info');}
 </script>
-</body>
+<nav class="site-utilities" aria-label="Site information"><a href="sitemap.html">Site map</a><a href="quests.html">Quest journal</a><a href="privacy.html">Privacy policy</a><button type="button" data-open-privacy>Cookie settings</button></nav></body>
 </html>

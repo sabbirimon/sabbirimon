@@ -1,0 +1,22 @@
+.mystery-coin { display:inline-grid!important; vertical-align:middle; place-items:center; width:44px; height:44px; background:transparent!important; border:0!important; box-shadow:none!important; padding:0!important; cursor:pointer; }
+.mystery-coin span { display:block; width:12px; height:16px; background:#f4b449; border-inline:3px solid #9b652d; border-block:2px solid #ffe999; box-shadow:inset 3px 0 #ffdc69,2px 2px #493246; transform:rotate(-6deg); }
+.mystery-coin span::after { content:""; display:block; margin:3px auto; width:2px; height:7px; background:#fff0ab; }
+.mystery-coin:hover span,.mystery-coin:focus-visible span { transform:scale(1.2); }
+.mystery-coin:focus-visible { outline:2px solid #8fffe9; }
+.mystery-coin:disabled { opacity:.36; cursor:default; }
+.quest-find-notice { position:fixed; z-index:15000; inset:auto max(1rem,env(safe-area-inset-right)) max(1rem,env(safe-area-inset-bottom)) auto; display:flex; align-items:center; gap:.7rem; max-width:calc(100vw - 2rem); box-sizing:border-box; padding:.8rem; color:#f8f3db; background:#172b36; border:2px solid #e4bd69; box-shadow:3px 3px #081119; font:650 .9rem/1.45 system-ui,sans-serif; }
+.quest-find-notice[hidden] { display:none; }
+.quest-find-notice a,.quest-journal-link { color:#9bf0d3; text-decoration:underline; text-underline-offset:.2em; }
+.quest-find-notice button { min-width:32px; min-height:32px; cursor:pointer; background:#263c4b; color:white; border:1px solid #678; }
+.quest-page { margin:0; min-height:100vh; background:#10192b; color:#eef4f7; font:1rem/1.6 system-ui,sans-serif; }
+.quest-page main { max-width:72rem; padding:clamp(1rem,4vw,3rem); margin:auto; }
+.quest-page a { color:#9cebd6; }
+.quest-page h1,.quest-page h2 { font-family:Silkscreen,monospace; font-weight:400; color:#ffdc87; }
+.quest-page h1 { font-size:clamp(2rem,5vw,3.5rem); margin:.6rem 0; }
+.quest-trails { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr)); gap:1rem; margin-block:1.5rem; }
+.quest-trails article { padding:1.25rem; border:2px solid #41516e; background:#18263a; box-shadow:3px 3px #080e1c; }
+.quest-trails article[data-complete=true] { border-color:#aaecd0; }
+.quest-trails h2 { line-height:1.2; margin:.2rem 0 .6rem; }
+.quest-trails progress { display:block; width:100%; margin:.8rem 0; accent-color:#81eabc; }
+.quest-trails a { display:block; margin-top:.4rem; }
+.quest-trails a[hidden] { display:none; }

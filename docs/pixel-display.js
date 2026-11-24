@@ -503,7 +503,14 @@ export function initPixelDisplay(root = document) {
     target.dataset.pixelDisplay = text;
     target.setAttribute('data-pixel-display-drawn', 'true');
     const shadow = lines.shadow || null;
-    target.innerHTML = renderDisplayLines(lines, lines.gradient || null, shadow);
+    const drawing=renderDisplayLines(lines, lines.gradient || null, shadow);
+    if(target.closest?.('.world-home') && target.tagName==='H2'){
+      const copy=document.createElement('span');
+      copy.className='title-typeset';
+      copy.append(...target.childNodes);
+      target.innerHTML=drawing;
+      target.append(copy);
+    }else target.innerHTML=drawing;
   }
   return targets.length;
 }
