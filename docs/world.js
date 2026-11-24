@@ -111,7 +111,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     return force*power*(.55+Math.sin(clock*1.7+x*.03)*.35+Math.sin(clock*.8)*.1);
   }
   function turbine(x,y,scale=1){
-    const angle=rotorTime/(.75+scale*.35)+scale;
+    const angle=rotorTime/(.75+scale*.35)+scale+x*.08;
     bladeWind(x,y-45*scale,17*scale,scale);
     ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);
     polygon([[-3,0],[3,0],[1,-44],[-1,-44]],'#b9cad6');rect(-2,-43,1,40,'#f1f3ec');
@@ -135,6 +135,20 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     }
     ctx.restore();
   }
+  // Low crests give the distant rotors a footing without covering the valley.
+  function horizonFarm(p, horizon) {
+    const sites=[[.55,-1,.24],[.59,-3,.30],[.64,0,.26],[.73,4,.39],[.79,1,.44]];
+    ctx.save();
+    for(const [position,rise,size] of sites){
+      const x=Math.round(width*position), y=Math.round(horizon+rise);
+      const span=Math.round(24*size);
+      polygon([[x-span-6,y+4],[x-span,y+1],[x-2,y],[x+3,y],[x+span+5,y+4]],p.mountain[1]);
+      ctx.globalAlpha=.72;
+      turbine(x,y,size);
+      ctx.globalAlpha=1;
+    }
+    ctx.restore();
+  }
   function riverbend(p) {
     const t=motion?clock:0, bank=height*.53;
     const soil='#886d52',beam='#553c37',wood='#bf8757',stone='#bac0a3';
@@ -144,6 +158,7 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     const ridge=[[0,bank+8],[width*.53,bank-8],[width*.60,bank-20],[width*.65,bank-20],
       [width*.72,bank-12],[width*.78,bank-12],[width*.85,bank-28],[width*.91,bank-28],[width,bank-7],
       [width,height],[0,height]];
+    horizonFarm(p,bank-32);
     polygon(ridge,p.grassShade);
     turbine(width*.624,bank-20,.48);
     turbine(width*.755,bank-12,.83);
@@ -743,9 +758,11 @@ export function initWorld(canvas, { onCollect = () => {} } = {}) {
     } else drawBiome(WORLD_ART[scene]?'forest':scene,p,cy,px,py);
     }
     if (['mountains','islands','waterfall-valley','energy-ridge','forest'].includes(scene)) {
-      const ridgeX=width*.87, ridgeY=height*(scene==='energy-ridge'?.53:.75);
+      const ridgeX=width*.87, ridgeY=height*(scene==='energy-ridge'?.53:portrait?.68:.75);
+      horizonFarm(p,ridgeY-height*.22);
       polygon([[width*.7,height],[width*.74,ridgeY+18],[ridgeX-12,ridgeY],[ridgeX+12,ridgeY],[width*.95,ridgeY+17],[width,height*.79],[width,height]],p.mountain[1]);
       rect(ridgeX-11,ridgeY,22,2,p.grassLight);
+      turbine(width*.756,ridgeY+15,portrait?.46:.62);
       turbine(ridgeX,ridgeY,portrait?1.05:1.48);
       turbine(width*.95,ridgeY+17,portrait?.68:.92);
     }

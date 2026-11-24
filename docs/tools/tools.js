@@ -2144,7 +2144,7 @@ export function initTools(root = document) {
   }
 
   tabs.forEach((tab) => {
-    tab.addEventListener('click', () => selectTab(tab));
+    tab.addEventListener('click', () => { selectTab(tab); history.replaceState(null,'','#'+tab.id.slice(4)); });
     tab.addEventListener('keydown', (event) => {
       const index = tabs.indexOf(tab);
       let next = null;
@@ -2155,9 +2155,13 @@ export function initTools(root = document) {
       if (!next) return;
       event.preventDefault();
       selectTab(next, true);
+      history.replaceState(null,'','#'+next.id.slice(4));
     });
   });
 
+  const readTab=()=>selectTab(tabs.find(tab=>'#'+tab.id.slice(4)===location.hash)||tabs[0]);
+  readTab();
+  window.addEventListener('hashchange',readTab);
   wireCopyButtons(scope);
 
   /* --- JSON ---------------------------------------------------- */

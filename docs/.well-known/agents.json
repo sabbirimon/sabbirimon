@@ -1,7 +1,6 @@
 {
-  "$schema": "https://imon.com.bd/.well-known/agents.json",
   "name": "IMON.world",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Sabbir Hassan Imon's personal site: open-source projects, an interactive pixel world, free browser games, and browser-based coding, AI and system-design learning labs.",
   "canonicalUrl": "https://imon.com.bd/",
   "owner": {
@@ -37,6 +36,7 @@
     "robots": "https://imon.com.bd/robots.txt"
   },
   "entryPoints": [
+    { "path": "/courses.html", "title": "Course catalog", "summary": "Crawlable lesson links grouped by course and chapter, with links to the three built-in quizzes. All lessons can be opened without an account." },
     {
       "path": "/",
       "title": "IMON | Sabbir Hassan Imon — Learning Labs, Open Source & Pixel Games",
@@ -82,10 +82,12 @@
     {
       "path": "/login.html",
       "title": "Log in",
-      "summary": "Optional Google and GitHub sign-in for carrying game scores between devices."
+      "summary": "Optional Google registration and sign-in, account passwords and private cloud progress."
     }
   ],
   "machineReadable": [
+    { "path": "/data/course-index.json", "format": "application/json", "description": "All three courses with exercise IDs, titles, chapters, briefs and stable absolute exercise URLs, plus the quiz URL for each course." },
+    { "path": "/data/circuits-course.json", "format": "application/json", "description": "The electronics and signals curriculum and exercise requirements." },
     { "path": "/llms.txt", "format": "text/plain", "description": "A hand-written plain-text map of the site for language models." },
     { "path": "/.well-known/agents.json", "format": "application/json", "description": "This file." },
     { "path": "/sitemap.xml", "format": "application/xml", "description": "Canonical URL list." },
@@ -109,7 +111,7 @@
     { "host": "dev.to", "purpose": "Fallback headlines for the tech and science feeds.", "when": "Daily section, only when a preferred provider is unreachable." },
     { "host": "api.stackexchange.com", "purpose": "Public Stack Overflow question search.", "when": "Code Lab lookup button. Only the search words are sent." },
     { "host": "cloudflare-dns.com", "purpose": "DNS-over-HTTPS resolution of a domain the visitor types.", "when": "Tools page DNS lookup, only on an explicit button press." },
-    { "host": "supabase.co", "purpose": "Google and GitHub sign-in, and cloud save of game scores.", "when": "Only when the visitor chooses to sign in." }
+    { "host": "supabase.co", "purpose": "Account authentication and private cloud saves.", "when": "Only when the visitor chooses to sign in." }
   ],
   "content": {
     "writtenBy": "the owner, by hand",

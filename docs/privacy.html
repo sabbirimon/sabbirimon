@@ -175,6 +175,7 @@
 <p class="privacy-note">A small note on <code>imon-auth-session-v1</code>: it holds an access and refresh token for your Supabase session. That is standard for any "sign in with Google" site — it is how the site knows you are signed in — but it does mean that key is sensitive. Clearing site data signs you out and removes it.</p>
 
 <h3 class="privacy-subhead">On the server (the Supabase database)</h3>
+<p>Each course quiz also saves its personal best in local storage under its own <code>imon-course-quiz-</code> key. This score stays on this device.</p>
 <p class="privacy-lede">This only applies if you sign in. The site uses one Supabase table called <code>progress</code>, which holds a single JSON blob per signed-in account:</p>
 <ul class="privacy-list">
 <li><strong>What it holds:</strong> the same score and progress values listed above, plus your Supabase user ID and the time of the last update. Your name and email come from Google or GitHub via Supabase Auth, which stores them in its own user table.</li>
@@ -200,7 +201,7 @@
 <p>There is no Google Analytics, no tag manager, no Plausible, Matomo, Fathom, Hotjar, Microsoft Clarity, Sentry, Segment, Mixpanel, Amplitude, or any other analytics, error-reporting, or advertising tag anywhere in this site's code. There are no tracking pixels, no <code>navigator.sendBeacon</code> calls, no third-party iframes, and no third-party fonts or images loaded from someone else's server.</p>
 <p>The only code that talks to the network is the handful of API calls listed at the top of this page, and each one is there to make a visible feature work.</p>
 </div>
-<p class="privacy-lede">One thing worth naming plainly: the site does use cookies — but only the ones a website cannot function without. If you sign in, the Supabase session needs a cookie to stay signed in. If you do not sign in, no cookie identifies you, and the site's own features do not need one.</p>
+<p class="privacy-lede">One thing worth naming plainly: the site does use cookies — but only the ones a website cannot function without. If you sign in, the site stores a Supabase session in browser local storage to keep you signed in. If you do not sign in, no cookie identifies you, and the site's own features do not need one.</p>
 <p class="privacy-lede">There is also a service worker (<code>sw.js</code>) that caches the site's own files in your browser so the games keep working offline. It stores static assets of this site — HTML, CSS, JavaScript, images — in the browser's cache storage. It does not cache, store, or transmit anything about you, and it does not run any tracking.</p>
 </section>
 

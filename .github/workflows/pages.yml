@@ -53,6 +53,8 @@ jobs:
           path.write_text(text)
           print(f'Offline cache: {version}')
           PY
+      - name: Check the published course catalog matches the labs
+        run: node scripts/course-catalog.mjs --check
       - name: Test game and interaction models
         run: node --test tests/*.test.mjs
       - name: Version local scripts and styles for browsers and the CDN

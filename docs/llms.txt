@@ -17,6 +17,10 @@ This file is a plain-text map of the site for language models and other automate
 
 ## Pages
 
+### [Course catalog](https://imon.com.bd/courses.html)
+All exercises are linked in static HTML, arranged by course and chapter. The [JSON course index](https://imon.com.bd/data/course-index.json) supplies each exercise ID, title, brief and absolute workbench URL. Each course also has a five-question quiz with explanations, accessible at its quizUrl. Reading the catalog and practicing require no account.
+
+
 ### [Home](https://imon.com.bd/)
 The main site. Sections:
 - [Projects](https://imon.com.bd/#projects) — open-source repositories: HyperL, meshlit, OmniCast, OmniRecovery, and a wider list on [GitHub](https://github.com/sabbirimon?tab=repositories).
@@ -40,13 +44,13 @@ Learn electronics and signals through 39 exercises in twelve chapters: voltage, 
 A standalone 18-city infrastructure management game with a pure simulation engine and a canvas UI. Power and data travel through separate layers; Cat6 reach, fibre capacity, generation, hardware, coverage, maintenance, prices and customer satisfaction determine service revenue. Later chapters unlock regional links, LEO ground stations and paid automation with budget reserves. Keyboard construction, touch pan/zoom, map overlays, fullscreen, pause/speed controls, and sound off by default. Saves live in the visitor's browser.
 
 ### [Developer Toolbox](https://imon.com.bd/tools/)
-Offline-first developer utilities: JSON formatter and validator, YAML, Terraform, SQL and XML formatters, Base64 encoder/decoder, JWT decoder, timestamp converter, regex tester, UUID generator, hash generator, colour contrast checker, and a DNS lookup tool.
+Offline-first developer utilities: JSON formatter and validator, YAML, Terraform, SQL and XML formatters, Base64 encoder/decoder, JWT decoder, timestamp converter, regex tester, UUID generator, hash generator, colour contrast checker, a DNS lookup tool, URL inspection, Unicode text counts, and a playable [sound library](https://imon.com.bd/tools/#sounds).
 
 ### [Privacy & data notice](https://imon.com.bd/privacy.html)
 A hand-written notice listing every third-party service the browser contacts, every key written to local storage, what reaches the optional Supabase table when a visitor signs in, and what is never stored anywhere. It names MDN's search API as the first choice for the Code Lab lookup and explains that it was replaced because it sends no CORS header, so a static host cannot call it.
 
 ### [Log in](https://imon.com.bd/login.html)
-Optional Google and GitHub sign-in, used only to carry game scores and quiz results between devices. Nothing is written for visitors who never sign in.
+Optional Google account registration and sign-in for private cloud progress. Signed-in players can also set an account password. Nothing is written for visitors who never sign in.
 
 ## Machine-readable companion
 

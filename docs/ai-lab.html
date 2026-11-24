@@ -13,14 +13,14 @@
 <meta property="og:description" content="Learn AI, machine learning and system design by writing real Python and real designs in your browser. Free, offline-friendly and no account needed.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://imon.com.bd/ai-lab.html">
-<meta property="og:image" content="https://imon.com.bd/social-card.png">
-<meta property="og:image:alt" content="IMON — Let’s Code Together. A colorful pixel world of open-source projects and browser games.">
+<meta property="og:image" content="https://imon.com.bd/art/lab-ai.webp">
+<meta property="og:image:alt" content="A small robot studying a constellation">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@sabbirimon">
 <meta name="twitter:title" content="AI Lab · IMON.world">
 <meta name="twitter:description" content="Learn AI, machine learning and system design by writing real Python and real designs in your browser. Free, offline-friendly and no account needed.">
-<meta name="twitter:image" content="https://imon.com.bd/social-card.png">
-<meta name="twitter:image:alt" content="IMON — Let’s Code Together. A colorful pixel world of open-source projects and browser games.">
+<meta name="twitter:image" content="https://imon.com.bd/art/lab-ai.webp">
+<meta name="twitter:image:alt" content="A small robot studying a constellation">
 <link rel="canonical" href="https://imon.com.bd/ai-lab.html">
 <link rel="alternate" type="text/plain" href="https://imon.com.bd/llms.txt" title="IMON.world in plain text for language models">
 <link rel="alternate" type="application/json" href="https://imon.com.bd/.well-known/agents.json" title="IMON.world machine-readable description for AI agents">
@@ -34,7 +34,9 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LearningResource",
+  "@type": ["Course", "LearningResource"],
+  "@id": "https://imon.com.bd/ai-lab.html#course",
+  "image": "https://imon.com.bd/art/lab-ai.webp",
   "name": "AI Lab",
   "description": "Learn AI, machine learning and system design by writing real Python and real designs in your browser. Free, offline-friendly and no account needed.",
   "url": "https://imon.com.bd/ai-lab.html",
@@ -43,7 +45,6 @@
   "educationalLevel": "Beginner to intermediate",
   "isAccessibleForFree": true,
   "interactivityType": "active",
-  "numberOfCredits": 54,
   "teaches": "Python for models, AI safety, system design, working with APIs and working with data",
   "provider": {
     "@type": "Person",
@@ -63,6 +64,7 @@
 <link rel="stylesheet" href="ai-lab.css">
 <script>document.documentElement.classList.remove('no-js');</script>
 <link rel="stylesheet" href="studio.css">
+<script type="module" src="course-quiz.js"></script>
 </head>
 <body class="lab-page ai-lab-page">
 <a class="lab-skip" href="#ai-lab-work">Skip to the workbench</a>
@@ -100,8 +102,9 @@
       <h1 class="lab-title" id="ai-lab-title" data-ai-title>Loading the course</h1>
       <p class="lab-lead" data-ai-brief>The course is being loaded. If it does not appear, the JSON file could not be read.</p>
 
-      <a class="workbench-link" href="#ai-lab-work">Go to workbench</a>
+      <div class="study-actions"><a class="workbench-link" href="#ai-lab-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button></div>
       <details class="lab-example"><summary>Worked example</summary><p><code>print(2 * 3)</code></p><p>Try this in a Python exercise. Predict the output, press Run, then change one number and run it again.</p></details>
+      <details class="study-chapter"><summary>Study this chapter</summary><div class="lab-learn" data-ai-learn></div></details>
       <div class="lab-instructions">
         <h2 class="lab-instructions-title">Instructions</h2>
         <ol class="lab-steps">
@@ -112,7 +115,7 @@
         <pre class="ai-expected" data-ai-expected hidden></pre>
       </div>
 
-      <div class="lab-learn" data-ai-learn></div>
+      
 
       <p class="lab-status" data-ai-status role="status" aria-live="polite"></p>
 
@@ -188,7 +191,12 @@
   </section>
 </main>
 
-<footer class="lab-foot">
+<dialog class="lesson-dialog quiz-dialog" id="course-quiz" data-course-quiz="ai" aria-labelledby="quiz-heading">
+  <div class="quiz-top"><h2 id="quiz-heading">AI Lab quiz</h2><button class="studio-control" type="button" data-close-quiz>Close</button></div>
+  <p data-score></p><fieldset><legend tabindex="-1"></legend><div data-choices></div></fieldset>
+  <p role="status"></p><button type="button" class="studio-control" data-grade>Check answer</button>
+</dialog>
+<footer class="lab-foot"><a href="courses.html#ai">Browse all AI Lab lessons</a>
   <p>Built for practice. Every exercise runs locally in your browser — no account, no upload, no tracking, and no paid API.</p>
 </footer>
 

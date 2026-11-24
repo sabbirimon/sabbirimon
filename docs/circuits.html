@@ -13,14 +13,14 @@
 <meta property="og:description" content="Learn electronics and signals in your browser. Build a circuit, watch the scope, and check your working against real numbers.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://imon.com.bd/circuits.html">
-<meta property="og:image" content="https://imon.com.bd/social-card.png">
-<meta property="og:image:alt" content="IMON — Let’s Code Together. A colorful pixel world of open-source projects and browser games.">
+<meta property="og:image" content="https://imon.com.bd/art/lab-circuits.webp">
+<meta property="og:image:alt" content="An oscilloscope on a pixel-art electronics bench">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@sabbirimon">
 <meta name="twitter:title" content="Circuits &amp; Signals · IMON.world">
 <meta name="twitter:description" content="Learn electronics and signals in your browser. Build a circuit, watch the scope, and check your working against real numbers.">
-<meta name="twitter:image" content="https://imon.com.bd/social-card.png">
-<meta name="twitter:image:alt" content="IMON — Let’s Code Together. A colorful pixel world of open-source projects and browser games.">
+<meta name="twitter:image" content="https://imon.com.bd/art/lab-circuits.webp">
+<meta name="twitter:image:alt" content="An oscilloscope on a pixel-art electronics bench">
 <link rel="canonical" href="https://imon.com.bd/circuits.html">
 <link rel="alternate" type="text/plain" href="https://imon.com.bd/llms.txt" title="IMON.world in plain text for language models">
 <link rel="alternate" type="application/json" href="https://imon.com.bd/.well-known/agents.json" title="IMON.world machine-readable description for AI agents">
@@ -28,7 +28,9 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LearningResource",
+  "@type": ["Course", "LearningResource"],
+  "@id": "https://imon.com.bd/circuits.html#course",
+  "image": "https://imon.com.bd/art/lab-circuits.webp",
   "name": "Circuits & Signals",
   "description": "Learn electronics and signals in your browser. Build a circuit, watch the scope, and check your working against real numbers.",
   "url": "https://imon.com.bd/circuits.html",
@@ -57,6 +59,7 @@
 <link rel="stylesheet" href="circuits.css">
 <script>document.documentElement.classList.remove('no-js');</script>
 <link rel="stylesheet" href="studio.css">
+<script type="module" src="course-quiz.js"></script>
 </head>
 <body class="lab-page circuits-page">
 <a class="lab-skip" href="#circuits-work">Skip to the workbench</a>
@@ -94,8 +97,9 @@
       <h1 class="lab-title" id="circuits-title" data-circuits-title>Loading the course</h1>
       <p class="lab-lead" data-circuits-brief>The course is being loaded. If it does not appear, the JSON file could not be read.</p>
 
-      <a class="workbench-link" href="#circuits-work">Go to workbench</a>
+      <div class="study-actions"><a class="workbench-link" href="#circuits-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button></div>
       <details class="lab-example"><summary>Worked example</summary><p><code>I = V / R = 3 V / 1000 Ω = 3 mA</code></p><p>With a fixed 3 V source, doubling the resistance halves the current. Try comparing two resistor values on the bench.</p></details>
+      <details class="study-chapter"><summary>Study this chapter</summary><div class="lab-learn" data-circuits-learn></div></details>
       <div class="lab-instructions">
         <h2 class="lab-instructions-title">Instructions</h2>
         <ol class="lab-steps" data-circuits-steps>
@@ -118,7 +122,7 @@
     </article>
 
     <!-- The study material --------------------------------------------- -->
-    <div class="lab-learn" data-circuits-learn></div>
+    
   </section>
 
   <!-- The workbench --------------------------------------------------- -->
@@ -236,7 +240,12 @@
   </section>
 </main>
 
-<footer class="lab-foot">
+<dialog class="lesson-dialog quiz-dialog" id="course-quiz" data-course-quiz="circuits" aria-labelledby="quiz-heading">
+  <div class="quiz-top"><h2 id="quiz-heading">Circuits &amp; Signals quiz</h2><button class="studio-control" type="button" data-close-quiz>Close</button></div>
+  <p data-score></p><fieldset><legend tabindex="-1"></legend><div data-choices></div></fieldset>
+  <p role="status"></p><button type="button" class="studio-control" data-grade>Check answer</button>
+</dialog>
+<footer class="lab-foot"><a href="courses.html#circuits">Browse all Circuits &amp; Signals lessons</a>
   <p>Built for practice. Every circuit is solved in your browser — no account, no upload, no tracking.</p>
 </footer>
 

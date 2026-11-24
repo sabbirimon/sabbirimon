@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#030719">
 <title>Signing in · IMON.world</title>
+<meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
@@ -22,7 +23,7 @@
     <p class="auth-notice">Signing in needs JavaScript. Enable it to complete the sign-in.</p>
   </noscript>
   <div class="auth-callback-actions">
-    <a class="auth-button" href="./"><span data-pixel-text>Back to IMON.world</span></a>
+    <a class="auth-button" href="login.html"><span data-pixel-text>Return to sign-in</span></a>
   </div>
 </main>
 <script type="module">
@@ -54,6 +55,7 @@ async function run() {
   const params = new URLSearchParams(location.search);
   const error = params.get('error_description') || params.get('error');
   const code = params.get('code');
+  history.replaceState(null,'',location.pathname);
 
   if (!isConfigured()) {
     setTitle('Sign-in failed');
@@ -62,7 +64,7 @@ async function run() {
   }
   if (error) {
     setTitle('Sign-in failed');
-    setStatus(`Sign-in failed — ${error}`, 'error');
+    setStatus('The provider could not complete sign-in. Return to the account page and try again.', 'error');
     return;
   }
   if (!code) {
@@ -81,7 +83,6 @@ async function run() {
   }
   setTitle('Signed in');
   setStatus('Signed in. Taking you back to IMON.world…', 'ok');
-  history.replaceState(null,'',location.pathname);
   location.replace(consumeEmailFlow()==='recover'?'./login.html?mode=update':returnTarget());
 }
 

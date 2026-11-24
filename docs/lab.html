@@ -13,14 +13,14 @@
 <meta property="og:description" content="Practice HTML, CSS and JavaScript right in your browser. Write code, see it run live, and earn XP for every exercise you solve.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://imon.com.bd/lab.html">
-<meta property="og:image" content="https://imon.com.bd/social-card.png">
-<meta property="og:image:alt" content="IMON — Let’s Code Together. A colorful pixel world of open-source projects and browser games.">
+<meta property="og:image" content="https://imon.com.bd/art/lab-code.webp">
+<meta property="og:image:alt" content="A glowing coding terminal in a pixel-art studio">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@sabbirimon">
 <meta name="twitter:title" content="Code Lab · IMON.world">
 <meta name="twitter:description" content="Practice HTML, CSS and JavaScript right in your browser. Write code, see it run live, and earn XP for every exercise you solve.">
-<meta name="twitter:image" content="https://imon.com.bd/social-card.png">
-<meta name="twitter:image:alt" content="IMON — Let’s Code Together. A colorful pixel world of open-source projects and browser games.">
+<meta name="twitter:image" content="https://imon.com.bd/art/lab-code.webp">
+<meta name="twitter:image:alt" content="A glowing coding terminal in a pixel-art studio">
 <link rel="canonical" href="https://imon.com.bd/lab.html">
 <link rel="alternate" type="text/plain" href="https://imon.com.bd/llms.txt" title="IMON.world in plain text for language models">
 <link rel="alternate" type="application/json" href="https://imon.com.bd/.well-known/agents.json" title="IMON.world machine-readable description for AI agents">
@@ -28,7 +28,9 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LearningResource",
+  "@type": ["Course", "LearningResource"],
+  "@id": "https://imon.com.bd/lab.html#course",
+  "image": "https://imon.com.bd/art/lab-code.webp",
   "name": "Code Lab",
   "description": "Practice HTML, CSS and JavaScript right in your browser. Write code, see it run live, and earn XP for every exercise you solve.",
   "url": "https://imon.com.bd/lab.html",
@@ -56,6 +58,7 @@
 <link rel="stylesheet" href="lab.css"><link rel="stylesheet" href="lab-layout.css">
 <script>document.documentElement.classList.remove('no-js');</script>
 <link rel="stylesheet" href="studio.css">
+<script type="module" src="course-quiz.js"></script>
 </head>
 <body class="lab-page">
 <a class="lab-skip" href="#lab-work">Skip to the workbench</a>
@@ -93,8 +96,9 @@
       <h1 class="lab-title" id="lab-title" data-lab-title>Your first tag</h1>
       <p class="lab-lead" data-lab-brief></p>
 
-      <a class="workbench-link" href="#lab-work">Go to workbench</a>
+      <div class="study-actions"><a class="workbench-link" href="#lab-work">Go to workbench</a><button type="button" class="workbench-link quiz-launch" data-open-quiz>Take course quiz</button></div>
       <details class="lab-example"><summary>Worked example</summary><p><code>&lt;h1&gt;Hello, world!&lt;/h1&gt;</code></p><p>Try it in the HTML tab, then change the words between the tags and compare the preview.</p></details>
+      <details class="study-chapter"><summary>Study this chapter</summary><div class="lab-learn" data-lab-learn></div></details>
       <div class="lab-instructions">
         <h2 class="lab-instructions-title">Instructions</h2>
         <ol class="lab-steps" data-lab-steps-code>
@@ -113,7 +117,7 @@
     <!-- The learning panel: the goal, the study material, how the answer is
          checked and what you can do afterwards. It sits under the brief so
          the task is read first and the teaching follows. -->
-    <div class="lab-learn" data-lab-learn></div>
+    
 
 
 
@@ -243,7 +247,12 @@
   </section>
 </main>
 
-<footer class="lab-foot">
+<dialog class="lesson-dialog quiz-dialog" id="course-quiz" data-course-quiz="code" aria-labelledby="quiz-heading">
+  <div class="quiz-top"><h2 id="quiz-heading">Code Lab quiz</h2><button class="studio-control" type="button" data-close-quiz>Close</button></div>
+  <p data-score></p><fieldset><legend tabindex="-1"></legend><div data-choices></div></fieldset>
+  <p role="status"></p><button type="button" class="studio-control" data-grade>Check answer</button>
+</dialog>
+<footer class="lab-foot"><a href="courses.html#code">Browse all Code Lab lessons</a>
   <p>Built for practice. Every exercise runs locally in your browser — no account, no upload, no tracking.</p>
 </footer>
 

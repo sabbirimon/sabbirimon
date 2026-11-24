@@ -273,3 +273,7 @@ body.tools-page .tool-seg .seg-button[aria-pressed="true"]{background:var(--gold
  .tool-grid-table th{width:auto}
  .kv-value{text-align:left}
 }
+.sound-shelf { display:grid; grid-template-columns:repeat(auto-fill,minmax(9rem,1fr)); gap:.65rem; margin:1rem 0; }
+.sound-shelf button { min-height:44px; text-align:start; }
+#panel-url input,#count-source { box-sizing:border-box; width:100%; margin:.5rem 0; }
+#url-result { overflow-wrap:anywhere; white-space:pre-wrap; }
