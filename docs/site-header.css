@@ -191,6 +191,9 @@
     left: 0;
     right: 0;
     top: 100%;
+    max-height: calc(100dvh - 100%);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
@@ -213,6 +216,7 @@
 
   .site-header nav a {
     height: 44px;
+    flex-shrink: 0;
     padding: 0 24px;
     border-bottom: 1px solid rgba(42, 48, 73, .55);
     font-size: 15px;

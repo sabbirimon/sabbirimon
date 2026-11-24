@@ -71,3 +71,22 @@
 }
 
 @media(prefers-reduced-motion:reduce){.arcade-modal *{animation:none!important;transition:none!important}.arcade-btn:hover,.arcade-btn:active{transform:none}}
+
+@media (pointer:coarse) {
+  .arcade-dpad { grid-template-columns:repeat(3,46px);grid-template-rows:repeat(2,46px);gap:5px }
+  .arcade-close { min-width:44px;min-height:44px }
+  .arcade-start,.arcade-actions button,.arcade-settings button,.arcade-settings select { min-height:44px }
+  .arcade-settings label { min-height:44px }
+  .arcade-settings { flex-wrap:wrap }
+
+}
+
+@media (pointer:coarse) and (max-width:600px) {
+  .arcade-modal { overflow-y:auto;overscroll-behavior:contain }
+  .arcade-shell { height:auto;min-height:100% }
+  .arcade-board { flex:none;height:auto;aspect-ratio:3/2 }
+  .arcade-header { order:1 }.arcade-hud { order:2 }.arcade-board { order:3 }
+  .arcade-bottom { order:4;flex-wrap:wrap;justify-content:center;padding:.5rem 0 }
+  .arcade-bottom #arcade-help { display:none }
+  .arcade-toolbar { order:5 }.arcade-mode-note { order:6 }
+}

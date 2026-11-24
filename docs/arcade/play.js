@@ -5,6 +5,8 @@ const el = id => document.getElementById(id);
 const canvas=document.querySelector('canvas'), ctx=canvas.getContext('2d');
 const overlay=document.querySelector('.overlay'), cabinet=document.querySelector('.cabinet');
 const keys={left:false,right:false,jump:false,fire:false};
+// Preserve short touchscreen presses until the simulation has taken a step.
+const tapped = new Set();
 const mapped={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'fire'};
 const themes=[['#112c36','#245250','#70dcac'],['#22253c','#454168','#bda3ff'],['#2a2134','#5f3c53','#f5b88c'],['#142639','#284765','#8bdcf4'],['#242838','#4b5149','#dddb88'],['#261b34','#573963','#ff9fb9']];
 let state, game, mode='ready', best=0, frame=0, last=0, accumulator=0;
@@ -56,7 +58,7 @@ function draw(){
   for(const shot of s.shots)rect(shot.x,shot.y,shot.w,shot.h,'#a2ffe4');
   if(game==='runner')ctx.restore();
 }
-function resetKeys(){for(const key of Object.keys(keys))keys[key]=false;}
+function resetKeys(){tapped.clear();for(const key of Object.keys(keys))keys[key]=false;}
 function stop(next,title,button){
   mode=next;cancelAnimationFrame(frame);frame=0;last=0;accumulator=0;resetKeys();
   overlay.hidden=false;el('message').textContent=title;el('play').textContent=button;
@@ -67,7 +69,12 @@ function tick(time){
   accumulator+=last?Math.min((time-last)/1000,.1):0;last=time;
   const score=state.score,lives=state.lives;
   const firing=state.cooldown;
-  while(accumulator>=1/120 && state.status==='playing'){step(state,keys,1/120);accumulator-=1/120;}
+  while(accumulator>=1/120 && state.status==='playing'){if (tapped.size) {
+      const input={...keys};
+      for(const key of tapped) input[key]=true;
+      tapped.clear();step(state,input,1/120);
+    } else step(state,keys,1/120);
+    accumulator-=1/120;}
   if(state.score!==score)playSound('coin');else if(state.lives<lives)playSound('hit');else if(state.cooldown>firing)playSound('pulse');
   if(state.score>best){best=state.score;try{localStorage.setItem('imon-arcade-'+game,String(best));}catch{}}
   draw();if(score!==state.score || lives!==state.lives)hud();
@@ -115,7 +122,8 @@ window.addEventListener('keydown',e=>{
 window.addEventListener('keyup',e=>{if(mapped[e.code])keys[mapped[e.code]]=false;});
 document.querySelectorAll('[data-key]').forEach(button=>{
   const key=button.dataset.key;
-  button.onpointerdown=e=>{if(mode!=='playing')return;e.preventDefault();button.setPointerCapture(e.pointerId);keys[key]=true;};
+  button.onpointerdown=e=>{if(mode!=='playing')return;e.preventDefault();button.setPointerCapture(e.pointerId);keys[key]=true;tapped.add(key);};
+  button.onpointercancel=()=>{tapped.delete(key);keys[key]=false};
   button.onlostpointercapture=()=>{keys[key]=false;};
 });
 function drag(e){if(mode!=='playing'||game==='runner')return;

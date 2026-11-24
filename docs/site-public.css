@@ -10,3 +10,10 @@
 .consent-panel button { cursor:pointer; padding:.5rem .7rem; color:#edf8fb; background:#253a50; border:1px solid #66889a; font:650 .9rem/1.3 system-ui,sans-serif; min-height:40px; }
 .consent-panel a { color:#b9f2df; text-decoration:underline; }
 [data-published-content]:not([hidden]) { padding:1rem; border-left:3px solid #91dcc9; background:#192b3d; color:#eaf3fc; white-space:pre-line; overflow-wrap:anywhere; }
+
+@media (pointer:coarse) {
+  .site-utilities :is(a,button),.consent-panel a {display:inline-flex;align-items:center;justify-content:center;min-height:44px}
+  .site-utilities {gap:.2rem .8rem}
+  .consent-panel {max-height:calc(100dvh - 2rem);overflow-y:auto}
+  .consent-panel :is(label,button) {min-height:44px;box-sizing:border-box}
+}

@@ -316,9 +316,9 @@ export function consumeEmailFlow() {
  * @returns {Promise<boolean>} false when the provider is unknown or the
  *   module is not configured.
  */
-export function loginReturnTarget() {
-  const page = new URLSearchParams(location.search).get('return') || '';
-  return /^(admin\/(content\/|metrics\/|settings\/|users\/|library\/|data\/|backups\/)?|progress\.html|leaderboard\.html)$/.test(page) ? page : './';
+export function loginReturnTarget(search = location.search) {
+  const page = new URLSearchParams(search).get('return') || '';
+  return /^(admin\/(content\/|metrics\/|settings\/|users\/|library\/|data\/|backups\/|guide\/)?|progress\.html|leaderboard\.html)$/.test(page) ? page : './';
 }
 
 export async function signIn(provider) {

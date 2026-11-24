@@ -3,3 +3,6 @@
 .recordings article h3 {margin:.15rem 0 .8rem;color:#ffd384}
 .recordings audio {display:block;width:100%;max-width:20rem}
 .recordings p {overflow-wrap:anywhere}
+@media (pointer:coarse) {
+  .recordings nav a {display:inline-flex;align-items:center;min-height:44px}
+}

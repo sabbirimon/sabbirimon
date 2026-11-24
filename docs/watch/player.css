@@ -18,3 +18,27 @@ button{background:#8ceacc;color:#122239;font:400 1rem/1.3 Silkscreen,monospace;b
 #cover span{padding:.45rem .7rem;background:#0a162de8;color:#ffe6a5;font:400 clamp(1rem,2vw,1.4rem)/1.3 Silkscreen,monospace}
 #actions{margin-top:1rem}#actions[hidden],[hidden]{display:none!important}details,footer{margin-top:1.4rem}summary{cursor:pointer}
 body main{width:min(100%,86rem)}.watch-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(15rem,.36fr);gap:1.2rem;margin-top:1rem}.watch-layout .view{min-width:0}.view-controls{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:.65rem}.view-controls button,#enqueue{background:#16364a;color:#c3f8f4}.watch-side{padding:.9rem;border:2px solid #56768c;background:#13243b;align-self:start}.watch-side h2{font:400 1.25rem/1.35 Silkscreen,monospace;color:#ffe09a;margin:.4rem 0}.watch-side ol{padding:0;list-style:none}.watch-side li{display:flex;align-items:center;gap:.4rem}.watch-side button{border:0;box-shadow:none;background:#213a50;color:#d2ffed;font:600 1rem/1.4 Mulish,system-ui,sans-serif;text-align:left;margin:.2rem 0}.watch-side [data-play]{width:100%;overflow-wrap:anywhere}.watch-side small{display:block;color:#c0d0e0}.watch-layout.wide{grid-template-columns:minmax(0,1fr)}.watch-layout.wide .watch-side{max-width:42rem}.watch-layout.expanded,.watch-layout:fullscreen{background:#091426;position:fixed;inset:0;z-index:100;padding:1rem;margin:0;overflow:auto;display:block}.watch-layout.expanded .watch-side,.watch-layout:fullscreen .watch-side{display:none}.watch-layout.expanded #screen,.watch-layout:fullscreen #screen{height:calc(100dvh - 11rem);min-height:200px}.watch-layout [aria-pressed=true]{border-color:#ffda85}@media(max-width:780px){.watch-layout{grid-template-columns:minmax(0,1fr)}}
+
+html.full-window{overflow:hidden}
+@media(max-width:780px){
+  .watch-layout.wide:not(.expanded):not(:fullscreen) .view{margin-inline:calc(-1 * clamp(1rem,4vw,3rem))}
+  .watch-layout.wide .view-controls,.watch-layout.wide #actions,.watch-layout.wide #fallback{padding-inline:1rem}
+}
+
+@media (pointer:coarse) {
+  nav a, footer a, #external {display:inline-flex;min-height:44px;align-items:center}
+  button, input, summary {min-height:44px}
+  button, summary, a {touch-action:manipulation}
+  summary {padding-block:.6rem}
+  .watch-side li button:last-child {flex:0 0 44px;text-align:center}
+}
+@media (max-width:480px) {
+  .controls,.view-controls {display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .controls input {grid-column:1/-1;width:100%}
+  .controls button,.view-controls button {min-width:0;padding-inline:.35rem;font-size:.94rem}
+}
+/* Keep the stage and exit control on the same screen when a phone rotates. */
+.watch-layout:is(.expanded,:fullscreen) .view {height:100%;display:flex;flex-direction:column}
+.watch-layout:is(.expanded,:fullscreen) #screen {min-height:0;height:auto;flex:1}
+.watch-layout:is(.expanded,:fullscreen) #fallback {display:none}
+.watch-layout:is(.expanded,:fullscreen) #actions {margin-top:.5rem}

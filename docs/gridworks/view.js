@@ -291,14 +291,18 @@ function hardwareMarkup(cell) {
   }).join('')}<p>CPU, GPU and storage add demand and heat. Keep cooling balanced to avoid throttling.</p></section>`;
 }
 function renderOperations(force = false) {
-  if (!state || !analysis || !force && $('#operator-panel').contains(document.activeElement)) return;
+  if (!state || !analysis) return;
   const horizon=Number($('#forecast-window').value);
   const projected=clamp(state.credits+analysis.net*horizon,0,1000000000);
   const bottleneck=analysis.power.deficit>0?'Power shortfall':analysis.data.deficit>0?'Data shortfall':'Demand is covered';
   $('#forecast-note').textContent=bottleneck+' · At current rates: '+fmt(projected)+' credits after '+horizon+' minutes.';
-  $('#service-price').value = state.servicePrice || 1;
-  $('#service-price-label').textContent = `${Number(state.servicePrice || 1).toFixed(2)}×`;
+  if (force || document.activeElement !== $('#service-price')) {
+    $('#service-price').value = state.servicePrice || 1;
+    $('#service-price-label').textContent = `${Number(state.servicePrice || 1).toFixed(2)}×`;
+  }
   $('#service-metrics').innerHTML = [['Customers', fmt(analysis.customers)], ['Service', `${fmt(analysis.service)}%`], ['Revenue', `${fmt(analysis.income)} / min`], ['Operating cost', `${fmt(analysis.maintenance)} / min`], ['Compute', `${fmt(analysis.compute)} units`], ['Heat', `${fmt(analysis.heat)} units`]].map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join('');
+  // Preserve focus and in-progress reserve edits while live metrics update.
+  if (!force && $('#operator-list').contains(document.activeElement)) return;
   $('#operator-list').innerHTML = Object.entries(Engine.AUTOMATIONS || {}).map(([key, def]) => {
     const owned = state.automations?.[key], available = sandbox || state.levelIndex >= def.unlockLevel;
     const price = owned ? Engine.getAutomationUpgradeCost(state, key) : def.cost;
@@ -570,13 +574,38 @@ $('#motion-button').onclick = () => { motion = !motion; weather.setMotion(motion
 $('#fullscreen-button').onclick = async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen(); else toast('Fullscreen is not available in this browser. The game already fills this tab.'); } catch { toast('Fullscreen is unavailable here. Keep playing in this tab.'); } };
 document.addEventListener('fullscreenchange', () => { $('#fullscreen-button span').textContent = document.fullscreenElement ? 'EXIT FULLSCREEN' : 'FULLSCREEN'; setTimeout(() => { resizeMap(); fitMap(); }, 50); });
 $$('dialog').forEach(dialog => dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } }));
+const mapTouches = new Map();
+function pinchGeometry() {
+  const [a,b] = mapTouches.values();
+  return {x:(a.x+b.x)/2, y:(a.y+b.y)/2, distance:Math.hypot(a.x-b.x,a.y-b.y)};
+}
 canvas.addEventListener('pointerdown', event => {
   if (event.button !== 0 && event.button !== 1) return;
-  const p = point(event); pointer = { id: event.pointerId, start: p, camera: { ...camera }, moved: false, pan: mode === 'pan' || event.button === 1 || spaceHeld };
+  const p = point(event);
+  if (event.pointerType === 'touch') {
+    mapTouches.set(event.pointerId, p);
+    if (mapTouches.size > 1) {
+      pointer = null;
+      canvas.setPointerCapture(event.pointerId);
+      return;
+    }
+  }
+  pointer = { id: event.pointerId, start: p, camera: { ...camera }, moved: false, pan: mode === 'pan' || event.button === 1 || spaceHeld };
   canvas.setPointerCapture(event.pointerId); canvas.focus({ preventScroll: true }); if (pointer.pan) viewport.style.cursor = 'grabbing';
 });
 canvas.addEventListener('pointermove', event => {
-  const p = point(event); hover = tilePoint(p);
+  const p = point(event);
+  if (mapTouches.has(event.pointerId)) {
+    const before=mapTouches.size===2 ? pinchGeometry() : null;
+    mapTouches.set(event.pointerId,p);
+    if (before) {
+      const after=pinchGeometry();
+      camera.x+=after.x-before.x;camera.y+=after.y-before.y;
+      zoomAt(before.distance>0 ? after.distance/before.distance : 1,after.x,after.y);
+      return;
+    }
+  }
+  hover = tilePoint(p);
   if (pointer && event.pointerId === pointer.id) {
     const dx = p.x - pointer.start.x, dy = p.y - pointer.start.y;
     if (Math.hypot(dx, dy) > 6) pointer.moved = true;
@@ -584,8 +613,11 @@ canvas.addEventListener('pointermove', event => {
   }
   draw();
 });
-canvas.addEventListener('pointerup', event => { if (!pointer || event.pointerId !== pointer.id) return; const wasPan = pointer.pan, moved = pointer.moved; pointer = null; if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId); viewport.style.cursor = mode === 'pan' ? 'grab' : mode === 'build' ? 'crosshair' : 'default'; if (!wasPan && !moved) actOnTile(tilePoint(point(event))); });
-canvas.addEventListener('pointercancel', () => { pointer = null; });
+canvas.addEventListener('pointerup', event => { mapTouches.delete(event.pointerId); if (!pointer || event.pointerId !== pointer.id) return; const wasPan = pointer.pan, moved = pointer.moved; pointer = null; if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId); viewport.style.cursor = mode === 'pan' ? 'grab' : mode === 'build' ? 'crosshair' : 'default'; if (!wasPan && !moved) actOnTile(tilePoint(point(event))); });
+canvas.addEventListener('lostpointercapture', event => {
+  mapTouches.delete(event.pointerId);
+  if (pointer?.id===event.pointerId) pointer=null;
+});
 canvas.addEventListener('wheel', event => { event.preventDefault(); const p = point(event); zoomAt(event.deltaY < 0 ? 1.13 : .885, p.x, p.y); }, { passive: false });
 canvas.addEventListener('keydown', event => {
   const moves = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };

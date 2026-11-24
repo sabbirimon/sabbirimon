@@ -26,7 +26,12 @@ get('choose').addEventListener('submit', event => {
   get('actions').hidden=get('fallback').hidden=false;
   status.textContent=video.provider+' selected.';
 });
-get('close').addEventListener('click',()=>{closePlayer();status.textContent='Player closed.';input.focus();});
+get('close').addEventListener('click',async()=>{
+  closePlayer();
+  await exitFullWindow();
+  status.textContent='Player closed.';
+  input.focus();
+});
 input.addEventListener('input',()=>{input.removeAttribute('aria-invalid');status.textContent='';});
 
 const room=get('room');
@@ -34,18 +39,34 @@ get('wide').onclick=()=>{
   const on=room.classList.toggle('wide');get('wide').setAttribute('aria-pressed',String(on));
 };
 function fullState(){
-  const on=Boolean(document.fullscreenElement)||room.classList.contains('expanded');
+  const expanded=room.classList.contains('expanded');
+  const on=Boolean(document.fullscreenElement)||expanded;
   get('full').textContent=on?'Exit full window':'Full window';
   get('full').setAttribute('aria-pressed',String(on));
+  for(const sibling of room.parentElement.children){
+    if(sibling!==room)sibling.inert=expanded;
+  }
+  document.documentElement.classList.toggle('full-window',expanded);
+}
+async function exitFullWindow(){
+  room.classList.remove('expanded');
+  if(document.fullscreenElement)await document.exitFullscreen().catch(()=>{});
+  fullState();
 }
 get('full').onclick=async()=>{
-  if(document.fullscreenElement) await document.exitFullscreen();
-  else if(room.classList.contains('expanded'))room.classList.remove('expanded');
-  else {try{await room.requestFullscreen()}catch{room.classList.add('expanded')}}
-  fullState();
+  if(document.fullscreenElement||room.classList.contains('expanded'))await exitFullWindow();
+  else{
+    try{await room.requestFullscreen()}catch{room.classList.add('expanded')}
+    fullState();
+  }
 };
 document.addEventListener('fullscreenchange',fullState);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){room.classList.remove('expanded');fullState()}});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&room.classList.contains('expanded')){
+    void exitFullWindow();
+    get('full').focus();
+  }
+});
 const picks=[
   ['HTML in 100 Seconds','Fireship','youtu.be/ok-plXXHlWw'],
   ['But what is a neural network?','3Blue1Brown','youtu.be/Ilg3g-GewQ5'],
@@ -66,7 +87,16 @@ function showQueue(){
   get('empty').hidden=queue.length>0;get('queue').replaceChildren();
   for(const url of queue){
     const video=parseVideo(url),item=document.createElement('li'),remove=document.createElement('button');
-    const id=new URL(video.embed);const label=picks.find(p=>parseVideo(p[2]).original===url)?.[0] || video.provider+' · '+(id.searchParams.get('bvid')||id.searchParams.get('aid')||id.searchParams.get('episodeId')||id.pathname.split('/').pop());
+    const original=new URL(video.original);
+    const shortId=original.searchParams.get('v') || original.pathname.split('/').pop();
+    const title=picks.find(p=>{
+      const pick=new URL(parseVideo(p[2]).original);
+      return pick.pathname===original.pathname && pick.searchParams.get('v')===original.searchParams.get('v');
+    })?.[0] || video.provider+' · '+shortId;
+    const parts=[title];
+    if(original.searchParams.has('p'))parts.push('part '+original.searchParams.get('p'));
+    if(original.searchParams.has('t'))parts.push('at '+parseInt(original.searchParams.get('t'),10)+'s');
+    const label=parts.join(' · ');
     remove.type='button';remove.textContent='×';remove.setAttribute('aria-label','Remove '+label);
     remove.onclick=()=>{queue=queue.filter(entry=>entry!==url);save();showQueue();get('enqueue').focus()};
     item.append(playButton(label,url),remove);get('queue').append(item);

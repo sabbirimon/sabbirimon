@@ -27,7 +27,7 @@ function courseSection(course){
     chapters.get(e.chapter).push(e);
   }
   return `<section id="${course.id}"><div class="course-cover"><img width="900" height="300" src="art/lab-${course.id==='systems'?'ai':course.id}.webp" alt="" loading="lazy"><canvas data-learning-art="${course.id}" width="480" height="160" aria-hidden="true"></canvas></div><div class="catalog-copy"><h2>${escape(course.title)}</h2><p>${escape(course.subject)} · ${course.exercises.length} exercises</p><div class="track-actions"><a href="${course.url.slice(origin.length)}">Enter workbench</a><a href="exams/?track=${course.id}">Practical exam</a><a href="${new URL(course.quizUrl).pathname.slice(1)}#course-quiz">Take the ${escape(course.title)} quiz</a></div>
-${[...chapters].map(([name,list])=>`<details><summary>${escape(name)} (${list.length})</summary><ol>${list.map(e=>`<li><a href="${escape(e.url.slice(origin.length))}">${escape(e.title)}</a></li>`).join('\n')}</ol></details>`).join('\n')}
+${[...chapters].map(([name,list])=>`<details><summary>${escape(name)} (${list.length})</summary><ol>${list.map(e=>`<li data-brief="${escape(e.brief || '')}"><a href="${escape(e.url.slice(origin.length))}">${escape(e.title)}</a></li>`).join('\n')}</ol></details>`).join('\n')}
 </div></section>`;
 }
 const description='Browse '+count+' free browser exercises in web development, AI, electronics and systems, grouped by course and chapter. Open any lesson or take a course quiz.';

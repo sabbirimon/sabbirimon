@@ -18,3 +18,11 @@ button:disabled{opacity:.5}#play,.pad button:active{color:#152a26;background:var
 .cabinet:fullscreen{display:grid;align-content:center;background:#0c1524}.cabinet:fullscreen .screen{width:min(100%,calc(74dvh * 16 / 9))}
 [hidden]{display:none!important}
 @media(max-width:550px){.hud{font-size:.8rem;gap:.35rem}.toolbar{gap:.3rem}.toolbar button{font-size:.82rem;padding:.48rem}.screen{max-width:100%}header label{font-size:.85rem}.pad{justify-content:space-between}}
+
+@media (pointer:coarse) {
+  header a { display:inline-flex;align-items:center;min-height:44px }
+  button,select { min-height:44px }
+  .pad { display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:.5rem }
+  .pad button { min-height:50px;min-width:0;touch-action:none }
+  .toolbar button { touch-action:manipulation }
+}

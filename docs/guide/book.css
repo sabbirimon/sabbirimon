@@ -32,3 +32,6 @@
 .book footer {padding:1rem 0}
 @media(max-width:720px){.book .spread{grid-template-columns:1fr}.book article{display:grid;grid-template-columns: minmax(9rem, .9fr) 1fr}.book .rules dl{display:block}.book dt{margin-top:.85rem}}
 @media(max-width:490px){.book article{display:block}.book figure img{aspect-ratio:1.36;object-fit:cover;object-position:50% 32%}}
+@media (pointer:coarse) {
+  .book nav a,.book footer a,.book .scene a {display:inline-flex;align-items:center;min-height:44px}
+}

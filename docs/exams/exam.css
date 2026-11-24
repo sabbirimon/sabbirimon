@@ -1,1 +1,36 @@
 #tracks{display:flex;flex-wrap:wrap;gap:.6rem}#tracks a,#paper button,#report button{padding:.6rem .9rem;border:2px solid #6f97ab;background:#15324a;color:#c2ffed}#tracks [aria-current]{color:#ffe3a0;border-color:#ffd780}#paper section,#report{margin:1.2rem 0;padding:clamp(1rem,3vw,2rem);background:#14253b;border:2px solid #55718e;box-shadow:4px 4px #080f1c}#paper fieldset{border:0;border-top:1px solid #476176;margin:1rem 0;padding:.8rem 0;min-width:0}#paper label{display:block;padding:.35rem}#paper legend{font-weight:bold}#paper input[type=number]{width:9rem;max-width:100%;padding:.55rem}#paper input:focus-visible,#paper button:focus-visible{outline:3px solid #ffe2a3}#paper,#report{font:1rem/1.55 system-ui,sans-serif}#report article{border-top:1px solid #536a7a;margin-top:1rem}#report h3{color:#a8f2d6}
+
+@media (max-width: 700px) {
+  .catalog-page nav a, #report > a {
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 44px;
+  }
+  #paper :is(button, input[type=number]), #report button {
+    box-sizing: border-box;
+    min-height: 44px;
+    font-size: 16px;
+  }
+  #paper label {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 48px;
+    gap: .7rem;
+    margin-block: .35rem;
+    padding: .5rem .65rem;
+    border: 1px solid #527087;
+    cursor: pointer;
+  }
+  #paper label:has(input:checked) {
+    border-color: #93e8c7;
+    background: #23453f;
+  }
+  #paper label input {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+}

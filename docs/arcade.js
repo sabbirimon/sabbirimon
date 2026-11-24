@@ -200,6 +200,7 @@ export function initArcade() {
   const canvas = $('#arcade-canvas'), ctx = canvas.getContext('2d');
   const overlay = $('.arcade-overlay');
   const difficultySelect = $('#arcade-difficulty');
+  const turnPreview = $('#snake-path');
   const skinSelect = $('#snake-skin');
   const skinColors = {
     fern: {},
@@ -267,7 +268,7 @@ export function initArcade() {
     snakeBackdrop = null;
     dialog.dataset.game = game;
     skinSelect.closest('label').hidden=!isSnake;
-    $('#snake-path').closest('label').hidden=!isSnake;
+    turnPreview.closest('label').hidden=!isSnake;
     if (modeSelect) modeSelect.closest('label').hidden = !isSnake;
     if (modeNote) {
       modeNote.hidden = !isSnake;
@@ -463,7 +464,7 @@ export function initArcade() {
       snakeBackdrop.dataset.mode = state.mode;
     }
     ctx.drawImage(snakeBackdrop, 0, 0);
-    if ($('#snake-path').checked) {
+    if (turnPreview.checked) {
       let {x,y}=state.body[0];
       for(let i=0;i<3;i++){
         const dir=state.queue[Math.min(i,state.queue.length-1)]||state.direction;
@@ -615,6 +616,7 @@ export function initArcade() {
   $('.arcade-restart').addEventListener('click', () => { reset(); announce('Game reset. Select Start game when ready.'); });
   difficultySelect.addEventListener('change', reset);
   modeSelect?.addEventListener('change', reset);
+  turnPreview.addEventListener('change', draw);
   function syncSoundButton() {
     const sound = isSoundEnabled();
     $('.arcade-sound').setAttribute('aria-pressed', String(sound));
@@ -629,7 +631,7 @@ export function initArcade() {
   });
   dialog.addEventListener('keydown', event => {
     const direction = KEY_DIRECTION[event.key];
-    const editing = event.target.tagName === 'SELECT';
+    const editing = event.target.matches('select, input');
     if (editing) return;
     if (direction) {
       event.preventDefault();

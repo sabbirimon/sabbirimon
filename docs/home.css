@@ -17,3 +17,20 @@
 .world-home .arrival .hero-content{text-align:center}.world-home .arrival .hero-description{margin:.75rem auto}.world-home .arrival .hero-actions,.world-home .arrival .hero-location{justify-content:center}.arrival-menu h2,.portals span{text-align:center}.arrival-menu nav{justify-content:center}.portals span{display:grid;place-items:center;min-height:2.6rem;padding-inline:.35rem}.world-home .weather-choices button{align-content:center;justify-items:center}.world-home .arrival .world-toolbar .sky-controls>button{display:flex;align-items:center;justify-content:center;text-align:center;gap:.3em}
 .world-home .arrival .hero{height:auto;min-height:clamp(37rem,75vh,55rem)}
 .world-home .arrival .hero-content{align-self:center;max-width:100%}
+
+@media (pointer:coarse) {
+  .world-home .site-header :is(.brand,.auth-button,.github-link,.command-palette-launcher,.nav-toggle) {
+    min-width:44px;min-height:44px;justify-content:center;
+  }
+  .world-home .arrival-menu nav {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(8rem,100%),1fr));gap:6px}
+  .world-home .arrival-menu nav a {display:grid;place-items:center;text-align:center;min-height:44px;padding:.3rem .45rem;border:1px solid #496879;background:#112238;text-decoration:none}
+  .world-home :is(.world-studio,.sound-mixer) :is(button,select,input[type=range],input[type=color]),
+  .world-home #sound-mixer-dialog :is(button,input[type=range]) {min-width:44px;min-height:44px}
+  .world-home .world-studio :is(select,input),.world-home .quick-weather select {font-size:16px}
+  .world-home .sound-mixer-volume label {font:600 .9rem/1.4 system-ui,sans-serif}
+  .world-home .studio-explorer-controls {flex-wrap:wrap}
+  .world-home #worlds {scroll-margin-top:.5rem}
+}
+@media (max-width:380px) and (pointer:coarse) {
+  .world-home .site-header {gap:4px;padding-inline:8px}
+}

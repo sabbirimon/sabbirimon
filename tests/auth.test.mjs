@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { base64UrlEncode, generateCodeVerifier, isConfigured, configurationMessage, mergeProgress, readLocalProgress, LOCAL_PROGRESS_KEYS } from '../docs/auth.js';
+import { loginReturnTarget, base64UrlEncode, generateCodeVerifier, isConfigured, configurationMessage, mergeProgress, readLocalProgress, LOCAL_PROGRESS_KEYS } from '../docs/auth.js';
 import { PIXEL_ANIMATIONS, pixelFrame, renderPixelArt, initPixelArt } from '../docs/pixel-art.js';
 
 test('base64UrlEncode produces URL-safe base64 with no padding',()=>{
@@ -110,4 +110,13 @@ test('the tracked local progress keys cover every game that stores a score',()=>
 
 test('readLocalProgress returns an empty blob when storage is unavailable',()=>{
  assert.deepEqual(readLocalProgress(),{});
+});
+
+test('sign-in returns editors to the guide and rejects unknown destinations', () => {
+  for (const path of ['admin/', 'admin/guide/', 'admin/library/', 'progress.html']) {
+    assert.equal(loginReturnTarget('?return=' + encodeURIComponent(path)), path);
+  }
+  for (const path of ['//example.com/', 'admin/../other/', 'missing.html']) {
+    assert.equal(loginReturnTarget('?return=' + encodeURIComponent(path)), './');
+  }
 });

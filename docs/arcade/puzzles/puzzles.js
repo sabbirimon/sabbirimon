@@ -3,7 +3,7 @@ const symbols=['Moon','Star','Leaf','Wave','Sun','Bolt'];
 const get=id=>document.getElementById(id),mode=get('game'),input=get('answer').querySelector('input');
 function shuffle(items){const out=[...items];for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]]}return out}
 let deck,round,points,target,locked,first,matches,timer,moves;
-function stats(){get('stats').textContent=mode.value==='pairs'?matches+' of 6 pairs · '+moves+' turns':'Puzzle '+(round+1)+' of 5 · '+points+' solved'}
+function stats(){get('stats').textContent=mode.value==='pairs'?matches+' of 6 pairs · '+moves+(moves===1?' turn':' turns'):'Puzzle '+(round+1)+' of 5 · '+points+' solved'}
 function next(){
   clearTimeout(timer);locked=false;first=null;matches=0;moves=0;get('next').hidden=true;get('answer').hidden=mode.value==='pairs';get('cards').replaceChildren();get('result').textContent='';get('prompt').textContent='';input.value='';stats();
   if(mode.value==='pairs'){
@@ -29,5 +29,22 @@ function next(){
   }
 }
 function reset(){round=0;points=0;deck=shuffle(words.map((_,i)=>i));get('title').textContent=mode.selectedOptions[0].textContent;next()}
-get('answer').onsubmit=e=>{e.preventDefault();if(locked)return;if(input.value.trim().toLowerCase()!==target){get('result').textContent='Try again. Check the clue above.';return}locked=true;points++;stats();get('result').textContent=round===4?'Five solved. Round complete!':'Correct!';get('next').hidden=round===4};
+get('answer').onsubmit = event => {
+  event.preventDefault();
+  if (locked) return;
+  if (input.value.trim().toLowerCase() !== target) {
+    get('result').textContent='Try again. Check the clue above.';
+    input.select();
+    input.focus();
+    return;
+  }
+  locked=true;
+  points++;
+  stats();
+  const finished=round===4;
+  get('answer').hidden=true;
+  get('result').textContent=finished?'Five solved. Round complete!':'Correct!';
+  get('next').hidden=finished;
+  get(finished?'restart':'next').focus();
+};
 get('next').onclick=()=>{round++;next();input.focus()};get('restart').onclick=mode.onchange=reset;reset();

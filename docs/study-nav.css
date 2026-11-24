@@ -1,2 +1,43 @@
 .track-switch,.track-actions{display:flex;align-items:center;flex-wrap:wrap;gap:.45rem;margin:1rem 0}.track-switch a,.track-actions a{border:2px solid #54768c;padding:.45rem .7rem;background:#11273c;color:#baf4e6;font:600 1rem/1.4 system-ui,sans-serif;text-decoration:none}.track-switch a[aria-current],.track-switch a:hover,.track-actions a:hover{border-color:#eed28a;color:#ffe3a5}.course-find{padding:.8rem 1rem;background:#172b40;border-left:4px solid #81e0bf}.course-find label{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}.course-find input{min-width:0;width:min(22rem,100%);padding:.55rem;font:inherit}.course-find output{display:block}.catalog-list [hidden]{display:none!important}
 .catalog-page>main>h1,.catalog-copy>h2,.lab-page .study-heading h1{text-align:center}.track-actions,.track-switch{justify-content:center}.track-actions a,.track-switch a{display:inline-grid;place-items:center;text-align:center;min-height:44px}
+
+/* The editors and course catalog share these controls on narrow screens. */
+@media (max-width: 700px) {
+  .lab-page :is(button, .lab-brand, .lab-topnav a, .lab-rail-link),
+  .catalog-page :is(button, select, input:not([type=checkbox],[type=radio])),
+  .lab-page :is(input:not([type=checkbox],[type=radio]), select) {
+    box-sizing: border-box;
+    min-height: 44px;
+  }
+  .lab-page :is(.lab-brand, .lab-rail-star) {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+  .lab-page :is(.lab-topnav, .track-switch) a,
+  .catalog-page :is(header, nav, .catalog-copy li, .mastery) a {
+    display: inline-flex;
+    align-items: center;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .lab-page :is(textarea, select, input:not([type=checkbox],[type=radio])),
+  .catalog-page :is(input:not([type=checkbox],[type=radio]), select) {
+    font-size: 16px;
+    max-width: 100%;
+  }
+  :is(.lab-page, .catalog-page) summary {
+    min-height: 44px;
+    box-sizing: border-box;
+    padding-block: .65rem;
+  }
+  .quiz-dialog [data-choices] label {
+    box-sizing: border-box;
+    min-height: 48px;
+  }
+  .quiz-dialog [data-choices] input {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+  }
+}

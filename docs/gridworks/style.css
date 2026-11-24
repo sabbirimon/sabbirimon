@@ -19,3 +19,24 @@
 body[data-palette=cyber]{--mint:#b7f77c;--cyan:#71edf0;--gold:#ffe25b}body[data-palette=cyber] .app-header{background:#11152d;border-bottom-color:#5a3d75}body[data-palette=cyber] .city-hud{background:#141c35;border-bottom-color:#5f487e}body[data-palette=cyber] .hud-item>div>span{color:#b9e3f5}body[data-palette=cyber] .hud-item:nth-child(2) strong{color:#d1ff9c}body[data-palette=cyber] .hud-item:nth-child(3) strong{color:#7ef3ed}body[data-palette=cyber] .hud-item:nth-child(4) strong{color:#ffa4dc}body[data-palette=cyber] .hud-item:nth-child(5) strong{color:#cab9ff}body[data-palette=cyber] .hud-item.is-warning strong{color:#ffacac}body[data-palette=cyber] .hud-item small{color:#a3bbce}body[data-palette=cyber] .hud-item small.is-positive{color:#bcf88f}body[data-palette=cyber] .hud-item small.is-negative{color:#ffb0b0}body[data-palette=cyber] .eyebrow{color:#bcf88f}body[data-palette=cyber] .build-categories button.selected{background:#423057;border-color:#ea88cf;color:#ffd1ed}body[data-palette=cyber] .build-card.selected{border-color:#c5fa80;box-shadow:inset 3px 0 #b7f77c;background:#283b3d}body[data-palette=cyber] .campaign-xp{background:#472b65;border-color:#cb8df0;color:#f0c7ff}body[data-palette=cyber] .map-overlays button.selected{background:#294f55;color:#a7ffeb}body[data-palette=cyber] .render-controls #cyber-view{color:#ffbcec}
 
 .weather-control{display:flex;flex-direction:column;gap:4px;color:#b8d8dc;font:6px/1.8 var(--pixel);padding:3px 0}.weather-control select{width:100%;min-height:24px;max-width:116px;border:1px solid #577b8b;background:#213b50;color:#e6f2f0;padding:4px;font:5px/1.8 var(--pixel);border-radius:0}body[data-palette=cyber] .weather-control select{background:#2d3054;border-color:#9b6daf;color:#e6dcfc}@media(max-width:560px){.weather-control select{font-size:6px;max-width:96px}.weather-control{font-size:6px}}
+
+@media (pointer:coarse) {
+  .header-actions .header-button,.zoom-controls button { min-width:44px;min-height:44px }
+  .mode-buttons button,.map-overlays button,.management-tabs button,.mobile-panel-close,.game-dialog [data-close-dialog],.build-tabs button { min-height:44px }
+  .zoom-controls { flex-direction:row;right:6px;bottom:6px }
+  .zoom-controls button { border-bottom:0;border-right:1px solid #435567 }
+  .render-controls { bottom:59px }
+  .map-legend { max-width:calc(100% - 150px);flex-wrap:wrap;gap:4px }
+}
+@media (pointer:coarse) and (max-width:560px) {
+  .app-header .header-actions { gap:2px }
+  .app-header { padding-inline:4px;gap:3px }
+  .header-actions .header-button { padding:2px }
+  .map-toolbar { overflow-x:auto;scrollbar-width:thin }
+  .map-toolbar>div { flex-shrink:0 }
+}
+
+@media (pointer:coarse) and (max-width:900px) {
+  html { overflow:hidden }
+  .game-dialog>header>button { flex:0 0 44px;width:44px }
+}
