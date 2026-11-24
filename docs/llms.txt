@@ -32,7 +32,7 @@ Fourteen browser-only simulations cover IPv4 subnets, VLANs, device troubleshoot
 ### [Home](https://imon.com.bd/)
 The main site. Sections:
 - [Projects](https://imon.com.bd/#projects) — software from Sabbir Hassan Imon, including OmniCast and OmniRecovery.
-- [HyperL](https://imon.com.bd/hyperl/) — native Rust tensor compute, Python graph tools and desktop inference downloads.
+- [HyperL](https://imon.com.bd/hyperl/) — Experimental AI compute with sharding, memory-tier planning, SafeTensors tools and authenticated workers.
 - [Meshlit](https://imon.com.bd/meshlit/) — local GGUF chat and agents on Android, plus a native desktop coding workspace and device pairing.
 - [Pixel world](https://imon.com.bd/#pixel-world) — an illustrated pixel scene with a live weather layer, World Studio controls, day/night cycle and optional synthesised ambience.
 - [Arcade](https://imon.com.bd/#arcade) — free browser games: Snake, Surf, 2048, Ludo, Puzzle, Dev Slots and a racer. No payments, no wagers.
